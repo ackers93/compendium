@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to: "home#index"
+  resources :note
 
   Rails.application.routes.draw do
     devise_scope :user do
