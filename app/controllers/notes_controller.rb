@@ -1,4 +1,4 @@
-class NoteController < ApplicationController
+class NotesController < ApplicationController
   before_action :authenticate_user!
   def index
     @notes = Note.all
@@ -6,6 +6,7 @@ class NoteController < ApplicationController
 
   def show
     @note = Note.find(params[:id])
+    puts "SHOWNOTE #{@note}"
   end
 
   def new
@@ -18,7 +19,7 @@ class NoteController < ApplicationController
     puts "PARAAMSCREATE #{params}"
     @note = Note.new(title: params['title'], content: params['content'], user_id: current_user.id)
     if @note.save
-      redirect_to note_path
+      redirect_to @note
     else
       render 'new'
     end

@@ -10,8 +10,9 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
-    <link rel="stylesheet" type="text/css" href="trix.css">
-    <script type="text/javascript" src="trix.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0-beta.0/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0-beta.0/dist/trix.umd.min.js"></script>
+    <script src="https://kit.fontawesome.com/b96b0b2690.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
@@ -21,7 +22,7 @@
       <div class="flex h-16 items-center justify-between">
         <div class="flex items-center">
           <div class="flex-shrink-0">
-            <img class="h-8 w-8" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company">
+          <i class="fa-solid fa-books" style="color: white;"></i>
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
