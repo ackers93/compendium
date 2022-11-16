@@ -1,23 +1,27 @@
 <h1>Notes Index</h1>
 
-<% @notes.each do |note| %>
-
-    <table>
-      <thead>
+<div class="overflow-x-auto relative">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Created At</th>
+            <th scope="col" class="py-3 px-6">Title</th>
+            <th scope="col" class="py-3 px-6">Content</th>
+            <th scope="col" class="py-3 px-6">Created At</th>
+            <th scope="col" class="py-3 px-6">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><%= note.title %></td>
-            <td><div class="trix-content"><%= note["content"] %></div></td>
-            <td><%= note.created_at.strftime("%b %d, %Y") %></td>
-            <td><div class="delete"><%= button_to 'Delete', note, :method => :delete %></div></td>
-            <td><div class="edit"><%= button_to 'Edit', edit_note_path(note), :method => :get %></div></td>
-          </tr>
+          <% @notes.each do |note| %>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="py-4 px-6"><%= note.title %></td>
+                <td class="py-4 px-6"><div class="trix-content"><%= note["content"] %></div></td>
+                <td class="py-4 px-6"><%= note.created_at.strftime("%b %d, %Y") %></td>
+                <td class="py-4 px-6">
+                  <div class="delete"><%= button_to 'Delete', note, :method => :delete %></div> 
+                  <div class="edit"><%= button_to 'Edit', edit_note_path(note), :method => :get %></div>
+                </td>
+              </tr>
+          <% end %>
         </tbody>
     </table>
-    <% end %>
+
