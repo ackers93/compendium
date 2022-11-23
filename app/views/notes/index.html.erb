@@ -1,8 +1,5 @@
-<div class="w-full">
-<div class="flex justify-between">
-  <h1 class="mb-4 text-2xl font-extrabold" >All Notes</h1>
-  <div class="create bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-6 rounded focus:outline-none focus:shadow-outline"><%= button_to 'Create a New Note', new_note_path, :method => :get %></div>
-</div>
+<div class="">
+<h1 class="mb-4 text-2xl font-extrabold" >All Notes</h1>
 
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -16,12 +13,12 @@
         <tbody>
           <% @notes.each do |note| %>
               <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td class="py-4 px-6"><%= note.title %></td>
-                <td class="py-4 px-6">Tags</td>
+                <td class="py-4 px-6"><%= link_to note.title, note_path(note) %></td>
+                <td class="py-4 px-6">Tags</div></td>
                 <td class="py-4 px-6"><%= note.created_at.strftime("%b %d, %Y") %></td>
                 <td class="py-4 px-6">
-                  <div class="delete  bg-red-500 hover:bg-red-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"><%= button_to 'Delete', note, :method => :delete %></div> 
-                  <div class="edit bg-green-500 hover:bg-green-700 text-white font-bold my-2 py-2 px-6 rounded focus:outline-none focus:shadow-outline"><%= button_to 'Edit', edit_note_path(note), :method => :get %></div>
+                  <div class="delete"><%= button_to 'Delete', note, :method => :delete %></div> 
+                  <div class="edit"><%= button_to 'Edit', edit_note_path(note), :method => :get %></div>
                 </td>
               </tr>
           <% end %>

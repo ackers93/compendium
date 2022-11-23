@@ -1,5 +1,33 @@
-<h1>NOTE SHOW</h1>
-<%= @note.title %>
-</br>
-<%= @note.content %>
-<i class="fa-solid fa-books"></i>
+<div class="w-full">
+
+  <div class="bg-white/95 shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+    <h1 class="mb-4 text-2xl font-extrabold" ><%= @note.title %></h1>
+    <%= @note.content %>
+  </div>
+
+  <div class="mt-2">
+    <form  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="note" action="/notes/<%= @note.id %>/comments" method="post">
+      <input type="hidden" name="note_id" value="<%= @note.id %>" />
+      <h1 class="mb-4 text-1xl font-extrabold" >Add a question or comment...</h1>
+      <input id="x" type="hidden" name="content">
+      <trix-editor  class="trix-editor" input="x"></trix-editor>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="">
+    <div class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+      <% @comments.each do |comment| %>
+        <div class="shadow-lg rounded my-7 px-2 py-3">
+          <h1 class="mb-4 text-1xl font-extrabold" ><%= comment.user_id %></h1>
+          <div class="trix-content"><%= comment.content %></div>
+          <% if comment.user_id == current_user.id %>
+            <div class="edit"><%= button_to 'Edit', edit_note_comment_path(comment), :method => :get %></div>
+            <div class="delete"><%= button_to 'Delete', note_comment_path(comment), :method => :delete %></div> 
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
+  </div>
+</div>

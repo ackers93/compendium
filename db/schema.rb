@@ -49,6 +49,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_16_063418) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "comments", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "upvotes"
+    t.datetime "created_at", precision: nil
+    t.integer "note_id"
+  end
+
   create_table "notes", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", limit: 45
     t.datetime "created_at", precision: nil
