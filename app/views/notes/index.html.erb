@@ -1,27 +1,46 @@
-<div class="">
-<h1 class="mb-4 text-2xl font-extrabold" >All Notes</h1>
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
 
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="py-3 px-6">Title</th>
-            <th scope="col" class="py-3 px-6">Tags</th>
-            <th scope="col" class="py-3 px-6">Created At</th>
-            <th scope="col" class="py-3 px-6">Actions</th>
-          </tr>
-        </thead>
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Notes</h1>
+    <%= button_to 'Publish a New Note', new_note_path, method: :get, data: { turbo_frame: 'modal' }, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="notes" class="min-w-full mt-4 mb-4 p-8 border-4 border-x-green-800">
+    <table id="notestable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead>
+      <tr>
+        <th scope="col" class="py-3 px-6">
+            Title
+        </th>
+        <th scope="col" class="py-3 px-6">
+            Content
+        </th>
+        <th scope="col" class="py-3 px-6">
+            Tags
+        </th>
+      </tr>  
+      </thead>   
         <tbody>
-          <% @notes.each do |note| %>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td class="py-4 px-6"><%= link_to note.title, note_path(note) %></td>
-                <td class="py-4 px-6">Tags</div></td>
-                <td class="py-4 px-6"><%= note.created_at.strftime("%b %d, %Y") %></td>
-                <td class="py-4 px-6">
-                  <div class="delete"><%= button_to 'Delete', note, :method => :delete %></div> 
-                  <div class="edit"><%= button_to 'Edit', edit_note_path(note), :method => :get %></div>
-                </td>
-              </tr>
-          <% end %>
+        <% @notes.each do |note| %>
+            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+              <td><%= link_to note.title, note %></td>
+              <td> <%= note.content.to_plain_text.truncate(20) %></td>
+              <td>Tags</td>
+            </tr>
+        <% end %>
         </tbody>
+      </tr>
     </table>
+  </div>
 </div>
+
+<script>
+
+$(document).ready( function () {
+    $('#notestable').DataTable();
+} );
+
+</script>
