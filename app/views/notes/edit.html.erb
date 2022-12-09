@@ -1,14 +1,4 @@
-<div class="w-full">
-  <form  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="note" action="/notes" method="post">
-    <label class="block text-gray-700 text-sm font-bold mb-2" for="Title">
-          Title
-    </label>
-    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" name="title">
-    <label class="block text-gray-700 text-sm font-bold my-3 mb-2" for="content">
-      Content
-    </label>
-    <input id="x" type="hidden" name="content">
-    <trix-editor  class="trix-editor" input="x"></trix-editor>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit">Submit</button>
-  </form>
-</div>
+<%= render TurboModalComponent.new(title: "Editing Note") do %>
+  <%= render "form", note: @note %>
+  <%= puts "EDITNOTE #{@note}"%>
+<% end %>

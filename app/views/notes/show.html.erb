@@ -1,12 +1,24 @@
 <div class="w-full">
 
-  <div class="bg-white/95 shadow-lg rounded px-8 pt-6 pb-8 mb-4">
-    <h1 class="mb-4 text-2xl font-extrabold" ><%= @note.title %></h1>
-    <%= @note.content %>
+
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+    <%= render @note %>
+    <%= link_to 'Edit this note', edit_note_path(@note), data: { turbo_frame: 'modal' }, class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="inline-block ml-2">
+      <%= button_to 'Destroy this note', note_path(@note), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    </div>
+    <%= link_to 'Back to notes', notes_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
+</div>
+
+
 
   <div class="mt-2">
-    <form  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="note" action="/notes/<%= @note.id %>/comments" method="post">
+    <form  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="note" action="/notes/<%= @note.id %>/comments" method="note">
       <input type="hidden" name="note_id" value="<%= @note.id %>" />
       <h1 class="mb-4 text-1xl font-extrabold" >Add a question or comment...</h1>
       <input id="x" type="hidden" name="content">
@@ -16,13 +28,14 @@
   </div>
 
   <div class="">
-    <div class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+    <div class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-10">
+    <h1 class="mb-4 text-3xl font-extrabold" >Comments...</h1>
       <% @comments.each do |comment| %>
-        <div class="shadow-lg rounded my-7 px-2 py-3">
+        <div class="shadow-lg rounded my-12 px-2 py-3">
           <h1 class="mb-4 text-1xl font-extrabold" ><%= comment.user_id %></h1>
           <div class="trix-content"><%= comment.content %></div>
           <% if comment.user_id == current_user.id %>
-            <div class="edit"><%= button_to 'Edit', edit_note_comment_path(comment), :method => :get %></div>
+            <div class="edit"><%= button_to 'Edit', edit_note_comment_path(@note, comment), :method => :get, data: { "turbo-frame": "modal" } %></div>
             <div class="delete"><%= button_to 'Delete', note_comment_path(comment), :method => :delete %></div> 
           <% end %>
         </div>

@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="modal" data-action="keyup@document->modal#handleKeyup" class="border-4 border-indigo-600">
+    <!-- Clicking outside the modal will cause it to close -->
+    <div class="modal-background" data-action="click->modal#close"></div>
+
+    <div class="modal-styles-and-stuff">
+      <button data-action="modal#close">X</button>
+
+      <%= turbo_frame_tag "modal-body" do %>
+        <%= yield %>
+        <%= button_tag "Close", data: { action: "turbo-modal#hideModal" }, type: "button", class: "rounded-lg py-3 px-5 bg-red-600 text-white" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

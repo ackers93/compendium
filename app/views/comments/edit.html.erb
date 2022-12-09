@@ -1,0 +1,11 @@
+<%= render "shared/modal" do %>
+  <div class="mt-2">
+    <form  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="note" action="/notes/<%= @note.id %>/comments" method="post">
+      <input type="hidden" name="note_id" value="<%= @note.id %>" />
+      <h1 class="mb-4 text-1xl font-extrabold" >Edit your comment...</h1>
+      <input id="x" type="hidden" name="content">
+      <trix-editor  class="trix-editor" input="x"></trix-editor>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit">Edit</button>
+    </form>
+  </div>
+<% end %>
