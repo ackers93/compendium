@@ -10,6 +10,7 @@ class NotesController < ApplicationController
 
   def show
     @comments = Comment.where(note_id: @note).all
+    puts "TAGs #{@note.tag_list}"
   end
 
   def new
@@ -69,6 +70,6 @@ class NotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def note_params
-      params.require(:note).permit(:title, :content, :user_id)
+      params.require(:note).permit(:title, :content, :user_id, :tag_list)
     end
 end
