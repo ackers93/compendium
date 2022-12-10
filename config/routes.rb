@@ -8,10 +8,8 @@ Rails.application.routes.draw do
   end
 
   Rails.application.routes.draw do
-    devise_scope :user do
-      # Redirests signing out users back to sign-in
-      get "users", to: "devise/sessions#new"
-    end
-  devise_for :users
+    devise_for :users, controllers: {
+      sessions: 'users/sessions'
+    }
   end
 end
