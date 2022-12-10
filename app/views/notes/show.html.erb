@@ -1,7 +1,7 @@
 <div class="w-full">
 
 
-<div class="mx-auto md:w-2/3 w-full flex">
+<div class="mx-auto w-full flex">
   <div class="mx-auto">
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
@@ -17,29 +17,14 @@
 
 
 
-  <div class="mt-2">
-    <form  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" id="note" action="/notes/<%= @note.id %>/comments" method="note">
-      <input type="hidden" name="note_id" value="<%= @note.id %>" />
-      <h1 class="mb-4 text-1xl font-extrabold" >Add a question or comment...</h1>
-      <input id="x" type="hidden" name="content">
-      <trix-editor  class="trix-editor" input="x"></trix-editor>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" value="submit">Submit</button>
-    </form>
-  </div>
+<div class="mt-2">
+  <%= render template: 'comments/new' %>
+</div>
 
   <div class="">
     <div class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-10">
     <h1 class="mb-4 text-3xl font-extrabold" >Comments...</h1>
-      <% @comments.each do |comment| %>
-        <div class="shadow-lg rounded my-12 px-2 py-3">
-          <h1 class="mb-4 text-1xl font-extrabold" ><%= comment.user_id %></h1>
-          <div class="trix-content"><%= comment.content %></div>
-          <% if comment.user_id == current_user.id %>
-            <div class="edit"><%= button_to 'Edit', edit_note_comment_path(@note, comment), :method => :get, data: { "turbo-frame": "modal" } %></div>
-            <div class="delete"><%= button_to 'Delete', note_comment_path(comment), :method => :delete %></div> 
-          <% end %>
-        </div>
-      <% end %>
+      <%= render @comments %>
     </div>
     
   </div>

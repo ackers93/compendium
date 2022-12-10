@@ -1,0 +1,8 @@
+<div id="<%= dom_id comment %>" class="shadow-lg rounded my-12 px-2 py-3">
+    <h1 class="mb-4 text-1xl font-extrabold" ><%= comment.user_id %></h1>
+    <div class="trix-content"><%= comment.content %></div>
+    <% if comment.user_id == current_user.id %>
+    <div class="edit"><%= button_to 'Edit', edit_note_comment_path(@note, comment), :method => :get, data: { "turbo-frame": "modal" } %></div>
+    <div class="delete"><%= button_to 'Delete', note_comment_path(comment), :method => :delete %></div> 
+    <% end %>
+</div>

@@ -20,7 +20,6 @@ class NotesController < ApplicationController
   end
   
   def create
-    puts "NOTEPARAMS #{note_params}"
     @note = Note.new(note_params)
     respond_to do |format|
       if @note.save
@@ -28,7 +27,6 @@ class NotesController < ApplicationController
         format.html { redirect_to note_url(@note), notice: "Note was successfully created." }
         format.json { render :show, status: :created, location: @note }
       else
-        puts "ERROR #{@note.errors.full_messages}"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @note.errors, status: :unprocessable_entity }
       end
@@ -36,7 +34,6 @@ class NotesController < ApplicationController
   end
   
   def update
-    puts "NOTEEditPARAMS #{note_params}"
     respond_to do |format|
       if @note.update(note_params)
         format.turbo_stream { render turbo_stream: turbo_stream.replace(@note, partial: "notes/note", locals: {note: @note}) }
