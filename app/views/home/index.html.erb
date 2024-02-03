@@ -1,2 +1,23 @@
-<h1>Welcome to the Christadelphian Compendium</h1>
-<div>Check out notes for your Daily Readings, or share your own thoughts on specific topics.</div>
+
+<style>
+  .glossy-button {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.25in;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .glossy-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+</style>
+<div class="text-center">
+    <div class="text-3xl">Welcome to the Christadelphian Compendium</div>
+    <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
+    <div>Check out notes for your Daily Readings, or share your own thoughts on specific topics.</div>
+    <div class="border-double border-4 border-sky-500 flex flex-row justify-evenly p-10 mt-5">
+        <a href="/notes" class="glossy-button text-white text-xl py-16 px-5 border-solid border-2 bg-red-500">Notes</a>
+        <a href="/notes" class="glossy-button text-white text-xl py-16 px-5 border-solid border-2 bg-blue-500">Readings</a>
+        <a href="/notes" class="glossy-button text-white text-xl py-16 px-5 border-solid border-2 bg-green-500">Classes</a>
+    </div>
+</div>

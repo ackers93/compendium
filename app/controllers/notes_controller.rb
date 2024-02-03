@@ -5,22 +5,27 @@ class NotesController < ApplicationController
 
 
   def index
+    puts "notes#index"
     @notes = Note.all
   end
 
   def show
+    puts "notes#show"
+    # @note = Note.where(id: params[:note_id])
     @comments = Comment.where(note_id: @note).all
-    puts "TAGs #{@note.tag_list}"
   end
 
   def new
+    puts "notes#new"
     @note = Note.new
   end
 
   def edit
+    puts "notes#edit"
   end
   
   def create
+    puts "notes#create"
     @note = Note.new(note_params)
     respond_to do |format|
       if @note.save
@@ -35,6 +40,7 @@ class NotesController < ApplicationController
   end
   
   def update
+    puts "notes#update"
     respond_to do |format|
       if @note.update(note_params)
         format.turbo_stream { render turbo_stream: turbo_stream.replace(@note, partial: "notes/note", locals: {note: @note}) }
@@ -48,12 +54,19 @@ class NotesController < ApplicationController
   end
 
   def destroy
+    puts "notes#destroy"
     @note.destroy
 
     respond_to do |format|
       format.html { redirect_to notes_url, notice: "Note was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+
+  def list
+    @notes = Note.where('title ilike ?', "%#{params[:title]}%") if params[:title].present?
+    render("index", locals: { notes: @notes })
   end
 
 

@@ -1,11 +1,8 @@
-  <%= form_with(url: note_comments_path(@note, @comment), method: :post, class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4") do |form| %>
-    <div class="my-5">
-        <%= form.label :content %>
-        <%= form.rich_text_area :content, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-    </div>
-    <%= form.hidden_field :user_id, value: current_user.id %>
-    <%= form.hidden_field :note_id, value: @note.id %>
-    <div class="inline">
-        <%= form.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-    </div>
-<% end %>
+<div class="my-5">
+    <%= form.rich_text_area :content, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+</div>
+<%= form.hidden_field :user_id, value: current_user.id %>
+<%= form.hidden_field :note_id, value: @note.id %>
+<div class="inline">
+    <%= form.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+</div>

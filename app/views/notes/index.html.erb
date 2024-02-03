@@ -8,47 +8,53 @@
     <%= button_to 'Publish a New Note', new_note_path, method: :get, data: { turbo_frame: 'modal' }, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="notes" class="min-w-full mt-4 mb-4 p-8 border-4 border-x-green-800">
-    <table id="notestable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead>
-      <tr>
-        <th scope="col" class="py-3 px-6">
-            Title
-        </th>
-        <th scope="col" class="py-3 px-6">
-            Content
-        </th>
-        <th scope="col" class="py-3 px-6">
-            Tags
-        </th>
-      </tr>  
-      </thead>   
-        <tbody>
-        <% @notes.each do |note| %>
-            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-              <td><%= link_to note.title, note %></td>
-              <td> <%= note.content.to_plain_text.truncate(20) %></td>
-              <td>
-               <div class="flex row-auto">
-                <% note.tag_list.each do |tag| %>
-                  <div class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                  <%= tag %>
+
+  <%= turbo_frame_tag "notes", class: "shadow overflow-hidden rounded border-b border-gray-200" do %>
+    <div class="flex justify-end mb-1">
+      <%= form_with url: notes_list_path, method: :get do |form| %>
+        <%= form.text_field :name, placeholder: "Search by name", value: params[:name], class: "border border-blue-500 rounded p-2" %>
+        <%= form.button "Search", class: "bg-blue-500 text-white p-2 rounded-sm" %>
+      <% end %>
+    </div>
+
+    <div id="notes" class="relative overflow-x-auto">
+      <table id="notestable" class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+              Title
+          </th>
+          <th scope="col" class="px-6 py-3">
+              Content
+          </th>
+          <th scope="col" class="px-6 py-3">
+              Tags
+          </th>
+        </tr>  
+        </thead>   
+          <tbody>
+          <% @notes.each do |note| %>
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="px-6 py-4"><%= link_to note.title, note %></td>
+                <td class="px-6 py-4"> <%= note.content.to_plain_text.truncate(20) %></td>
+                <td class="px-6 py-4">
+                <div>
+                  <% note.tag_list.each do |tag| %>
+                    <div class="flex row bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                    <%= tag %>
+                    </div>
+                  <% end %>
                   </div>
-                <% end %>
-                </div>
-              </td>
-            </tr>
-        <% end %>
-        </tbody>
-      </tr>
-    </table>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </tr>
+      </table>
+    </div>
+  <% end %>
   </div>
-</div>
 
 <script>
-
-$(document).ready( function () {
-    $('#notestable').DataTable();
-} );
 
 </script>

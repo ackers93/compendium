@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :notes do
     resources :comments
   end
+  get '/notes/list', to: 'notes#list'
 
   Rails.application.routes.draw do
     devise_for :users, controllers: {

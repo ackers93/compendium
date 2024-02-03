@@ -1,3 +1,7 @@
 <%= render TurboModalComponent.new(title: "Editing Note") do %>
-  <%= render "form", comment: @comment %>
+  <div class="">
+  <%= form_with(url: note_comment_path(@comment.note_id, @comment), scope: :comment, method: :patch) do |form| %>
+    <%= render "form", comment: @comment, form: form %>
+  <% end %>
+  </div>
 <% end %>

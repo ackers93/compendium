@@ -2,9 +2,8 @@
   <%= tag.div data: { controller: "turbo-modal",
                       turbo_modal_target: "modal",
                       action: "turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" },
-                      class: "absolute z-10 top-10 right-10 rounded-md w-96 break-words border-4 border-gray-600 m-5 p-10 bg-slate-50" do %>
+                      class: "absolute z-10 top-10 right-10 rounded-md w-96 break-words border-4 border-white m-5 p-10" do %>
     <h1 class="font-bold text-4xl"><%= @title %></h1>
     <%= content %>
-    <%= button_tag "Close", data: { action: "turbo-modal#hideModal" }, type: "button", class: "rounded-lg py-3 px-5 bg-red-600 text-white" %>
   <% end %>
 <% end %>
