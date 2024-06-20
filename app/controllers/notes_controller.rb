@@ -6,7 +6,7 @@ class NotesController < ApplicationController
 
   def index
     puts "notes#index"
-    @notes = Note.all
+    @notes = Note.order(created_at: :desc)
   end
 
   def show
