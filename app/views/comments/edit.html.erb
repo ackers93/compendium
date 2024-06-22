@@ -1,4 +1,4 @@
-<%= render TurboModalComponent.new(title: "Editing Note") do %>
+<%= render TurboModalComponent.new(title: "Editing Comment") do %>
   <div class="">
   <%= form_with(url: note_comment_path(@comment.note_id, @comment), scope: :comment, method: :patch) do |form| %>
     <%= render "form", comment: @comment, form: form %>
