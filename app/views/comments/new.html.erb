@@ -1,4 +1,4 @@
-  <div class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <h1 class="mb-4 text-1xl font-extrabold" >Add a question or comment...</h1>
     <%= form_with(url: note_comments_path(@note, @comment), data: {controller: "reset_form", action: "turbo:submit-end->form#clear" }, scope: :comment, method: :post) do |form| %>
     <%= render "comments/form", comment: @comment, note: @note, form: form %>
