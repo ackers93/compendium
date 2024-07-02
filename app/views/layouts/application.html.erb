@@ -37,6 +37,14 @@
         </div>
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
+            <% if user_signed_in? %>
+                <%= current_user.email %>
+                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= link_to 'Profile', edit_user_registration_path %></div>
+                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= button_to 'Log out', destroy_user_session_path, method: :delete %></div>
+            <% else %>
+                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= link_to 'Log In', new_user_session_path %></div>
+                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= link_to 'Sign Up', new_user_registration_path %></div>
+            <% end %>
             <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
               <span class="sr-only">View notifications</span>
               <!-- Heroicon name: outline/bell -->
@@ -48,7 +56,7 @@
       </div>
     </div>
   </nav>
-    <main class="container mx-auto mt-28 px-5 flex flex-col">
+    <main class="container mx-auto mt-5 px-1 flex flex-col">
       <% if notice %>
         <p class="alert alert-success border-l-4 border-success-500"><%= notice %></p>
       <% end %>
