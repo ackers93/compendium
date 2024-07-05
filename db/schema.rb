@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_14_034745) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_04_185916) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -47,6 +47,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_14_034745) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "bible_verses", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "book", null: false
+    t.integer "chapter", null: false
+    t.integer "verse", null: false
+    t.text "text", null: false
+    t.datetime "created_at", default: "2024-07-04 18:44:55", null: false
+    t.datetime "updated_at", null: false
+    t.string "testament"
+    t.index ["book", "chapter", "verse"], name: "index_bible_verses_on_book_and_chapter_and_verse", unique: true
   end
 
   create_table "comments", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   end
   get '/notes/list', to: 'notes#list'
 
+
+  get 'bible_verses/books', to: 'bible_verses#book_index'
   Rails.application.routes.draw do
     devise_for :users, controllers: {
       sessions: 'users/sessions'
