@@ -1,17 +1,19 @@
 <div class="container mx-auto">
-  <h1 class="text-2xl font-bold my-4">The King James Version</h1>
-  <ul class="list-disc pl-5">
-    <% @old_testament_books.each do |book| %>
-      <li class="text-lg">
-        <%= book.book %>
-      </li>
-    <% end %>
-  </ul>
-  <ul class="list-disc pl-5">
-    <% @new_testament_books.each do |book| %>
-      <li class="text-lg">
-        <%= book.book %>
-      </li>
-    <% end %>
-  </ul>
+  <h1 class="mx-auto text-2xl font-bold my-4">The King James Version</h1>
+  <div class="flex flex-row justify-around">
+    <ul class="list-disc pl-5">
+      <% @old_testament_books.each do |book| %>
+        <li class="text-lg">
+          <%= book.book %>
+        </li>
+      <% end %>
+    </ul>
+    <ul class="list-disc pl-5">
+      <% @new_testament_books.each do |book| %>
+        <li class="text-lg">
+          <%= book.book %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
