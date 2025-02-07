@@ -1,5 +1,8 @@
 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
   <h1 class="mb-4 text-1xl font-extrabold">Add a question or comment...</h1>
+  <%= puts "COMMENTABLE #{@commentable.inspect}" %>
+  <%= puts "COMMENT #{@comment.inspect}" %>
+
   <%= form_with(url: polymorphic_path([@commentable, @comment]), data: { turbo_frame: "comment_form", controller: "reset_form", action: "turbo:submit-end->reset_form#clear" }, scope: :comment, method: :post) do |form| %>
     <%= render "comments/form", comment: @comment, form: form %>
   <% end %>

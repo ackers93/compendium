@@ -18,6 +18,8 @@ class CommentsController < ApplicationController
   def new
     puts "com#new"
     @comment = @commentable.comments.build
+    puts "COMMENT: #{@comment.inspect}"
+
   end
 
   def create
@@ -50,7 +52,7 @@ class CommentsController < ApplicationController
     @commentable = @comment.commentable
     respond_to do |format|
       if @comment.update(comment_params)
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@comment, partial: "comments/comment", locals: {comment: @comment}) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@comment, partial: "comments/comment", locals: { comment: @comment }) }
         format.html { redirect_to @commentable, notice: "Comment was successfully updated." }
         format.json { render :show, status: :ok, location: @commentable }
       else
@@ -75,11 +77,13 @@ class CommentsController < ApplicationController
   end
 
   def set_commentable
+    puts "PARAMS: #{params.inspect}"
     @commentable = if params[:note_id]
                      Note.find(params[:note_id])
                    elsif params[:bible_verse_id]
                      BibleVerse.find(params[:bible_verse_id])
                    end
+    puts "COMMENTABLE: #{@commentable.inspect}"
   end
 
   def ensure_frame_response

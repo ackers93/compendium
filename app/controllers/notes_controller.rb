@@ -12,7 +12,9 @@ class NotesController < ApplicationController
   def show
     puts "notes#show"
     # @note = Note.where(id: params[:note_id])
-    @comments = Comment.where(note_id: @note).all
+    @commentable = @note
+    @comment = @commentable.comments.build
+    @comments = @commentable.comments
   end
 
   def new
