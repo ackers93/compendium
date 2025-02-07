@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_04_185916) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_06_042255) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -65,6 +65,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_04_185916) do
     t.integer "upvotes"
     t.datetime "created_at", precision: nil
     t.integer "note_id"
+    t.integer "bible_verse_id"
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
   end
 
   create_table "notes", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: "home#index"
   resources :notes do
-    resources :comments
+    resources :comments, only: [:new, :create, :edit, :update, :destroy]
+  end
+  
+  resources :bible_verses do
+    resources :comments, only: [:new, :create, :edit, :update, :destroy]
   end
   get '/notes/list', to: 'notes#list'
 
