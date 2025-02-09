@@ -58,7 +58,7 @@
   </nav>
     <main class="container mx-auto mt-5 px-1 flex flex-col">
         <%= yield %>
-      <%= turbo_frame_tag "modal", class: "absolute" %>
+        <%= turbo_frame_tag "modal", class: "absolute hidden", data: { controller: "modal" } %>
     </main>
   </body>
 </html>

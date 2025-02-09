@@ -1,14 +1,20 @@
-import { Controller } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
     document.addEventListener('turbo:submit-end', this.handleSubmit)
     this.backgroundId = 'modal-background';
     this.backgroundHtml = this._backgroundHTML();
+    document.body.insertAdjacentHTML('beforeend', this.backgroundHtml);
+    document.getElementById(this.backgroundId).addEventListener('click', this.close.bind(this));
+    document.addEventListener('keyup', this.handleKeyup.bind(this));
   }
 
   disconnect() {
     document.removeEventListener('turbo:submit-end', this.handleSubmit)
+    document.getElementById(this.backgroundId).removeEventListener('click', this.close.bind(this));
+    document.removeEventListener('keyup', this.handleKeyup.bind(this));
+    document.getElementById(this.backgroundId).remove();
   }
 
   close() {

@@ -18,10 +18,12 @@ class NotesController < ApplicationController
   end
 
   def new
-    puts "notes#new"
     @note = Note.new
+    respond_to do |format|
+      format.html { render :new }
+      format.turbo_stream { render :new }
+    end
   end
-
   def edit
     puts "notes#edit"
   end
@@ -79,7 +81,6 @@ class NotesController < ApplicationController
     end
 
     def ensure_frame_response
-      return unless Rails.env.development?
       redirect_to root_path unless turbo_frame_request?
     end
 
