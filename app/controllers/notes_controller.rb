@@ -20,6 +20,9 @@ class NotesController < ApplicationController
   def new
     @note = Note.new
     respond_to do |format|
+      puts "notes#new"
+      puts turbo_frame_request?
+      puts "FORMAT #{format.inspect}"
       format.html { render :new }
       format.turbo_stream { render :new }
     end
@@ -81,6 +84,9 @@ class NotesController < ApplicationController
     end
 
     def ensure_frame_response
+      puts "Request headers: #{request.headers.to_h.select { |k,v| k.start_with?('HTTP_') }}"
+      puts "Turbo Frame Request?: #{turbo_frame_request?}"
+      puts "Turbo?: #{request.headers['HTTP_TURBO_FRAME']}"
       redirect_to root_path unless turbo_frame_request?
     end
 

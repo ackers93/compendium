@@ -17,6 +17,10 @@ export default class extends Controller {
     document.getElementById(this.backgroundId).remove();
   }
 
+  openModal() {
+    this.element.classList.remove("hidden")
+  }
+
   close() {
     // Remove the modal element so it doesn't blanket the screen
     this.element.remove()
