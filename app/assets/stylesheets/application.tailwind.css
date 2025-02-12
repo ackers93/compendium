@@ -1,5 +1,5 @@
-@tailwind base;
-@tailwind components;
+@import 'actiontext.css';
+@import "tailwindcss/preflight";
 @tailwind utilities;
 
 /*
@@ -11,4 +11,3 @@
 }
 
 */
-@import 'actiontext.css';
