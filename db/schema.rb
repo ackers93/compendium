@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_06_042255) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_07_050125) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -54,31 +54,19 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_06_042255) do
     t.integer "chapter", null: false
     t.integer "verse", null: false
     t.text "text", null: false
-    t.datetime "created_at", default: "2024-07-04 18:44:55", null: false
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "testament"
     t.index ["book", "chapter", "verse"], name: "index_bible_verses_on_book_and_chapter_and_verse", unique: true
   end
 
-  create_table "comments", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "upvotes"
-    t.datetime "created_at", precision: nil
-    t.integer "note_id"
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "bible_verse_id"
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
-  end
-
-  create_table "notes", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "title", limit: 45
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.string "user_id", limit: 45
-    t.integer "approved"
-    t.datetime "published_at", precision: nil
-    t.text "content", size: :long
   end
 
   create_table "taggings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -109,20 +97,19 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_06_042255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "taggings_count", default: 0
-    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "users", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", limit: 45
-    t.string "role", limit: 45
-    t.string "ecclesia", limit: 45
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "name"
+    t.string "ecclesia"
+    t.string "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
