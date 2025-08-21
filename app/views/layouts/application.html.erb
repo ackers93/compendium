@@ -7,60 +7,58 @@
     <%= csp_meta_tag %>
     
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://kit.fontawesome.com/b96b0b2690.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
-  <div class="">
-  <nav class="bg-gray-800">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-          <i class="fa-solid fa-books" style="color: white;"></i>
-          </div>
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
-              <a href="/notes" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Notes</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Topics</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Classes</a>
-              <a href="bible_verses/books" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Bible</a>
-            </div>
-          </div>
-        </div>
-        <div class="hidden md:block">
-          <div class="ml-4 flex items-center md:ml-6">
-            <% if user_signed_in? %>
-                <%= current_user.email %>
-                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= link_to 'Profile', edit_user_registration_path %></div>
-                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= button_to 'Log out', destroy_user_session_path, method: :delete %></div>
-            <% else %>
-                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= link_to 'Log In', new_user_session_path %></div>
-                      <div class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"><%= link_to 'Sign Up', new_user_registration_path %></div>
-            <% end %>
-            <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-              <span class="sr-only">View notifications</span>
-              <!-- Heroicon name: outline/bell -->
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-              </svg>
-            </button>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="nav-brand">
+          <i class="fa-solid fa-books brand-icon"></i>
+          Compendium
+        </a>
+        
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/notes" class="nav-link">Notes</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Topics</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Classes</a>
+          </li>
+          <li class="nav-item">
+            <a href="bible_verses/books" class="nav-link">Bible</a>
+          </li>
+        </ul>
+        
+        <div class="nav-actions">
+          <% if user_signed_in? %>
+            <span class="user-info"><%= current_user.email %></span>
+            <%= link_to 'Profile', edit_user_registration_path, class: 'btn btn-outline' %>
+            <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary' %>
+          <% else %>
+            <%= link_to 'Log In', new_user_session_path, class: 'btn btn-outline' %>
+            <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary' %>
+          <% end %>
         </div>
       </div>
-    </div>
-  </nav>
-  <div data-controller="hello">
-    Hello, Stimulus!
-  </div>
-    <main class="container mx-auto mt-5 px-1 flex flex-col">
+    </nav>
+    
+    <main class="main-content">
+      <div class="container">
         <%= yield %>
-        
-        <%= turbo_frame_tag "modal" %>
+      </div>
     </main>
   </body>
 </html>
