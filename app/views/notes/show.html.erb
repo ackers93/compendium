@@ -1,41 +1,4 @@
-<div class="page-header">
-  <h1 class="page-title"><%= @note.title %></h1>
-  <div class="d-flex gap-2 mb-4">
-    <% @note.tag_list.each do |tag| %>
-      <span class="badge badge-primary"><%= tag %></span>
-    <% end %>
-  </div>
-</div>
-
-<div class="content-section">
-  <div class="section-content">
-    <div class="note-content">
-      <%= @note.content %>
-    </div>
-    
-    <div class="note-actions mt-6">
-      <%= link_to edit_note_path(@note), 
-          class: "btn btn-outline", 
-          data: { turbo_frame: "modal" } do %>
-        <i class="fa-solid fa-edit"></i>
-        Edit Note
-      <% end %>
-      
-      <%= button_to note_path(@note), 
-          method: :delete, 
-          class: "btn btn-danger",
-          data: { confirm: "Are you sure you want to delete this note?" } do %>
-        <i class="fa-solid fa-trash"></i>
-        Delete Note
-      <% end %>
-      
-      <%= link_to notes_path, class: "btn btn-secondary" do %>
-        <i class="fa-solid fa-arrow-left"></i>
-        Back to Notes
-      <% end %>
-    </div>
-  </div>
-</div>
+<%= render 'note_content', note: @note %>
 
 <div class="content-section mt-8">
   <div class="section-header">

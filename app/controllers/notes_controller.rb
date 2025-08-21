@@ -49,13 +49,16 @@ class NotesController < ApplicationController
     respond_to do |format|
       if @note.update(note_params)
         format.turbo_stream { 
-          render turbo_stream: turbo_stream.replace(@note, partial: "notes/note", locals: { note: @note })
+          render turbo_stream: [
+            turbo_stream.replace("modal", ""),  # Close the modal
+            turbo_stream.replace("note-content", partial: "notes/note_content", locals: { note: @note })  # Update the note content
+          ]
         }
-        format.html { redirect_to note_url(@note), notice: "Note was successfully updated." }
+        format.html { redirect_to @note, notice: "Note was successfully updated." }
         format.json { render :show, status: :ok, location: @note }
       else
         format.turbo_stream { 
-          render turbo_stream: turbo_stream.replace("modal", partial: "form", locals: { note: @note })
+          render turbo_stream: turbo_stream.replace("modal", partial: "notes/edit", locals: { note: @note })
         }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @note.errors, status: :unprocessable_entity }
