@@ -15,17 +15,11 @@ gem "mysql2", "~> 0.5.6"
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 6.6'
 
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
-
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
-
-# Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
-gem "tailwindcss-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
@@ -79,3 +73,9 @@ gem 'acts-as-taggable-on', '~> 12.0'
 gem "view_component", "~> 3.21.0"
 gem 'nio4r', '~> 2.7', '>= 2.7.4'
 gem 'zstd-ruby', '~> 1.5', '>= 1.5.6.6'
+
+# Add this line:
+gem "jsbundling-rails"
+
+# Use SCSS for stylesheets
+gem "sassc-rails"
