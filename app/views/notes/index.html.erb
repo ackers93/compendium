@@ -1,68 +1,53 @@
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
+<div class="page-header">
+  <h1 class="page-title">Notes</h1>
+  <p class="page-subtitle">Organize your thoughts and ideas</p>
+</div>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Notes</h1>
-    <%= link_to "Publish a new note", 
-    new_note_path, 
-    data: { 
-      turbo: true,
-      turbo_frame: "modal"
-    },
-    class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" 
-%>
-    <%# <%= link_to "Publish a new note", new_note_path, data: { turbo_frame: "modal" } %> 
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="section-title">All Notes</h2>
+      <%= link_to "Publish a new note", new_note_path, 
+          class: "btn btn-primary", 
+          data: { turbo_frame: "modal" } %>
+    </div>
   </div>
-
-
-  <%= turbo_frame_tag "notes", class: "shadow overflow-hidden rounded border-b border-gray-200" do %>
-    <div class="flex justify-end mb-1">
+  
+  <div class="section-content">
+    <div class="search-form">
       <%= form_with url: notes_list_path, method: :get do |form| %>
-        <%= form.text_field :name, placeholder: "Search by name", value: params[:name], class: "border border-blue-500 rounded p-2" %>
-        <%= form.button "Search", class: "bg-blue-500 text-white p-2 rounded-sm" %>
+        <%= form.text_field :name, placeholder: "Search by name", class: "form-control search-input" %>
+        <%= form.button "Search", class: "btn btn-secondary search-button" %>
       <% end %>
     </div>
-
-    <div id="notes" class="relative overflow-x-auto">
-      <table id="notestable" class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-          <th scope="col" class="px-6 py-3">
-              Title
-          </th>
-          <th scope="col" class="px-6 py-3">
-              Content
-          </th>
-          <th scope="col" class="px-6 py-3">
-              Tags
-          </th>
-        </tr>  
-        </thead>   
-          <tbody>
+    
+    <div class="table-container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+        <tbody>
           <% @notes.each do |note| %>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td class="px-6 py-4"><%= link_to note.title, note %></td>
-                <td class="px-6 py-4"> <%= note.content.to_plain_text.truncate(20) %></td>
-                <td class="px-6 py-4">
-                <div class="flex flex-wrap">
+            <tr>
+              <td><%= link_to note.title, note, class: 'text-primary' %></td>
+              <td><%= note.content.to_plain_text.truncate(50) %></td>
+              <td>
+                <div class="d-flex flex-wrap gap-2">
                   <% note.tag_list.each do |tag| %>
-                    <div class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                      <%= tag %>
-                    </div>
+                    <span class="badge badge-primary"><%= tag %></span>
                   <% end %>
                 </div>
-                </td>
-              </tr>
+              </td>
+            </tr>
           <% end %>
-          </tbody>
-        </tr>
+        </tbody>
       </table>
     </div>
-  <% end %>
   </div>
+</div>
 
-<script>
-
-</script>
+<%= turbo_frame_tag "modal" %>

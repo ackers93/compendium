@@ -1,21 +1,19 @@
-<%= form_with(model: note, local: true, class: "contents") do |form| %>
-  <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+<%= form_with model: note, id: 'note-form', class: 'note-form' do |form| %>
+  <div class="form-group">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-control', placeholder: 'Enter note title...' %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :content %>
-    <%= form.rich_text_area :content, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="form-group">
+    <%= form.label :content, class: 'form-label' %>
+    <%= form.rich_text_area :content, class: 'form-control', style: 'min-height: 200px;' %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :tags %>
-    <%= form.text_field :tag_list, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="form-group">
+    <%= form.label :tag_list, 'Tags', class: 'form-label' %>
+    <%= form.text_field :tag_list, class: 'form-control', placeholder: 'Enter tags separated by commas...' %>
+    <div class="form-help">Tags help organize and categorize your notes</div>
   </div>
-  
+
   <%= form.hidden_field :user_id, value: current_user.id %>
-  <div class="inline">
-    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
-  </div>
 <% end %>

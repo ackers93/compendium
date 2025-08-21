@@ -1,5 +1,24 @@
-<%= render TurboModalComponent.new(title: "New Note:") do %>
-  <div class="bg-white rounded px-1 pt-6 pb-8 mb-4">
-    <%= render "form", note: @note %>
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-overlay">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <h2 class="modal-title">Publish a New Note</h2>
+        <%= link_to notes_path, class: "modal-close", data: { turbo_frame: "modal" } do %>
+          <i class="fa-solid fa-times"></i>
+        <% end %>
+      </div>
+      
+      <div class="modal-body">
+        <%= render 'form', note: @note %>
+      </div>
+      
+      <div class="modal-footer">
+        <%= link_to 'Cancel', notes_path, class: 'btn btn-outline', data: { turbo_frame: "modal" } %>
+        <button type="submit" form="note-form" class="btn btn-primary">
+          <i class="fa-solid fa-save"></i>
+          Create Note
+        </button>
+      </div>
+    </div>
   </div>
 <% end %>
