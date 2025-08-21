@@ -1,7 +1,8 @@
-// Vendor imports
+// Vendor imports (third-party libraries)
+@import "font-awesome";
 @import "vendor/normalize";
 
-// Base styles
+// Base styles (typography, colors, variables)
 @import "base/variables";
 @import "base/typography";
 @import "base/colors";
@@ -16,8 +17,10 @@
 @import "components/tables";
 @import "components/forms";
 @import "components/badges";
-@import "components/hero";
 @import "components/modal";
+@import "components/trix";
+@import "components/comments";
+@import "components/hero";
 
 // Utility classes
 @import "utilities/spacing";
