@@ -9,7 +9,7 @@ class NotesController < ApplicationController
   def show
     @commentable = @note
     @comment = @commentable.comments.build
-    @comments = @commentable.comments
+    @comments = Comment.where(commentable: @note).includes(:user, :rich_text_content).order(created_at: :desc)
   end
 
   def new
@@ -21,9 +21,10 @@ class NotesController < ApplicationController
   
   def create
     @note = Note.new(note_params)
-    
+  
     respond_to do |format|
       if @note.save
+     
         format.turbo_stream { 
           render turbo_stream: [
             turbo_stream.replace("modal", ""),
@@ -34,6 +35,7 @@ class NotesController < ApplicationController
         format.html { redirect_to note_url(@note), notice: "Note was successfully created." }
         format.json { render :show, status: :created, location: @note }
       else
+        
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace("modal", partial: "form", locals: { note: @note })
         }

@@ -1,13 +1,53 @@
-<div id="<%= dom_id comment %>" class="shadow-lg rounded my-12 px-2 py-3">
-    <h1 class="mb-4 text-1xl font-extrabold"><%= comment.user_id %></h1>
+<div id="<%= dom_id comment %>" class="comment-item">
+  <div class="comment-header">
+    <div class="comment-author">
+      <i class="fa-solid fa-user-circle"></i>
+      <span class="author-name">
+        <%= comment.user&.email || "Unknown User" %>
+      </span>
+      <span class="comment-date">
+        <%= comment.created_at&.strftime("%B %d, %Y at %I:%M %p") || "Unknown Date" %>
+      </span>
+    </div>
+  </div>
+  
+  <div class="comment-content">
     <div class="trix-content"><%= comment.content %></div>
-    <% if comment.user_id == current_user.id %>
-        <% if comment.commentable_type == "Note" %>
-            <div class="edit"><%= button_to 'Edit', edit_note_comment_path(comment.commentable, comment), method: :get, data: { "turbo-frame": "modal" } %></div>
-            <div class="delete"><%= button_to 'Delete', note_comment_path(comment.commentable, comment), method: :delete %></div>
-        <% elsif comment.commentable_type == "BibleVerse" %>
-            <div class="edit"><%= button_to 'Edit', edit_bible_verse_comment_path(comment.commentable, comment), method: :get, data: { "turbo-frame": "modal" } %></div>
-            <div class="delete"><%= button_to 'Delete', bible_verse_comment_path(comment.commentable, comment), method: :delete %></div>
+  </div>
+  
+  <% if comment.user == current_user %>
+    <div class="comment-actions">
+      <% if comment.commentable_type == "Note" %>
+        <%= link_to edit_note_comment_path(comment.commentable, comment), 
+            class: "btn btn-sm btn-outline", 
+            data: { turbo_frame: "modal" } do %>
+          <i class="fa-solid fa-edit"></i>
+          Edit
         <% end %>
-    <% end %>
+        
+        <%= button_to note_comment_path(comment.commentable, comment), 
+            method: :delete, 
+            class: "btn btn-sm btn-danger",
+            data: { confirm: "Are you sure?" } do %>
+          <i class="fa-solid fa-trash"></i>
+          Delete
+        <% end %>
+      <% elsif comment.commentable_type == "BibleVerse" %>
+        <%= link_to edit_bible_verse_comment_path(comment.commentable, comment), 
+            class: "btn btn-sm btn-outline", 
+            data: { turbo_frame: "modal" } do %>
+          <i class="fa-solid fa-edit"></i>
+          Edit
+        <% end %>
+        
+        <%= button_to bible_verse_comment_path(comment.commentable, comment), 
+            method: :delete, 
+            class: "btn btn-sm btn-danger",
+            data: { confirm: "Are you sure?" } do %>
+          <i class="fa-solid fa-trash"></i>
+          Delete
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

@@ -1,33 +1,60 @@
-<div class="w-full">
-
-
-<div class="mx-auto w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1 class="page-title"><%= @note.title %></h1>
+  <div class="d-flex gap-2 mb-4">
+    <% @note.tag_list.each do |tag| %>
+      <span class="badge badge-primary"><%= tag %></span>
     <% end %>
-    <%= render @note %>
-    <%= link_to 'Edit this note', edit_note_path(@note), data: { turbo_frame: 'modal', action: "turbo-modal#openModal" }, class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this note', note_path(@note), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
-    </div>
-    <%= link_to 'Back to notes', notes_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
 </div>
 
-
-
-<div class="mt-2">
-  <%= render template: 'comments/new' %>
-</div>
-
-  <div class="">
-    <div class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-10">
-    <h1 class="mb-4 text-3xl font-extrabold" >Comments...</h1>
-      <div id="comments">
-        <%= render @comments %>
-      </div>
+<div class="content-section">
+  <div class="section-content">
+    <div class="note-content">
+      <%= @note.content %>
     </div>
     
+    <div class="note-actions mt-6">
+      <%= link_to edit_note_path(@note), 
+          class: "btn btn-outline", 
+          data: { turbo_frame: "modal" } do %>
+        <i class="fa-solid fa-edit"></i>
+        Edit Note
+      <% end %>
+      
+      <%= button_to note_path(@note), 
+          method: :delete, 
+          class: "btn btn-danger",
+          data: { confirm: "Are you sure you want to delete this note?" } do %>
+        <i class="fa-solid fa-trash"></i>
+        Delete Note
+      <% end %>
+      
+      <%= link_to notes_path, class: "btn btn-secondary" do %>
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Notes
+      <% end %>
+    </div>
   </div>
 </div>
+
+<div class="content-section mt-8">
+  <div class="section-header">
+    <h2 class="section-title">Comments</h2>
+  </div>
+  
+  <div class="section-content">
+    <div id="comments">
+      <% if @comments.any? %>
+        <%= render @comments %>
+      <% else %>
+        <p class="text-gray-500 text-center py-8">No comments yet. Be the first to comment!</p>
+      <% end %>
+    </div>
+    
+    <div class="mt-6">
+      <%= render template: 'comments/new' %>
+    </div>
+  </div>
+</div>
+
+<%= turbo_frame_tag "modal" %>
