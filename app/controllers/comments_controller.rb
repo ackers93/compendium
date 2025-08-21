@@ -5,26 +5,20 @@ class CommentsController < ApplicationController
   before_action :set_commentable, only: [:new, :create]
 
   def index
-    puts "com#index"
     @comments = Comment.all
   end
 
   def show
-    puts "com#show"
     @comment = Comment.find(params[:id])
     @commentable = @comment.commentable
   end
 
   def new
-    puts "com#new"
     @comment = @commentable.comments.build
-    puts "COMMENT: #{@comment.inspect}"
 
   end
 
   def create
-    puts "com#create"
-    puts "COMMENTPARAMS #{comment_params}"
     @comment = @commentable.comments.build(comment_params)
     respond_to do |format|
       if @comment.save
@@ -32,7 +26,6 @@ class CommentsController < ApplicationController
         format.html { redirect_to @commentable, notice: "Comment was successfully created." }
         format.json { render :show, status: :created, location: @comment }
       else
-        puts "ERROR #{@comment.errors.full_messages}"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
@@ -40,14 +33,11 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    puts "com#edit"
     @comment = Comment.find(params[:id])
     @commentable = @comment.commentable
-    puts "COMMENT #{@comment.inspect}"
   end
 
   def update
-    puts "com#update"
     @comment = Comment.find(params[:id])
     @commentable = @comment.commentable
     respond_to do |format|
@@ -63,7 +53,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    puts "com#des"
     @comment = Comment.find(params[:id])
     @commentable = @comment.commentable
     @comment.destroy
@@ -77,13 +66,11 @@ class CommentsController < ApplicationController
   end
 
   def set_commentable
-    puts "PARAMS: #{params.inspect}"
     @commentable = if params[:note_id]
                      Note.find(params[:note_id])
                    elsif params[:bible_verse_id]
                      BibleVerse.find(params[:bible_verse_id])
                    end
-    puts "COMMENTABLE: #{@commentable.inspect}"
   end
 
   def ensure_frame_response

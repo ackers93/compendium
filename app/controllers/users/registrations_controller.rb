@@ -62,7 +62,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # private
 
   # def user_params
-  #   puts "PARAMS #{params}"
   #   params.require(:user).permit(:name, :role, :email, :ecclesia, :encrypted_password)
   # end
 end
