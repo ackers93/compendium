@@ -21,23 +21,21 @@ class NotesController < ApplicationController
   
   def create
     @note = Note.new(note_params)
-  
+    @note.user = current_user
+
     respond_to do |format|
       if @note.save
-     
         format.turbo_stream { 
           render turbo_stream: [
-            turbo_stream.replace("modal", ""),
-            turbo_stream.prepend("notes", partial: "notes/note", locals: { note: @note }),
-            turbo_stream.update("notice", "Note was successfully created.")
+            turbo_stream.replace("modal", ""),  # Close the modal
+            turbo_stream.prepend("notes-table-body", partial: "notes/note_row", locals: { note: @note })  # Add to table body
           ]
         }
-        format.html { redirect_to note_url(@note), notice: "Note was successfully created." }
+        format.html { redirect_to notes_path, notice: "Note was successfully created." }
         format.json { render :show, status: :created, location: @note }
       else
-        
         format.turbo_stream { 
-          render turbo_stream: turbo_stream.replace("modal", partial: "form", locals: { note: @note })
+          render turbo_stream: turbo_stream.replace("modal", partial: "notes/new", locals: { note: @note })
         }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @note.errors, status: :unprocessable_entity }

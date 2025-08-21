@@ -1,20 +1,26 @@
-<div id="<%= dom_id note %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Title:</strong>
-    <%= note.title %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Content:</strong>
-    <%= note.content %>
-  </p>
-
-  <div class="flex row-auto">
-
-  <% @note.tag_list.each do |tag| %>
-    <div class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-    <%= tag %>
+<div id="<%= dom_id note %>" class="note-item">
+  <div class="note-header">
+    <h3 class="note-title"><%= note.title %></h3>
+    <div class="note-tags">
+      <% note.tag_list.each do |tag| %>
+        <span class="badge badge-primary"><%= tag %></span>
+      <% end %>
     </div>
-  <% end %>
+  </div>
+  
+  <div class="note-content">
+    <%= note.content.to_plain_text.truncate(100) %>
+  </div>
+  
+  <div class="note-actions">
+    <%= link_to note_path(note), class: "btn btn-sm btn-outline" do %>
+      <i class="fa-solid fa-eye"></i>
+      View
+    <% end %>
+    
+    <%= link_to edit_note_path(note), class: "btn btn-sm btn-outline", data: { turbo_frame: "modal" } do %>
+      <i class="fa-solid fa-edit"></i>
+      Edit
+    <% end %>
   </div>
 </div>

@@ -1,0 +1,11 @@
+<tr id="<%= dom_id note %>">
+  <td><%= link_to note.title, note, class: 'text-primary' %></td>
+  <td><%= note.content.to_plain_text.truncate(50) %></td>
+  <td>
+    <div class="d-flex flex-wrap gap-2">
+      <% note.tag_list.each do |tag| %>
+        <span class="badge badge-primary"><%= tag %></span>
+      <% end %>
+    </div>
+  </td>
+</tr>

@@ -21,31 +21,21 @@
       <% end %>
     </div>
     
-    <div class="table-container">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Tags</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @notes.each do |note| %>
+    <div id="notes-list">
+      <div class="table-container">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td><%= link_to note.title, note, class: 'text-primary' %></td>
-              <td><%= note.content.to_plain_text.truncate(50) %></td>
-              <td>
-                <div class="d-flex flex-wrap gap-2">
-                  <% note.tag_list.each do |tag| %>
-                    <span class="badge badge-primary"><%= tag %></span>
-                  <% end %>
-                </div>
-              </td>
+              <th>Title</th>
+              <th>Content</th>
+              <th>Tags</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody id="notes-table-body">
+            <%= render partial: "notes/note_row", collection: @notes, as: :note %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
