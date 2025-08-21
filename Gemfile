@@ -79,3 +79,6 @@ gem "jsbundling-rails"
 
 # Use SCSS for stylesheets
 gem "sassc-rails"
+
+# Use Font Awesome for icons
+gem "font-awesome-sass"
