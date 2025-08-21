@@ -1,17 +1,17 @@
 // Color utility classes
-.text-primary { color: $primary-color; }
-.text-secondary { color: $secondary-color; }
-.text-success { color: $success-color; }
-.text-warning { color: $warning-color; }
-.text-danger { color: $danger-color; }
-.text-info { color: $info-color; }
+.text-primary { color: $primary; }
+.text-secondary { color: $secondary; }
+.text-success { color: $success; }
+.text-warning { color: $warning; }
+.text-danger { color: $danger; }
+.text-info { color: $info; }
 
-.bg-primary { background-color: $primary-color; }
-.bg-secondary { background-color: $secondary-color; }
-.bg-success { background-color: $success-color; }
-.bg-warning { background-color: $warning-color; }
-.bg-danger { background-color: $danger-color; }
-.bg-info { background-color: $info-color; }
+.bg-primary { background-color: $primary; }
+.bg-secondary { background-color: $secondary; }
+.bg-success { background-color: $success; }
+.bg-warning { background-color: $warning; }
+.bg-danger { background-color: $danger; }
+.bg-info { background-color: $info; }
 
 // Gray scale utilities
 .text-gray-50 { color: $gray-50; }

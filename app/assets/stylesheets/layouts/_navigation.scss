@@ -1,0 +1,120 @@
+.navbar {
+    background: linear-gradient(135deg, $gray-900 0%, $gray-800 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba($white, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: $z-sticky;
+    
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 $space-6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4rem;
+    }
+    
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: $space-3;
+      color: $white;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      text-decoration: none;
+      
+      .brand-icon {
+        font-size: $font-size-2xl;
+        color: $primary;
+      }
+    }
+    
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: $space-8;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      
+      .nav-item {
+        .nav-link {
+          color: $gray-300;
+          text-decoration: none;
+          font-weight: $font-weight-medium;
+          padding: $space-2 $space-3;
+          border-radius: $radius;
+          transition: all 0.2s ease;
+          
+          &:hover {
+            color: $white;
+            background-color: rgba($white, 0.1);
+          }
+          
+          &.active {
+            color: $primary;
+            background-color: rgba($primary, 0.1);
+          }
+        }
+      }
+    }
+    
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: $space-4;
+      
+      .user-info {
+        color: $gray-300;
+        font-size: $font-size-sm;
+      }
+      
+      .btn {
+        padding: $space-2 $space-4;
+        border-radius: $radius;
+        font-weight: $font-weight-medium;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        
+        &.btn-outline {
+          color: $gray-300;
+          border: 1px solid $gray-600;
+          
+          &:hover {
+            color: $white;
+            border-color: $gray-400;
+            background-color: rgba($white, 0.1);
+          }
+        }
+        
+        &.btn-primary {
+          background-color: $primary;
+          color: $white;
+          border: 1px solid $primary;
+          
+          &:hover {
+            background-color: $primary-dark;
+            border-color: $primary-dark;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    .navbar {
+      .nav-menu {
+        display: none;
+      }
+      
+      .nav-actions {
+        gap: $space-2;
+        
+        .user-info {
+          display: none;
+        }
+      }
+    }
+  }

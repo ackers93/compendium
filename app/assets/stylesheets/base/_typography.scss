@@ -10,7 +10,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-weight: $font-weight-bold;
   line-height: $line-height-tight;
-  margin-bottom: $spacing-md;
+  margin-bottom: $space-4;
   color: $gray-900;
 }
 
@@ -22,12 +22,12 @@ h5 { font-size: $font-size-lg; }
 h6 { font-size: $font-size-base; }
 
 p {
-  margin-bottom: $spacing-md;
+  margin-bottom: $space-4;
   line-height: $line-height-relaxed;
 }
 
 a {
-  color: $primary-color;
+  color: $primary;
   text-decoration: none;
   
   &:hover {

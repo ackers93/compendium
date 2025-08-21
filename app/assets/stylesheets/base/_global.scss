@@ -21,19 +21,19 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 $spacing-md;
+  padding: 0 $space-4;
 }
 
 // Responsive container
 @media (min-width: $breakpoint-sm) {
   .container {
-    padding: 0 $spacing-lg;
+    padding: 0 $space-6;
   }
 }
 
 @media (min-width: $breakpoint-lg) {
   .container {
-    padding: 0 $spacing-xl;
+    padding: 0 $space-8;
   }
 }
 

@@ -1,0 +1,175 @@
+.hero-section {
+  text-align: center;
+  padding: $space-20 0;
+  background: linear-gradient(135deg, $gray-50 0%, $white 100%);
+  
+  .hero-title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    color: $gray-900;
+    margin-bottom: $space-6;
+    background: linear-gradient(135deg, $gray-900 0%, $primary 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    @media (min-width: $breakpoint-md) {
+      font-size: 3.5rem;
+    }
+  }
+  
+  .hero-subtitle {
+    font-size: $font-size-lg;
+    color: $gray-600;
+    max-width: 600px;
+    margin: 0 auto $space-12;
+    line-height: $line-height-relaxed;
+  }
+  
+  .hero-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, $gray-300 50%, transparent 100%);
+    border: none;
+    margin: $space-8 auto;
+    max-width: 200px;
+  }
+  
+  .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $space-8;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: $space-10;
+    background: $white;
+    border: 3px solid $primary;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-lg;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, $primary, $secondary, $success, $primary);
+      border-radius: $radius-xl;
+      z-index: -1;
+      opacity: 0.3;
+    }
+  }
+}
+
+.glossy-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $space-8 $space-6;
+  text-decoration: none;
+  color: $white;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-lg;
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: $shadow-xl;
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-2px) scale(1.01);
+  }
+  
+  .button-icon {
+    font-size: $font-size-3xl;
+    margin-bottom: $space-3;
+    opacity: 0.9;
+  }
+  
+  .button-text {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  &.btn-notes {
+    background: linear-gradient(135deg, $danger 0%, darken($danger, 15%) 100%);
+    border-color: $danger;
+    
+    &:hover {
+      background: linear-gradient(135deg, darken($danger, 10%) 0%, darken($danger, 25%) 100%);
+      border-color: darken($danger, 15%);
+    }
+  }
+  
+  &.btn-readings {
+    background: linear-gradient(135deg, $primary 0%, darken($primary, 15%) 100%);
+    border-color: $primary;
+    
+    &:hover {
+      background: linear-gradient(135deg, darken($primary, 10%) 0%, darken($primary, 25%) 100%);
+      border-color: darken($primary, 15%);
+    }
+  }
+  
+  &.btn-classes {
+    background: linear-gradient(135deg, $success 0%, darken($success, 15%) 100%);
+    border-color: $success;
+    
+    &:hover {
+      background: linear-gradient(135deg, darken($success, 10%) 0%, darken($success, 25%) 100%);
+      border-color: darken($success, 15%);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-md) {
+  .hero-section {
+    padding: $space-12 0;
+    
+    .hero-title {
+      font-size: $font-size-3xl;
+    }
+    
+    .hero-actions {
+      grid-template-columns: 1fr;
+      gap: $space-6;
+      padding: $space-8;
+    }
+  }
+  
+  .glossy-button {
+    padding: $space-6 $space-4;
+    
+    .button-icon {
+      font-size: $font-size-2xl;
+    }
+    
+    .button-text {
+      font-size: $font-size-base;
+    }
+  }
+} 

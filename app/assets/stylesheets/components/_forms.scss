@@ -1,0 +1,115 @@
+.form-group {
+  margin-bottom: $space-6;
+  
+  .form-label {
+    display: block;
+    font-weight: $font-weight-medium;
+    color: $gray-700;
+    margin-bottom: $space-2;
+    font-size: $font-size-sm;
+  }
+  
+  .form-help {
+    font-size: $font-size-xs;
+    color: $gray-500;
+    margin-top: $space-1;
+  }
+  
+  .form-error {
+    font-size: $font-size-xs;
+    color: $danger;
+    margin-top: $space-1;
+  }
+}
+
+.form-control {
+  width: 100%;
+  padding: $space-3 $space-4;
+  font-size: $font-size-sm;
+  line-height: $line-height-normal;
+  color: $gray-900;
+  background-color: $white;
+  border: 1px solid $gray-300;
+  border-radius: $radius;
+  transition: all 0.2s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+  
+  &:disabled {
+    background-color: $gray-100;
+    color: $gray-500;
+    cursor: not-allowed;
+  }
+  
+  &::placeholder {
+    color: $gray-400;
+  }
+}
+
+.form-control-lg {
+  padding: $space-4 $space-5;
+  font-size: $font-size-base;
+}
+
+.form-control-sm {
+  padding: $space-2 $space-3;
+  font-size: $font-size-xs;
+}
+
+// Form layouts
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $space-6;
+}
+
+.form-inline {
+  display: flex;
+  gap: $space-4;
+  align-items: end;
+  
+  .form-group {
+    margin-bottom: 0;
+    flex: 1;
+  }
+}
+
+// Checkboxes and radios
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-3;
+  
+  .form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0;
+  }
+  
+  .form-check-label {
+    font-size: $font-size-sm;
+    color: $gray-700;
+    cursor: pointer;
+  }
+}
+
+// Search form
+.search-form {
+  display: flex;
+  gap: $space-3;
+  margin-bottom: $space-6;
+  
+  .search-input {
+    flex: 1;
+    max-width: 400px;
+  }
+  
+  .search-button {
+    white-space: nowrap;
+  }
+} 
