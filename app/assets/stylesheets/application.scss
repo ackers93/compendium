@@ -1,0 +1,27 @@
+// Vendor imports (third-party libraries)
+@import "vendor/normalize";
+
+// Base styles (typography, colors, variables)
+@import "base/variables";
+@import "base/typography";
+@import "base/colors";
+@import "base/global";
+
+// Layout styles
+// @import "layouts/header";
+// @import "layouts/navigation";
+// @import "layouts/main";
+// @import "layouts/footer";
+
+// Component styles
+@import "components/buttons";
+// @import "components/forms";
+// @import "components/tables";
+// @import "components/modals";
+// @import "components/cards";
+
+// Utility classes
+@import "utilities/spacing";
+// @import "utilities/text";
+// @import "utilities/flexbox";
+// @import "utilities/display";

@@ -25,6 +25,6 @@ class BibleVersesController < ApplicationController
     @new_testament_books = BibleVerse.select(:book).distinct.where(testament: 'NT').order(Arel.sql("CASE book #{new_testament_order} END"))
   end
 
-  def show
-  end
+  # def show
+  # end
 end

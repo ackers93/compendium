@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
+    
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0-beta.0/dist/trix.css">
-    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0-beta.0/dist/trix.umd.min.js"></script>
+    
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    
     <script src="https://kit.fontawesome.com/b96b0b2690.js" crossorigin="anonymous"></script>
   </head>
 
@@ -56,6 +54,9 @@
       </div>
     </div>
   </nav>
+  <div data-controller="hello">
+    Hello, Stimulus!
+  </div>
     <main class="container mx-auto mt-5 px-1 flex flex-col">
         <%= yield %>
         

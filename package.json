@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.4"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=iife --outdir=app/assets/builds --public-path=/assets"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.9"
+  }
+}

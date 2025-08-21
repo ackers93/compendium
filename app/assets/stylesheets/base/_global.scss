@@ -1,0 +1,58 @@
+// Global styles and resets
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+  line-height: $line-height-normal;
+  color: $gray-900;
+  background-color: $white;
+}
+
+// Container
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+// Responsive container
+@media (min-width: $breakpoint-sm) {
+  .container {
+    padding: 0 $spacing-lg;
+  }
+}
+
+@media (min-width: $breakpoint-lg) {
+  .container {
+    padding: 0 $spacing-xl;
+  }
+}
+
+// Clearfix
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+// Screen reader only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+} 

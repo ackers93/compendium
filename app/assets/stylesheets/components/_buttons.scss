@@ -1,0 +1,74 @@
+// Button base styles
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+}
+
+// Button variants
+.btn-primary {
+  @extend .btn;
+  background-color: $primary-color;
+  border-color: $primary-color;
+  color: $white;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($primary-color, 10%);
+    border-color: darken($primary-color, 10%);
+  }
+}
+
+.btn-secondary {
+  @extend .btn;
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  color: $white;
+  
+  &:hover:not(:disabled) {
+    background-color: darken($secondary-color, 10%);
+    border-color: darken($secondary-color, 10%);
+  }
+}
+
+.btn-outline {
+  @extend .btn;
+  background-color: transparent;
+  border-color: $gray-300;
+  color: $gray-700;
+  
+  &:hover:not(:disabled) {
+    background-color: $gray-50;
+    border-color: $gray-400;
+  }
+}
+
+// Button sizes
+.btn-sm {
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-xs;
+}
+
+.btn-lg {
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-base;
+} 
