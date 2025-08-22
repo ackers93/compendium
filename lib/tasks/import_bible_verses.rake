@@ -1,7 +1,6 @@
 namespace :import do
     desc "Import Bible verses from text files"
     task bible_verses: :environment do
-      require 'csv'
   
       # Define the testament and book order
       old_testament_books = [
