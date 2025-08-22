@@ -1,8 +1,10 @@
-<div class="my-5">
-    <%= form.rich_text_area :content, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-</div>
-<%= form.hidden_field :user_id, value: current_user.id %>
-<%= form.hidden_field :note_id, value: @note.id %>
-<div class="inline">
-    <%= form.submit class: "bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-</div>
+<%= form_with(model: comment, url: polymorphic_path([comment.commentable, comment]), id: "comment-form") do |form| %>
+  <div class="form-group">
+    <%= form.label :content, class: "form-label" %>
+    <%= form.rich_text_area :content, class: "form-input" %>
+  </div>
+  
+  <div class="form-actions mt-4">
+    <%= form.submit "Save Comment", class: "btn btn-primary" %>
+  </div>
+<% end %>
