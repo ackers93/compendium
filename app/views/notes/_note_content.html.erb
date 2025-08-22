@@ -14,7 +14,7 @@
         <%= note.content %>
       </div>
       
-      <div class="note-actions mt-6">
+      <div class="note-actions mt-6 d-flex gap-2">
         <%= link_to edit_note_path(note), 
             class: "btn btn-outline", 
             data: { turbo_frame: "modal" } do %>
@@ -28,11 +28,6 @@
             data: { confirm: "Are you sure you want to delete this note?" } do %>
           <i class="fa-solid fa-trash"></i>
           Delete Note
-        <% end %>
-        
-        <%= link_to notes_path, class: "btn btn-secondary" do %>
-          <i class="fa-solid fa-arrow-left"></i>
-          Back to Notes
         <% end %>
       </div>
     </div>
