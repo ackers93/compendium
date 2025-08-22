@@ -15,15 +15,13 @@
   
   <div class="section-content">
     <div class="search-form">
-      <%= form_with url: notes_list_path, method: :get, class: "d-flex gap-2", data: { turbo_frame: "notes-table" } do |form| %>
+      <%= form_with url: notes_list_path, method: :get, class: "d-flex gap-2" do |form| %>
         <%= form.text_field :query, placeholder: "Search by title, content, or tags", class: "form-control search-input" %>
         <%= form.button "Search", class: "btn btn-secondary search-button" %>
       <% end %>
     </div>
     
-    <%= turbo_frame_tag "notes-table" do %>
-      <%= render "notes/table", notes: @notes %>
-    <% end %>
+    <%= render "notes/table", notes: @notes %>
   </div>
 </div>
 

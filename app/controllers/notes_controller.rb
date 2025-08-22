@@ -78,20 +78,17 @@ class NotesController < ApplicationController
                Note.joins(:rich_text_content)
                    .joins("LEFT JOIN taggings ON taggings.taggable_id = notes.id AND taggings.taggable_type = 'Note'")
                    .joins("LEFT JOIN tags ON tags.id = taggings.tag_id")
-                   .where("LOWER(notes.title) LIKE LOWER(?) OR LOWER(action_text_rich_texts.body) LIKE LOWER(?) OR LOWER(tags.name) LIKE LOWER(?)", 
-                          "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%")
+                   .joins("LEFT JOIN comments ON comments.commentable_id = notes.id AND comments.commentable_type = 'Note'")
+                   .joins("LEFT JOIN action_text_rich_texts comment_content ON comment_content.record_id = comments.id AND comment_content.record_type = 'Comment' AND comment_content.name = 'content'")
+                   .where("LOWER(notes.title) LIKE LOWER(?) OR LOWER(action_text_rich_texts.body) LIKE LOWER(?) OR LOWER(tags.name) LIKE LOWER(?) OR LOWER(comment_content.body) LIKE LOWER(?)", 
+                          "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%")
                    .distinct
                    .order(created_at: :desc)
              else
                Note.order(created_at: :desc)
              end
     
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("notes-table", partial: "notes/table", locals: { notes: @notes })
-      end
-      format.html { render "index" }
-    end
+    render "index"
   end
 
   private
