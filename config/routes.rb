@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: "home#index"
 
+  get '/notes/list', to: 'notes#list'
+  get 'bible_verses/books', to: 'bible_verses#book_index'
+  
   resources :notes do
     resources :comments, only: [:new, :create, :edit, :update, :destroy]
   end
@@ -11,9 +14,6 @@ Rails.application.routes.draw do
   resources :bible_verses do
     resources :comments, only: [:new, :create, :edit, :update, :destroy]
   end
-
-  get '/notes/list', to: 'notes#list'
-  get 'bible_verses/books', to: 'bible_verses#book_index'
 
   devise_for :users, controllers: {
     sessions: 'users/sessions'
