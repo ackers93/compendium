@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   get '/notes/list', to: 'notes#list'
   get 'bible_verses/books', to: 'bible_verses#book_index'
+  get 'bible_verses/:book/chapters', to: 'bible_verses#chapters', as: :bible_verse_chapters
+  get 'bible_verses/:book/:chapter', to: 'bible_verses#verses', as: :bible_verse_verses
+  get 'bible_verses/:book/:chapter/:verse', to: 'bible_verses#show', as: :bible_verse_show
   
   resources :notes do
     resources :comments, only: [:new, :create, :edit, :update, :destroy]

@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1 class="page-title"><%= @book %> <%= @chapter %>:<%= @verse %></h1>
+  <p class="page-subtitle">King James Version</p>
+</div>
+
+<div class="content-section">
+  <div class="verse-display">
+    <div class="verse-header">
+      <div class="verse-reference">
+        <%= @book %> <%= @chapter %>:<%= @verse %>
+      </div>
+      <div class="verse-navigation">
+        <% if @verse > 1 %>
+          <%= link_to "← Previous Verse", bible_verse_show_path(book: @book, chapter: @chapter, verse: @verse - 1), 
+              class: "nav-button" %>
+        <% end %>
+        
+        <%= link_to "Chapter", bible_verse_verses_path(book: @book, chapter: @chapter), 
+            class: "nav-button" %>
+        
+        <% next_verse = BibleVerse.find_by(book: @book, chapter: @chapter, verse: @verse + 1) %>
+        <% if next_verse %>
+          <%= link_to "Next Verse →", bible_verse_show_path(book: @book, chapter: @chapter, verse: @verse + 1), 
+              class: "nav-button" %>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="verse-content">
+      <%= @bible_verse.text %>
+    </div>
+  </div>
+  
+  <div class="d-flex justify-between mt-6">
+    <%= link_to "← Back to Chapter", bible_verse_verses_path(book: @book, chapter: @chapter), 
+        class: "btn btn-outline" %>
+    <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>
+  </div>
+</div> 

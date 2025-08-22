@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1 class="page-title"><%= @book %></h1>
+  <p class="page-subtitle">Select a chapter to read</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">Chapters</h2>
+      <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>
+    </div>
+  </div>
+  
+  <div class="section-content">
+    <div class="chapters-grid">
+      <% @chapters.each do |chapter| %>
+        <%= link_to chapter.chapter, bible_verse_verses_path(book: @book, chapter: chapter.chapter), 
+            class: "chapter-link" %>
+      <% end %>
+    </div>
+  </div>
+</div> 

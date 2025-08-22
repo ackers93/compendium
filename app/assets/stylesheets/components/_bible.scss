@@ -1,0 +1,108 @@
+// Bible-specific styles
+.testament-section {
+  flex: 1;
+  max-width: 50%;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $space-3;
+}
+
+.book-link {
+  display: block;
+  padding: $space-3 $space-4;
+  background: $white;
+  border: 1px solid $gray-200;
+  border-radius: $radius-md;
+  text-decoration: none;
+  color: $gray-700;
+  font-weight: $font-weight-medium;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: $primary;
+    color: $white;
+    border-color: $primary;
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Chapter grid styles
+.chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: $space-2;
+  margin-top: $space-4;
+}
+
+.chapter-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-2;
+  background: $white;
+  border: 1px solid $gray-200;
+  border-radius: $radius-sm;
+  text-decoration: none;
+  color: $gray-700;
+  font-weight: $font-weight-medium;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: $primary;
+    color: $white;
+    border-color: $primary;
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Verse display styles
+.verse-display {
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $gray-200;
+  padding: $space-6;
+  margin-top: $space-6;
+}
+
+.verse-header {
+  border-bottom: 2px solid $gray-200;
+  padding-bottom: $space-4;
+  margin-bottom: $space-6;
+  
+  .verse-reference {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $gray-900;
+  }
+  
+  .verse-navigation {
+    margin-top: $space-3;
+    
+    .nav-button {
+      @extend .btn;
+      @extend .btn-outline;
+      margin-right: $space-2;
+    }
+  }
+}
+
+.verse-content {
+  font-size: $font-size-lg;
+  line-height: 1.6;
+  color: $gray-800;
+  text-align: justify;
+} 

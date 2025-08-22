@@ -25,6 +25,25 @@ class BibleVersesController < ApplicationController
     @new_testament_books = BibleVerse.select(:book).distinct.where(testament: 'NT').order(Arel.sql("CASE book #{new_testament_order} END"))
   end
 
-  # def show
-  # end
+  def chapters
+    @book = params[:book]
+    @chapters = BibleVerse.where(book: @book).select(:chapter).distinct.order(:chapter)
+  end
+
+  def verses
+    @book = params[:book]
+    @chapter = params[:chapter].to_i
+    @verses = BibleVerse.where(book: @book, chapter: @chapter).order(:verse)
+  end
+
+  def show
+    @book = params[:book]
+    @chapter = params[:chapter].to_i
+    @verse = params[:verse].to_i
+    @bible_verse = BibleVerse.find_by(book: @book, chapter: @chapter, verse: @verse)
+    
+    if @bible_verse.nil?
+      redirect_to bible_verse_chapters_path(book: @book), alert: "Verse not found"
+    end
+  end
 end

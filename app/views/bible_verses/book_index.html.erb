@@ -1,19 +1,40 @@
-<div class="container mx-auto">
-  <h1 class="mx-auto text-2xl font-bold my-4">The King James Version</h1>
-  <div class="flex flex-row justify-around">
-    <ul class="list-disc pl-5">
-      <% @old_testament_books.each do |book| %>
-        <li class="text-lg">
-          <%= book.book %>
-        </li>
-      <% end %>
-    </ul>
-    <ul class="list-disc pl-5">
-      <% @new_testament_books.each do |book| %>
-        <li class="text-lg">
-          <%= book.book %>
-        </li>
-      <% end %>
-    </ul>
+<div class="page-header">
+  <h1 class="page-title">The King James Version</h1>
+  <p class="page-subtitle">Browse the complete Bible by book and chapter</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Bible Books</h2>
+  </div>
+  
+  <div class="section-content">
+    <div class="d-flex gap-8">
+      <!-- Old Testament -->
+      <div class="testament-section">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">
+          Old Testament
+        </h3>
+        <div class="books-grid">
+          <% @old_testament_books.each do |book| %>
+            <%= link_to book.book, bible_verse_chapters_path(book: book.book), 
+                class: "book-link" %>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- New Testament -->
+      <div class="testament-section">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-gray-200">
+          New Testament
+        </h3>
+        <div class="books-grid">
+          <% @new_testament_books.each do |book| %>
+            <%= link_to book.book, bible_verse_chapters_path(book: book.book), 
+                class: "book-link" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

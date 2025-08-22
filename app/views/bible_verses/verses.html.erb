@@ -1,0 +1,33 @@
+<div class="page-header">
+  <h1 class="page-title"><%= @book %> <%= @chapter %></h1>
+  <p class="page-subtitle">All verses in this chapter</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">Chapter <%= @chapter %></h2>
+      <div class="d-flex gap-2">
+        <%= link_to "← Back to Chapters", bible_verse_chapters_path(book: @book), class: "btn btn-outline" %>
+        <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section-content">
+    <div class="verses-list">
+      <% @verses.each do |verse| %>
+        <div class="verse-item mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <div class="verse-header mb-2">
+            <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
+            <%= link_to "See all Comments", bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
+                class: "btn btn-sm btn-primary ml-2" %>
+          </div>
+          <div class="verse-preview text-gray-700">
+            <%= verse.text %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div> 
