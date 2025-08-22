@@ -32,7 +32,7 @@ class NotesController < ApplicationController
           ]
         }
         format.html { redirect_to notes_path, notice: "Note was successfully created." }
-        format.json { render :show, status: :created, location: @note }
+        format.json { render json: { id: @note.id, title: @note.title }, status: :created, location: @note }
       else
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace("modal", partial: "notes/new", locals: { note: @note })
@@ -53,7 +53,7 @@ class NotesController < ApplicationController
           ]
         }
         format.html { redirect_to @note, notice: "Note was successfully updated." }
-        format.json { render :show, status: :ok, location: @note }
+        format.json { render json: { id: @note.id, title: @note.title }, status: :ok, location: @note }
       else
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace("modal", partial: "notes/edit", locals: { note: @note })
@@ -74,8 +74,12 @@ class NotesController < ApplicationController
   end
 
   def list
-    @notes = Note.where('title ilike ?', "%#{params[:title]}%") if params[:title].present?
-    render("index", locals: { notes: @notes })
+    @notes = if params[:title].present?
+               Note.where('title ilike ?', "%#{params[:title]}%")
+             else
+               Note.order(created_at: :desc)
+             end
+    render("index")
   end
 
   private
@@ -85,6 +89,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :content, :user_id, :tag_list)
+    params.require(:note).permit(:title, :content, :tag_list)
   end
 end
