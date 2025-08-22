@@ -5,7 +5,7 @@
 
 <div class="content-section">
   <div class="section-header">
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-between items-center">
       <h2 class="section-title">All Notes</h2>
       <%= link_to "Publish a new note", new_note_path, 
           class: "btn btn-primary", 
@@ -15,28 +15,15 @@
   
   <div class="section-content">
     <div class="search-form">
-      <%= form_with url: notes_list_path, method: :get do |form| %>
-        <%= form.text_field :name, placeholder: "Search by name", class: "form-control search-input" %>
+      <%= form_with url: notes_list_path, method: :get, class: "d-flex gap-2", data: { turbo_frame: "notes-table" } do |form| %>
+        <%= form.text_field :query, placeholder: "Search by title, content, or tags", class: "form-control search-input" %>
         <%= form.button "Search", class: "btn btn-secondary search-button" %>
       <% end %>
     </div>
     
-    <div id="notes-list">
-      <div class="table-container">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Content</th>
-              <th>Tags</th>
-            </tr>
-          </thead>
-          <tbody id="notes-table-body">
-            <%= render partial: "notes/note_row", collection: @notes, as: :note %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <%= turbo_frame_tag "notes-table" do %>
+      <%= render "notes/table", notes: @notes %>
+    <% end %>
   </div>
 </div>
 

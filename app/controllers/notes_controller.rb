@@ -74,12 +74,24 @@ class NotesController < ApplicationController
   end
 
   def list
-    @notes = if params[:title].present?
-               Note.where('title ilike ?', "%#{params[:title]}%")
+    @notes = if params[:query].present?
+               Note.joins(:rich_text_content)
+                   .joins("LEFT JOIN taggings ON taggings.taggable_id = notes.id AND taggings.taggable_type = 'Note'")
+                   .joins("LEFT JOIN tags ON tags.id = taggings.tag_id")
+                   .where("LOWER(notes.title) LIKE LOWER(?) OR LOWER(action_text_rich_texts.body) LIKE LOWER(?) OR LOWER(tags.name) LIKE LOWER(?)", 
+                          "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%")
+                   .distinct
+                   .order(created_at: :desc)
              else
                Note.order(created_at: :desc)
              end
-    render("index")
+    
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("notes-table", partial: "notes/table", locals: { notes: @notes })
+      end
+      format.html { render "index" }
+    end
   end
 
   private

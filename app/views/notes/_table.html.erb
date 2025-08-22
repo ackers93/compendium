@@ -1,0 +1,16 @@
+<div id="notes-list">
+  <div class="table-container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Content</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody id="notes-table-body">
+        <%= render partial: "notes/note_row", collection: notes, as: :note %>
+      </tbody>
+    </table>
+  </div>
+</div> 
