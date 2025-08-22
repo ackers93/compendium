@@ -1,3 +1,7 @@
+<%= link_to notes_path, class: "btn btn-secondary" do %>
+  <i class="fa-solid fa-arrow-left"></i>
+  Back to Notes
+<% end %>
 <%= render 'note_content', note: @note %>
 
 <div class="content-section mt-8">
@@ -15,7 +19,8 @@
     </div>
     
     <div class="mt-6">
-      <%= render template: 'comments/new' %>
+      <h3 class="text-lg font-semibold mb-4">Add a comment</h3>
+      <%= render 'comments/form', comment: @comment %>
     </div>
   </div>
 </div>
