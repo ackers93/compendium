@@ -98,6 +98,68 @@
   }
 }
 
+// Registration page specific styles
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: $space-6;
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $gray-200;
+}
+
+.auth-links {
+  border-top: 1px solid $gray-200;
+  padding-top: $space-4;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background: rgba($primary, 0.1);
+  border-radius: 50%;
+  
+  i {
+    color: $primary;
+  }
+}
+
+.danger-zone {
+  background: rgba($danger, 0.05);
+  border: 1px solid rgba($danger, 0.2);
+  
+  h3 {
+    color: $danger;
+  }
+  
+  p {
+    color: rgba($danger, 0.8);
+  }
+}
+
+.alert {
+  padding: $space-4;
+  border-radius: $radius;
+  margin-bottom: $space-4;
+  
+  &.alert-info {
+    background: rgba($info, 0.1);
+    border: 1px solid rgba($info, 0.2);
+    color: $info;
+  }
+  
+  &.alert-error {
+    background: rgba($danger, 0.1);
+    border: 1px solid rgba($danger, 0.2);
+    color: $danger;
+  }
+}
+
 // Search form
 .search-form {
   display: flex;

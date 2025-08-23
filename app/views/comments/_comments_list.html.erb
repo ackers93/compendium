@@ -1,0 +1,9 @@
+<% if commentable.comments.any? %>
+  <% commentable.comments.order(created_at: :desc).each do |comment| %>
+    <%= render 'comments/comment', comment: comment %>
+  <% end %>
+<% else %>
+  <div class="text-center py-8 text-gray-500">
+    <p>No comments yet. Be the first to share your thoughts!</p>
+  </div>
+<% end %> 

@@ -20,8 +20,15 @@
         <div class="verse-item mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
           <div class="verse-header mb-2">
             <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
-            <%= link_to "See all Comments", bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
-                class: "btn btn-sm btn-primary ml-2" %>
+            <div class="d-flex items-center gap-2">
+              <% if verse.comments.any? %>
+                <span class="comment-count text-sm text-gray-600">
+                  <%= pluralize(verse.comments.count, 'comment') %>
+                </span>
+              <% end %>
+              <%= link_to "See all Comments", bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
+                  class: "btn btn-sm btn-primary" %>
+            </div>
           </div>
           <div class="verse-preview text-gray-700">
             <%= verse.text %>

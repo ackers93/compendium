@@ -31,6 +31,30 @@
     </div>
   </div>
   
+  <!-- Comments Section -->
+  <div class="comments-section mt-8">
+    <div class="section-header">
+      <div class="d-flex justify-between items-center">
+        <h3 class="section-title">Comments on <%= @book %> <%= @chapter %>:<%= @verse %></h3>
+        <div id="comment-count">
+          <%= render 'comments/comment_count', commentable: @bible_verse %>
+        </div>
+      </div>
+    </div>
+    
+    <div id="comments" class="comments-list mb-6">
+      <%= render 'comments/comments_list', commentable: @bible_verse %>
+    </div>
+    
+    <!-- Add Comment Form -->
+    <div class="add-comment-section">
+      <h4 class="text-lg font-semibold mb-4">Add a Comment</h4>
+      <div id="comment-form">
+        <%= render 'comments/form', comment: @bible_verse.comments.build %>
+      </div>
+    </div>
+  </div>
+  
   <div class="d-flex justify-between mt-6">
     <%= link_to "← Back to Chapter", bible_verse_verses_path(book: @book, chapter: @chapter), 
         class: "btn btn-outline" %>

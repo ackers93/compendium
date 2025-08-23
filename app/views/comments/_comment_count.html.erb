@@ -1,0 +1,5 @@
+<% if commentable.comments.any? %>
+  <span class="comment-count-badge">
+    <%= pluralize(commentable.comments.count, 'comment') %>
+  </span>
+<% end %> 

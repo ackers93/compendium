@@ -3,7 +3,8 @@
     <div class="modal modal-md">
       <div class="modal-header">
         <h2 class="modal-title">Editing Comment</h2>
-        <%= link_to polymorphic_path(@comment.commentable), class: "modal-close", data: { turbo_frame: "modal" } do %>
+        <%= link_to bible_verse_path_for(@comment.commentable), 
+            class: "modal-close", data: { turbo_frame: "modal" } do %>
           <i class="fa-solid fa-times"></i>
         <% end %>
       </div>
@@ -13,7 +14,8 @@
       </div>
       
       <div class="modal-footer">
-        <%= link_to 'Cancel', polymorphic_path(@comment.commentable), class: 'btn btn-outline', data: { turbo_frame: "modal" } %>
+        <%= link_to 'Cancel', bible_verse_path_for(@comment.commentable), 
+            class: 'btn btn-outline', data: { turbo_frame: "modal" } %>
       </div>
     </div>
   </div>

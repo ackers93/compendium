@@ -26,10 +26,21 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.turbo_stream { 
-          render turbo_stream: [
-            turbo_stream.append("comments", partial: "comments/comment", locals: { comment: @comment }),
-            turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build })
-          ]
+          if @commentable.comments.count == 1
+            # First comment - replace the "no comments" message with the comment
+            render turbo_stream: [
+              turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
+              turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build }),
+              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
+            ]
+          else
+            # Additional comments - append to existing list
+            render turbo_stream: [
+              turbo_stream.append("comments", partial: "comments/comment", locals: { comment: @comment }),
+              turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build }),
+              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
+            ]
+          end
         }
         format.html { redirect_to @commentable, notice: "Comment was successfully created." }
         format.json { render json: { id: @comment.id, content: @comment.content }, status: :created, location: @comment }
@@ -60,7 +71,13 @@ class CommentsController < ApplicationController
             turbo_stream.replace(dom_id(@comment), partial: "comments/comment", locals: { comment: @comment })
           ]
         }
-        format.html { redirect_to @comment.commentable, notice: "Comment was successfully updated." }
+        format.html { 
+          if @comment.commentable.is_a?(BibleVerse)
+            redirect_to bible_verse_show_path(book: @comment.commentable.book, chapter: @comment.commentable.chapter, verse: @comment.commentable.verse), notice: "Comment was successfully updated."
+          else
+            redirect_to @comment.commentable, notice: "Comment was successfully updated."
+          end
+        }
         format.json { render json: { id: @comment.id, content: @comment.content }, status: :ok, location: @comment }
       else
         format.turbo_stream { 
@@ -79,7 +96,31 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @commentable = @comment.commentable
     @comment.destroy
-    redirect_to @commentable
+    
+    respond_to do |format|
+      format.turbo_stream { 
+        if @commentable.comments.any?
+          # Still have comments - update the list and count
+          render turbo_stream: [
+            turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
+            turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
+          ]
+        else
+          # No more comments - show the "no comments" message and update count
+          render turbo_stream: [
+            turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
+            turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
+          ]
+        end
+      }
+      format.html { 
+        if @commentable.is_a?(BibleVerse)
+          redirect_to bible_verse_show_path(book: @commentable.book, chapter: @commentable.chapter, verse: @commentable.verse), notice: "Comment was successfully deleted."
+        else
+          redirect_to @commentable, notice: "Comment was successfully deleted."
+        end
+      }
+    end
   end
 
   private
@@ -91,6 +132,8 @@ class CommentsController < ApplicationController
   def set_commentable
     @commentable = if params[:note_id]
                      Note.find(params[:note_id])
+                   elsif params[:book] && params[:chapter] && params[:verse]
+                     BibleVerse.find_by(book: params[:book], chapter: params[:chapter].to_i, verse: params[:verse].to_i)
                    elsif params[:bible_verse_id]
                      BibleVerse.find(params[:bible_verse_id])
                    else

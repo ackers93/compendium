@@ -105,4 +105,79 @@
   line-height: 1.6;
   color: $gray-800;
   text-align: justify;
+}
+
+// Comments section styles
+.comments-section {
+  border-top: 2px solid $gray-200;
+  padding-top: $space-6;
+}
+
+.add-comment-section {
+  background: $gray-50;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  border: 1px solid $gray-200;
+}
+
+.comment-count-badge {
+  background: $primary;
+  color: $white;
+  padding: $space-2 $space-3;
+  border-radius: $radius-full;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+.comments-list {
+  .comment-item {
+    background: $white;
+    border-radius: $radius-md;
+    padding: $space-4;
+    margin-bottom: $space-4;
+    border: 1px solid $gray-200;
+    box-shadow: $shadow-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .comment-header {
+    margin-bottom: $space-3;
+    
+    .comment-author {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+      margin-bottom: $space-2;
+      
+      .author-name {
+        font-weight: $font-weight-semibold;
+        color: $gray-900;
+      }
+      
+      .comment-date {
+        color: $gray-500;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+  
+  .comment-content {
+    color: $gray-800;
+    line-height: 1.5;
+    
+    .trix-content {
+      font-size: $font-size-base;
+    }
+  }
+  
+  .comment-actions {
+    margin-top: $space-3;
+    padding-top: $space-3;
+    border-top: 1px solid $gray-200;
+    display: flex;
+    gap: $space-2;
+  }
 } 
