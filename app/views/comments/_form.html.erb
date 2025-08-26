@@ -1,10 +1,18 @@
 <%= form_with(model: comment, url: bible_verse_form_url_for(comment), id: "comment-form") do |form| %>
+  <% if comment.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% comment.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+  
   <div class="form-group">
     <%= form.label :content, class: "form-label" %>
     <%= form.rich_text_area :content, class: "form-input" %>
   </div>
   
   <div class="form-actions mt-4">
-    <%= form.submit "Save Comment", class: "btn btn-primary" %>
+    <%= form.submit comment.new_record? ? "Save Comment" : "Update Comment", class: "btn btn-primary" %>
   </div>
 <% end %>

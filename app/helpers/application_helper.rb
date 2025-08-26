@@ -34,7 +34,8 @@ module ApplicationHelper
       if comment.commentable.is_a?(BibleVerse)
         bible_verse_comment_path(book: comment.commentable.book, chapter: comment.commentable.chapter, verse: comment.commentable.verse, id: comment.id)
       else
-        polymorphic_path([comment.commentable, comment])
+        # For cross-reference comments, use the individual comment routes
+        comment_path(comment)
       end
     end
   end
