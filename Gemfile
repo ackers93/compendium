@@ -82,3 +82,6 @@ gem "sassc-rails"
 
 # Use Font Awesome for icons
 gem "font-awesome-sass"
+gem "dockerfile-rails", ">= 1.7", :group => :development
+
+gem "aws-sdk-s3", "~> 1.198", :require => false
