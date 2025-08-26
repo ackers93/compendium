@@ -18,7 +18,7 @@
     <div class="verses-list">
       <% @verses.each do |verse| %>
         <div class="verse-item mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <div class="verse-header mb-2">
+          <div class="verse-header mb-2 d-flex flex-row justify-between">
             <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
             <div class="d-flex items-center gap-2">
               <% if verse.comments.any? %>
