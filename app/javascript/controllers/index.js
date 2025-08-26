@@ -1,5 +1,6 @@
 import { application } from "./application"
+import ModalController from "./modal_controller"
 
-// For now, let's just export the application
-// We'll add controllers manually as needed
+application.register("modal", ModalController)
+
 export { application } 
