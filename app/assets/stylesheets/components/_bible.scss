@@ -168,6 +168,7 @@
   .table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
     
     th, td {
       padding: $space-3;
@@ -179,6 +180,17 @@
       background: $gray-50;
       font-weight: $font-weight-semibold;
       color: $gray-700;
+    }
+    
+    // Set specific column widths
+    th:first-child,
+    td:first-child {
+      width: 50%; // Connected Verse column
+    }
+    
+    th:last-child,
+    td:last-child {
+      width: 50%; // Comments column
     }
   }
   
@@ -197,9 +209,7 @@
     color: $gray-600;
   }
   
-  .comments-summary {
-    max-width: 300px;
-  }
+
   
   .comment-item {
     border-left: 3px solid $primary;

@@ -26,6 +26,14 @@
                   <%= pluralize(verse.comments.count, 'comment') %>
                 </span>
               <% end %>
+              <% if verse.comments.any? && verse.ordered_cross_references.any? %>
+                |
+              <% end %>
+              <% if verse.ordered_cross_references.any? %>
+                <span class="cross-reference-count text-sm text-gray-600">
+                  <%= pluralize(verse.ordered_cross_references.count, 'cross reference') %>
+                </span>
+              <% end %>
               <%= link_to "See all Comments", bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
                   class: "btn btn-sm btn-primary" %>
             </div>
