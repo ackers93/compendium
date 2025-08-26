@@ -1,36 +1,25 @@
-<div id="<%= dom_id comment %>" class="comment-item">
-  <div class="comment-header">
-    <div class="comment-author">
-      <i class="fa-solid fa-user-circle"></i>
-      <span class="author-name">
-        <%= comment.user&.email || "Unknown User" %>
+<div id="<%= dom_id comment %>" class="comment-item mb-2 p-2 bg-gray-50 rounded">
+  <div class="comment-header text-xs text-gray-500 mb-1">
+    <span class="author-name">
+      <%= comment.user&.name || comment.user&.email || "Unknown User" %>
+    </span>
+    <span class="comment-date">
+      • <%= time_ago_in_words(comment.created_at) %> ago
+    </span>
+    <% if current_user == comment.user %>
+      <span class="ml-2">
+        <%= link_to "Edit", edit_comment_path(comment), 
+            class: "text-blue-500 hover:text-blue-700",
+            data: { turbo_frame: "modal" } %>
+        <span class="mx-1">•</span>
+        <%= link_to "Delete", comment_path(comment), 
+            class: "text-red-500 hover:text-red-700",
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
       </span>
-      <span class="comment-date">
-        <%= comment.created_at&.strftime("%B %d, %Y at %I:%M %p") || "Unknown Date" %>
-      </span>
-    </div>
+    <% end %>
   </div>
   
   <div class="comment-content">
-    <div class="trix-content"><%= comment.content %></div>
+    <%= comment.content %>
   </div>
-  
-  <% if comment.user == current_user %>
-    <div class="comment-actions">
-      <%= link_to edit_bible_verse_comment_path_for(comment.commentable, comment), 
-          class: "btn btn-sm btn-outline", 
-          data: { turbo_frame: "modal" } do %>
-        <i class="fa-solid fa-edit"></i>
-        Edit
-      <% end %>
-      
-      <%= button_to bible_verse_comment_path_for(comment.commentable, comment), 
-          method: :delete, 
-          class: "btn btn-sm btn-danger",
-          data: { confirm: "Are you sure?", turbo_stream: true } do %>
-        <i class="fa-solid fa-trash"></i>
-        Delete
-      <% end %>
-    </div>
-  <% end %>
 </div>

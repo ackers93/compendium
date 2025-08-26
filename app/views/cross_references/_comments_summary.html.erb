@@ -1,0 +1,7 @@
+<% if cross_ref.comments.any? %>
+  <% cross_ref.comments.each do |comment| %>
+    <%= render 'comments/comment', comment: comment %>
+  <% end %>
+<% else %>
+  <span class="text-gray-400">No comments</span>
+<% end %> 

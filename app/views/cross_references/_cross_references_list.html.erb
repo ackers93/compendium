@@ -1,0 +1,43 @@
+<div class="cross-references-list">
+  <% if cross_references&.any? %>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Connected Verse</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cross_references.each do |cross_ref| %>
+            <% 
+              # Determine which verse is the "other" one (not the current verse)
+              other_verse = cross_ref.source_verse_id == verse.id ? cross_ref.target_verse : cross_ref.source_verse
+            %>
+            <tr>
+              <td>
+                <a href="<%= bible_verse_show_path(book: other_verse.book, chapter: other_verse.chapter, verse: other_verse.verse) %>" 
+                   class="verse-link">
+                  <%= other_verse.book %> <%= other_verse.chapter %>:<%= other_verse.verse %>
+                </a>
+                <div class="verse-preview text-sm text-gray-600 mt-1">
+                  <%= truncate(other_verse.text, length: 100) %>
+                </div>
+              </td>
+              <td>
+                <div class="comments-summary" id="comments-summary-<%= cross_ref.id %>">
+                  <%= render 'cross_references/comments_summary', cross_ref: cross_ref %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <p>No cross-references found for this verse.</p>
+      <p class="text-sm mt-2">Add a cross-reference to connect this verse to another passage.</p>
+    </div>
+  <% end %>
+</div>

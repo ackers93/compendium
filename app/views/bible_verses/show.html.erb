@@ -31,26 +31,58 @@
     </div>
   </div>
   
-  <!-- Comments Section -->
-  <div class="comments-section mt-8">
-    <div class="section-header">
-      <div class="d-flex justify-between items-center">
-        <h3 class="section-title">Comments on <%= @book %> <%= @chapter %>:<%= @verse %></h3>
-        <div id="comment-count">
-          <%= render 'comments/comment_count', commentable: @bible_verse %>
+  <!-- Tabs Section -->
+  <div class="tabs-section mt-8">
+    <div class="tabs-header">
+      <div class="tabs-nav">
+        <button class="tab-button active" onclick="showTab('comments')">Comments</button>
+        <button class="tab-button" onclick="showTab('cross-references')">Cross-References</button>
+      </div>
+    </div>
+    
+    <!-- Comments Tab -->
+    <div id="comments-tab" class="tab-content active">
+      <div class="comments-section">
+        <div class="section-header">
+          <div class="d-flex justify-between items-center">
+            <h3 class="section-title">Comments on <%= @book %> <%= @chapter %>:<%= @verse %></h3>
+            <div id="comment-count">
+              <%= render 'comments/comment_count', commentable: @bible_verse %>
+            </div>
+          </div>
+        </div>
+        
+        <div id="comments" class="comments-list mb-6">
+          <%= render 'comments/comments_list', commentable: @bible_verse %>
+        </div>
+        
+        <!-- Add Comment Form -->
+        <div class="add-comment-section">
+          <h4 class="text-lg font-semibold mb-4">Add a Comment</h4>
+          <div id="comment-form">
+            <%= render 'comments/form', comment: @bible_verse.comments.build %>
+          </div>
         </div>
       </div>
     </div>
     
-    <div id="comments" class="comments-list mb-6">
-      <%= render 'comments/comments_list', commentable: @bible_verse %>
-    </div>
-    
-    <!-- Add Comment Form -->
-    <div class="add-comment-section">
-      <h4 class="text-lg font-semibold mb-4">Add a Comment</h4>
-      <div id="comment-form">
-        <%= render 'comments/form', comment: @bible_verse.comments.build %>
+    <!-- Cross-References Tab -->
+    <div id="cross-references-tab" class="tab-content">
+      <div class="cross-references-section">
+        <div class="section-header">
+          <div class="d-flex justify-between items-center">
+            <h3 class="section-title">Cross-References for <%= @book %> <%= @chapter %>:<%= @verse %></h3>
+            <button class="btn btn-primary" onclick="showCrossReferenceModal()">
+              Add Cross-Reference
+            </button>
+          </div>
+        </div>
+        
+        <div id="cross-references" class="cross-references-content mb-6">
+          <%= render 'cross_references/cross_references_list', 
+              cross_references: @bible_verse.ordered_cross_references, 
+              verse: @bible_verse %>
+        </div>
       </div>
     </div>
   </div>
@@ -60,4 +92,33 @@
         class: "btn btn-outline" %>
     <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>
   </div>
-</div> 
+</div>
+
+<!-- Cross-Reference Modal -->
+<%= turbo_frame_tag "modal" %>
+
+<script>
+function showTab(tabName) {
+  // Hide all tab contents
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabContents.forEach(content => content.classList.remove('active'));
+  
+  // Remove active class from all tab buttons
+  const tabButtons = document.querySelectorAll('.tab-button');
+  tabButtons.forEach(button => button.classList.remove('active'));
+  
+  // Show selected tab content
+  document.getElementById(tabName + '-tab').classList.add('active');
+  
+  // Add active class to clicked button
+  event.target.classList.add('active');
+}
+
+function showCrossReferenceModal() {
+  // Use Turbo to load the modal content
+  const modalFrame = document.getElementById('modal');
+  if (modalFrame) {
+    modalFrame.src = '<%= new_bible_verse_cross_reference_path(source_book: @book, source_chapter: @chapter, source_verse: @verse) %>';
+  }
+}
+</script> 

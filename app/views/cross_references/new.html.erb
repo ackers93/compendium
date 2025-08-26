@@ -1,0 +1,24 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-overlay">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <h2 class="modal-title">Add Cross-Reference</h2>
+        <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: @verse), class: "modal-close", data: { turbo_frame: "modal" } do %>
+          <i class="fa-solid fa-times"></i>
+        <% end %>
+      </div>
+      
+      <div class="modal-body">
+        <%= render 'form' %>
+      </div>
+      
+      <div class="modal-footer">
+        <%= link_to 'Cancel', bible_verse_show_path(book: @book, chapter: @chapter, verse: @verse), class: 'btn btn-outline', data: { turbo_frame: "modal" } %>
+        <button type="submit" form="cross-reference-form" class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i>
+          Add Cross-Reference
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %> 

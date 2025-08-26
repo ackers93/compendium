@@ -1,21 +1,17 @@
 <%= turbo_frame_tag "modal" do %>
-  <div class="modal-overlay">
-    <div class="modal modal-md">
+  <div class="modal-overlay" data-controller="modal">
+    <div class="modal modal-md" data-modal-target="modal">
       <div class="modal-header">
-        <h2 class="modal-title">Editing Comment</h2>
-        <%= link_to bible_verse_path_for(@comment.commentable), 
-            class: "modal-close", data: { turbo_frame: "modal" } do %>
-          <i class="fa-solid fa-times"></i>
-        <% end %>
+        <h2 class="modal-title">Edit Comment</h2>
+        <%= link_to "×", "#", class: "modal-close", data: { action: "click->modal#closeModal" } %>
       </div>
-      
+
       <div class="modal-body">
         <%= render 'comments/form', comment: @comment %>
       </div>
       
       <div class="modal-footer">
-        <%= link_to 'Cancel', bible_verse_path_for(@comment.commentable), 
-            class: 'btn btn-outline', data: { turbo_frame: "modal" } %>
+        <%= link_to 'Cancel', "#", class: 'btn btn-outline', data: { action: "click->modal#closeModal" } %>
       </div>
     </div>
   </div>
