@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_21_191741) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_24_201325) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -71,6 +71,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_191741) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "cross_references", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "source_verse_id", null: false
+    t.bigint "target_verse_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_verse_id", "target_verse_id"], name: "index_cross_references_on_source_and_target", unique: true
+    t.index ["source_verse_id"], name: "index_cross_references_on_source_verse_id"
+    t.index ["target_verse_id"], name: "index_cross_references_on_target_verse_id"
+  end
+
   create_table "notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.integer "user_id", null: false
@@ -129,5 +139,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_191741) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
+  add_foreign_key "cross_references", "bible_verses", column: "source_verse_id"
+  add_foreign_key "cross_references", "bible_verses", column: "target_verse_id"
   add_foreign_key "taggings", "tags"
 end
