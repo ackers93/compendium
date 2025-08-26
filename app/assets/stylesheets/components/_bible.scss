@@ -104,80 +104,211 @@
   font-size: $font-size-lg;
   line-height: 1.6;
   color: $gray-800;
-  text-align: justify;
+  font-style: italic;
 }
 
-// Comments section styles
-.comments-section {
-  border-top: 2px solid $gray-200;
-  padding-top: $space-6;
-}
-
-.add-comment-section {
-  background: $gray-50;
+// Tabs styles
+.tabs-section {
+  background: $white;
   border-radius: $radius-lg;
-  padding: $space-6;
+  box-shadow: $shadow-sm;
   border: 1px solid $gray-200;
+  overflow: hidden;
 }
 
-.comment-count-badge {
-  background: $primary;
-  color: $white;
-  padding: $space-2 $space-3;
-  border-radius: $radius-full;
-  font-size: $font-size-sm;
+.tabs-header {
+  background: $gray-50;
+  border-bottom: 1px solid $gray-200;
+}
+
+.tabs-nav {
+  display: flex;
+  border-bottom: 1px solid $gray-200;
+}
+
+.tab-button {
+  padding: $space-4 $space-6;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: $gray-600;
   font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: $gray-100;
+    color: $gray-800;
+  }
+  
+  &.active {
+    color: $primary;
+    border-bottom-color: $primary;
+    background: $white;
+  }
 }
 
-.comments-list {
-  .comment-item {
-    background: $white;
-    border-radius: $radius-md;
-    padding: $space-4;
-    margin-bottom: $space-4;
-    border: 1px solid $gray-200;
-    box-shadow: $shadow-sm;
+.tab-content {
+  display: none;
+  padding: $space-6;
+  
+  &.active {
+    display: block;
+  }
+}
+
+// Cross-references styles
+.cross-references-section {
+  .section-header {
+    margin-bottom: $space-6;
+  }
+}
+
+.cross-references-list {
+  .table {
+    width: 100%;
+    border-collapse: collapse;
     
-    &:last-child {
-      margin-bottom: 0;
+    th, td {
+      padding: $space-3;
+      text-align: left;
+      border-bottom: 1px solid $gray-200;
     }
+    
+    th {
+      background: $gray-50;
+      font-weight: $font-weight-semibold;
+      color: $gray-700;
+    }
+  }
+  
+  .verse-link {
+    color: $primary;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  .verse-preview {
+    font-style: italic;
+    color: $gray-600;
+  }
+  
+  .comments-summary {
+    max-width: 300px;
+  }
+  
+  .comment-item {
+    border-left: 3px solid $primary;
   }
   
   .comment-header {
-    margin-bottom: $space-3;
-    
-    .comment-author {
-      display: flex;
-      align-items: center;
-      gap: $space-2;
-      margin-bottom: $space-2;
-      
-      .author-name {
-        font-weight: $font-weight-semibold;
-        color: $gray-900;
-      }
-      
-      .comment-date {
-        color: $gray-500;
-        font-size: $font-size-sm;
-      }
-    }
+    font-size: $font-size-xs;
   }
   
   .comment-content {
-    color: $gray-800;
-    line-height: 1.5;
+    font-size: $font-size-sm;
+    line-height: 1.4;
+  }
+}
+
+.cross-reference-form {
+  background: $gray-50;
+  padding: $space-6;
+  border-radius: $radius-md;
+  border: 1px solid $gray-200;
+  
+  .form-group {
+    margin-bottom: $space-4;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: $space-2;
+    font-weight: $font-weight-medium;
+    color: $gray-700;
+  }
+  
+  .form-select,
+  .form-input,
+  .form-textarea {
+    width: 100%;
+    padding: $space-2 $space-3;
+    border: 1px solid $gray-300;
+    border-radius: $radius-sm;
+    font-size: $font-size-sm;
     
-    .trix-content {
-      font-size: $font-size-base;
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.1);
     }
   }
   
-  .comment-actions {
-    margin-top: $space-3;
-    padding-top: $space-3;
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .form-actions {
+    margin-top: $space-6;
+  }
+  
+  // Small form elements for inline forms
+  .form-textarea-sm {
+    min-height: 60px;
+    font-size: $font-size-sm;
+  }
+  
+  .btn-sm {
+    padding: $space-1 $space-2;
+    font-size: $font-size-xs;
+  }
+  
+  // Inline comment form styling
+  .add-comment-form {
     border-top: 1px solid $gray-200;
-    display: flex;
-    gap: $space-2;
+    padding-top: $space-3;
+    
+    .form-textarea {
+      border: 1px solid $gray-300;
+      border-radius: $radius-sm;
+      padding: $space-2;
+      font-size: $font-size-sm;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 2px rgba($primary, 0.1);
+      }
+    }
+  }
+}
+
+// Alert styles
+.alert {
+  padding: $space-3 $space-4;
+  border-radius: $radius-sm;
+  margin-bottom: $space-4;
+  
+  &.alert-error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+  }
+  
+  &.alert-success {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #16a34a;
+  }
+  
+  &.alert-info {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #2563eb;
   }
 } 
