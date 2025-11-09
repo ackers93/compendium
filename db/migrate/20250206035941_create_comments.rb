@@ -1,6 +1,6 @@
 class CreateComments < ActiveRecord::Migration[6.1]
   def change
-    create_table :comments, id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci" do |t|
+    create_table :comments do |t|
       t.integer :user_id, null: false
       t.integer :upvotes
       t.datetime :created_at, precision: nil
