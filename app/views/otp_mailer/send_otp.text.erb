@@ -1,0 +1,18 @@
+Two-Factor Authentication Code
+================================
+
+Hello <%= @user.email %>,
+
+You are attempting to sign in to Christadelphian Compendium. Please use the following verification code to complete your login:
+
+YOUR CODE: <%= @otp_code %>
+
+This code will expire in <%= @expiry_minutes %> minutes.
+
+SECURITY NOTICE:
+If you did not attempt to sign in, please ignore this email and consider changing your password.
+
+For security reasons, never share this code with anyone.
+
+---
+This is an automated message from Christadelphian Compendium. Please do not reply to this email.

@@ -36,6 +36,15 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }
+  
+  # OTP/2FA routes
+  namespace :users do
+    get 'otp/verify', to: 'otp_sessions#new', as: :otp_verify
+    post 'otp/verify', to: 'otp_sessions#create'
+    post 'otp/resend', to: 'otp_sessions#resend', as: :otp_resend
+    patch 'two_factor_settings', to: 'two_factor_settings#update', as: :two_factor_settings
+  end
 end
