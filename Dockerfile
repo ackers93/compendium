@@ -60,9 +60,11 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Clean any existing assets and precompile fresh for production
-RUN SECRET_KEY_BASE_DUMMY=1 NODE_ENV=production ./bin/rails assets:clobber
-RUN SECRET_KEY_BASE_DUMMY=1 NODE_ENV=production ./bin/rails assets:precompile
+# Build JavaScript bundle first
+RUN NODE_ENV=production bundle exec rake javascript:build
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
 # Final stage for app image
