@@ -1,0 +1,95 @@
+<div class="page-header">
+  <h1 class="page-title">Edit User Role</h1>
+  <p class="page-subtitle">Change role and permissions for <%= @user.email %></p>
+</div>
+
+<div class="content-section" style="max-width: 800px; margin: 0 auto;">
+  <div class="edit-user-card">
+    <div class="user-info-section">
+      <h2 class="section-title">
+        <i class="fa-solid fa-user"></i>
+        User Information
+      </h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Email</span>
+          <span class="info-value"><%= @user.email %></span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Name</span>
+          <span class="info-value"><%= @user.name || 'Not provided' %></span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Current Role</span>
+          <span class="info-value">
+            <span class="role-badge <%= @user.role %>">
+              <%= @user.role&.titleize || 'Viewer' %>
+            </span>
+          </span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Member Since</span>
+          <span class="info-value"><%= @user.created_at.strftime("%B %d, %Y") %></span>
+        </div>
+      </div>
+    </div>
+    
+    <%= form_with(model: [:admin, @user], local: true, class: "edit-role-form") do |form| %>
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-user-shield"></i>
+          Change Role
+        </h2>
+        
+        <div class="form-group">
+          <%= form.label :role, "Select New Role", class: "form-label" %>
+          <div class="role-select-wrapper">
+            <%= form.select :role, 
+                options_for_select([
+                  ['Viewer - Can only view content', 'viewer'],
+                  ['Contributor - Can create and manage their own content', 'contributor'],
+                  ['Admin - Can manage all content and users', 'admin']
+                ], @user.role),
+                {},
+                class: "form-select" %>
+          </div>
+        </div>
+        
+        <div class="permissions-info">
+          <div class="info-icon">
+            <i class="fa-solid fa-circle-info"></i>
+          </div>
+          <div class="info-content">
+            <h3 class="info-title">Role Permissions</h3>
+            <ul class="permissions-list">
+              <li>
+                <span class="role-badge viewer">Viewer</span>
+                <span>Can only view content</span>
+              </li>
+              <li>
+                <span class="role-badge contributor">Contributor</span>
+                <span>Can create, edit, and delete their own notes, comments, and cross-references</span>
+              </li>
+              <li>
+                <span class="role-badge admin">Admin</span>
+                <span>Full access to all content and user management</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <%= link_to admin_users_path, class: "btn btn-secondary" do %>
+          <i class="fa-solid fa-arrow-left"></i>
+          Cancel
+        <% end %>
+        <%= form.submit "Update Role", class: "btn btn-primary" do %>
+          <i class="fa-solid fa-save"></i>
+          Update Role
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

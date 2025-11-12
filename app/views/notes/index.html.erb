@@ -7,9 +7,11 @@
   <div class="section-header">
     <div class="d-flex justify-between items-center">
       <h2 class="section-title">All Notes</h2>
-      <%= link_to "Publish a new note", new_note_path, 
-          class: "btn btn-primary", 
-          data: { turbo_frame: "modal" } %>
+      <% if current_user&.can_create? %>
+        <%= link_to "Publish a new note", new_note_path, 
+            class: "btn btn-primary", 
+            data: { turbo_frame: "modal" } %>
+      <% end %>
     </div>
   </div>
   

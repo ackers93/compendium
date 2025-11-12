@@ -1,7 +1,11 @@
 class CrossReferencesController < ApplicationController
+  include Authorizable
+  
   before_action :authenticate_user!
   before_action :set_source_verse, only: [:new, :create]
   before_action :set_cross_reference, only: [:destroy]
+  before_action :authorize_create!, only: %i[ new create ]
+  before_action -> { authorize_delete!(@cross_reference) }, only: %i[ destroy ]
 
   def new
     # This action renders the modal form
@@ -87,7 +91,8 @@ class CrossReferencesController < ApplicationController
       # Create new cross-reference
       @cross_reference = CrossReference.new(
         source_verse: @source_verse,
-        target_verse: target_verse
+        target_verse: target_verse,
+        user: current_user
       )
       
       if @cross_reference.save

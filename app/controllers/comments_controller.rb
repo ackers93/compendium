@@ -1,10 +1,14 @@
 class CommentsController < ApplicationController
   include ActionView::RecordIdentifier
+  include Authorizable
   
   before_action :authenticate_user!
   before_action :set_comment, only: %i[ show edit update destroy ]
   before_action :ensure_frame_response, only: [:new, :edit]
   before_action :set_commentable, only: [:new, :create]
+  before_action :authorize_create!, only: %i[ new create ]
+  before_action -> { authorize_edit!(@comment) }, only: %i[ edit update ]
+  before_action -> { authorize_delete!(@comment) }, only: %i[ destroy ]
 
   def index
     @comments = Comment.all

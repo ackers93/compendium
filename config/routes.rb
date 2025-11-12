@@ -47,4 +47,9 @@ Rails.application.routes.draw do
     post 'otp/resend', to: 'otp_sessions#resend', as: :otp_resend
     patch 'two_factor_settings', to: 'two_factor_settings#update', as: :two_factor_settings
   end
+  
+  # Admin routes
+  namespace :admin do
+    resources :users, only: [:index, :edit, :update, :destroy]
+  end
 end
