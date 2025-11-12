@@ -1,6 +1,11 @@
 class NotesController < ApplicationController
+  include Authorizable
+  
   before_action :authenticate_user!
   before_action :set_note, only: %i[ show edit update destroy ]
+  before_action :authorize_create!, only: %i[ new create ]
+  before_action -> { authorize_edit!(@note) }, only: %i[ edit update ]
+  before_action -> { authorize_delete!(@note) }, only: %i[ destroy ]
 
   def index
     @notes = Note.order(created_at: :desc)

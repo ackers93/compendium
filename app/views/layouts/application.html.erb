@@ -33,11 +33,19 @@
           <li class="nav-item">
             <a href="/bible_verses/books" class="nav-link">Bible</a>
           </li>
+          <% if user_signed_in? && current_user.can_manage_users? %>
+            <li class="nav-item">
+              <a href="/admin/users" class="nav-link">Admin</a>
+            </li>
+          <% end %>
         </ul>
         
         <div class="nav-actions">
           <% if user_signed_in? %>
-            <span class="user-info"><%= current_user.email %></span>
+            <span class="user-info">
+              <%= current_user.email %>
+              <span class="role-badge <%= current_user.role %>"><%= current_user.role&.titleize || 'Viewer' %></span>
+            </span>
             <%= link_to 'Profile', edit_user_registration_path, class: 'btn btn-outline' %>
             <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary', data: { turbo: false, confirm: 'Are you sure you want to log out?' } %>
           <% else %>

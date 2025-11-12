@@ -57,12 +57,14 @@
         </div>
         
         <!-- Add Comment Form -->
-        <div class="add-comment-section">
-          <h4 class="text-lg font-semibold mb-4">Add a Comment</h4>
-          <div id="comment-form">
-            <%= render 'comments/form', comment: @bible_verse.comments.build %>
+        <% if current_user&.can_create? %>
+          <div class="add-comment-section">
+            <h4 class="text-lg font-semibold mb-4">Add a Comment</h4>
+            <div id="comment-form">
+              <%= render 'comments/form', comment: @bible_verse.comments.build %>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
     
@@ -72,9 +74,11 @@
         <div class="section-header">
           <div class="d-flex justify-between items-center">
             <h3 class="section-title">Cross-References for <%= @book %> <%= @chapter %>:<%= @verse %></h3>
-            <button class="btn btn-primary" onclick="showCrossReferenceModal()">
-              Add Cross-Reference
-            </button>
+            <% if current_user&.can_create? %>
+              <button class="btn btn-primary" onclick="showCrossReferenceModal()">
+                Add Cross-Reference
+              </button>
+            <% end %>
           </div>
         </div>
         

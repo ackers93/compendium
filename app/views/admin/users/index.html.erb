@@ -1,0 +1,123 @@
+<div class="page-header">
+  <h1 class="page-title">User Management</h1>
+  <p class="page-subtitle">Manage user roles and permissions</p>
+</div>
+
+<div class="content-section">
+  <!-- Role Statistics Cards -->
+  <div class="admin-stats-grid">
+    <div class="stat-card stat-card-viewer">
+      <div class="stat-icon">
+        <i class="fa-solid fa-eye"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Viewers</h3>
+        <p class="stat-number"><%= @viewer_count %></p>
+        <%= link_to "View All", admin_users_path(role: 'viewer'), class: "stat-link" %>
+      </div>
+    </div>
+    
+    <div class="stat-card stat-card-contributor">
+      <div class="stat-icon">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Contributors</h3>
+        <p class="stat-number"><%= @contributor_count %></p>
+        <%= link_to "View All", admin_users_path(role: 'contributor'), class: "stat-link" %>
+      </div>
+    </div>
+    
+    <div class="stat-card stat-card-admin">
+      <div class="stat-icon">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Admins</h3>
+        <p class="stat-number"><%= @admin_count %></p>
+        <%= link_to "View All", admin_users_path(role: 'admin'), class: "stat-link" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="content-section">
+  <div class="filter-tabs">
+    <%= link_to admin_users_path, class: "filter-tab #{params[:role].blank? ? 'active' : ''}" do %>
+      <i class="fa-solid fa-users"></i>
+      All Users
+    <% end %>
+    <%= link_to admin_users_path(role: 'viewer'), class: "filter-tab #{params[:role] == 'viewer' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-eye"></i>
+      Viewers
+    <% end %>
+    <%= link_to admin_users_path(role: 'contributor'), class: "filter-tab #{params[:role] == 'contributor' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-pen-to-square"></i>
+      Contributors
+    <% end %>
+    <%= link_to admin_users_path(role: 'admin'), class: "filter-tab #{params[:role] == 'admin' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-crown"></i>
+      Admins
+    <% end %>
+  </div>
+</div>
+
+<!-- Users Table -->
+<div class="content-section">
+  <% if @users.any? %>
+    <div class="users-table-container">
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr class="<%= 'current-user' if user == current_user %>">
+              <td>
+                <div class="user-email">
+                  <%= user.email %>
+                  <% if user == current_user %>
+                    <span class="badge badge-warning">You</span>
+                  <% end %>
+                </div>
+              </td>
+              <td><%= user.name || '-' %></td>
+              <td>
+                <span class="role-badge <%= user.role %>">
+                  <%= user.role&.titleize || 'Viewer' %>
+                </span>
+              </td>
+              <td class="date-cell"><%= user.created_at.strftime("%b %d, %Y") %></td>
+              <td class="actions-cell">
+                <%= link_to edit_admin_user_path(user), class: "btn btn-sm btn-outline" do %>
+                  <i class="fa-solid fa-edit"></i> Edit Role
+                <% end %>
+                <% unless user == current_user %>
+                  <%= button_to admin_user_path(user), method: :delete, 
+                      data: { turbo_confirm: "Are you sure you want to delete #{user.email}?" },
+                      class: "btn btn-sm btn-danger" do %>
+                    <i class="fa-solid fa-trash"></i> Delete
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <i class="fa-solid fa-users-slash"></i>
+      <p>No users found with this filter.</p>
+      <%= link_to "View All Users", admin_users_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
