@@ -61,6 +61,55 @@
 
 <div class="content-section mt-8">
   <div class="section-header">
+    <h2 class="section-title">Security Settings</h2>
+  </div>
+  
+  <div class="section-content">
+    <div class="security-settings p-6 bg-blue-50 border border-blue-200 rounded-lg">
+      <div class="flex items-start justify-between">
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold text-blue-900 mb-2 flex items-center">
+            <i class="fa-solid fa-shield-halved mr-2"></i>
+            Two-Factor Authentication (2FA)
+          </h3>
+          <p class="text-blue-800 mb-4">
+            Add an extra layer of security to your account. When enabled, you'll receive a verification code via email each time you sign in.
+          </p>
+          
+          <div class="flex items-center gap-4">
+            <div class="text-sm">
+              Status: 
+              <% if current_user.otp_required_for_login? %>
+                <span class="badge bg-success text-white px-3 py-1 rounded">
+                  <i class="fa-solid fa-check mr-1"></i> Enabled
+                </span>
+              <% else %>
+                <span class="badge bg-warning text-dark px-3 py-1 rounded">
+                  <i class="fa-solid fa-times mr-1"></i> Disabled
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        
+        <div class="ml-4">
+          <%= form_with url: users_two_factor_settings_path, method: :patch, data: { turbo: false } do |f| %>
+            <%= hidden_field_tag :enabled, !current_user.otp_required_for_login? %>
+            <% if current_user.otp_required_for_login? %>
+              <%= f.submit "Disable 2FA", class: "btn btn-outline-danger", 
+                  data: { confirm: "Are you sure you want to disable two-factor authentication?" } %>
+            <% else %>
+              <%= f.submit "Enable 2FA", class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-section mt-8">
+  <div class="section-header">
     <h2 class="section-title text-red-600">Danger Zone</h2>
   </div>
   
