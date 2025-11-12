@@ -36,10 +36,28 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
+  # Action Mailer configuration for Gmail SMTP
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
+  
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  
+  # Use letter_opener to preview emails in browser during development
+  # Change to :smtp to actually send emails via Gmail
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+  
+  # Gmail SMTP settings (used when delivery_method is :smtp)
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'gmail.com',
+    user_name: ENV['GMAIL_USERNAME'],
+    password: ENV['GMAIL_APP_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true,
+    openssl_verify_mode: 'none'
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
