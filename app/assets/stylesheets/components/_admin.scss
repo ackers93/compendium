@@ -1,0 +1,486 @@
+// Admin Dashboard Styles
+
+// Stats Grid
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $space-6;
+  margin-bottom: $space-8;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, $white 0%, $gray-50 100%);
+  border-radius: $radius-lg;
+  padding: $space-6;
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: $radius-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-2xl;
+    flex-shrink: 0;
+  }
+  
+  .stat-content {
+    flex: 1;
+  }
+  
+  .stat-label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: $space-2;
+    opacity: 0.8;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: $font-weight-bold;
+    line-height: 1;
+    margin-bottom: $space-2;
+  }
+  
+  .stat-link {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      text-decoration: underline;
+      opacity: 0.8;
+    }
+  }
+  
+  // Viewer card
+  &.stat-card-viewer {
+    border-color: rgba($info, 0.2);
+    
+    .stat-icon {
+      background: linear-gradient(135deg, $info 0%, darken($info, 10%) 100%);
+      color: $white;
+    }
+    
+    .stat-label,
+    .stat-number {
+      color: darken($info, 15%);
+    }
+    
+    .stat-link {
+      color: $info;
+    }
+  }
+  
+  // Contributor card
+  &.stat-card-contributor {
+    border-color: rgba($success, 0.2);
+    
+    .stat-icon {
+      background: linear-gradient(135deg, $success 0%, darken($success, 10%) 100%);
+      color: $white;
+    }
+    
+    .stat-label,
+    .stat-number {
+      color: darken($success, 15%);
+    }
+    
+    .stat-link {
+      color: $success;
+    }
+  }
+  
+  // Admin card
+  &.stat-card-admin {
+    border-color: rgba(#9333ea, 0.2);
+    
+    .stat-icon {
+      background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+      color: $white;
+    }
+    
+    .stat-label,
+    .stat-number {
+      color: #7c3aed;
+    }
+    
+    .stat-link {
+      color: #9333ea;
+    }
+  }
+}
+
+// Filter Tabs
+.filter-tabs {
+  display: flex;
+  gap: $space-2;
+  background: $gray-100;
+  padding: $space-2;
+  border-radius: $radius-lg;
+  overflow-x: auto;
+  
+  .filter-tab {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-3 $space-5;
+    border-radius: $radius;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-base;
+    color: $gray-700;
+    background: transparent;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    
+    i {
+      font-size: $font-size-lg;
+    }
+    
+    &:hover {
+      background: $white;
+      color: $primary;
+    }
+    
+    &.active {
+      background: $primary;
+      color: $white;
+      border-color: $primary;
+      box-shadow: 0 2px 4px rgba($primary, 0.3);
+    }
+  }
+}
+
+// Users Table
+.users-table-container {
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  thead {
+    background: linear-gradient(135deg, $gray-900 0%, $gray-800 100%);
+    
+    th {
+      padding: $space-4 $space-5;
+      text-align: left;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $white;
+      
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+  
+  tbody {
+    tr {
+      border-bottom: 1px solid $gray-200;
+      transition: background-color 0.2s ease;
+      
+      &:hover {
+        background: $gray-50;
+      }
+      
+      &.current-user {
+        background: rgba($warning, 0.1);
+        
+        &:hover {
+          background: rgba($warning, 0.15);
+        }
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    
+    td {
+      padding: $space-4 $space-5;
+      font-size: $font-size-base;
+      color: $gray-900;
+      
+      &.date-cell {
+        color: $gray-600;
+        font-size: $font-size-sm;
+      }
+      
+      &.actions-cell {
+        text-align: right;
+        
+        .btn {
+          margin-left: $space-2;
+          
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+      }
+    }
+  }
+  
+  .user-email {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Button Sizes
+.btn-sm {
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  
+  i {
+    font-size: $font-size-sm;
+  }
+}
+
+// Empty State
+.empty-state {
+  text-align: center;
+  padding: $space-12 $space-6;
+  color: $gray-500;
+  
+  i {
+    font-size: 4rem;
+    margin-bottom: $space-4;
+    opacity: 0.5;
+  }
+  
+  p {
+    font-size: $font-size-lg;
+    margin-bottom: $space-6;
+  }
+}
+
+// Edit User Page
+.edit-user-card {
+  background: $white;
+  border-radius: $radius-lg;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.user-info-section {
+  background: linear-gradient(135deg, $gray-50 0%, $white 100%);
+  padding: $space-6;
+  border-bottom: 2px solid $gray-200;
+  
+  .section-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $space-4;
+    color: $gray-900;
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    
+    i {
+      color: $primary;
+    }
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $space-4;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  
+  .info-label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $gray-600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .info-value {
+    font-size: $font-size-base;
+    color: $gray-900;
+    font-weight: $font-weight-medium;
+  }
+}
+
+.edit-role-form {
+  .form-section {
+    padding: $space-6;
+    
+    .section-title {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+      margin-bottom: $space-5;
+      color: $gray-900;
+      display: flex;
+      align-items: center;
+      gap: $space-3;
+      
+      i {
+        color: $success;
+      }
+    }
+  }
+  
+  .form-group {
+    margin-bottom: $space-6;
+  }
+  
+  .role-select-wrapper {
+    position: relative;
+    
+    .form-select {
+      width: 100%;
+      padding: $space-3 $space-4;
+      border: 2px solid $gray-300;
+      border-radius: $radius;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      background: $white;
+      transition: all 0.2s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+    }
+  }
+  
+  .permissions-info {
+    display: flex;
+    gap: $space-4;
+    padding: $space-5;
+    background: rgba($info, 0.1);
+    border-radius: $radius-lg;
+    border-left: 4px solid $info;
+    
+    .info-icon {
+      font-size: $font-size-2xl;
+      color: $info;
+      flex-shrink: 0;
+    }
+    
+    .info-content {
+      flex: 1;
+      
+      .info-title {
+        font-size: $font-size-base;
+        font-weight: $font-weight-bold;
+        color: $gray-900;
+        margin-bottom: $space-3;
+      }
+      
+      .permissions-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space-3;
+        
+        li {
+          display: flex;
+          align-items: center;
+          gap: $space-3;
+          font-size: $font-size-sm;
+          color: $gray-700;
+          
+          .role-badge {
+            flex-shrink: 0;
+          }
+          
+          span:not(.role-badge) {
+            flex: 1;
+          }
+        }
+      }
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-5 $space-6;
+    background: $gray-50;
+    border-top: 1px solid $gray-200;
+    
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-md) {
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filter-tabs {
+    .filter-tab {
+      font-size: $font-size-sm;
+      padding: $space-2 $space-4;
+    }
+  }
+  
+  .users-table-container {
+    overflow-x: auto;
+  }
+  
+  .users-table {
+    min-width: 800px;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .permissions-info {
+    flex-direction: column;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: $space-3;
+    
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
