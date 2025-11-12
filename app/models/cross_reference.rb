@@ -1,6 +1,7 @@
 class CrossReference < ApplicationRecord
   belongs_to :source_verse, class_name: 'BibleVerse'
   belongs_to :target_verse, class_name: 'BibleVerse'
+  belongs_to :user
   has_many :comments, as: :commentable, dependent: :destroy
   
   validates :source_verse_id, presence: true
