@@ -6,6 +6,11 @@ class Users::OtpSessionsController < ApplicationController
   
   # GET /users/otp/verify
   def new
+    # Generate and send OTP if not already generated
+    if current_user.otp_secret.blank? || current_user.otp_sent_at.nil? || current_user.otp_sent_at < Time.current - User::OTP_EXPIRY_TIME
+      current_user.generate_otp
+      OtpMailer.send_otp(current_user).deliver_now
+    end
     # Show the OTP verification form
   end
   
