@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Build JavaScript
+yarn build
+
+# Build CSS (if using jsbundling-rails with CSS)
+# Uncomment if you're using jsbundling for CSS as well
+# yarn build:css
+
