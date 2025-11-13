@@ -14,6 +14,7 @@
       align-items: center;
       justify-content: space-between;
       height: 4rem;
+      position: relative;
     }
     
     .nav-brand {
@@ -24,6 +25,7 @@
       font-size: $font-size-xl;
       font-weight: $font-weight-bold;
       text-decoration: none;
+      z-index: $z-fixed;
       
       .brand-icon {
         font-size: $font-size-2xl;
@@ -102,22 +104,162 @@
             border-color: $primary-dark;
           }
         }
+
+        &.btn-block {
+          width: 100%;
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+
+    // Hamburger Button
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 2rem;
+      height: 2rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: $z-fixed;
+      
+      &:focus {
+        outline: none;
+      }
+      
+      .hamburger-line {
+        width: 2rem;
+        height: 0.2rem;
+        background: $white;
+        border-radius: $radius-full;
+        transition: all 0.3s ease;
+        position: relative;
+        transform-origin: 1px;
+      }
+      
+      &.active {
+        .hamburger-line {
+          &:nth-child(1) {
+            transform: rotate(45deg);
+          }
+          
+          &:nth-child(2) {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          
+          &:nth-child(3) {
+            transform: rotate(-45deg);
+          }
+        }
+      }
+    }
+
+    // Mobile Menu
+    .nav-menu-mobile {
+      position: fixed;
+      top: 4rem;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: calc(100vh - 4rem);
+      background: linear-gradient(180deg, $gray-900 0%, $gray-800 100%);
+      border-left: 1px solid rgba($white, 0.1);
+      padding: $space-6;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      box-shadow: $shadow-xl;
+      
+      &.active {
+        right: 0;
+      }
+      
+      .mobile-nav-links {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 $space-8 0;
+        
+        .mobile-nav-item {
+          margin-bottom: $space-2;
+          
+          .mobile-nav-link {
+            display: block;
+            color: $gray-300;
+            text-decoration: none;
+            font-weight: $font-weight-medium;
+            font-size: $font-size-lg;
+            padding: $space-4;
+            border-radius: $radius;
+            transition: all 0.2s ease;
+            
+            &:hover {
+              color: $white;
+              background-color: rgba($white, 0.1);
+            }
+            
+            &.active {
+              color: $primary;
+              background-color: rgba($primary, 0.1);
+            }
+          }
+        }
+      }
+      
+      .mobile-nav-actions {
+        display: flex;
+        flex-direction: column;
+        gap: $space-4;
+        padding-top: $space-6;
+        border-top: 1px solid rgba($white, 0.1);
+        
+        .mobile-user-info {
+          padding: $space-4;
+          background-color: rgba($white, 0.05);
+          border-radius: $radius;
+          margin-bottom: $space-2;
+          
+          .mobile-user-email {
+            color: $white;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-medium;
+            margin-bottom: $space-2;
+            word-break: break-word;
+          }
+          
+          .role-badge {
+            display: inline-block;
+          }
+        }
+        
+        .btn {
+          width: 100%;
+          text-align: center;
+          padding: $space-3 $space-4;
+        }
       }
     }
   }
   
   @media (max-width: $breakpoint-md) {
     .navbar {
-      .nav-menu {
+      .nav-menu-desktop,
+      .nav-actions-desktop {
         display: none;
       }
       
-      .nav-actions {
-        gap: $space-2;
-        
-        .user-info {
-          display: none;
-        }
+      .hamburger {
+        display: flex;
+      }
+    }
+  }
+
+  @media (min-width: $breakpoint-md + 1) {
+    .navbar {
+      .nav-menu-mobile {
+        display: none;
       }
     }
   }
