@@ -1,6 +1,11 @@
 <div id="note-content">
   <div class="page-header">
-    <h1 class="page-title"><%= note.title %></h1>
+    <h1 class="page-title">
+      <%= note.title %>
+      <% if note.draft? %>
+        <span class="badge badge-secondary ml-2">Draft</span>
+      <% end %>
+    </h1>
     <div class="d-flex gap-2 mb-4">
       <% note.tag_list.each do |tag| %>
         <span class="badge badge-primary"><%= tag %></span>
@@ -16,6 +21,22 @@
       
       <% if current_user %>
         <div class="note-actions mt-6 d-flex gap-2">
+          <% if note.draft? && current_user.can_edit?(note) %>
+            <%= button_to publish_note_path(note), 
+                method: :patch, 
+                class: "btn btn-primary" do %>
+              <i class="fa-solid fa-paper-plane"></i>
+              Publish Note
+            <% end %>
+          <% elsif note.published? && current_user.can_edit?(note) %>
+            <%= button_to unpublish_note_path(note), 
+                method: :patch, 
+                class: "btn btn-secondary" do %>
+              <i class="fa-solid fa-file"></i>
+              Convert to Draft
+            <% end %>
+          <% end %>
+          
           <% if current_user.can_edit?(note) %>
             <%= link_to edit_note_path(note), 
                 class: "btn btn-outline", 

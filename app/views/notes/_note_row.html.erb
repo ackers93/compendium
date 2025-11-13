@@ -1,5 +1,10 @@
 <tr id="<%= dom_id note %>">
-  <td><%= link_to note.title, note, class: 'text-primary' %></td>
+  <td>
+    <%= link_to note.title, note, class: 'text-primary' %>
+    <% if note.draft? %>
+      <span class="badge badge-secondary ml-2">Draft</span>
+    <% end %>
+  </td>
   <td><%= note.content.to_plain_text.truncate(50) %></td>
   <td>
     <div class="d-flex flex-wrap gap-2">
@@ -8,4 +13,12 @@
       <% end %>
     </div>
   </td>
+  <% if note.draft? && current_user&.can_edit?(note) %>
+    <td>
+      <%= button_to "Publish", publish_note_path(note), 
+          method: :patch, 
+          class: "btn btn-sm btn-primary",
+          form: { data: { turbo_frame: "_top" } } %>
+    </td>
+  <% end %>
 </tr>
