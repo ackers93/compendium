@@ -55,8 +55,19 @@ Rails.application.routes.draw do
     patch 'two_factor_settings', to: 'two_factor_settings#update', as: :two_factor_settings
   end
   
+  # Content flagging routes
+  resources :content_flags, only: [:create]
+  
   # Admin routes
   namespace :admin do
     resources :users, only: [:index, :edit, :update, :destroy]
+    resources :content_flags, only: [:index] do
+      member do
+        patch :approve
+        patch :request_review
+        get :edit_content
+        delete :destroy_content
+      end
+    end
   end
 end

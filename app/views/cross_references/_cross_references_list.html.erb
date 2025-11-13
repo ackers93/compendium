@@ -6,6 +6,9 @@
           <tr>
             <th>Connected Verse</th>
             <th>Comments</th>
+            <% if current_user %>
+              <th>Actions</th>
+            <% end %>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +32,24 @@
                   <%= render 'cross_references/comments_summary', cross_ref: cross_ref %>
                 </div>
               </td>
+              <% if current_user %>
+                <td>
+                  <% if current_user.can_delete?(cross_ref) %>
+                    <%= button_to cross_reference_path(cross_ref), 
+                        method: :delete, 
+                        class: "btn btn-sm btn-danger",
+                        data: { turbo_confirm: "Are you sure you want to remove this cross-reference?" } do %>
+                      <i class="fa-solid fa-trash"></i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to "javascript:void(0)", 
+                        onclick: "flagContent('CrossReference', #{cross_ref.id})",
+                        class: "text-yellow-600 hover:text-yellow-800 text-sm" do %>
+                      <i class="fa-solid fa-flag"></i> Flag
+                    <% end %>
+                  <% end %>
+                </td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>

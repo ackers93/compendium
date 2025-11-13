@@ -14,6 +14,49 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <script>
+      // Global function for flagging content
+      function flagContent(contentType, contentId) {
+        const reason = prompt("Please explain why you are flagging this content:");
+        if (reason && reason.trim() !== '') {
+          // Submit the flag via a simple form
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = '/content_flags';
+          
+          // Add CSRF token
+          const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+          const csrfInput = document.createElement('input');
+          csrfInput.type = 'hidden';
+          csrfInput.name = 'authenticity_token';
+          csrfInput.value = csrfToken;
+          form.appendChild(csrfInput);
+          
+          // Add content type ID
+          const idInput = document.createElement('input');
+          idInput.type = 'hidden';
+          if (contentType === 'Note') {
+            idInput.name = 'note_id';
+          } else if (contentType === 'Comment') {
+            idInput.name = 'comment_id';
+          } else if (contentType === 'CrossReference') {
+            idInput.name = 'cross_reference_id';
+          }
+          idInput.value = contentId;
+          form.appendChild(idInput);
+          
+          // Add reason
+          const reasonInput = document.createElement('input');
+          reasonInput.type = 'hidden';
+          reasonInput.name = 'content_flag[reason]';
+          reasonInput.value = reason;
+          form.appendChild(reasonInput);
+          
+          document.body.appendChild(form);
+          form.submit();
+        }
+      }
+    </script>
   </head>
 
   <body>
