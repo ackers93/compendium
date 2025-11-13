@@ -77,6 +77,17 @@
           <li class="nav-item">
             <a href="/bible_verses/books" class="nav-link">Bible</a>
           </li>
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to my_flagged_content_path, class: "nav-link" do %>
+                My Content
+                <% review_count = current_user.flagged_content_needing_review_count %>
+                <% if review_count > 0 %>
+                  <span class="badge badge-warning" style="margin-left: 0.5rem; font-size: 0.7rem;"><%= review_count %></span>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
           <% if user_signed_in? && current_user.can_manage_users? %>
             <li class="nav-item">
               <a href="/admin/users" class="nav-link">Admin</a>
@@ -117,6 +128,17 @@
             <li class="mobile-nav-item">
               <a href="/bible_verses/books" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Bible</a>
             </li>
+            <% if user_signed_in? %>
+              <li class="mobile-nav-item">
+                <%= link_to my_flagged_content_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                  My Content
+                  <% review_count = current_user.flagged_content_needing_review_count %>
+                  <% if review_count > 0 %>
+                    <span class="badge badge-warning" style="margin-left: 0.5rem;"><%= review_count %></span>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
             <% if user_signed_in? && current_user.can_manage_users? %>
               <li class="mobile-nav-item">
                 <a href="/admin/users" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Admin</a>

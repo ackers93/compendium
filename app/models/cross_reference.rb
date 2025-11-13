@@ -1,9 +1,10 @@
 class CrossReference < ApplicationRecord
+  include Flaggable
+  
   belongs_to :source_verse, class_name: 'BibleVerse'
   belongs_to :target_verse, class_name: 'BibleVerse'
   belongs_to :user
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :content_flags, as: :flaggable, dependent: :destroy
   
   validates :source_verse_id, presence: true
   validates :target_verse_id, presence: true

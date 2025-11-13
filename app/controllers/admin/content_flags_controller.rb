@@ -53,9 +53,9 @@ module Admin
       # Redirect to the appropriate edit page based on content type
       case @flag.flaggable_type
       when 'Note'
-        redirect_to edit_note_path(@flag.flaggable)
+        redirect_to edit_note_path(@flag.flaggable, direct_edit: true)
       when 'Comment'
-        redirect_to edit_comment_path(@flag.flaggable)
+        redirect_to edit_comment_path(@flag.flaggable, direct_edit: true)
       when 'CrossReference'
         redirect_to admin_content_flags_path, alert: "Cross-references cannot be edited directly. Please delete and recreate if needed."
       end

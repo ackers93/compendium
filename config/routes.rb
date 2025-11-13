@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   
   # Content flagging routes
   resources :content_flags, only: [:create]
+  get 'my-flagged-content', to: 'my_flagged_content#index', as: :my_flagged_content
   
   # Admin routes
   namespace :admin do

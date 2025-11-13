@@ -129,12 +129,25 @@
                 <strong>Flagged At:</strong> 
                 <%= flag.created_at.strftime("%b %d, %Y at %I:%M %p") %>
               </div>
+              <% if flag.status_pending? && flag.updated_at > flag.created_at + 5.seconds %>
+                <div class="flag-meta-item flag-updated-indicator">
+                  <strong><i class="fa-solid fa-rotate"></i> Updated:</strong> 
+                  <%= flag.updated_at.strftime("%b %d, %Y at %I:%M %p") %>
+                </div>
+              <% end %>
             </div>
             
             <% if flag.reason.present? %>
               <div class="flag-reason">
                 <strong>Reason:</strong>
                 <p><%= flag.reason %></p>
+              </div>
+            <% end %>
+            
+            <% if flag.admin_note.present? && flag.admin_note.include?('[UPDATE]') %>
+              <div class="flag-update-notice">
+                <i class="fa-solid fa-circle-check"></i>
+                <strong>Content has been updated by the author and is ready for re-review!</strong>
               </div>
             <% end %>
             
@@ -175,9 +188,16 @@
                 <% if flag.admin_note.present? %>
                   <div class="flag-reason">
                     <strong>Admin Note:</strong>
-                    <p><%= flag.admin_note %></p>
+                    <p><%= simple_format(flag.admin_note) %></p>
                   </div>
                 <% end %>
+              </div>
+            <% elsif flag.status_pending? && flag.admin_note.present? %>
+              <div class="flag-history">
+                <strong>Previous Admin Notes:</strong>
+                <div class="admin-note-history">
+                  <%= simple_format(flag.admin_note) %>
+                </div>
               </div>
             <% end %>
           </div>

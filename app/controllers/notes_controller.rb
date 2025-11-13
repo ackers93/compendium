@@ -64,7 +64,9 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        notice_message = if @note.draft? && @note.status_previously_was == 'published'
+        notice_message = if @note.flagged_content_was_updated
+          "Note was successfully updated and has been submitted back to admins for review. Thank you for addressing the feedback!"
+        elsif @note.draft? && @note.status_previously_was == 'published'
           "Note was converted to draft."
         elsif @note.draft?
           "Draft was successfully updated."
@@ -74,12 +76,20 @@ class NotesController < ApplicationController
           "Note was successfully updated."
         end
         format.turbo_stream { 
+          # Normal modal updates - direct_edit cases will use HTML format
           render turbo_stream: [
             turbo_stream.replace("modal", ""),  # Close the modal
             turbo_stream.replace("note-content", partial: "notes/note_content", locals: { note: @note })  # Update the note content
           ]
         }
-        format.html { redirect_to @note, notice: notice_message }
+        format.html { 
+          # If editing from flagged content review, redirect appropriately
+          if params[:direct_edit] && @note.flagged_content_was_updated
+            redirect_to my_flagged_content_path, notice: notice_message
+          else
+            redirect_to @note, notice: notice_message
+          end
+        }
         format.json { render json: { id: @note.id, title: @note.title }, status: :ok, location: @note }
       else
         format.turbo_stream { 
