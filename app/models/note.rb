@@ -24,4 +24,8 @@ class Note < ApplicationRecord
   def publish!
     update(status: 'published')
   end
+  
+  def unpublish!
+    update(status: 'draft')
+  end
 end

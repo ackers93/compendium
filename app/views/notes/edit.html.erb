@@ -24,6 +24,10 @@
             Publish
           </button>
         <% else %>
+          <button type="submit" form="note-form" name="note[status]" value="draft" class="btn btn-secondary">
+            <i class="fa-solid fa-file"></i>
+            Convert to Draft
+          </button>
           <button type="submit" form="note-form" name="note[status]" value="published" class="btn btn-primary">
             <i class="fa-solid fa-save"></i>
             Update Note

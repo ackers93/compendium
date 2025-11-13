@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   resources :notes do
     member do
       patch :publish
+      patch :unpublish
     end
     collection do
       get :drafts

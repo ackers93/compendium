@@ -28,6 +28,13 @@
               <i class="fa-solid fa-paper-plane"></i>
               Publish Note
             <% end %>
+          <% elsif note.published? && current_user.can_edit?(note) %>
+            <%= button_to unpublish_note_path(note), 
+                method: :patch, 
+                class: "btn btn-secondary" do %>
+              <i class="fa-solid fa-file"></i>
+              Convert to Draft
+            <% end %>
           <% end %>
           
           <% if current_user.can_edit?(note) %>

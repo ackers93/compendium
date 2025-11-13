@@ -2,9 +2,9 @@ class NotesController < ApplicationController
   include Authorizable
   
   before_action :authenticate_user!
-  before_action :set_note, only: %i[ show edit update destroy publish ]
+  before_action :set_note, only: %i[ show edit update destroy publish unpublish ]
   before_action :authorize_create!, only: %i[ new create ]
-  before_action -> { authorize_edit!(@note) }, only: %i[ edit update publish ]
+  before_action -> { authorize_edit!(@note) }, only: %i[ edit update publish unpublish ]
   before_action -> { authorize_delete!(@note) }, only: %i[ destroy ]
 
   def index
@@ -64,7 +64,9 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
-        notice_message = if @note.draft?
+        notice_message = if @note.draft? && @note.status_previously_was == 'published'
+          "Note was converted to draft."
+        elsif @note.draft?
           "Draft was successfully updated."
         elsif @note.status_previously_was == 'draft'
           "Note was successfully published."
@@ -110,6 +112,23 @@ class NotesController < ApplicationController
         format.json { render json: { id: @note.id }, status: :ok }
       else
         format.html { redirect_to @note, alert: "Failed to publish note." }
+        format.json { render json: @note.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  def unpublish
+    respond_to do |format|
+      if @note.unpublish!
+        format.turbo_stream { 
+          render turbo_stream: [
+            turbo_stream.replace("note-content", partial: "notes/note_content", locals: { note: @note })
+          ]
+        }
+        format.html { redirect_to @note, notice: "Note was converted to draft." }
+        format.json { render json: { id: @note.id }, status: :ok }
+      else
+        format.html { redirect_to @note, alert: "Failed to convert note to draft." }
         format.json { render json: @note.errors, status: :unprocessable_entity }
       end
     end
