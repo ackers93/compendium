@@ -2,16 +2,27 @@ class NotesController < ApplicationController
   include Authorizable
   
   before_action :authenticate_user!
-  before_action :set_note, only: %i[ show edit update destroy ]
+  before_action :set_note, only: %i[ show edit update destroy publish ]
   before_action :authorize_create!, only: %i[ new create ]
-  before_action -> { authorize_edit!(@note) }, only: %i[ edit update ]
+  before_action -> { authorize_edit!(@note) }, only: %i[ edit update publish ]
   before_action -> { authorize_delete!(@note) }, only: %i[ destroy ]
 
   def index
-    @notes = Note.order(created_at: :desc)
+    @notes = Note.published.order(created_at: :desc)
+  end
+  
+  def drafts
+    @notes = current_user.notes.draft.order(updated_at: :desc)
+    render :index
   end
 
   def show
+    # Prevent users from viewing other people's drafts
+    if @note.draft? && @note.user != current_user
+      redirect_to notes_path, alert: "You don't have permission to view this draft."
+      return
+    end
+    
     @commentable = @note
     @comment = @commentable.comments.build
     @comments = Comment.where(commentable: @note).includes(:user, :rich_text_content).order(created_at: :desc)
@@ -30,13 +41,15 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.save
+        notice_message = @note.draft? ? "Draft was successfully saved." : "Note was successfully published."
+        redirect_path = @note.draft? ? drafts_notes_path : notes_path
         format.turbo_stream { 
           render turbo_stream: [
             turbo_stream.replace("modal", ""),  # Close the modal
             turbo_stream.prepend("notes-table-body", partial: "notes/note_row", locals: { note: @note })  # Add to table body
           ]
         }
-        format.html { redirect_to notes_path, notice: "Note was successfully created." }
+        format.html { redirect_to redirect_path, notice: notice_message }
         format.json { render json: { id: @note.id, title: @note.title }, status: :created, location: @note }
       else
         format.turbo_stream { 
@@ -51,13 +64,20 @@ class NotesController < ApplicationController
   def update
     respond_to do |format|
       if @note.update(note_params)
+        notice_message = if @note.draft?
+          "Draft was successfully updated."
+        elsif @note.status_previously_was == 'draft'
+          "Note was successfully published."
+        else
+          "Note was successfully updated."
+        end
         format.turbo_stream { 
           render turbo_stream: [
             turbo_stream.replace("modal", ""),  # Close the modal
             turbo_stream.replace("note-content", partial: "notes/note_content", locals: { note: @note })  # Update the note content
           ]
         }
-        format.html { redirect_to @note, notice: "Note was successfully updated." }
+        format.html { redirect_to @note, notice: notice_message }
         format.json { render json: { id: @note.id, title: @note.title }, status: :ok, location: @note }
       else
         format.turbo_stream { 
@@ -77,10 +97,28 @@ class NotesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def publish
+    respond_to do |format|
+      if @note.publish!
+        format.turbo_stream { 
+          render turbo_stream: [
+            turbo_stream.remove(dom_id(@note)),  # Remove from drafts list
+          ]
+        }
+        format.html { redirect_to @note, notice: "Note was successfully published." }
+        format.json { render json: { id: @note.id }, status: :ok }
+      else
+        format.html { redirect_to @note, alert: "Failed to publish note." }
+        format.json { render json: @note.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def list
     @notes = if params[:query].present?
-               Note.joins(:rich_text_content)
+               Note.published
+                   .joins(:rich_text_content)
                    .joins("LEFT JOIN taggings ON taggings.taggable_id = notes.id AND taggings.taggable_type = 'Note'")
                    .joins("LEFT JOIN tags ON tags.id = taggings.tag_id")
                    .joins("LEFT JOIN comments ON comments.commentable_id = notes.id AND comments.commentable_type = 'Note'")
@@ -90,7 +128,7 @@ class NotesController < ApplicationController
                    .distinct
                    .order(created_at: :desc)
              else
-               Note.order(created_at: :desc)
+               Note.published.order(created_at: :desc)
              end
     
     render "index"
@@ -103,6 +141,6 @@ class NotesController < ApplicationController
   end
 
   def note_params
-    params.require(:note).permit(:title, :content, :tag_list)
+    params.require(:note).permit(:title, :content, :tag_list, :status)
   end
 end

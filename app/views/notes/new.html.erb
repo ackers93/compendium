@@ -14,9 +14,13 @@
       
       <div class="modal-footer">
         <%= link_to 'Cancel', notes_path, class: 'btn btn-outline', data: { turbo_frame: "modal" } %>
-        <button type="submit" form="note-form" class="btn btn-primary">
-          <i class="fa-solid fa-save"></i>
-          Create Note
+        <button type="submit" form="note-form" name="note[status]" value="draft" class="btn btn-secondary">
+          <i class="fa-solid fa-file"></i>
+          Save as Draft
+        </button>
+        <button type="submit" form="note-form" name="note[status]" value="published" class="btn btn-primary">
+          <i class="fa-solid fa-paper-plane"></i>
+          Publish
         </button>
       </div>
     </div>

@@ -32,6 +32,12 @@ Rails.application.routes.draw do
   
   # Notes routes
   resources :notes do
+    member do
+      patch :publish
+    end
+    collection do
+      get :drafts
+    end
     resources :comments, only: [:new, :create, :edit, :update, :destroy]
   end
 

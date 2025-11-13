@@ -6,12 +6,33 @@
 <div class="content-section">
   <div class="section-header">
     <div class="d-flex justify-between items-center">
-      <h2 class="section-title">All Notes</h2>
-      <% if current_user&.can_create? %>
-        <%= link_to "Publish a new note", new_note_path, 
-            class: "btn btn-primary", 
-            data: { turbo_frame: "modal" } %>
-      <% end %>
+      <h2 class="section-title">
+        <% if request.path == drafts_notes_path %>
+          My Drafts
+        <% else %>
+          All Notes
+        <% end %>
+      </h2>
+      <div class="d-flex gap-2">
+        <% if current_user %>
+          <% if request.path == drafts_notes_path %>
+            <%= link_to notes_path, class: "btn btn-outline" do %>
+              <i class="fa-solid fa-list"></i>
+              View All Notes
+            <% end %>
+          <% else %>
+            <%= link_to drafts_notes_path, class: "btn btn-outline" do %>
+              <i class="fa-solid fa-file"></i>
+              My Drafts
+            <% end %>
+          <% end %>
+        <% end %>
+        <% if current_user&.can_create? %>
+          <%= link_to "Publish a new note", new_note_path, 
+              class: "btn btn-primary", 
+              data: { turbo_frame: "modal" } %>
+        <% end %>
+      </div>
     </div>
   </div>
   
