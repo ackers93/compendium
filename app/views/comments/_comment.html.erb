@@ -18,6 +18,11 @@
           <%= link_to "Delete", comment_path(comment), 
               class: "text-red-500 hover:text-red-700",
               data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+        <% else %>
+          <span class="mx-1">•</span>
+          <%= link_to "Flag", "javascript:void(0)", 
+              onclick: "flagContent('Comment', #{comment.id})",
+              class: "text-yellow-600 hover:text-yellow-800" %>
         <% end %>
       </span>
     <% end %>

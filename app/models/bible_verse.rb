@@ -15,6 +15,11 @@ class BibleVerse < ApplicationRecord
   validates :text, presence: true
   validates :testament, presence: true, inclusion: { in: ['OT', 'NT'] }
   
+  # Get human-readable reference (e.g., "John 3:16")
+  def reference
+    "#{book} #{chapter}:#{verse}"
+  end
+  
   # Get all cross-references for this verse (both as source and target)
   def all_cross_references
     CrossReference.where('source_verse_id = ? OR target_verse_id = ?', id, id)

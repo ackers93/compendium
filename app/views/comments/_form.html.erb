@@ -1,4 +1,6 @@
-<%= form_with(model: comment, url: bible_verse_form_url_for(comment), id: "comment-form") do |form| %>
+<%= form_with(model: comment, url: bible_verse_form_url_for(comment), id: "comment-form", data: { turbo_frame: params[:direct_edit] ? "_top" : nil }) do |form| %>
+  <%= hidden_field_tag :direct_edit, params[:direct_edit] if params[:direct_edit] %>
+  
   <% if comment.errors.any? %>
     <div class="alert alert-error mb-4">
       <% comment.errors.full_messages.each do |message| %>

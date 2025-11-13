@@ -1,4 +1,6 @@
-<%= form_with(model: note, id: "note-form", data: { turbo_frame: "modal" }) do |form| %>
+<%= form_with(model: note, id: "note-form", data: { turbo_frame: params[:direct_edit] ? "_top" : "modal" }) do |form| %>
+  <%= hidden_field_tag :direct_edit, params[:direct_edit] if params[:direct_edit] %>
+  
   <div class="form-group">
     <%= form.label :title, class: "form-label" %>
     <%= form.text_field :title, class: "form-input" %>

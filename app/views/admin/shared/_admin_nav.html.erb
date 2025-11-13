@@ -1,0 +1,16 @@
+<div class="admin-navigation mb-6">
+  <div class="filter-tabs">
+    <%= link_to admin_users_path, class: "filter-tab #{controller_name == 'users' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-users"></i>
+      User Management
+    <% end %>
+    <%= link_to admin_content_flags_path, class: "filter-tab #{controller_name == 'content_flags' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-flag"></i>
+      Flagged Content
+      <% if ContentFlag.status_pending.count > 0 %>
+        <span class="badge badge-warning ml-2"><%= ContentFlag.status_pending.count %></span>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+

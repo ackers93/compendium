@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_13_004307) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_13_042117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -72,6 +72,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_13_004307) do
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+  end
+
+  create_table "content_flags", force: :cascade do |t|
+    t.string "flaggable_type", null: false
+    t.bigint "flaggable_id", null: false
+    t.bigint "user_id", null: false
+    t.text "reason"
+    t.string "status", default: "pending", null: false
+    t.bigint "resolved_by_id"
+    t.datetime "resolved_at"
+    t.text "admin_note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flaggable_type", "flaggable_id"], name: "index_content_flags_on_flaggable"
+    t.index ["flaggable_type", "flaggable_id"], name: "index_content_flags_on_flaggable_type_and_flaggable_id"
+    t.index ["resolved_by_id"], name: "index_content_flags_on_resolved_by_id"
+    t.index ["status"], name: "index_content_flags_on_status"
+    t.index ["user_id"], name: "index_content_flags_on_user_id"
   end
 
   create_table "cross_references", force: :cascade do |t|
@@ -148,6 +166,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_13_004307) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "content_flags", "users"
+  add_foreign_key "content_flags", "users", column: "resolved_by_id"
   add_foreign_key "cross_references", "bible_verses", column: "source_verse_id"
   add_foreign_key "cross_references", "bible_verses", column: "target_verse_id"
   add_foreign_key "cross_references", "users"

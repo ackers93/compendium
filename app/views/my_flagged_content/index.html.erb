@@ -1,0 +1,308 @@
+<div class="page-header">
+  <h1 class="page-title">My Flagged Content</h1>
+  <p class="page-subtitle">Review feedback on your content from administrators</p>
+</div>
+
+<div class="content-section">
+  <!-- Status Statistics Cards -->
+  <div class="admin-stats-grid">
+    <div class="stat-card stat-card-info">
+      <div class="stat-icon">
+        <i class="fa-solid fa-redo"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Review Requested</h3>
+        <p class="stat-number"><%= @review_requested_count %></p>
+        <%= link_to "View All", my_flagged_content_path(status: 'review_requested'), class: "stat-link" %>
+      </div>
+    </div>
+    
+    <div class="stat-card stat-card-warning">
+      <div class="stat-icon">
+        <i class="fa-solid fa-flag"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Under Review</h3>
+        <p class="stat-number"><%= @pending_count %></p>
+        <%= link_to "View All", my_flagged_content_path(status: 'pending'), class: "stat-link" %>
+      </div>
+    </div>
+    
+    <div class="stat-card stat-card-success">
+      <div class="stat-icon">
+        <i class="fa-solid fa-check-circle"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Approved</h3>
+        <p class="stat-number"><%= @approved_count %></p>
+        <%= link_to "View All", my_flagged_content_path(status: 'approved'), class: "stat-link" %>
+      </div>
+    </div>
+    
+    <div class="stat-card stat-card-primary">
+      <div class="stat-icon">
+        <i class="fa-solid fa-edit"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Edited</h3>
+        <p class="stat-number"><%= @edited_count %></p>
+        <%= link_to "View All", my_flagged_content_path(status: 'edited'), class: "stat-link" %>
+      </div>
+    </div>
+    
+    <div class="stat-card stat-card-danger">
+      <div class="stat-icon">
+        <i class="fa-solid fa-trash"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Deleted</h3>
+        <p class="stat-number"><%= @deleted_count %></p>
+        <%= link_to "View All", my_flagged_content_path(status: 'deleted'), class: "stat-link" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="content-section">
+  <div class="filter-tabs">
+    <%= link_to my_flagged_content_path(status: 'review_requested'), class: "filter-tab #{(params[:status] == 'review_requested' || params[:status].blank?) ? 'active' : ''}" do %>
+      <i class="fa-solid fa-redo"></i>
+      Review Requested
+      <% if @review_requested_count > 0 %>
+        <span class="badge badge-warning ml-2"><%= @review_requested_count %></span>
+      <% end %>
+    <% end %>
+    <%= link_to my_flagged_content_path(status: 'pending'), class: "filter-tab #{params[:status] == 'pending' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-flag"></i>
+      Under Review
+    <% end %>
+    <%= link_to my_flagged_content_path(status: 'approved'), class: "filter-tab #{params[:status] == 'approved' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-check-circle"></i>
+      Approved
+    <% end %>
+    <%= link_to my_flagged_content_path(status: 'edited'), class: "filter-tab #{params[:status] == 'edited' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-edit"></i>
+      Edited
+    <% end %>
+    <%= link_to my_flagged_content_path(status: 'deleted'), class: "filter-tab #{params[:status] == 'deleted' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-trash"></i>
+      Deleted
+    <% end %>
+  </div>
+</div>
+
+<!-- Flags List -->
+<div class="content-section">
+  <% if @flags.any? %>
+    <div class="flags-table-container">
+      <% @flags.each do |flag| %>
+        <div class="flag-card">
+          <div class="flag-header">
+            <div class="flag-type">
+              <% case flag.flaggable_type %>
+              <% when 'Note' %>
+                <i class="fa-solid fa-file-lines"></i> Your Note
+              <% when 'Comment' %>
+                <i class="fa-solid fa-comment"></i> Your Comment
+              <% when 'CrossReference' %>
+                <i class="fa-solid fa-link"></i> Your Cross-Reference
+              <% end %>
+            </div>
+            <div class="flag-status">
+              <span class="badge badge-<%= flag.status %>"><%= flag.status.humanize %></span>
+            </div>
+          </div>
+          
+          <div class="flag-content">
+            <h3 class="flag-title"><%= flag.flaggable_title %></h3>
+            
+            <div class="flag-meta">
+              <div class="flag-meta-item">
+                <strong>Flagged By:</strong> 
+                <%= flag.user.email %>
+              </div>
+              <div class="flag-meta-item">
+                <strong>Flagged At:</strong> 
+                <%= flag.created_at.strftime("%b %d, %Y at %I:%M %p") %>
+              </div>
+              <% if flag.resolved_by %>
+                <div class="flag-meta-item">
+                  <strong>Reviewed By:</strong> 
+                  <%= flag.resolved_by.email %>
+                </div>
+              <% end %>
+              <% if flag.resolved_at %>
+                <div class="flag-meta-item">
+                  <strong>Reviewed At:</strong> 
+                  <%= flag.resolved_at.strftime("%b %d, %Y at %I:%M %p") %>
+                </div>
+              <% end %>
+            </div>
+            
+            <% if flag.reason.present? %>
+              <div class="flag-reason">
+                <strong>Reason for Flag:</strong>
+                <p><%= flag.reason %></p>
+              </div>
+            <% end %>
+            
+            <% if flag.admin_note.present? %>
+              <div class="admin-message">
+                <strong><i class="fa-solid fa-user-shield"></i> Admin Feedback:</strong>
+                <p><%= flag.admin_note %></p>
+              </div>
+            <% end %>
+            
+            <div class="flag-preview">
+              <strong>Your Content:</strong>
+              <div class="content-preview-box">
+                <% case flag.flaggable_type %>
+                <% when 'Note' %>
+                  <% if flag.flaggable %>
+                    <% if flag.flaggable.content.present? %>
+                      <%= truncate(flag.flaggable.content.to_plain_text, length: 300) %>
+                    <% else %>
+                      <em>No content</em>
+                    <% end %>
+                  <% else %>
+                    <em class="text-danger">Content has been deleted</em>
+                  <% end %>
+                <% when 'Comment' %>
+                  <% if flag.flaggable %>
+                    <% if flag.flaggable.content.present? %>
+                      <%= truncate(flag.flaggable.content.to_plain_text, length: 300) %>
+                    <% else %>
+                      <em>No content</em>
+                    <% end %>
+                  <% else %>
+                    <em class="text-danger">Content has been deleted</em>
+                  <% end %>
+                <% when 'CrossReference' %>
+                  <% if flag.flaggable %>
+                    <%= flag.flaggable.source_verse.reference %> → <%= flag.flaggable.target_verse.reference %>
+                  <% else %>
+                    <em class="text-danger">Content has been deleted</em>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          
+          <% if flag.status_review_requested? && flag.flaggable.present? %>
+            <div class="flag-actions">
+              <% 
+                # Determine the correct edit path
+                edit_path = case flag.flaggable_type
+                when 'Note'
+                  edit_note_path(flag.flaggable)
+                when 'Comment'
+                  edit_comment_path(flag.flaggable)
+                when 'CrossReference'
+                  nil # Cross-references can't be edited
+                end
+              %>
+              
+              <% if edit_path %>
+                <%= link_to edit_path + (edit_path.include?('?') ? '&' : '?') + 'direct_edit=true', class: "btn btn-primary" do %>
+                  <i class="fa-solid fa-edit"></i> Edit Content
+                <% end %>
+              <% end %>
+              
+              <% 
+                # Determine the correct view path
+                view_path = case flag.flaggable_type
+                when 'Note'
+                  note_path(flag.flaggable)
+                when 'Comment'
+                  case flag.flaggable.commentable_type
+                  when 'Note'
+                    note_path(flag.flaggable.commentable)
+                  when 'BibleVerse'
+                    verse = flag.flaggable.commentable
+                    bible_verse_show_path(verse.book, verse.chapter, verse.verse)
+                  when 'CrossReference'
+                    xref = flag.flaggable.commentable
+                    bible_verse_show_path(xref.source_verse.book, xref.source_verse.chapter, xref.source_verse.verse)
+                  end
+                when 'CrossReference'
+                  bible_verse_show_path(flag.flaggable.source_verse.book, flag.flaggable.source_verse.chapter, flag.flaggable.source_verse.verse)
+                end
+              %>
+              
+              <%= link_to view_path, class: "btn btn-outline", target: "_blank" do %>
+                <i class="fa-solid fa-eye"></i> View Content
+              <% end %>
+            </div>
+          <% elsif flag.flaggable.present? %>
+            <div class="flag-actions">
+              <% 
+                # Determine the correct view path
+                view_path = case flag.flaggable_type
+                when 'Note'
+                  note_path(flag.flaggable)
+                when 'Comment'
+                  case flag.flaggable.commentable_type
+                  when 'Note'
+                    note_path(flag.flaggable.commentable)
+                  when 'BibleVerse'
+                    verse = flag.flaggable.commentable
+                    bible_verse_show_path(verse.book, verse.chapter, verse.verse)
+                  when 'CrossReference'
+                    xref = flag.flaggable.commentable
+                    bible_verse_show_path(xref.source_verse.book, xref.source_verse.chapter, xref.source_verse.verse)
+                  end
+                when 'CrossReference'
+                  bible_verse_show_path(flag.flaggable.source_verse.book, flag.flaggable.source_verse.chapter, flag.flaggable.source_verse.verse)
+                end
+              %>
+              
+              <%= link_to view_path, class: "btn btn-outline", target: "_blank" do %>
+                <i class="fa-solid fa-eye"></i> View Content
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <i class="fa-solid fa-flag-checkered"></i>
+      <% if params[:status] == 'review_requested' || params[:status].blank? %>
+        <p>No content currently needs your review! 🎉</p>
+        <p class="text-sm mt-2">When admins request revisions to your content, they will appear here.</p>
+      <% else %>
+        <p>No flagged content found with this status.</p>
+      <% end %>
+      <%= link_to "View All My Flags", my_flagged_content_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.admin-message {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #e0f2fe;
+  border-left: 4px solid #0ea5e9;
+  border-radius: 0.5rem;
+}
+
+.admin-message strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #0c4a6e;
+  font-weight: 600;
+}
+
+.admin-message strong i {
+  margin-right: 0.5rem;
+}
+
+.admin-message p {
+  margin: 0;
+  color: #334155;
+  line-height: 1.6;
+}
+</style>
+

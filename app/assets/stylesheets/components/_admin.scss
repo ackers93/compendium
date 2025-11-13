@@ -484,3 +484,322 @@
   }
 }
 
+// Flagged Content Styles
+.flag-card {
+  background: $white;
+  border: 2px solid $gray-200;
+  border-radius: $radius-lg;
+  padding: $space-6;
+  margin-bottom: $space-4;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: $gray-300;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.flag-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $space-4;
+  padding-bottom: $space-3;
+  border-bottom: 1px solid $gray-200;
+}
+
+.flag-type {
+  font-weight: $font-weight-semibold;
+  color: $gray-700;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  
+  i {
+    color: $gray-500;
+  }
+}
+
+.flag-status {
+  .badge {
+    font-size: $font-size-sm;
+    padding: $space-1 $space-3;
+  }
+}
+
+.flag-content {
+  .flag-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $gray-900;
+    margin-bottom: $space-4;
+  }
+}
+
+.flag-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $space-3;
+  margin-bottom: $space-4;
+  padding: $space-4;
+  background-color: $gray-50;
+  border-radius: $radius;
+}
+
+.flag-meta-item {
+  font-size: $font-size-sm;
+  color: $gray-700;
+  
+  strong {
+    color: $gray-900;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.flag-reason {
+  margin-bottom: $space-4;
+  padding: $space-4;
+  background-color: $warning-light;
+  border-left: 4px solid $warning;
+  border-radius: $radius;
+  
+  strong {
+    display: block;
+    margin-bottom: $space-2;
+    color: $gray-900;
+    font-weight: $font-weight-semibold;
+  }
+  
+  p {
+    margin: 0;
+    color: $gray-700;
+    line-height: 1.6;
+  }
+}
+
+.flag-preview {
+  margin-bottom: $space-4;
+  
+  strong {
+    display: block;
+    margin-bottom: $space-2;
+    color: $gray-900;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.content-preview-box {
+  padding: $space-4;
+  background-color: $gray-50;
+  border: 1px solid $gray-200;
+  border-radius: $radius;
+  font-size: $font-size-sm;
+  color: $gray-700;
+  line-height: 1.6;
+  
+  em {
+    color: $gray-500;
+  }
+}
+
+.flag-resolution {
+  margin-top: $space-4;
+  padding-top: $space-4;
+  border-top: 2px solid $gray-200;
+}
+
+.flag-actions {
+  display: flex;
+  gap: $space-2;
+  flex-wrap: wrap;
+  margin-top: $space-4;
+  padding-top: $space-4;
+  border-top: 1px solid $gray-200;
+  
+  .btn {
+    flex: 0 1 auto;
+  }
+}
+
+.flags-table-container {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+// Badge status colors
+.badge {
+  &.badge-pending {
+    background-color: $warning-light;
+    color: $warning-dark;
+  }
+  
+  &.badge-approved {
+    background-color: $success-light;
+    color: $success-dark;
+  }
+  
+  &.badge-review_requested {
+    background-color: $info-light;
+    color: $info-dark;
+  }
+  
+  &.badge-edited {
+    background-color: $primary-light;
+    color: $primary-dark;
+  }
+  
+  &.badge-deleted {
+    background-color: $danger-light;
+    color: $danger-dark;
+  }
+}
+
+// Stat card variations for flags
+.stat-card {
+  &.stat-card-warning {
+    border-color: rgba($warning, 0.2);
+    
+    .stat-icon {
+      background: linear-gradient(135deg, $warning 0%, darken($warning, 10%) 100%);
+      color: $white;
+    }
+    
+    .stat-label,
+    .stat-number {
+      color: darken($warning, 15%);
+    }
+    
+    .stat-link {
+      color: $warning;
+    }
+  }
+  
+  &.stat-card-info {
+    border-color: rgba($info, 0.2);
+    
+    .stat-icon {
+      background: linear-gradient(135deg, $info 0%, darken($info, 10%) 100%);
+      color: $white;
+    }
+    
+    .stat-label,
+    .stat-number {
+      color: darken($info, 15%);
+    }
+    
+    .stat-link {
+      color: $info;
+    }
+  }
+  
+  &.stat-card-primary {
+    border-color: rgba($primary, 0.2);
+    
+    .stat-icon {
+      background: linear-gradient(135deg, $primary 0%, darken($primary, 10%) 100%);
+      color: $white;
+    }
+    
+    .stat-label,
+    .stat-number {
+      color: darken($primary, 15%);
+    }
+    
+    .stat-link {
+      color: $primary;
+    }
+  }
+  
+  &.stat-card-danger {
+    border-color: rgba($danger, 0.2);
+    
+    .stat-icon {
+      background: linear-gradient(135deg, $danger 0%, darken($danger, 10%) 100%);
+      color: $white;
+    }
+    
+    .stat-label,
+    .stat-number {
+      color: darken($danger, 15%);
+    }
+    
+    .stat-link {
+      color: $danger;
+    }
+  }
+}
+
+.admin-navigation {
+  margin-bottom: $space-6;
+}
+
+// Flag update indicators
+.flag-updated-indicator {
+  background-color: $success-light;
+  border: 1px solid $success;
+  border-radius: $radius;
+  padding: $space-2 $space-3;
+  
+  strong {
+    color: $success-dark;
+  }
+  
+  i {
+    color: $success;
+    margin-right: $space-1;
+  }
+}
+
+.flag-update-notice {
+  margin-bottom: $space-4;
+  padding: $space-4;
+  background-color: $success-light;
+  border-left: 4px solid $success;
+  border-radius: $radius;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  
+  i {
+    font-size: $font-size-xl;
+    color: $success;
+    flex-shrink: 0;
+  }
+  
+  strong {
+    color: $success-dark;
+    font-weight: $font-weight-semibold;
+    margin: 0;
+  }
+}
+
+.flag-history {
+  margin-bottom: $space-4;
+  padding: $space-4;
+  background-color: $gray-50;
+  border-left: 4px solid $gray-400;
+  border-radius: $radius;
+  
+  > strong {
+    display: block;
+    margin-bottom: $space-2;
+    color: $gray-900;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.admin-note-history {
+  font-size: $font-size-sm;
+  color: $gray-700;
+  line-height: 1.6;
+  
+  p {
+    margin-bottom: $space-2;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+

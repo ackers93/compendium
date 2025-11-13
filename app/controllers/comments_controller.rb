@@ -93,7 +93,14 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
+        notice_message = if @comment.flagged_content_was_updated
+          "Comment was successfully updated and has been submitted back to admins for review. Thank you for addressing the feedback!"
+        else
+          "Comment was successfully updated."
+        end
+        
         format.turbo_stream { 
+          # Normal modal updates - direct_edit cases will use HTML format
           if @comment.commentable.is_a?(CrossReference)
             # Handle cross-reference comment updates - replace the entire cross-references list
             render turbo_stream: [
@@ -111,10 +118,13 @@ class CommentsController < ApplicationController
           end
         }
         format.html { 
-          if @comment.commentable.is_a?(BibleVerse)
-            redirect_to bible_verse_show_path(book: @comment.commentable.book, chapter: @comment.commentable.chapter, verse: @comment.commentable.verse), notice: "Comment was successfully updated."
+          # If editing from flagged content review, redirect appropriately
+          if params[:direct_edit] && @comment.flagged_content_was_updated
+            redirect_to my_flagged_content_path, notice: notice_message
+          elsif @comment.commentable.is_a?(BibleVerse)
+            redirect_to bible_verse_show_path(book: @comment.commentable.book, chapter: @comment.commentable.chapter, verse: @comment.commentable.verse), notice: notice_message
           else
-            redirect_to @comment.commentable, notice: "Comment was successfully updated."
+            redirect_to @comment.commentable, notice: notice_message
           end
         }
         format.json { render json: { id: @comment.id, content: @comment.content }, status: :ok, location: @comment }
@@ -206,6 +216,8 @@ class CommentsController < ApplicationController
 
   def ensure_frame_response
     return unless Rails.env.development?
+    # Allow direct access if coming from admin or with direct_edit param
+    return if params[:direct_edit] || request.referer&.include?('admin')
     redirect_to root_path unless turbo_frame_request?
   end
 
