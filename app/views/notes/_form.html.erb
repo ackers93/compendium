@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <%= form.label :tag_list, class: "form-label" %>
-    <%= form.text_field :tag_list, class: "form-input", placeholder: "Enter tags separated by commas" %>
+    <%= form.text_field :tag_list, value: note.tag_list.to_s, class: "form-input", placeholder: "Enter tags separated by commas" %>
     <small class="form-help">Tags help organize and categorize your notes</small>
   </div>
 <% end %>
