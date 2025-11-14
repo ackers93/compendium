@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 30px;
+        border: 1px solid #e0e0e0;
+      }
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px 8px 0 0;
+        margin: -30px -30px 20px -30px;
+      }
+      .header h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .user-info {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        border-left: 4px solid #667eea;
+      }
+      .info-row {
+        display: flex;
+        margin: 10px 0;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      .info-row:last-child {
+        border-bottom: none;
+      }
+      .info-label {
+        font-weight: bold;
+        color: #555;
+        min-width: 140px;
+      }
+      .info-value {
+        color: #333;
+        flex: 1;
+      }
+      .role-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .role-badge.viewer {
+        background-color: #e3f2fd;
+        color: #1976d2;
+      }
+      .role-badge.contributor {
+        background-color: #f3e5f5;
+        color: #7b1fa2;
+      }
+      .action-section {
+        background-color: #e8f5e9;
+        border-left: 4px solid #4caf50;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      .footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+        font-size: 12px;
+        color: #777;
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>🎉 New User Signup</h2>
+      </div>
+      
+      <p>Hello Admin,</p>
+      
+      <p>A new user has just signed up for Compendium. Here are their details:</p>
+      
+      <div class="user-info">
+        <div class="info-row">
+          <div class="info-label">Email:</div>
+          <div class="info-value"><strong><%= @user.email %></strong></div>
+        </div>
+        
+        <% if @user.name.present? %>
+          <div class="info-row">
+            <div class="info-label">Name:</div>
+            <div class="info-value"><%= @user.name %></div>
+          </div>
+        <% end %>
+        
+        <% if @user.ecclesia.present? %>
+          <div class="info-row">
+            <div class="info-label">Ecclesia:</div>
+            <div class="info-value"><%= @user.ecclesia %></div>
+          </div>
+        <% end %>
+        
+        <div class="info-row">
+          <div class="info-label">Current Role:</div>
+          <div class="info-value">
+            <span class="role-badge <%= @user.role %>"><%= @user.role&.titleize || 'Viewer' %></span>
+          </div>
+        </div>
+        
+        <div class="info-row">
+          <div class="info-label">Signed Up:</div>
+          <div class="info-value"><%= @user.created_at.strftime('%B %d, %Y at %I:%M %p') %></div>
+        </div>
+        
+        <div class="info-row">
+          <div class="info-label">User ID:</div>
+          <div class="info-value">#<%= @user.id %></div>
+        </div>
+      </div>
+      
+      <div class="action-section">
+        <strong>📋 Next Steps:</strong>
+        <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+          <li>Review this user's information to verify their identity</li>
+          <li>Check if they should be promoted from Viewer to Contributor</li>
+          <li>Consider if they have admin privileges needs</li>
+          <li>Log in to the Admin Dashboard to manage their role</li>
+        </ul>
+      </div>
+      
+      <p style="text-align: center;">
+        <a href="<%= Rails.application.routes.url_helpers.admin_users_url(host: ENV['APP_HOST'] || 'localhost:3000') %>" class="btn">
+          Go to Admin Dashboard
+        </a>
+      </p>
+      
+      <div class="footer">
+        <p><strong>About User Roles:</strong></p>
+        <ul style="margin: 5px 0; padding-left: 20px; font-size: 11px;">
+          <li><strong>Viewer:</strong> Can read all content but cannot create notes, comments, or cross-references</li>
+          <li><strong>Contributor:</strong> Can create and edit their own content</li>
+          <li><strong>Admin:</strong> Full access to manage users and all content</li>
+        </ul>
+        <p style="margin-top: 15px;">This is an automated notification from Compendium.</p>
+      </div>
+    </div>
+  </body>
+</html>
+

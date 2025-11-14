@@ -1,0 +1,36 @@
+New User Signup - Compendium
+================================
+
+Hello Admin,
+
+A new user has just signed up for Compendium. Here are their details:
+
+USER INFORMATION
+----------------
+Email: <%= @user.email %>
+<% if @user.name.present? %>Name: <%= @user.name %><% end %>
+<% if @user.ecclesia.present? %>Ecclesia: <%= @user.ecclesia %><% end %>
+Current Role: <%= @user.role&.titleize || 'Viewer' %>
+Signed Up: <%= @user.created_at.strftime('%B %d, %Y at %I:%M %p') %>
+User ID: #<%= @user.id %>
+
+NEXT STEPS
+----------
+- Review this user's information to verify their identity
+- Check if they should be promoted from Viewer to Contributor
+- Consider if they have admin privileges needs
+- Log in to the Admin Dashboard to manage their role
+
+ADMIN DASHBOARD
+---------------
+<%= Rails.application.routes.url_helpers.admin_users_url(host: ENV['APP_HOST'] || 'localhost:3000') %>
+
+ABOUT USER ROLES
+----------------
+- Viewer: Can read all content but cannot create notes, comments, or cross-references
+- Contributor: Can create and edit their own content
+- Admin: Full access to manage users and all content
+
+---
+This is an automated notification from Compendium.
+

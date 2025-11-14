@@ -16,6 +16,9 @@ class User < ApplicationRecord
     # Set default role after initialization
     after_initialize :set_default_role, if: :new_record?
     
+    # Send notification to head admin when new user signs up
+    after_create :notify_admin_of_signup
+    
     # OTP/2FA Configuration
     OTP_EXPIRY_TIME = 10.minutes
     
@@ -126,6 +129,10 @@ class User < ApplicationRecord
     
     def set_default_role
       self.role ||= 'viewer'
+    end
+    
+    def notify_admin_of_signup
+      AdminNotificationMailer.new_user_signup(self).deliver_later
     end
     
     # Defensive methods to prevent serialization issues
