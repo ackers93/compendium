@@ -55,6 +55,11 @@ Rails.application.routes.draw do
     patch 'two_factor_settings', to: 'two_factor_settings#update', as: :two_factor_settings
   end
   
+  # Onboarding routes
+  get 'onboarding', to: 'onboarding#show', as: :onboarding
+  post 'onboarding/complete', to: 'onboarding#complete', as: :complete_onboarding
+  post 'onboarding/skip', to: 'onboarding#skip', as: :skip_onboarding
+  
   # Content flagging routes
   resources :content_flags, only: [:create]
   get 'my-flagged-content', to: 'my_flagged_content#index', as: :my_flagged_content
