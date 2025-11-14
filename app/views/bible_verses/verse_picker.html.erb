@@ -1,0 +1,72 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-overlay">
+    <div class="modal modal-md" data-controller="bible-verse-picker">
+      <div class="modal-header">
+        <h2 class="modal-title">Insert Bible Verse Reference</h2>
+        <%= link_to "#", class: "modal-close", data: { turbo_frame: "modal" } do %>
+          <i class="fa-solid fa-times"></i>
+        <% end %>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Book</label>
+          <select 
+            class="form-input" 
+            data-bible-verse-picker-target="bookSelect"
+            data-action="change->bible-verse-picker#bookSelected">
+            <option value="">Select a book...</option>
+            <optgroup label="Old Testament">
+              <% @old_testament_books.each do |book_record| %>
+                <option value="<%= book_record.book %>"><%= book_record.book %></option>
+              <% end %>
+            </optgroup>
+            <optgroup label="New Testament">
+              <% @new_testament_books.each do |book_record| %>
+                <option value="<%= book_record.book %>"><%= book_record.book %></option>
+              <% end %>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Chapter</label>
+          <select 
+            class="form-input" 
+            data-bible-verse-picker-target="chapterSelect"
+            data-action="change->bible-verse-picker#chapterSelected"
+            disabled>
+            <option value="">Select chapter...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Verse</label>
+          <select 
+            class="form-input" 
+            data-bible-verse-picker-target="verseSelect"
+            data-action="change->bible-verse-picker#verseSelected"
+            disabled>
+            <option value="">Select verse...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Preview</label>
+          <div class="preview-box" data-bible-verse-picker-target="preview"></div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <%= link_to "#", class: "btn btn-outline", data: { turbo_frame: "modal" } do %>
+          Cancel
+        <% end %>
+        <button type="button" class="btn btn-primary" data-action="click->bible-verse-picker#insertVerse">
+          <i class="fa-solid fa-link"></i>
+          Insert Reference
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
+
