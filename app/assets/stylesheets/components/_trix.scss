@@ -172,4 +172,31 @@
       margin-top: $space-2;
     }
   }
+}
+
+// Custom Bible verse button
+.trix-button--bible-verse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+// Bible verse dialog
+.trix-dialog--verse {
+  .trix-dialog__verse-fields {
+    display: flex;
+    gap: $space-2;
+    align-items: center;
+    
+    select {
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    .trix-button-group {
+      margin: 0;
+    }
+  }
 } 
