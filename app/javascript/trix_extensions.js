@@ -43,7 +43,7 @@ document.addEventListener("trix-initialize", function(event) {
     button.setAttribute('data-trix-action', 'verse')
     button.setAttribute('title', 'Insert Bible Verse Reference')
     button.setAttribute('tabindex', '-1')
-    button.textContent = 'Verse'
+    button.innerHTML = '<i class="fa-solid fa-book"></i>'
     
     bibleVerseGroup.appendChild(button)
     linkTools.parentNode.insertBefore(bibleVerseGroup, linkTools.nextSibling)
