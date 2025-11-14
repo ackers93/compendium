@@ -22,7 +22,14 @@ module Admin
     end
     
     def update
+      old_role = @user.role
+      
       if @user.update(user_params)
+        # Reset admin onboarding if user was promoted to admin
+        if @user.role_admin? && old_role != 'admin'
+          @user.update_column(:admin_onboarding_completed_at, nil)
+        end
+        
         redirect_to admin_users_path, notice: "#{@user.email} was successfully updated to #{@user.role}."
       else
         render :edit, status: :unprocessable_entity

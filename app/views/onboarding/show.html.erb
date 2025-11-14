@@ -1,0 +1,445 @@
+<div class="onboarding-container">
+  <div class="onboarding-card">
+    <% if @onboarding_type == 'admin' %>
+      <div class="onboarding-header">
+        <i class="fa-solid fa-crown" style="font-size: 3rem; color: #9333ea; margin-bottom: 1rem;"></i>
+        <h1 class="onboarding-title">Welcome to Admin!</h1>
+        <p class="onboarding-subtitle">You've been promoted to administrator. Here's what you can do now.</p>
+      </div>
+      
+      <div class="onboarding-body">
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <h3 class="feature-title">User Management</h3>
+            <p class="feature-description">
+              View, edit, and manage all users. Change user roles, promote contributors, 
+              and remove spam accounts from the admin dashboard.
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="feature-title">Full Content Access</h3>
+            <p class="feature-description">
+              Edit or delete any user's notes, comments, and cross-references. 
+              You have complete control over all content in the system.
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-flag"></i>
+            </div>
+            <h3 class="feature-title">Content Moderation</h3>
+            <p class="feature-description">
+              Review and manage flagged content from all users. Approve, request changes, 
+              or remove inappropriate content to maintain quality.
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h3 class="feature-title">Role Assignment</h3>
+            <p class="feature-description">
+              Promote viewers to contributors when they're ready to create content, 
+              or elevate trusted users to admin status.
+            </p>
+          </div>
+        </div>
+        
+        <div class="onboarding-tips">
+          <h3 class="tips-title">
+            <i class="fa-solid fa-lightbulb"></i>
+            Quick Tips
+          </h3>
+          <ul class="tips-list">
+            <li>Access the Admin Dashboard from the navigation bar</li>
+            <li>Use role filters to quickly find users by their access level</li>
+            <li>The "Admin" badge will appear next to your name throughout the app</li>
+            <li>You can still review content flagged on your own posts in "My Content"</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="onboarding-footer">
+        <%= form_with url: skip_onboarding_path, method: :post do %>
+          <%= hidden_field_tag :type, 'admin' %>
+          <%= button_tag type: 'submit', class: 'btn btn-outline' do %>
+            <i class="fa-solid fa-times"></i>
+            Skip for now
+          <% end %>
+        <% end %>
+        <%= form_with url: complete_onboarding_path, method: :post do %>
+          <%= hidden_field_tag :type, 'admin' %>
+          <%= button_tag type: 'submit', class: 'btn btn-primary' do %>
+            <i class="fa-solid fa-rocket"></i>
+            Go to Admin Dashboard
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="onboarding-header">
+        <i class="fa-solid fa-book-open" style="font-size: 3rem; color: #3b82f6; margin-bottom: 1rem;"></i>
+        <h1 class="onboarding-title">Welcome to Compendium!</h1>
+        <p class="onboarding-subtitle">Your personal Bible study companion. Here's what you can do.</p>
+      </div>
+      
+      <div class="onboarding-body">
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-book-bible"></i>
+            </div>
+            <h3 class="feature-title">Browse Scripture</h3>
+            <p class="feature-description">
+              Access the complete King James Version Bible. Navigate by book, chapter, 
+              and verse to read and study God's Word.
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-note-sticky"></i>
+            </div>
+            <h3 class="feature-title">Take Notes</h3>
+            <p class="feature-description">
+              <% if current_user.can_create? %>
+                Create personal study notes, save sermon insights, and organize your 
+                thoughts. Keep drafts private or publish to share with others.
+              <% else %>
+                View and read notes from contributors. Request contributor access 
+                from an admin to create your own notes.
+              <% end %>
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+            <h3 class="feature-title">Add Comments</h3>
+            <p class="feature-description">
+              <% if current_user.can_create? %>
+                Comment on Bible verses and notes to share insights, ask questions, 
+                and discuss interpretations with the community.
+              <% else %>
+                Read comments from other users. You'll need contributor access 
+                to add your own comments.
+              <% end %>
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-link"></i>
+            </div>
+            <h3 class="feature-title">Cross-Reference</h3>
+            <p class="feature-description">
+              <% if current_user.can_create? %>
+                Create connections between related Bible verses. Build a web of 
+                scriptural relationships to deepen your understanding.
+              <% else %>
+                View cross-references created by contributors. These connections 
+                help you discover related passages.
+              <% end %>
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-tags"></i>
+            </div>
+            <h3 class="feature-title">Organize with Tags</h3>
+            <p class="feature-description">
+              <% if current_user.can_create? %>
+                Tag your notes with topics and themes. Easily find and filter 
+                your content by category.
+              <% else %>
+                Browse notes by tags to find content on specific topics 
+                that interest you.
+              <% end %>
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-flag"></i>
+            </div>
+            <h3 class="feature-title">Flag Content</h3>
+            <p class="feature-description">
+              Help maintain quality by flagging inappropriate or problematic content. 
+              Admins will review flagged items and take appropriate action.
+            </p>
+          </div>
+        </div>
+        
+        <% unless current_user.can_create? %>
+          <div class="onboarding-upgrade">
+            <div class="upgrade-icon">
+              <i class="fa-solid fa-info-circle"></i>
+            </div>
+            <div class="upgrade-content">
+              <h3 class="upgrade-title">Your Current Role: Viewer</h3>
+              <p class="upgrade-description">
+                You're currently a viewer, which means you can read and explore all content. 
+                To create notes, comments, and cross-references, ask an administrator to 
+                promote you to <strong>Contributor</strong> status.
+              </p>
+            </div>
+          </div>
+        <% end %>
+        
+        <div class="onboarding-tips">
+          <h3 class="tips-title">
+            <i class="fa-solid fa-lightbulb"></i>
+            Getting Started
+          </h3>
+          <ul class="tips-list">
+            <li>Start by exploring the Bible section to read scripture</li>
+            <li>Check out Notes to see what others have written</li>
+            <li>Your role badge (<span class="role-badge <%= current_user.role %>"><%= current_user.role&.titleize %></span>) shows your access level</li>
+            <% if current_user.can_create? %>
+              <li>Use the "New Note" button to create your first study note</li>
+              <li>Save drafts to work on notes privately before publishing</li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="onboarding-footer">
+        <%= form_with url: skip_onboarding_path, method: :post do %>
+          <%= hidden_field_tag :type, 'user' %>
+          <%= button_tag type: 'submit', class: 'btn btn-outline' do %>
+            <i class="fa-solid fa-times"></i>
+            Skip for now
+          <% end %>
+        <% end %>
+        <%= form_with url: complete_onboarding_path, method: :post do %>
+          <%= hidden_field_tag :type, 'user' %>
+          <%= button_tag type: 'submit', class: 'btn btn-primary' do %>
+            <i class="fa-solid fa-rocket"></i>
+            Get Started
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  .onboarding-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .onboarding-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 1000px;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .onboarding-header {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+    background: linear-gradient(to bottom, #f8fafc, white);
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .onboarding-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .onboarding-subtitle {
+    font-size: 1.125rem;
+    color: #64748b;
+  }
+  
+  .onboarding-body {
+    padding: 2rem;
+  }
+  
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .feature-card {
+    padding: 1.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .feature-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .feature-description {
+    color: #64748b;
+    line-height: 1.6;
+  }
+  
+  .onboarding-tips {
+    background: #f1f5f9;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tips-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .tips-title i {
+    color: #f59e0b;
+  }
+  
+  .tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tips-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #475569;
+  }
+  
+  .tips-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+  }
+  
+  .onboarding-upgrade {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 2px solid #fbbf24;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .upgrade-icon {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: #f59e0b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+  
+  .upgrade-content {
+    flex: 1;
+  }
+  
+  .upgrade-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #92400e;
+    margin-bottom: 0.5rem;
+  }
+  
+  .upgrade-description {
+    color: #78350f;
+    line-height: 1.6;
+    margin: 0;
+  }
+  
+  .onboarding-footer {
+    padding: 1.5rem 2rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .onboarding-container {
+      padding: 1rem;
+    }
+    
+    .onboarding-title {
+      font-size: 2rem;
+    }
+    
+    .onboarding-body {
+      padding: 1.5rem;
+    }
+    
+    .feature-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .onboarding-footer {
+      flex-direction: column;
+    }
+    
+    .onboarding-footer form {
+      width: 100%;
+    }
+    
+    .onboarding-footer button {
+      width: 100%;
+    }
+  }
+</style>
+

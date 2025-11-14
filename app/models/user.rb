@@ -69,6 +69,27 @@ class User < ApplicationRecord
       role_admin?
     end
     
+    # Onboarding methods
+    def needs_user_onboarding?
+      onboarding_completed_at.nil?
+    end
+    
+    def needs_admin_onboarding?
+      role_admin? && admin_onboarding_completed_at.nil?
+    end
+    
+    def needs_any_onboarding?
+      needs_user_onboarding? || needs_admin_onboarding?
+    end
+    
+    def complete_user_onboarding!
+      update(onboarding_completed_at: Time.current)
+    end
+    
+    def complete_admin_onboarding!
+      update(admin_onboarding_completed_at: Time.current)
+    end
+    
     # Get count of flagged content needing review for this user
     def flagged_content_needing_review_count
       note_ids = notes.pluck(:id)
