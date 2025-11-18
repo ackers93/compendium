@@ -9,6 +9,10 @@ class BibleVerse < ApplicationRecord
   has_many :cross_references_as_target, class_name: 'CrossReference', foreign_key: 'target_verse_id', dependent: :destroy
   has_many :source_verses, through: :cross_references_as_target, source: :source_verse
   
+  # Bible threads
+  has_many :bible_thread_entries, dependent: :destroy
+  has_many :bible_threads, through: :bible_thread_entries
+  
   validates :book, presence: true
   validates :chapter, presence: true
   validates :verse, presence: true

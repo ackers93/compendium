@@ -1,0 +1,78 @@
+<div class="page-header">
+  <h1 class="page-title"><%= @bible_thread.title %></h1>
+  <p class="page-subtitle">
+    Created by <%= @bible_thread.user.email %> on <%= @bible_thread.created_at.strftime('%b %d, %Y') %>
+  </p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">Verses in this Thread</h2>
+      <div class="d-flex gap-2">
+        <% if current_user&.can_update?(@bible_thread) %>
+          <%= link_to edit_bible_thread_path(@bible_thread), class: "btn btn-secondary" do %>
+            <i class="fa-solid fa-edit"></i>
+            Edit
+          <% end %>
+        <% end %>
+        <% if current_user&.can_delete?(@bible_thread) %>
+          <%= button_to bible_thread_path(@bible_thread), 
+              method: :delete, 
+              class: "btn btn-danger",
+              data: { turbo_confirm: "Are you sure you want to delete this thread?" } do %>
+            <i class="fa-solid fa-trash"></i>
+            Delete
+          <% end %>
+        <% elsif current_user %>
+          <%= link_to "javascript:void(0)", 
+              onclick: "flagContent('BibleThread', #{@bible_thread.id})",
+              class: "btn btn-outline" do %>
+            <i class="fa-solid fa-flag"></i>
+            Flag
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section-content">
+    <% if @bible_thread_entries.any? %>
+      <div class="thread-verses">
+        <% @bible_thread_entries.each_with_index do |entry, index| %>
+          <div class="thread-verse-item">
+            <div class="verse-number">
+              <%= index + 1 %>
+            </div>
+            <div class="verse-details">
+              <div class="verse-header">
+                <%= link_to entry.bible_verse.reference, 
+                    bible_verse_show_path(book: entry.bible_verse.book, 
+                                          chapter: entry.bible_verse.chapter, 
+                                          verse: entry.bible_verse.verse), 
+                    class: "verse-link font-semibold" %>
+              </div>
+              <div class="verse-text mt-2">
+                <%= entry.bible_verse.text %>
+              </div>
+              <% if entry.comment.present? %>
+                <div class="verse-comment mt-3 p-3 bg-gray-50 rounded">
+                  <p class="text-sm text-gray-700"><%= entry.comment %></p>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-8 text-gray-500">
+        <p>No verses in this thread yet.</p>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="d-flex justify-between mt-6">
+    <%= link_to "← Back to Threads", bible_threads_path, class: "btn btn-outline" %>
+  </div>
+</div>
+

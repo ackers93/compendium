@@ -37,6 +37,7 @@
       <div class="tabs-nav">
         <button class="tab-button active" onclick="showTab('comments')">Comments</button>
         <button class="tab-button" onclick="showTab('cross-references')">Cross-References</button>
+        <button class="tab-button" onclick="showTab('threads')">Threads</button>
       </div>
     </div>
     
@@ -86,6 +87,50 @@
           <%= render 'cross_references/cross_references_list', 
               cross_references: @bible_verse.ordered_cross_references, 
               verse: @bible_verse %>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Threads Tab -->
+    <div id="threads-tab" class="tab-content">
+      <div class="threads-section">
+        <div class="section-header">
+          <div class="d-flex justify-between items-center">
+            <h3 class="section-title">Threads Containing This Verse</h3>
+            <% if current_user&.can_create? %>
+              <%= link_to new_bible_thread_path, class: "btn btn-primary" do %>
+                <i class="fa-solid fa-plus"></i>
+                New Thread
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        
+        <div id="threads-list" class="threads-content mb-6">
+          <% threads = @bible_verse.bible_threads %>
+          <% if threads.any? %>
+            <div class="threads-list">
+              <% threads.each do |thread| %>
+                <div class="thread-item">
+                  <div class="thread-title-link">
+                    <%= link_to thread.title, bible_thread_path(thread), class: "font-semibold text-lg" %>
+                  </div>
+                  <div class="thread-meta text-sm text-gray-600 mt-1">
+                    Created by <%= thread.user.email %> • <%= pluralize(thread.bible_thread_entries.count, 'verse') %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-center py-8 text-gray-500">
+              <p>This verse is not part of any threads yet.</p>
+              <% if current_user&.can_create? %>
+                <p class="text-sm mt-2">
+                  <%= link_to "Create a thread", new_bible_thread_path, class: "text-blue-600 hover:text-blue-800" %> to connect this verse with others thematically.
+                </p>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

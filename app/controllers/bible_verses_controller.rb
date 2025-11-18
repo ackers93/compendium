@@ -61,7 +61,7 @@ class BibleVersesController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.json { render json: { verses: @verses.as_json(only: [:verse, :text]) } }
+      format.json { render json: { verses: @verses.as_json(only: [:id, :verse, :text]) } }
     end
   end
   

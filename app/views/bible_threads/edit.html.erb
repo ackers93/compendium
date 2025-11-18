@@ -1,0 +1,13 @@
+<div class="page-header">
+  <h1 class="page-title">Edit Bible Thread</h1>
+  <p class="page-subtitle">Update your thread</p>
+</div>
+
+<div class="content-section">
+  <%= render 'form', bible_thread: @bible_thread %>
+  
+  <div class="d-flex justify-between mt-6">
+    <%= link_to "← Cancel", bible_thread_path(@bible_thread), class: "btn btn-outline" %>
+  </div>
+</div>
+

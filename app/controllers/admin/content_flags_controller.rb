@@ -56,6 +56,8 @@ module Admin
         redirect_to edit_note_path(@flag.flaggable, direct_edit: true)
       when 'Comment'
         redirect_to edit_comment_path(@flag.flaggable, direct_edit: true)
+      when 'BibleThread'
+        redirect_to edit_bible_thread_path(@flag.flaggable)
       when 'CrossReference'
         redirect_to admin_content_flags_path, alert: "Cross-references cannot be edited directly. Please delete and recreate if needed."
       end
