@@ -41,6 +41,8 @@ class ContentFlagsController < ApplicationController
       Comment.find_by(id: params[:comment_id])
     elsif params[:cross_reference_id]
       CrossReference.find_by(id: params[:cross_reference_id])
+    elsif params[:bible_thread_id]
+      BibleThread.find_by(id: params[:bible_thread_id])
     end
   end
   

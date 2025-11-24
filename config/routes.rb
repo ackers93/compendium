@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   post 'bible_verses/:source_book/:source_chapter/:source_verse/cross_references', to: 'cross_references#create', as: :bible_verse_cross_references
   delete 'cross_references/:id', to: 'cross_references#destroy', as: :cross_reference
   
+  # Bible threads routes
+  resources :bible_threads
+  
   # Comments on cross-references
   
   # Individual comment management

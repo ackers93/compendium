@@ -321,4 +321,300 @@
     border: 1px solid #bfdbfe;
     color: #2563eb;
   }
+}
+
+// Bible Thread styles
+.threads-list {
+  .thread-card {
+    background: $white;
+    border: 1px solid $gray-200;
+    border-radius: $radius-md;
+    padding: $space-4;
+    margin-bottom: $space-4;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      box-shadow: $shadow-md;
+      border-color: $primary;
+    }
+    
+    .thread-title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $space-2;
+      
+      a {
+        color: $gray-900;
+        text-decoration: none;
+        
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+    
+    .thread-meta {
+      color: $gray-600;
+      font-size: $font-size-sm;
+      margin-bottom: $space-3;
+    }
+    
+    .verse-preview {
+      margin-top: $space-2;
+      font-size: $font-size-sm;
+      color: $gray-700;
+      
+      strong {
+        color: $primary;
+      }
+    }
+  }
+  
+  .thread-item {
+    padding: $space-4;
+    border: 1px solid $gray-200;
+    border-radius: $radius-md;
+    margin-bottom: $space-3;
+    background: $white;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      box-shadow: $shadow-sm;
+      border-color: $primary;
+    }
+  }
+  
+  .thread-title-link {
+    a {
+      color: $gray-900;
+      text-decoration: none;
+      
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+
+.thread-verses {
+  .thread-verse-item {
+    display: flex;
+    gap: $space-4;
+    padding: $space-4;
+    border: 1px solid $gray-200;
+    border-radius: $radius-md;
+    margin-bottom: $space-4;
+    background: $white;
+    
+    .verse-number {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $primary;
+      color: $white;
+      border-radius: 50%;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-lg;
+    }
+    
+    .verse-details {
+      flex: 1;
+    }
+    
+    .verse-header {
+      margin-bottom: $space-2;
+    }
+    
+    .verse-link {
+      color: $primary;
+      text-decoration: none;
+      font-size: $font-size-lg;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    .verse-text {
+      color: $gray-800;
+      line-height: 1.6;
+      font-style: italic;
+    }
+    
+    .verse-comment {
+      background: $gray-50;
+      padding: $space-3;
+      border-radius: $radius-sm;
+      border-left: 3px solid $primary;
+      margin-top: $space-3;
+    }
+  }
+}
+
+.bible-thread-form {
+  .verses-section {
+    margin-top: $space-6;
+  }
+  
+  .verses-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $space-4;
+    padding-bottom: $space-3;
+    border-bottom: 2px solid $gray-200;
+  }
+  
+  .verses-section-title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $gray-800;
+    margin: 0;
+  }
+  
+  .verse-entry {
+    background: $white;
+    border: 1px solid $gray-200;
+    border-radius: $radius-md;
+    margin-bottom: $space-3;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      border-color: $gray-300;
+      box-shadow: $shadow-sm;
+    }
+    
+    .verse-entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $space-2 $space-3;
+      background: $gray-50;
+      border-bottom: 1px solid $gray-200;
+    }
+    
+    .verse-entry-number {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+      
+      .verse-position-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: $primary;
+        color: $white;
+        border-radius: 50%;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+      }
+    }
+    
+    .verse-entry-controls {
+      display: flex;
+      gap: $space-1;
+    }
+    
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      background: $white;
+      border: 1px solid $gray-300;
+      border-radius: $radius-sm;
+      color: $gray-600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-size: $font-size-sm;
+      
+      &:hover {
+        background: $gray-100;
+        border-color: $gray-400;
+        color: $gray-800;
+      }
+      
+      &:active {
+        transform: scale(0.95);
+      }
+      
+      &.btn-icon-danger {
+        color: #dc2626;
+        
+        &:hover {
+          background: #fef2f2;
+          border-color: #fca5a5;
+          color: #b91c1c;
+        }
+      }
+    }
+    
+    .verse-entry-body {
+      padding: $space-3;
+    }
+    
+    .verse-selectors {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: $space-2;
+      margin-bottom: $space-3;
+    }
+    
+    .verse-select {
+      width: 100%;
+      padding: $space-2;
+      border: 1px solid $gray-300;
+      border-radius: $radius-sm;
+      background: $white;
+      font-size: $font-size-sm;
+      color: $gray-700;
+      transition: all 0.15s ease;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+      
+      &:disabled {
+        background: $gray-100;
+        color: $gray-500;
+        cursor: not-allowed;
+      }
+    }
+    
+    .verse-comment-input {
+      width: 100%;
+      padding: $space-2;
+      border: 1px solid $gray-300;
+      border-radius: $radius-sm;
+      font-size: $font-size-sm;
+      color: $gray-700;
+      resize: vertical;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      }
+      
+      &::placeholder {
+        color: $gray-400;
+      }
+    }
+  }
+  
+  .form-actions {
+    margin-top: $space-6;
+  }
 } 

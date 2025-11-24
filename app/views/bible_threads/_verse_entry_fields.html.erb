@@ -1,0 +1,236 @@
+<%
+  # Handle both existing entries and new ones
+  is_template = index.to_s == 'INDEX_PLACEHOLDER'
+  entry_id = is_template ? '' : (entry&.id || '')
+  position_value = is_template ? 'INDEX_PLACEHOLDER' : (entry&.position || index + 1)
+  comment_value = is_template ? '' : (entry&.comment || '')
+  verse_id = is_template ? '' : (entry&.bible_verse_id || '')
+  verse_reference = is_template ? '' : (entry&.bible_verse&.reference || '')
+  
+  # Extract book, chapter, verse for existing entries
+  existing_book = entry&.bible_verse&.book || ''
+  existing_chapter = entry&.bible_verse&.chapter || ''
+  existing_verse = entry&.bible_verse&.verse || ''
+  has_existing_verse = existing_book.present? && existing_chapter.present? && existing_verse.present?
+%>
+
+<div class="verse-entry">
+  <% if f %>
+    <%= f.fields_for :bible_thread_entries, entry do |entry_form| %>
+      <%= entry_form.hidden_field :id if entry&.persisted? %>
+      <%= entry_form.hidden_field :position, value: position_value, class: 'verse-position-input' %>
+      <%= entry_form.hidden_field :_destroy, value: '0' %>
+      
+      <div class="verse-entry-header">
+        <div class="verse-entry-number">
+          <span class="verse-position-number"><%= position_value %></span>
+        </div>
+        <div class="verse-entry-controls">
+          <button type="button" onclick="window.moveVerseUp(this)" class="btn-icon" title="Move Up">
+            <i class="fa-solid fa-arrow-up"></i>
+          </button>
+          <button type="button" onclick="window.moveVerseDown(this)" class="btn-icon" title="Move Down">
+            <i class="fa-solid fa-arrow-down"></i>
+          </button>
+          <button type="button" onclick="window.removeVerseEntry(this)" class="btn-icon btn-icon-danger" title="Remove">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="verse-entry-body">
+        <div class="verse-selectors" data-has-existing="<%= has_existing_verse %>" data-book="<%= existing_book %>" data-chapter="<%= existing_chapter %>" data-verse="<%= existing_verse %>">
+          <select class="verse-select verse-book-select" data-entry-index="<%= is_template ? 'INDEX_PLACEHOLDER' : index %>" onchange="loadChaptersForEntry(this)">
+            <option value="">Book...</option>
+            <optgroup label="Old Testament">
+              <% BibleVersesController::OLD_TESTAMENT_BOOKS.each do |book_option| %>
+                <option value="<%= book_option %>" <%= 'selected' if book_option == existing_book %>><%= book_option %></option>
+              <% end %>
+            </optgroup>
+            <optgroup label="New Testament">
+              <% BibleVersesController::NEW_TESTAMENT_BOOKS.each do |book_option| %>
+                <option value="<%= book_option %>" <%= 'selected' if book_option == existing_book %>><%= book_option %></option>
+              <% end %>
+            </optgroup>
+          </select>
+          <select class="verse-select verse-chapter-select" <%= 'disabled' unless has_existing_verse %> data-entry-index="<%= is_template ? 'INDEX_PLACEHOLDER' : index %>" onchange="loadVersesForEntry(this)">
+            <option value="">Ch...</option>
+            <% if has_existing_verse %>
+              <option value="<%= existing_chapter %>" selected><%= existing_chapter %></option>
+            <% end %>
+          </select>
+          <select class="verse-select verse-verse-select" <%= 'disabled' unless has_existing_verse %> data-entry-index="<%= is_template ? 'INDEX_PLACEHOLDER' : index %>" onchange="updateVerseId(this)">
+            <option value="">V...</option>
+            <% if has_existing_verse %>
+              <option value="<%= existing_verse %>" selected><%= existing_verse %></option>
+            <% end %>
+          </select>
+        </div>
+        <%= entry_form.hidden_field :bible_verse_id, class: 'verse-id-input', value: verse_id %>
+        
+        <%= entry_form.text_area :comment, 
+            value: comment_value,
+            class: "verse-comment-input", 
+            rows: 2,
+            placeholder: "Optional commentary..." %>
+      </div>
+    <% end %>
+  <% else %>
+    <!-- Template version without form builder -->
+    <input type="hidden" name="bible_thread[bible_thread_entries_attributes][INDEX_PLACEHOLDER][position]" value="INDEX_PLACEHOLDER" class="verse-position-input" />
+    <input type="hidden" name="bible_thread[bible_thread_entries_attributes][INDEX_PLACEHOLDER][_destroy]" value="0" />
+    
+    <div class="verse-entry-header">
+      <div class="verse-entry-number">
+        <span class="verse-position-number">INDEX_PLACEHOLDER</span>
+      </div>
+      <div class="verse-entry-controls">
+        <button type="button" onclick="window.moveVerseUp(this)" class="btn-icon" title="Move Up">
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
+        <button type="button" onclick="window.moveVerseDown(this)" class="btn-icon" title="Move Down">
+          <i class="fa-solid fa-arrow-down"></i>
+        </button>
+        <button type="button" onclick="window.removeVerseEntry(this)" class="btn-icon btn-icon-danger" title="Remove">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="verse-entry-body">
+      <div class="verse-selectors">
+        <select class="verse-select verse-book-select" data-entry-index="INDEX_PLACEHOLDER" onchange="loadChaptersForEntry(this)">
+          <option value="">Book...</option>
+          <optgroup label="Old Testament">
+            <% BibleVersesController::OLD_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>"><%= book_option %></option>
+            <% end %>
+          </optgroup>
+          <optgroup label="New Testament">
+            <% BibleVersesController::NEW_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>"><%= book_option %></option>
+            <% end %>
+          </optgroup>
+        </select>
+        <select class="verse-select verse-chapter-select" disabled data-entry-index="INDEX_PLACEHOLDER" onchange="loadVersesForEntry(this)">
+          <option value="">Ch...</option>
+        </select>
+        <select class="verse-select verse-verse-select" disabled data-entry-index="INDEX_PLACEHOLDER" onchange="updateVerseId(this)">
+          <option value="">V...</option>
+        </select>
+      </div>
+      <input type="hidden" name="bible_thread[bible_thread_entries_attributes][INDEX_PLACEHOLDER][bible_verse_id]" class="verse-id-input" />
+      
+      <textarea name="bible_thread[bible_thread_entries_attributes][INDEX_PLACEHOLDER][comment]" 
+                class="verse-comment-input" 
+                rows="2"
+                placeholder="Optional commentary..."></textarea>
+    </div>
+  <% end %>
+</div>
+
+<script>
+async function loadChaptersForEntry(bookSelect) {
+  const book = bookSelect.value;
+  const entry = bookSelect.closest('.verse-entry');
+  const chapterSelect = entry.querySelector('.verse-chapter-select');
+  const verseSelect = entry.querySelector('.verse-verse-select');
+  
+  // Clear and disable chapter and verse selects
+  chapterSelect.innerHTML = '<option value="">Chapter...</option>';
+  chapterSelect.disabled = true;
+  verseSelect.innerHTML = '<option value="">Verse...</option>';
+  verseSelect.disabled = true;
+  
+  if (!book) return;
+  
+  try {
+    const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/chapters`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    const data = await response.json();
+    
+    data.chapters.forEach(chapter => {
+      const option = document.createElement('option');
+      option.value = chapter;
+      option.textContent = chapter;
+      chapterSelect.appendChild(option);
+    });
+    
+    chapterSelect.disabled = false;
+  } catch (error) {
+    console.error('Error loading chapters:', error);
+  }
+}
+
+async function loadVersesForEntry(chapterSelect) {
+  const chapter = chapterSelect.value;
+  const entry = chapterSelect.closest('.verse-entry');
+  const bookSelect = entry.querySelector('.verse-book-select');
+  const book = bookSelect.value;
+  const verseSelect = entry.querySelector('.verse-verse-select');
+  
+  // Clear and disable verse select
+  verseSelect.innerHTML = '<option value="">Verse...</option>';
+  verseSelect.disabled = true;
+  
+  if (!book || !chapter) return;
+  
+  try {
+    const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    const data = await response.json();
+    
+    data.verses.forEach(verse => {
+      const option = document.createElement('option');
+      option.value = verse.verse;
+      option.textContent = verse.verse;
+      option.dataset.verseId = verse.id || `${book}_${chapter}_${verse.verse}`;
+      verseSelect.appendChild(option);
+    });
+    
+    verseSelect.disabled = false;
+  } catch (error) {
+    console.error('Error loading verses:', error);
+  }
+}
+
+async function updateVerseId(verseSelect) {
+  const verse = verseSelect.value;
+  const entry = verseSelect.closest('.verse-entry');
+  const bookSelect = entry.querySelector('.verse-book-select');
+  const chapterSelect = entry.querySelector('.verse-chapter-select');
+  const verseIdInput = entry.querySelector('.verse-id-input');
+  
+  const book = bookSelect.value;
+  const chapter = chapterSelect.value;
+  
+  if (!book || !chapter || !verse) return;
+  
+  try {
+    // Fetch the verse data to get the ID
+    const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    const data = await response.json();
+    
+    const verseData = data.verses.find(v => v.verse == verse);
+    if (verseData && verseData.id) {
+      verseIdInput.value = verseData.id;
+    } else {
+      // Fallback: try to find the verse by querying the show endpoint
+      const verseResponse = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}/${verse}`, {
+        headers: { 'Accept': 'application/json' }
+      });
+      if (verseResponse.ok) {
+        const verseDetails = await verseResponse.json();
+        verseIdInput.value = verseDetails.id;
+      }
+    }
+  } catch (error) {
+    console.error('Error updating verse ID:', error);
+  }
+}
+</script>
+

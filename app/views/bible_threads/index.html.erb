@@ -1,0 +1,61 @@
+<div class="page-header">
+  <h1 class="page-title">Bible Threads</h1>
+  <p class="page-subtitle">Explore thematic connections between verses</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">All Threads</h2>
+      <% if current_user&.can_create? %>
+        <%= link_to new_bible_thread_path, class: "btn btn-primary" do %>
+          <i class="fa-solid fa-plus"></i>
+          New Thread
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="section-content">
+    <% if @bible_threads.any? %>
+      <div class="threads-list">
+        <% @bible_threads.each do |thread| %>
+          <div class="thread-card">
+            <div class="thread-header">
+              <h3 class="thread-title">
+                <%= link_to thread.title, bible_thread_path(thread) %>
+              </h3>
+              <div class="thread-meta">
+                <span class="text-sm text-gray-600">
+                  Created by <%= thread.user.email %> on <%= thread.created_at.strftime('%b %d, %Y') %>
+                </span>
+              </div>
+            </div>
+            <div class="thread-preview">
+              <% if thread.bible_thread_entries.any? %>
+                <p class="text-sm text-gray-600">
+                  <%= pluralize(thread.bible_thread_entries.count, 'verse') %> in this thread
+                </p>
+                <% first_entry = thread.bible_thread_entries.first %>
+                <p class="verse-preview mt-2">
+                  <strong><%= first_entry.bible_verse.reference %></strong>: 
+                  <%= truncate(first_entry.bible_verse.text, length: 100) %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-8 text-gray-500">
+        <p>No Bible threads yet.</p>
+        <% if current_user&.can_create? %>
+          <p class="text-sm mt-2">
+            <%= link_to "Create the first thread", new_bible_thread_path, class: "text-blue-600 hover:text-blue-800" %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

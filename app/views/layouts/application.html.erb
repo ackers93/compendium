@@ -41,6 +41,8 @@
             idInput.name = 'comment_id';
           } else if (contentType === 'CrossReference') {
             idInput.name = 'cross_reference_id';
+          } else if (contentType === 'BibleThread') {
+            idInput.name = 'bible_thread_id';
           }
           idInput.value = contentId;
           form.appendChild(idInput);

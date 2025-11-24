@@ -1,0 +1,212 @@
+<%= form_with(model: bible_thread, id: "bible-thread-form", class: "bible-thread-form") do |form| %>
+  <% if bible_thread.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <h3><%= pluralize(bible_thread.errors.count, "error") %> prohibited this thread from being saved:</h3>
+      <ul>
+        <% bible_thread.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, "Thread Title", class: "form-label" %>
+    <%= form.text_field :title, class: "form-input", placeholder: "e.g., Salvation Through Faith" %>
+  </div>
+
+  <div class="verses-section">
+    <div class="verses-section-header">
+      <h3 class="verses-section-title">Verses in Thread</h3>
+      <button type="button" onclick="window.addVerseEntry()" class="btn btn-secondary">
+        <i class="fa-solid fa-plus"></i>
+        Add Verse
+      </button>
+    </div>
+    
+    <div id="verse-entries">
+      <% if bible_thread.bible_thread_entries.any? %>
+        <% bible_thread.bible_thread_entries.sort_by(&:position).each_with_index do |entry, index| %>
+          <%= render 'verse_entry_fields', f: form, entry: entry, index: index %>
+        <% end %>
+      <% else %>
+        <%= render 'verse_entry_fields', f: form, entry: bible_thread.bible_thread_entries.build(position: 1), index: 0 %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-actions mt-6">
+    <%= form.submit "Save Thread", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<template id="verse-entry-template">
+  <%= render 'verse_entry_fields', f: nil, entry: nil, index: 'INDEX_PLACEHOLDER' %>
+</template>
+
+<script>
+// Make functions globally accessible
+window.verseEntryIndex = <%= bible_thread.bible_thread_entries.any? ? bible_thread.bible_thread_entries.maximum(:position) : 0 %>;
+
+window.addVerseEntry = function() {
+  window.verseEntryIndex++;
+  const template = document.getElementById('verse-entry-template');
+  const container = document.getElementById('verse-entries');
+  
+  if (!template || !container) {
+    console.error('Template or container not found');
+    return;
+  }
+  
+  // Clone the template content
+  let content = template.innerHTML;
+  
+  // Replace the placeholder with the actual index
+  content = content.replace(/INDEX_PLACEHOLDER/g, window.verseEntryIndex);
+  content = content.replace(/\[bible_thread_entries_attributes\]\[\]/g, `[bible_thread_entries_attributes][${Date.now()}]`);
+  
+  // Create a temporary div to hold the HTML
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = content;
+  
+  // Append to container
+  container.appendChild(tempDiv.firstElementChild);
+  
+  // Update position numbers
+  window.updatePositionNumbers();
+}
+
+window.removeVerseEntry = function(button) {
+  const entry = button.closest('.verse-entry');
+  if (!entry) return;
+  
+  const destroyInput = entry.querySelector('input[name*="_destroy"]');
+  
+  if (destroyInput) {
+    // If this is an existing entry, mark it for destruction
+    destroyInput.value = '1';
+    entry.style.display = 'none';
+  } else {
+    // If this is a new entry, just remove it from DOM
+    entry.remove();
+  }
+  
+  window.updatePositionNumbers();
+}
+
+window.moveVerseUp = function(button) {
+  const entry = button.closest('.verse-entry');
+  if (!entry) return;
+  
+  // Find the previous visible entry
+  let previous = entry.previousElementSibling;
+  while (previous && (previous.style.display === 'none' || !previous.classList.contains('verse-entry'))) {
+    previous = previous.previousElementSibling;
+  }
+  
+  if (previous && previous.classList.contains('verse-entry')) {
+    entry.parentNode.insertBefore(entry, previous);
+    window.updatePositionNumbers();
+  }
+}
+
+window.moveVerseDown = function(button) {
+  const entry = button.closest('.verse-entry');
+  if (!entry) return;
+  
+  // Find the next visible entry
+  let next = entry.nextElementSibling;
+  while (next && (next.style.display === 'none' || !next.classList.contains('verse-entry'))) {
+    next = next.nextElementSibling;
+  }
+  
+  if (next && next.classList.contains('verse-entry')) {
+    // Insert current entry after the next entry
+    if (next.nextElementSibling) {
+      entry.parentNode.insertBefore(entry, next.nextElementSibling);
+    } else {
+      entry.parentNode.appendChild(entry);
+    }
+    window.updatePositionNumbers();
+  }
+}
+
+window.updatePositionNumbers = function() {
+  const entries = document.querySelectorAll('.verse-entry:not([style*="display: none"])');
+  entries.forEach((entry, index) => {
+    const positionInput = entry.querySelector('input[name*="[position]"]');
+    const positionDisplay = entry.querySelector('.verse-position-number');
+    
+    if (positionInput) {
+      positionInput.value = index + 1;
+    }
+    if (positionDisplay) {
+      positionDisplay.textContent = index + 1;
+    }
+  });
+}
+
+// Initialize verse pickers when the page loads
+document.addEventListener('turbo:load', () => {
+  initializeExistingVerses();
+});
+
+// Also initialize on regular page load
+document.addEventListener('DOMContentLoaded', () => {
+  initializeExistingVerses();
+});
+
+// Load chapters and verses for existing entries on page load
+async function initializeExistingVerses() {
+  const existingEntries = document.querySelectorAll('.verse-selectors[data-has-existing="true"]');
+  
+  for (const selector of existingEntries) {
+    const book = selector.dataset.book;
+    const chapter = selector.dataset.chapter;
+    const verse = selector.dataset.verse;
+    
+    if (!book || !chapter || !verse) continue;
+    
+    const entry = selector.closest('.verse-entry');
+    const chapterSelect = entry.querySelector('.verse-chapter-select');
+    const verseSelect = entry.querySelector('.verse-verse-select');
+    
+    // Load chapters
+    try {
+      const chaptersResponse = await fetch(`/bible_verses/${encodeURIComponent(book)}/chapters`, {
+        headers: { 'Accept': 'application/json' }
+      });
+      const chaptersData = await chaptersResponse.json();
+      
+      chapterSelect.innerHTML = '<option value="">Ch...</option>';
+      chaptersData.chapters.forEach(ch => {
+        const option = document.createElement('option');
+        option.value = ch;
+        option.textContent = ch;
+        if (ch == chapter) option.selected = true;
+        chapterSelect.appendChild(option);
+      });
+      chapterSelect.disabled = false;
+      
+      // Load verses
+      const versesResponse = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}`, {
+        headers: { 'Accept': 'application/json' }
+      });
+      const versesData = await versesResponse.json();
+      
+      verseSelect.innerHTML = '<option value="">V...</option>';
+      versesData.verses.forEach(v => {
+        const option = document.createElement('option');
+        option.value = v.verse;
+        option.textContent = v.verse;
+        if (v.verse == verse) option.selected = true;
+        verseSelect.appendChild(option);
+      });
+      verseSelect.disabled = false;
+    } catch (error) {
+      console.error('Error initializing verse selectors:', error);
+    }
+  }
+}
+</script>
+
