@@ -132,11 +132,46 @@ class CrossReferencesController < ApplicationController
   end
 
   def destroy
-    # This action is now for deleting comments, not cross-references
-    # We'll handle this differently
+    # Determine which verse page we're on (source or target)
+    source_verse = @cross_reference.source_verse
+    target_verse = @cross_reference.target_verse
+    
+    # Try to determine the current verse from params
+    current_verse = if params[:book] && params[:chapter] && params[:verse_number]
+      BibleVerse.find_by(book: params[:book], chapter: params[:chapter].to_i, verse: params[:verse_number].to_i)
+    elsif request.referer
+      # Extract verse info from referer URL
+      referer_path = URI.parse(request.referer).path rescue nil
+      if referer_path&.match(%r{/bible_verses/(\w+)/(\d+)/(\d+)})
+        BibleVerse.find_by(book: $1, chapter: $2.to_i, verse: $3.to_i)
+      end
+    end
+    
+    # If we can't determine from params/referer, check if current verse matches source or target
+    if current_verse.nil?
+      # Default to source verse, but we could also check referer more carefully
+      current_verse = source_verse
+    elsif current_verse.id != source_verse.id && current_verse.id != target_verse.id
+      # If the verse doesn't match either, default to source
+      current_verse = source_verse
+    end
+    
+    # Delete the cross-reference
+    @cross_reference.destroy
+    
     respond_to do |format|
-      format.html { redirect_to root_path, alert: "Invalid action" }
-      format.json { render json: { error: "Invalid action" }, status: :unprocessable_entity }
+      format.turbo_stream { 
+        # Update the cross-references list for the current verse
+        render turbo_stream: turbo_stream.replace("cross-references", 
+          partial: "cross_references/cross_references_list", 
+          locals: { cross_references: current_verse.ordered_cross_references, verse: current_verse }
+        )
+      }
+      format.html { 
+        redirect_to bible_verse_show_path(book: current_verse.book, chapter: current_verse.chapter, verse: current_verse.verse), 
+          notice: "Cross-reference was successfully deleted."
+      }
+      format.json { head :no_content }
     end
   end
 

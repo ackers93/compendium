@@ -165,6 +165,11 @@
 }
 
 .cross-references-list {
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+  }
+  
   .table {
     width: 100%;
     border-collapse: collapse;
@@ -174,6 +179,9 @@
       padding: $space-3;
       text-align: left;
       border-bottom: 1px solid $gray-200;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      vertical-align: top;
     }
     
     th {
@@ -185,12 +193,20 @@
     // Set specific column widths
     th:first-child,
     td:first-child {
-      width: 50%; // Connected Verse column
+      width: 40%; // Connected Verse column
     }
     
-    th:last-child,
-    td:last-child {
-      width: 50%; // Comments column
+    // Comments column (second column, or last if no Actions column)
+    th:nth-child(2),
+    td:nth-child(2) {
+      width: 45%; // Comments column
+      min-width: 200px; // Prevent column from becoming too narrow
+    }
+    
+    // Actions column (if present)
+    th:nth-child(3),
+    td:nth-child(3) {
+      width: 15%; // Actions column
     }
   }
   
@@ -198,6 +214,7 @@
     color: $primary;
     text-decoration: none;
     font-weight: $font-weight-medium;
+    word-break: break-word;
     
     &:hover {
       text-decoration: underline;
@@ -207,21 +224,61 @@
   .verse-preview {
     font-style: italic;
     color: $gray-600;
+    word-break: break-word;
   }
   
-
+  .comments-summary {
+    max-width: 100%;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
   
   .comment-item {
     border-left: 3px solid $primary;
+    max-width: 100%;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
   
   .comment-header {
     font-size: $font-size-xs;
+    word-break: normal;
+    overflow-wrap: break-word;
+    
+    .author-name {
+      white-space: normal;
+      word-break: normal;
+      display: inline;
+    }
   }
   
   .comment-content {
     font-size: $font-size-sm;
     line-height: 1.4;
+    word-break: normal;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+    
+    // Ensure ActionText/Trix content wraps properly
+    .trix-content {
+      word-break: normal;
+      overflow-wrap: break-word;
+      white-space: normal;
+      max-width: 100%;
+      
+      * {
+        word-break: normal;
+        overflow-wrap: break-word;
+        white-space: normal;
+        max-width: 100%;
+      }
+      
+      p, div {
+        word-break: normal;
+        overflow-wrap: break-word;
+      }
+    }
   }
 }
 
