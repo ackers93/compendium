@@ -116,7 +116,7 @@
                     <%= link_to thread.title, bible_thread_path(thread), class: "font-semibold text-lg" %>
                   </div>
                   <div class="thread-meta text-sm text-gray-600 mt-1">
-                    Created by <%= thread.user.email %> • <%= pluralize(thread.bible_thread_entries.count, 'verse') %>
+                    Created by <%= thread.user.display_name %> • <%= pluralize(thread.bible_thread_entries.count, 'verse') %>
                   </div>
                 </div>
               <% end %>

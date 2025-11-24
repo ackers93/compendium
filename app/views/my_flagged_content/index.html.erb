@@ -120,7 +120,7 @@
             <div class="flag-meta">
               <div class="flag-meta-item">
                 <strong>Flagged By:</strong> 
-                <%= flag.user.email %>
+                <%= flag.user.display_name %>
               </div>
               <div class="flag-meta-item">
                 <strong>Flagged At:</strong> 
@@ -129,7 +129,7 @@
               <% if flag.resolved_by %>
                 <div class="flag-meta-item">
                   <strong>Reviewed By:</strong> 
-                  <%= flag.resolved_by.email %>
+                  <%= flag.resolved_by.display_name %>
                 </div>
               <% end %>
               <% if flag.resolved_at %>

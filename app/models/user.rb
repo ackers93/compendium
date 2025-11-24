@@ -136,6 +136,19 @@ class User < ApplicationRecord
                  .count
     end
     
+    # Display name in format "name - ecclesia"
+    def display_name
+      if name.present? && ecclesia.present?
+        "#{name} - #{ecclesia}"
+      elsif name.present?
+        name
+      elsif ecclesia.present?
+        ecclesia
+      else
+        email || "Unknown User"
+      end
+    end
+    
     private
     
     def set_default_role

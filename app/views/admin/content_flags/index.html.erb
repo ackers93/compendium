@@ -119,11 +119,11 @@
             <div class="flag-meta">
               <div class="flag-meta-item">
                 <strong>Content Author:</strong> 
-                <%= flag.content_author.email %>
+                <%= flag.content_author.display_name %>
               </div>
               <div class="flag-meta-item">
                 <strong>Flagged By:</strong> 
-                <%= flag.user.email %>
+                <%= flag.user.display_name %>
               </div>
               <div class="flag-meta-item">
                 <strong>Flagged At:</strong> 
@@ -178,7 +178,7 @@
                 <div class="flag-meta">
                   <div class="flag-meta-item">
                     <strong>Resolved By:</strong> 
-                    <%= flag.resolved_by&.email || 'N/A' %>
+                    <%= flag.resolved_by&.display_name || 'N/A' %>
                   </div>
                   <div class="flag-meta-item">
                     <strong>Resolved At:</strong> 

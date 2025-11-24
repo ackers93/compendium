@@ -1,7 +1,7 @@
 <div class="page-header">
   <h1 class="page-title"><%= @bible_thread.title %></h1>
   <p class="page-subtitle">
-    Created by <%= @bible_thread.user.email %> on <%= @bible_thread.created_at.strftime('%b %d, %Y') %>
+    Created by <%= @bible_thread.user.display_name %> on <%= @bible_thread.created_at.strftime('%b %d, %Y') %>
   </p>
 </div>
 

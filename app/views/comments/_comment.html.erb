@@ -1,7 +1,7 @@
 <div id="<%= dom_id comment %>" class="comment-item mb-2 p-2 bg-gray-50 rounded">
   <div class="comment-header text-xs text-gray-500 mb-1">
     <span class="author-name">
-      <%= comment.user&.name || comment.user&.email || "Unknown User" %>
+      <%= comment.user&.display_name || "Unknown User" %>
     </span>
     <span class="comment-date">
       • <%= time_ago_in_words(comment.created_at) %> ago
