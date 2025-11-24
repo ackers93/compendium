@@ -26,13 +26,13 @@
           <span class="verse-position-number"><%= position_value %></span>
         </div>
         <div class="verse-entry-controls">
-          <button type="button" onclick="moveVerseUp(this)" class="btn-icon" title="Move Up">
+          <button type="button" onclick="window.moveVerseUp(this)" class="btn-icon" title="Move Up">
             <i class="fa-solid fa-arrow-up"></i>
           </button>
-          <button type="button" onclick="moveVerseDown(this)" class="btn-icon" title="Move Down">
+          <button type="button" onclick="window.moveVerseDown(this)" class="btn-icon" title="Move Down">
             <i class="fa-solid fa-arrow-down"></i>
           </button>
-          <button type="button" onclick="removeVerseEntry(this)" class="btn-icon btn-icon-danger" title="Remove">
+          <button type="button" onclick="window.removeVerseEntry(this)" class="btn-icon btn-icon-danger" title="Remove">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
@@ -85,13 +85,13 @@
         <span class="verse-position-number">INDEX_PLACEHOLDER</span>
       </div>
       <div class="verse-entry-controls">
-        <button type="button" onclick="moveVerseUp(this)" class="btn-icon" title="Move Up">
+        <button type="button" onclick="window.moveVerseUp(this)" class="btn-icon" title="Move Up">
           <i class="fa-solid fa-arrow-up"></i>
         </button>
-        <button type="button" onclick="moveVerseDown(this)" class="btn-icon" title="Move Down">
+        <button type="button" onclick="window.moveVerseDown(this)" class="btn-icon" title="Move Down">
           <i class="fa-solid fa-arrow-down"></i>
         </button>
-        <button type="button" onclick="removeVerseEntry(this)" class="btn-icon btn-icon-danger" title="Remove">
+        <button type="button" onclick="window.removeVerseEntry(this)" class="btn-icon btn-icon-danger" title="Remove">
           <i class="fa-solid fa-trash"></i>
         </button>
       </div>
@@ -130,114 +130,107 @@
 </div>
 
 <script>
-// Define these functions on window object if not already defined
-if (!window.loadChaptersForEntry) {
-  window.loadChaptersForEntry = async function(bookSelect) {
-    const book = bookSelect.value;
-    const entry = bookSelect.closest('.verse-entry');
-    const chapterSelect = entry.querySelector('.verse-chapter-select');
-    const verseSelect = entry.querySelector('.verse-verse-select');
+async function loadChaptersForEntry(bookSelect) {
+  const book = bookSelect.value;
+  const entry = bookSelect.closest('.verse-entry');
+  const chapterSelect = entry.querySelector('.verse-chapter-select');
+  const verseSelect = entry.querySelector('.verse-verse-select');
+  
+  // Clear and disable chapter and verse selects
+  chapterSelect.innerHTML = '<option value="">Chapter...</option>';
+  chapterSelect.disabled = true;
+  verseSelect.innerHTML = '<option value="">Verse...</option>';
+  verseSelect.disabled = true;
+  
+  if (!book) return;
+  
+  try {
+    const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/chapters`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    const data = await response.json();
     
-    // Clear and disable chapter and verse selects
-    chapterSelect.innerHTML = '<option value="">Ch...</option>';
-    chapterSelect.disabled = true;
-    verseSelect.innerHTML = '<option value="">V...</option>';
-    verseSelect.disabled = true;
+    data.chapters.forEach(chapter => {
+      const option = document.createElement('option');
+      option.value = chapter;
+      option.textContent = chapter;
+      chapterSelect.appendChild(option);
+    });
     
-    if (!book) return;
-    
-    try {
-      const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/chapters`, {
-        headers: { 'Accept': 'application/json' }
-      });
-      const data = await response.json();
-      
-      data.chapters.forEach(chapter => {
-        const option = document.createElement('option');
-        option.value = chapter;
-        option.textContent = chapter;
-        chapterSelect.appendChild(option);
-      });
-      
-      chapterSelect.disabled = false;
-    } catch (error) {
-      console.error('Error loading chapters:', error);
-    }
-  };
+    chapterSelect.disabled = false;
+  } catch (error) {
+    console.error('Error loading chapters:', error);
+  }
 }
 
-if (!window.loadVersesForEntry) {
-  window.loadVersesForEntry = async function(chapterSelect) {
-    const chapter = chapterSelect.value;
-    const entry = chapterSelect.closest('.verse-entry');
-    const bookSelect = entry.querySelector('.verse-book-select');
-    const book = bookSelect.value;
-    const verseSelect = entry.querySelector('.verse-verse-select');
+async function loadVersesForEntry(chapterSelect) {
+  const chapter = chapterSelect.value;
+  const entry = chapterSelect.closest('.verse-entry');
+  const bookSelect = entry.querySelector('.verse-book-select');
+  const book = bookSelect.value;
+  const verseSelect = entry.querySelector('.verse-verse-select');
+  
+  // Clear and disable verse select
+  verseSelect.innerHTML = '<option value="">Verse...</option>';
+  verseSelect.disabled = true;
+  
+  if (!book || !chapter) return;
+  
+  try {
+    const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    const data = await response.json();
     
-    // Clear and disable verse select
-    verseSelect.innerHTML = '<option value="">V...</option>';
-    verseSelect.disabled = true;
+    data.verses.forEach(verse => {
+      const option = document.createElement('option');
+      option.value = verse.verse;
+      option.textContent = verse.verse;
+      option.dataset.verseId = verse.id || `${book}_${chapter}_${verse.verse}`;
+      verseSelect.appendChild(option);
+    });
     
-    if (!book || !chapter) return;
-    
-    try {
-      const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}`, {
-        headers: { 'Accept': 'application/json' }
-      });
-      const data = await response.json();
-      
-      data.verses.forEach(verse => {
-        const option = document.createElement('option');
-        option.value = verse.verse;
-        option.textContent = verse.verse;
-        option.dataset.verseId = verse.id || `${book}_${chapter}_${verse.verse}`;
-        verseSelect.appendChild(option);
-      });
-      
-      verseSelect.disabled = false;
-    } catch (error) {
-      console.error('Error loading verses:', error);
-    }
-  };
+    verseSelect.disabled = false;
+  } catch (error) {
+    console.error('Error loading verses:', error);
+  }
 }
 
-if (!window.updateVerseId) {
-  window.updateVerseId = async function(verseSelect) {
-    const verse = verseSelect.value;
-    const entry = verseSelect.closest('.verse-entry');
-    const bookSelect = entry.querySelector('.verse-book-select');
-    const chapterSelect = entry.querySelector('.verse-chapter-select');
-    const verseIdInput = entry.querySelector('.verse-id-input');
+async function updateVerseId(verseSelect) {
+  const verse = verseSelect.value;
+  const entry = verseSelect.closest('.verse-entry');
+  const bookSelect = entry.querySelector('.verse-book-select');
+  const chapterSelect = entry.querySelector('.verse-chapter-select');
+  const verseIdInput = entry.querySelector('.verse-id-input');
+  
+  const book = bookSelect.value;
+  const chapter = chapterSelect.value;
+  
+  if (!book || !chapter || !verse) return;
+  
+  try {
+    // Fetch the verse data to get the ID
+    const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    const data = await response.json();
     
-    const book = bookSelect.value;
-    const chapter = chapterSelect.value;
-    
-    if (!book || !chapter || !verse) return;
-    
-    try {
-      // Fetch the verse data to get the ID
-      const response = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}`, {
+    const verseData = data.verses.find(v => v.verse == verse);
+    if (verseData && verseData.id) {
+      verseIdInput.value = verseData.id;
+    } else {
+      // Fallback: try to find the verse by querying the show endpoint
+      const verseResponse = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}/${verse}`, {
         headers: { 'Accept': 'application/json' }
       });
-      const data = await response.json();
-      
-      const verseData = data.verses.find(v => v.verse == verse);
-      if (verseData && verseData.id) {
-        verseIdInput.value = verseData.id;
-      } else {
-        // Fallback: try to find the verse by querying the show endpoint
-        const verseResponse = await fetch(`/bible_verses/${encodeURIComponent(book)}/${chapter}/${verse}`, {
-          headers: { 'Accept': 'application/json' }
-        });
-        if (verseResponse.ok) {
-          const verseDetails = await verseResponse.json();
-          verseIdInput.value = verseDetails.id;
-        }
+      if (verseResponse.ok) {
+        const verseDetails = await verseResponse.json();
+        verseIdInput.value = verseDetails.id;
       }
-    } catch (error) {
-      console.error('Error updating verse ID:', error);
     }
-  };
+  } catch (error) {
+    console.error('Error updating verse ID:', error);
+  }
 }
 </script>
 
