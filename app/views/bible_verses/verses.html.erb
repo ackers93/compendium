@@ -22,32 +22,57 @@
   </div>
   
   <div class="section-content">
-    <!-- Card View (Current Style) -->
-    <div data-verse-view-toggle-target="cardView" class="verses-list">
+    <!-- Card View (Table Style) -->
+    <div data-verse-view-toggle-target="cardView" class="verses-table-view">
       <% @verses.each do |verse| %>
-        <div class="verse-item mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-          <div class="verse-header mb-2 d-flex flex-row justify-between">
-            <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
-            <div class="d-flex items-center gap-2">
-              <% if verse.comments.any? %>
-                <span class="comment-count text-sm text-gray-600">
-                  <%= pluralize(verse.comments.count, 'comment') %>
-                </span>
-              <% end %>
-              <% if verse.comments.any? && verse.ordered_cross_references.any? %>
-                |
-              <% end %>
-              <% if verse.ordered_cross_references.any? %>
-                <span class="cross-reference-count text-sm text-gray-600">
-                  <%= pluralize(verse.ordered_cross_references.count, 'cross reference') %>
-                </span>
-              <% end %>
-              <%= link_to "See all Comments", bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
-                  class: "btn btn-sm btn-primary" %>
-            </div>
+        <div class="verse-table-row">
+          <div class="verse-column">
+            <div class="verse-number font-bold text-primary mb-1"><%= verse.verse %></div>
+            <div class="verse-text text-gray-700"><%= verse.text %></div>
           </div>
-          <div class="verse-preview text-gray-700">
-            <%= verse.text %>
+          <div class="verse-content-column">
+            <!-- Comments Section -->
+            <% if verse.comments.any? %>
+              <div class="verse-comments-section mb-3">
+                <% verse.comments.order(created_at: :desc).each do |comment| %>
+                  <div class="comment-preview" data-comment-id="<%= comment.id %>">
+                    <div class="comment-preview-text">
+                      <%= plain_text_from_rich_text(comment.content, 40) %>
+                    </div>
+                    <div class="comment-full-text">
+                      <div class="comment-header text-xs text-gray-500 mb-1">
+                        <span class="author-name"><%= comment.user&.display_name || "Unknown User" %></span>
+                        <span class="comment-date">• <%= time_ago_in_words(comment.created_at) %> ago</span>
+                      </div>
+                      <div class="comment-content">
+                        <%= comment.content %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+            
+            <!-- Cross-References Section -->
+            <% if verse.ordered_cross_references.any? %>
+              <div class="verse-cross-refs-section mb-3">
+                <% verse.ordered_cross_references.each_with_index do |cross_ref, index| %>
+                  <% other_verse = cross_ref.source_verse_id == verse.id ? cross_ref.target_verse : cross_ref.source_verse %>
+                  <%= link_to "#{other_verse.book} #{other_verse.chapter}:#{other_verse.verse}", 
+                      bible_verse_show_path(book: other_verse.book, chapter: other_verse.chapter, verse: other_verse.verse),
+                      class: "cross-ref-link" %><% unless index == verse.ordered_cross_references.count - 1 %>, <% end %>
+                <% end %>
+              </div>
+            <% end %>
+            
+            <!-- Threads Section -->
+            <% if verse.bible_threads.any? %>
+              <div class="verse-threads-section">
+                <% verse.bible_threads.each_with_index do |thread, index| %>
+                  <%= link_to thread.title, bible_thread_path(thread), class: "thread-link" %><% unless index == verse.bible_threads.count - 1 %>, <% end %>
+                <% end %>
+              </div>
+            <% end %>
           </div>
         </div>
       <% end %>

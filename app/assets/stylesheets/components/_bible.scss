@@ -676,6 +676,118 @@
   }
 }
 
+// Verses table view styles (Card View)
+.verses-table-view {
+  .verse-table-row {
+    display: flex;
+    gap: $space-4;
+    padding: $space-4;
+    border-bottom: 1px solid $gray-200;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &:hover {
+      background-color: $gray-50;
+    }
+  }
+  
+  .verse-column {
+    width: 30%;
+    flex-shrink: 0;
+  }
+  
+  .verse-content-column {
+    width: 70%;
+    flex: 1;
+  }
+  
+  .verse-number {
+    font-size: $font-size-lg;
+  }
+  
+  .verse-text {
+    font-size: $font-size-base;
+    line-height: 1.5;
+  }
+  
+  .verse-comments-section {
+    margin-bottom: $space-3;
+    
+    .comment-preview {
+      position: relative;
+      margin-bottom: $space-2;
+      padding: $space-2;
+      background: $white;
+      border: 1px solid $gray-200;
+      border-radius: $radius-sm;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        border-color: $primary;
+        box-shadow: $shadow-sm;
+        
+        .comment-preview-text {
+          display: none;
+        }
+        
+        .comment-full-text {
+          display: block;
+        }
+      }
+      
+      .comment-preview-text {
+        font-size: $font-size-sm;
+        color: $gray-700;
+        line-height: 1.4;
+      }
+      
+      .comment-full-text {
+        display: none;
+        
+        .comment-content {
+          font-size: $font-size-sm;
+          color: $gray-800;
+          line-height: 1.5;
+          
+          .trix-content {
+            font-size: $font-size-sm;
+          }
+        }
+      }
+    }
+  }
+  
+  .verse-cross-refs-section {
+    margin-bottom: $space-3;
+    font-size: $font-size-sm;
+    
+    .cross-ref-link {
+      color: $primary;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .verse-threads-section {
+    font-size: $font-size-sm;
+    
+    .thread-link {
+      color: $primary;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 // Verses list view styles
 .verses-list-list-view {
   .verse-item-list-link {

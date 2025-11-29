@@ -39,4 +39,14 @@ module ApplicationHelper
       end
     end
   end
+  
+  def plain_text_from_rich_text(rich_text, length = nil)
+    return "" unless rich_text.present?
+    text = rich_text.to_plain_text
+    if length && text.length > length
+      truncate(text, length: length, omission: '...')
+    else
+      text
+    end
+  end
 end
