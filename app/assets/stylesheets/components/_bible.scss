@@ -696,6 +696,23 @@
   .verse-column {
     width: 30%;
     flex-shrink: 0;
+    
+    &.verse-column-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        .verse-number {
+          color: darken($primary, 10%);
+        }
+        
+        .verse-text {
+          color: $gray-900;
+        }
+      }
+    }
   }
   
   .verse-content-column {
@@ -704,7 +721,8 @@
   }
   
   .verse-number {
-    font-size: $font-size-lg;
+    font-size: $font-size-base;
+    margin-right: $space-2;
   }
   
   .verse-text {

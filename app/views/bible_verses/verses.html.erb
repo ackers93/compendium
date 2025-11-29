@@ -26,10 +26,11 @@
     <div data-verse-view-toggle-target="cardView" class="verses-table-view">
       <% @verses.each do |verse| %>
         <div class="verse-table-row">
-          <div class="verse-column">
-            <div class="verse-number font-bold text-primary mb-1"><%= verse.verse %></div>
-            <div class="verse-text text-gray-700"><%= verse.text %></div>
-          </div>
+          <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
+              class: "verse-column verse-column-link" do %>
+            <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
+            <span class="verse-text text-gray-700"><%= verse.text %></span>
+          <% end %>
           <div class="verse-content-column">
             <!-- Comments Section -->
             <% if verse.comments.any? %>
@@ -56,6 +57,7 @@
             <!-- Cross-References Section -->
             <% if verse.ordered_cross_references.any? %>
               <div class="verse-cross-refs-section mb-3">
+                <span class="verse-cross-refs-section-title">CRs:</span>
                 <% verse.ordered_cross_references.each_with_index do |cross_ref, index| %>
                   <% other_verse = cross_ref.source_verse_id == verse.id ? cross_ref.target_verse : cross_ref.source_verse %>
                   <%= link_to "#{other_verse.book} #{other_verse.chapter}:#{other_verse.verse}", 
@@ -68,6 +70,7 @@
             <!-- Threads Section -->
             <% if verse.bible_threads.any? %>
               <div class="verse-threads-section">
+                <span class="verse-threads-section-title">T:</span>
                 <% verse.bible_threads.each_with_index do |thread, index| %>
                   <%= link_to thread.title, bible_thread_path(thread), class: "thread-link" %><% unless index == verse.bible_threads.count - 1 %>, <% end %>
                 <% end %>
