@@ -674,4 +674,48 @@
   .form-actions {
     margin-top: $space-6;
   }
+}
+
+// Verses list view styles
+.verses-list-list-view {
+  .verse-item-list-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.15s ease;
+    
+    &:hover {
+      background-color: $gray-50;
+    }
+    
+    &:active {
+      background-color: $gray-100;
+    }
+  }
+  
+  .verse-item-list {
+    padding: $space-2 0;
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid $gray-200;
+    }
+  }
+  
+  .verse-number-list {
+    font-size: $font-size-base;
+    min-width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  
+  .verse-text-list {
+    font-size: $font-size-base;
+    line-height: 1.5;
+  }
+  
+  .verse-counts-cell {
+    font-size: $font-size-xs;
+    white-space: nowrap;
+    padding-left: $space-3;
+  }
 } 

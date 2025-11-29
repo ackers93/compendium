@@ -3,11 +3,18 @@
   <p class="page-subtitle">All verses in this chapter</p>
 </div>
 
-<div class="content-section">
+<div class="content-section" data-controller="verse-view-toggle">
   <div class="section-header">
     <div class="d-flex justify-between items-center">
       <h2 class="section-title">Chapter <%= @chapter %></h2>
-      <div class="d-flex gap-2">
+      <div class="d-flex gap-2 items-center">
+        <button 
+          type="button" 
+          class="btn btn-outline btn-sm"
+          data-verse-view-toggle-target="toggleButton"
+          data-action="click->verse-view-toggle#toggle">
+          Switch to List View
+        </button>
         <%= link_to "← Back to Chapters", bible_verse_chapters_path(book: @book), class: "btn btn-outline" %>
         <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>
       </div>
@@ -15,7 +22,8 @@
   </div>
   
   <div class="section-content">
-    <div class="verses-list">
+    <!-- Card View (Current Style) -->
+    <div data-verse-view-toggle-target="cardView" class="verses-list">
       <% @verses.each do |verse| %>
         <div class="verse-item mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
           <div class="verse-header mb-2 d-flex flex-row justify-between">
@@ -42,6 +50,30 @@
             <%= verse.text %>
           </div>
         </div>
+      <% end %>
+    </div>
+
+    <!-- List View (Alternative Style) -->
+    <div data-verse-view-toggle-target="listView" class="verses-list-list-view hidden">
+      <% @verses.each do |verse| %>
+        <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
+            class: "verse-item-list-link" do %>
+          <div class="verse-item-list">
+            <div class="d-flex items-center justify-between gap-4">
+              <div class="d-flex items-start gap-2 flex-1">
+                <span class="verse-number-list font-bold text-primary flex-shrink-0"><%= verse.verse %></span>
+                <span class="verse-text-list text-gray-700"><%= verse.text %></span>
+              </div>
+              <div class="verse-counts-cell flex-shrink-0 text-sm text-gray-500">
+                <% counts = [] %>
+                <% counts << "C:#{verse.comments.count}" if verse.comments.any? %>
+                <% counts << "CR:#{verse.all_cross_references.count}" if verse.all_cross_references.any? %>
+                <% counts << "T:#{verse.bible_threads.count}" if verse.bible_threads.any? %>
+                <%= counts.join(' | ') if counts.any? %>
+              </div>
+            </div>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
