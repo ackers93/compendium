@@ -1,0 +1,49 @@
+<% verse_topics = bible_verse.verse_topics.includes(:topic, :user).order(created_at: :desc) %>
+<% if verse_topics.any? %>
+  <div class="topics-list">
+    <% verse_topics.each do |verse_topic| %>
+      <div id="verse_topic_<%= verse_topic.id %>" class="topic-item mb-4 p-4 border border-gray-200 rounded-lg">
+        <div class="d-flex justify-between items-start mb-2">
+          <div>
+            <span class="topic-name font-semibold text-lg">
+              <%= link_to verse_topic.topic.name, topic_path(verse_topic.topic), class: "topic-link" %>
+            </span>
+            <div class="topic-meta text-sm text-gray-600 mt-1">
+              Added by <%= verse_topic.user.display_name %> • <%= time_ago_in_words(verse_topic.created_at) %> ago
+            </div>
+          </div>
+          <% if verse_topic.user == current_user || current_user&.admin? %>
+            <%= button_to verse_topic_path(verse_topic), 
+                method: :delete,
+                class: "text-red-600 hover:text-red-800 text-sm",
+                data: { 
+                  turbo_frame: "_top",
+                  confirm: "Are you sure you want to remove this topic from this verse?" 
+                } do %>
+              <i class="fa-solid fa-trash"></i> Remove
+            <% end %>
+          <% end %>
+        </div>
+        <% if verse_topic.explanation.present? %>
+          <div class="topic-explanation mt-3 p-3 bg-gray-50 rounded">
+            <div class="text-sm text-gray-700">
+              <%= verse_topic.explanation %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-8 text-gray-500">
+    <p>This verse is not associated with any topics yet.</p>
+    <% if current_user&.can_create? %>
+      <p class="text-sm mt-2">
+        <%= link_to "Add this verse to a topic", new_bible_verse_topic_path(book: bible_verse.book, chapter: bible_verse.chapter, verse: bible_verse.verse), 
+            class: "text-blue-600 hover:text-blue-800",
+            data: { turbo_frame: "modal" } %> to categorize it.
+      </p>
+    <% end %>
+  </div>
+<% end %>
+

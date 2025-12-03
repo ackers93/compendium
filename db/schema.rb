@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_14_233903) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_03_231649) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -166,6 +166,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_233903) do
     t.integer "taggings_count", default: 0
   end
 
+  create_table "topics", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_topics_on_name", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -186,6 +193,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_233903) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "verse_topics", force: :cascade do |t|
+    t.bigint "bible_verse_id", null: false
+    t.bigint "topic_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bible_verse_id", "topic_id"], name: "index_verse_topics_on_bible_verse_id_and_topic_id", unique: true
+    t.index ["bible_verse_id"], name: "index_verse_topics_on_bible_verse_id"
+    t.index ["topic_id"], name: "index_verse_topics_on_topic_id"
+    t.index ["user_id"], name: "index_verse_topics_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bible_thread_entries", "bible_threads"
@@ -197,4 +216,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_14_233903) do
   add_foreign_key "cross_references", "bible_verses", column: "target_verse_id"
   add_foreign_key "cross_references", "users"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "verse_topics", "bible_verses"
+  add_foreign_key "verse_topics", "topics"
+  add_foreign_key "verse_topics", "users"
 end

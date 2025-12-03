@@ -79,9 +79,14 @@
           <li class="nav-item">
             <a href="/bible_verses/books" class="nav-link">Bible</a>
           </li>
+          <li class="nav-item">
+            <%= link_to topics_path, class: "nav-link nav-link-sm" do %>
+              Topics
+            <% end %>
+          </li>
           <% if user_signed_in? %>
             <li class="nav-item">
-              <%= link_to my_flagged_content_path, class: "nav-link" do %>
+              <%= link_to my_flagged_content_path, class: "nav-link nav-link-sm" do %>
                 My Content
                 <% review_count = current_user.flagged_content_needing_review_count %>
                 <% if review_count > 0 %>
@@ -92,7 +97,7 @@
           <% end %>
           <% if user_signed_in? && current_user.can_manage_users? %>
             <li class="nav-item">
-              <a href="/admin/users" class="nav-link">Admin</a>
+              <a href="/admin/users" class="nav-link nav-link-sm">Admin</a>
             </li>
           <% end %>
         </ul>
@@ -100,7 +105,6 @@
         <div class="nav-actions nav-actions-desktop">
           <% if user_signed_in? %>
             <span class="user-info">
-              <%= current_user.email %>
               <span class="role-badge <%= current_user.role %>"><%= current_user.role&.titleize || 'Viewer' %></span>
             </span>
             <%= link_to 'Profile', edit_user_registration_path, class: 'btn btn-outline' %>
@@ -129,6 +133,11 @@
             </li>
             <li class="mobile-nav-item">
               <a href="/bible_verses/books" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Bible</a>
+            </li>
+            <li class="mobile-nav-item">
+              <%= link_to topics_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                Topics
+              <% end %>
             </li>
             <% if user_signed_in? %>
               <li class="mobile-nav-item">

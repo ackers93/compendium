@@ -13,6 +13,10 @@ class BibleVerse < ApplicationRecord
   has_many :bible_thread_entries, dependent: :destroy
   has_many :bible_threads, through: :bible_thread_entries
   
+  # Topics
+  has_many :verse_topics, dependent: :destroy
+  has_many :topics, through: :verse_topics
+  
   validates :book, presence: true
   validates :chapter, presence: true
   validates :verse, presence: true
