@@ -495,9 +495,15 @@
         margin-top: $space-2;
         font-size: $font-size-sm;
         color: $gray-700;
+        line-height: 1.6;
         
-        strong {
+        .verse-ref-link {
           color: $primary;
+          text-decoration: none;
+          
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }

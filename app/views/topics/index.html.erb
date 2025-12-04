@@ -25,10 +25,16 @@
                 <%= pluralize(topic.verses_count || 0, 'verse') %> associated
               </p>
               <% if topic.verse_topics.any? %>
-                <% first_verse_topic = topic.verse_topics.first %>
                 <p class="verse-preview mt-2">
-                  <strong><%= first_verse_topic.bible_verse.reference %></strong>: 
-                  <%= truncate(first_verse_topic.bible_verse.text, length: 100) %>
+                  <% topic.verse_topics.each_with_index do |verse_topic, index| %>
+                    <%= link_to verse_topic.bible_verse.reference, 
+                        bible_verse_show_path(
+                          book: verse_topic.bible_verse.book,
+                          chapter: verse_topic.bible_verse.chapter,
+                          verse: verse_topic.bible_verse.verse
+                        ),
+                        class: "verse-ref-link" %><% unless index == topic.verse_topics.count - 1 %>, <% end %>
+                  <% end %>
                 </p>
               <% end %>
             </div>
