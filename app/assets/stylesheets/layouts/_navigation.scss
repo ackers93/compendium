@@ -9,7 +9,7 @@
     .nav-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 $space-6;
+      padding: 0 $space-1;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -260,7 +260,7 @@
     }
   }
 
-  @media (min-width: $breakpoint-md + 1) {
+  @media (min-width: $breakpoint-md) {
     .navbar {
       .nav-menu-mobile {
         display: none;
