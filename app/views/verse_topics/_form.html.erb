@@ -16,12 +16,12 @@
           autocomplete: "off",
           data: { 
             topic_autocomplete_target: "input",
-            action: "input->topic-autocomplete#search keydown->topic-autocomplete#handleKeydown focus->topic-autocomplete#showDropdown"
+            action: "input->topic-autocomplete#search keydown->topic-autocomplete#handleKeydown"
           } %>
       <div 
         class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden"
         data-topic-autocomplete-target="dropdown">
-        <ul class="max-h-60 overflow-auto py-1" data-topic-autocomplete-target="results">
+        <ul class="max-h-60 overflow-auto py-1 list-none m-0 p-0" data-topic-autocomplete-target="results">
           <!-- Results will be populated here -->
         </ul>
       </div>

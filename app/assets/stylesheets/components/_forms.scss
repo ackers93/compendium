@@ -190,4 +190,45 @@ select.form-input {
   .search-button {
     white-space: nowrap;
   }
+}
+
+// Autocomplete dropdown styles
+[data-topic-autocomplete-target="dropdown"] {
+  [data-topic-autocomplete-target="results"] {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+    li {
+      list-style: none;
+      margin: 0;
+      padding: $space-3 $space-4;
+      cursor: pointer;
+      color: $gray-900;
+      transition: background-color 0.15s ease;
+      
+      &:hover,
+      &.bg-gray-100 {
+        background-color: $gray-100;
+      }
+      
+      &:first-child {
+        border-top-left-radius: $radius;
+        border-top-right-radius: $radius;
+      }
+      
+      &:last-child {
+        border-bottom-left-radius: $radius;
+        border-bottom-right-radius: $radius;
+      }
+      
+      span {
+        display: block;
+      }
+      
+      strong {
+        font-weight: $font-weight-semibold;
+      }
+    }
+  }
 } 
