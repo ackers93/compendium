@@ -1,7 +1,74 @@
-<p>Hello <%= @email %>!</p>
-
-<% if @resource.try(:unconfirmed_email?) %>
-  <p>We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
-<% else %>
-  <p>We're contacting you to notify you that your email has been changed to <%= @resource.email %>.</p>
-<% end %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 30px;
+        border: 1px solid #e0e0e0;
+      }
+      .info-box {
+        background-color: #fff;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 20px 0;
+      }
+      .warning {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px;
+        margin: 20px 0;
+      }
+      .footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+        font-size: 12px;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Email Address Change</h2>
+      
+      <p>Hello <%= @email %>!</p>
+      
+      <% if @resource.try(:unconfirmed_email?) %>
+        <div class="info-box">
+          <strong>Email Change in Progress</strong><br>
+          We're contacting you to notify you that your email is being changed to <strong><%= @resource.unconfirmed_email %></strong>.
+        </div>
+        
+        <div class="warning">
+          <strong>⚠️ Action Required:</strong><br>
+          Please check your new email address (<%= @resource.unconfirmed_email %>) and confirm the change to complete the process.
+        </div>
+      <% else %>
+        <div class="info-box">
+          <strong>Email Successfully Changed</strong><br>
+          We're contacting you to notify you that your email has been changed to <strong><%= @resource.email %></strong>.
+        </div>
+        
+        <div class="warning">
+          <strong>⚠️ Security Notice:</strong><br>
+          If you did not make this change, please contact us immediately.
+        </div>
+      <% end %>
+      
+      <div class="footer">
+        <p>This is an automated message from Christadelphian Compendium. Please do not reply to this email.</p>
+      </div>
+    </div>
+  </body>
+</html>

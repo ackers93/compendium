@@ -1,7 +1,80 @@
-<p>Hello <%= @resource.email %>!</p>
-
-<p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
-
-<p>Click the link below to unlock your account:</p>
-
-<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 30px;
+        border: 1px solid #e0e0e0;
+      }
+      .button {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: #3498db;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        margin: 20px 0;
+        text-align: center;
+      }
+      .button:hover {
+        background-color: #2980b9;
+      }
+      .button-container {
+        text-align: center;
+        margin: 30px 0;
+      }
+      .warning {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px;
+        margin: 20px 0;
+      }
+      .footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+        font-size: 12px;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Unlock Your Account</h2>
+      
+      <p>Hello <%= @resource.email %>!</p>
+      
+      <p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+      
+      <div class="button-container">
+        <%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token), class: 'button', style: 'color: #fff; text-decoration: none;' %>
+      </div>
+      
+      <p style="color: #666; font-size: 14px;">
+        If the button doesn't work, copy and paste this link into your browser:<br>
+        <%= unlock_url(@resource, unlock_token: @token) %>
+      </p>
+      
+      <div class="warning">
+        <strong>⚠️ Security Notice:</strong><br>
+        If you did not attempt to sign in, please ignore this email and consider changing your password.
+      </div>
+      
+      <div class="footer">
+        <p>This is an automated message from Christadelphian Compendium. Please do not reply to this email.</p>
+      </div>
+    </div>
+  </body>
+</html>

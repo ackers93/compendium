@@ -1,0 +1,16 @@
+Unlock Your Account
+===================
+
+Hello <%= @resource.email %>!
+
+Your account has been locked due to an excessive number of unsuccessful sign in attempts.
+
+Click the link below to unlock your account:
+
+<%= unlock_url(@resource, unlock_token: @token) %>
+
+SECURITY NOTICE:
+If you did not attempt to sign in, please ignore this email and consider changing your password.
+
+---
+This is an automated message from Christadelphian Compendium. Please do not reply to this email.

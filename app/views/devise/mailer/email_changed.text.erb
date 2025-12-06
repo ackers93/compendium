@@ -1,0 +1,23 @@
+Email Address Change
+====================
+
+Hello <%= @email %>!
+
+<% if @resource.try(:unconfirmed_email?) %>
+EMAIL CHANGE IN PROGRESS
+
+We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.
+
+ACTION REQUIRED:
+Please check your new email address (<%= @resource.unconfirmed_email %>) and confirm the change to complete the process.
+<% else %>
+EMAIL SUCCESSFULLY CHANGED
+
+We're contacting you to notify you that your email has been changed to <%= @resource.email %>.
+
+SECURITY NOTICE:
+If you did not make this change, please contact us immediately.
+<% end %>
+
+---
+This is an automated message from Christadelphian Compendium. Please do not reply to this email.
