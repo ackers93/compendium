@@ -96,5 +96,9 @@ Rails.application.routes.draw do
         delete :destroy_content
       end
     end
+    resources :reviews, only: [:index] do
+      delete 'comments/:id', to: 'reviews#destroy_comment', as: :destroy_comment, on: :collection
+      delete 'cross_references/:id', to: 'reviews#destroy_cross_reference', as: :destroy_cross_reference, on: :collection
+    end
   end
 end

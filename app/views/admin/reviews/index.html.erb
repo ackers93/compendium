@@ -1,0 +1,217 @@
+<%= render 'admin/shared/admin_nav' %>
+
+<div class="page-header">
+  <h1 class="page-title">Content Review</h1>
+  <p class="page-subtitle">Review and manage all comments and cross-references</p>
+</div>
+
+<div class="content-section">
+  <!-- Statistics Cards -->
+  <div class="admin-stats-grid">
+    <div class="stat-card stat-card-primary">
+      <div class="stat-icon">
+        <i class="fa-solid fa-comment"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Total Comments</h3>
+        <p class="stat-number"><%= @comments_count %></p>
+        <%= link_to "View All", admin_reviews_path(type: 'comments'), class: "stat-link" %>
+      </div>
+    </div>
+    
+    <div class="stat-card stat-card-info">
+      <div class="stat-icon">
+        <i class="fa-solid fa-link"></i>
+      </div>
+      <div class="stat-content">
+        <h3 class="stat-label">Total Cross-References</h3>
+        <p class="stat-number"><%= @cross_references_count %></p>
+        <%= link_to "View All", admin_reviews_path(type: 'cross_references'), class: "stat-link" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="content-section">
+  <div class="filter-tabs">
+    <%= link_to admin_reviews_path, class: "filter-tab #{params[:type].blank? ? 'active' : ''}" do %>
+      <i class="fa-solid fa-list"></i>
+      All Content
+    <% end %>
+    <%= link_to admin_reviews_path(type: 'comments'), class: "filter-tab #{params[:type] == 'comments' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-comment"></i>
+      Comments
+    <% end %>
+    <%= link_to admin_reviews_path(type: 'cross_references'), class: "filter-tab #{params[:type] == 'cross_references' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-link"></i>
+      Cross-References
+    <% end %>
+  </div>
+</div>
+
+<!-- Content List -->
+<div class="content-section">
+  <% if @comments.any? || @cross_references.any? %>
+    <div class="reviews-container">
+      <!-- Comments Section -->
+      <% if @comments.any? %>
+        <div class="reviews-section">
+          <h2 class="section-title">
+            <i class="fa-solid fa-comment"></i>
+            Comments (<%= @comments.count %>)
+          </h2>
+          
+          <% @comments.each do |comment| %>
+            <div class="review-card">
+              <div class="review-header">
+                <div class="review-type">
+                  <i class="fa-solid fa-comment"></i> Comment
+                </div>
+                <div class="review-meta">
+                  <span class="text-sm text-gray-600">
+                    Created <%= time_ago_in_words(comment.created_at) %> ago
+                  </span>
+                </div>
+              </div>
+              
+              <div class="review-content">
+                <div class="review-author">
+                  <strong>Author:</strong> <%= comment.user&.display_name || "Unknown User" %>
+                </div>
+                
+                <div class="review-location">
+                  <strong>Location:</strong>
+                  <% if comment.commentable.is_a?(BibleVerse) %>
+                    <%= link_to comment.commentable.reference, 
+                        bible_verse_show_path(book: comment.commentable.book, chapter: comment.commentable.chapter, verse: comment.commentable.verse),
+                        class: "text-blue-600 hover:text-blue-800",
+                        target: "_blank" %>
+                  <% elsif comment.commentable.is_a?(CrossReference) %>
+                    Cross-reference: 
+                    <%= link_to "#{comment.commentable.source_verse.reference} → #{comment.commentable.target_verse.reference}",
+                        bible_verse_show_path(book: comment.commentable.source_verse.book, chapter: comment.commentable.source_verse.chapter, verse: comment.commentable.source_verse.verse),
+                        class: "text-blue-600 hover:text-blue-800",
+                        target: "_blank" %>
+                  <% elsif comment.commentable.is_a?(Note) %>
+                    <%= link_to comment.commentable.title, note_path(comment.commentable), 
+                        class: "text-blue-600 hover:text-blue-800",
+                        target: "_blank" %>
+                  <% else %>
+                    <%= comment.commentable_type %>
+                  <% end %>
+                </div>
+                
+                <div class="review-text">
+                  <strong>Content:</strong>
+                  <div class="content-preview-box">
+                    <% if comment.content.present? %>
+                      <%= truncate(plain_text_from_rich_text(comment.content), length: 300) %>
+                    <% else %>
+                      <em>No content</em>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="review-actions">
+                <%= link_to "View", bible_verse_path_for(comment.commentable), 
+                    class: "btn btn-sm btn-outline",
+                    target: "_blank" %>
+                <%= button_to destroy_comment_admin_reviews_path(comment, type: params[:type]), 
+                    method: :delete, 
+                    class: "btn btn-sm btn-danger",
+                    form: { onsubmit: "return confirm('Are you sure you want to delete this comment? This action cannot be undone.')" } do %>
+                  <i class="fa-solid fa-trash"></i> Delete
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      
+      <!-- Cross-References Section -->
+      <% if @cross_references.any? %>
+        <div class="reviews-section">
+          <h2 class="section-title">
+            <i class="fa-solid fa-link"></i>
+            Cross-References (<%= @cross_references.count %>)
+          </h2>
+          
+          <% @cross_references.each do |cross_ref| %>
+            <div class="review-card">
+              <div class="review-header">
+                <div class="review-type">
+                  <i class="fa-solid fa-link"></i> Cross-Reference
+                </div>
+                <div class="review-meta">
+                  <span class="text-sm text-gray-600">
+                    Created <%= time_ago_in_words(cross_ref.created_at) %> ago
+                  </span>
+                </div>
+              </div>
+              
+              <div class="review-content">
+                <div class="review-author">
+                  <strong>Created by:</strong> <%= cross_ref.user&.display_name || "Unknown User" %>
+                </div>
+                
+                <div class="review-location">
+                  <strong>Connection:</strong>
+                  <%= link_to cross_ref.source_verse.reference, 
+                      bible_verse_show_path(book: cross_ref.source_verse.book, chapter: cross_ref.source_verse.chapter, verse: cross_ref.source_verse.verse),
+                      class: "text-blue-600 hover:text-blue-800",
+                      target: "_blank" %>
+                  <i class="fa-solid fa-arrow-right mx-2"></i>
+                  <%= link_to cross_ref.target_verse.reference, 
+                      bible_verse_show_path(book: cross_ref.target_verse.book, chapter: cross_ref.target_verse.chapter, verse: cross_ref.target_verse.verse),
+                      class: "text-blue-600 hover:text-blue-800",
+                      target: "_blank" %>
+                </div>
+                
+                <div class="review-text">
+                  <div class="verse-preview">
+                    <div class="verse-item">
+                      <strong><%= cross_ref.source_verse.reference %>:</strong>
+                      <%= truncate(cross_ref.source_verse.text, length: 150) %>
+                    </div>
+                    <div class="verse-item mt-2">
+                      <strong><%= cross_ref.target_verse.reference %>:</strong>
+                      <%= truncate(cross_ref.target_verse.text, length: 150) %>
+                    </div>
+                  </div>
+                </div>
+                
+                <% if cross_ref.comments.any? %>
+                  <div class="review-comments-count">
+                    <i class="fa-solid fa-comments"></i>
+                    <%= pluralize(cross_ref.comments.count, 'comment') %> on this cross-reference
+                  </div>
+                <% end %>
+              </div>
+              
+              <div class="review-actions">
+                <%= link_to "View Source", 
+                    bible_verse_show_path(book: cross_ref.source_verse.book, chapter: cross_ref.source_verse.chapter, verse: cross_ref.source_verse.verse),
+                    class: "btn btn-sm btn-outline",
+                    target: "_blank" %>
+                <%= button_to destroy_cross_reference_admin_reviews_path(cross_ref, type: params[:type]), 
+                    method: :delete, 
+                    class: "btn btn-sm btn-danger",
+                    form: { onsubmit: "return confirm('Are you sure you want to delete this cross-reference? This action cannot be undone.')" } do %>
+                  <i class="fa-solid fa-trash"></i> Delete
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <i class="fa-solid fa-inbox"></i>
+      <p>No content found with this filter.</p>
+      <%= link_to "View All Content", admin_reviews_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

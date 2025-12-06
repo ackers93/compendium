@@ -11,6 +11,10 @@
         <span class="badge badge-warning ml-2"><%= ContentFlag.status_pending.count %></span>
       <% end %>
     <% end %>
+    <%= link_to admin_reviews_path, class: "filter-tab #{controller_name == 'reviews' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-list-check"></i>
+      Review Content
+    <% end %>
   </div>
 </div>
 
