@@ -76,6 +76,25 @@
                 <% end %>
               </div>
             <% end %>
+            
+            <!-- Topics Section -->
+            <% if verse.topics.any? %>
+              <div class="verse-topics-section mb-3">
+                <span class="verse-topics-section-title">Topics:</span>
+                <% verse.topics.each_with_index do |topic, index| %>
+                  <%= link_to topic.name, topic_path(topic), class: "topic-tag topic-link" %><% unless index == verse.topics.count - 1 %>, <% end %>
+                <% end %>
+              </div>
+            <% end %>
+            
+            <!-- Add Topic Link -->
+            <div class="verse-actions-section mt-2">
+              <%= link_to new_bible_verse_topic_path(book: @book, chapter: @chapter, verse: verse.verse), 
+                  class: "text-sm text-blue-600 hover:text-blue-800", 
+                  data: { turbo_frame: "modal" } do %>
+                <i class="fa-solid fa-tag"></i> Add to Topic
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>
@@ -97,6 +116,7 @@
                 <% counts << "C:#{verse.comments.count}" if verse.comments.any? %>
                 <% counts << "CR:#{verse.all_cross_references.count}" if verse.all_cross_references.any? %>
                 <% counts << "T:#{verse.bible_threads.count}" if verse.bible_threads.any? %>
+                <% counts << "TP:#{verse.topics.count}" if verse.topics.any? %>
                 <%= counts.join(' | ') if counts.any? %>
               </div>
             </div>

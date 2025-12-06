@@ -1,0 +1,63 @@
+<div class="page-header">
+  <h1 class="page-title">Topics</h1>
+  <p class="page-subtitle">Explore verses organized by topic</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">All Topics</h2>
+    </div>
+  </div>
+  
+  <div class="section-content">
+    <% if @topics.any? %>
+      <div class="topics-grid">
+        <% @topics.each do |topic| %>
+          <div class="topic-card">
+            <div class="topic-header">
+              <h3 class="topic-title">
+                <%= link_to topic.name, topic_path(topic) %>
+              </h3>
+            </div>
+            <div class="topic-preview">
+              <p class="text-sm text-gray-600">
+                <%= pluralize(topic.verses_count || 0, 'verse') %> associated
+              </p>
+              <% if topic.verse_topics.any? %>
+                <p class="verse-preview mt-2">
+                  <% 
+                    # Order verses by Bible order
+                    all_books = BibleVersesController::OLD_TESTAMENT_BOOKS + BibleVersesController::NEW_TESTAMENT_BOOKS
+                    book_order = all_books.each_with_index.to_h
+                    ordered_verse_topics = topic.verse_topics.includes(:bible_verse).to_a.sort_by do |vt|
+                      book_index = book_order[vt.bible_verse.book] || 999
+                      [book_index, vt.bible_verse.chapter, vt.bible_verse.verse]
+                    end
+                  %>
+                  <% ordered_verse_topics.each_with_index do |verse_topic, index| %>
+                    <%= link_to verse_topic.bible_verse.reference, 
+                        bible_verse_show_path(
+                          book: verse_topic.bible_verse.book,
+                          chapter: verse_topic.bible_verse.chapter,
+                          verse: verse_topic.bible_verse.verse
+                        ),
+                        class: "verse-ref-link" %><% unless index == ordered_verse_topics.count - 1 %>, <% end %>
+                  <% end %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-8 text-gray-500">
+        <p>No topics have been created yet.</p>
+        <p class="text-sm mt-2">
+          Start by <%= link_to "browsing verses", bible_verses_books_path, class: "text-blue-600 hover:text-blue-800" %> and adding them to topics.
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
+

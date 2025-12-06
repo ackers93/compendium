@@ -24,6 +24,23 @@ Rails.application.routes.draw do
   post 'bible_verses/:source_book/:source_chapter/:source_verse/cross_references', to: 'cross_references#create', as: :bible_verse_cross_references
   delete 'cross_references/:id', to: 'cross_references#destroy', as: :cross_reference
   
+  # Topics routes
+  resources :topics, only: [:index, :show] do
+    collection do
+      get :autocomplete
+    end
+    member do
+      post :add_verse
+    end
+  end
+  post 'topics', to: 'topics#create'
+  get 'bible_verses/:book/:chapter/:verse/topics/new', to: 'verse_topics#new', as: :new_bible_verse_topic
+  post 'bible_verses/:book/:chapter/:verse/topics', to: 'verse_topics#create', as: :bible_verse_topics
+  get 'verse_topics/:id/edit', to: 'verse_topics#edit', as: :edit_verse_topic
+  patch 'verse_topics/:id', to: 'verse_topics#update', as: :verse_topic
+  put 'verse_topics/:id', to: 'verse_topics#update'
+  delete 'verse_topics/:id', to: 'verse_topics#destroy'
+  
   # Bible threads routes
   resources :bible_threads
   

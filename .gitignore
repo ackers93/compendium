@@ -33,7 +33,9 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
+# IDE files
 .vscode/settings.json
+.idea/
 Gemfile.lock
 /node_modules/*
 /node_modules

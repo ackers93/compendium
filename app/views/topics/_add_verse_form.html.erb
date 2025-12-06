@@ -1,0 +1,63 @@
+<div class="add-verse-form">
+  <% if local_assigns[:errors] && errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% errors.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <%= form_with url: add_verse_topic_path(@topic), 
+                data: { turbo: true, controller: "bible-verse-picker" }, 
+                class: "space-y-4" do |form| %>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label for="book" class="form-label">Book</label>
+        <select name="book" id="book" class="form-input" required
+                data-bible-verse-picker-target="bookSelect"
+                data-action="change->bible-verse-picker#bookSelected">
+          <option value="">Select a book...</option>
+          <optgroup label="Old Testament">
+            <% BibleVersesController::OLD_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>"><%= book_option %></option>
+            <% end %>
+          </optgroup>
+          <optgroup label="New Testament">
+            <% BibleVersesController::NEW_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>"><%= book_option %></option>
+            <% end %>
+          </optgroup>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="chapter" class="form-label">Chapter</label>
+        <select name="chapter" id="chapter" class="form-input" required disabled
+                data-bible-verse-picker-target="chapterSelect"
+                data-action="change->bible-verse-picker#chapterSelected">
+          <option value="">Select chapter...</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="verse" class="form-label">Verse</label>
+        <select name="verse" id="verse" class="form-input" required disabled
+                data-bible-verse-picker-target="verseSelect"
+                data-action="change->bible-verse-picker#verseSelected">
+          <option value="">Select verse...</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <%= form.label :explanation, "Explanation (Optional)", class: "form-label" %>
+      <%= form.rich_text_area :explanation, class: "form-input" %>
+      <small class="form-help">Explain how this verse relates to the topic</small>
+    </div>
+    
+    <div class="form-actions">
+      <%= form.submit "Add Verse to Topic", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

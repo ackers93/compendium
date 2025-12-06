@@ -1,0 +1,39 @@
+<%= form_with(model: verse_topic, url: bible_verse_topics_path(book: book, chapter: chapter, verse: verse), id: "verse-topic-form", data: { turbo_frame: "modal" }) do |form| %>
+  <% if verse_topic.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% verse_topic.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <div class="form-group" data-controller="topic-autocomplete">
+    <%= form.label :topic_name, "Topic", class: "form-label" %>
+    <div class="relative">
+      <%= form.text_field :topic_name, 
+          class: "form-input", 
+          placeholder: "Type to search existing topics or create a new one",
+          autocomplete: "off",
+          data: { 
+            topic_autocomplete_target: "input",
+            action: "input->topic-autocomplete#search keydown->topic-autocomplete#handleKeydown"
+          } %>
+      <div 
+        class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden"
+        data-topic-autocomplete-target="dropdown">
+        <ul class="max-h-60 overflow-auto py-1 list-none m-0 p-0" data-topic-autocomplete-target="results">
+          <!-- Results will be populated here -->
+        </ul>
+      </div>
+    </div>
+    <small class="form-help">Start typing to see existing topics or create a new one</small>
+    <%= form.hidden_field :topic_id, data: { topic_autocomplete_target: "topicId" } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :explanation, "Explanation (Optional)", class: "form-label" %>
+    <%= form.rich_text_area :explanation, class: "form-input" %>
+    <small class="form-help">Explain how this verse relates to the topic</small>
+  </div>
+<% end %>
+
