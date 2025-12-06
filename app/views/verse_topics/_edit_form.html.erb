@@ -16,6 +16,6 @@
   </div>
   
   <div class="form-actions mt-4">
-    <%= form.submit "Update Explanation", class: "btn btn-primary" %>
+    <%= form.submit verse_topic.explanation.present? ? "Update Explanation" : "Add Explanation", class: "btn btn-primary" %>
   </div>
 <% end %>

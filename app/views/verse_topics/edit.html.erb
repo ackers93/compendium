@@ -2,7 +2,7 @@
   <div class="modal-overlay" data-controller="modal">
     <div class="modal modal-md" data-modal-target="modal">
       <div class="modal-header">
-        <h2 class="modal-title">Edit Explanation</h2>
+        <h2 class="modal-title"><%= @verse_topic.explanation.present? ? "Edit Explanation" : "Add Explanation" %></h2>
         <%= link_to "×", "#", class: "modal-close", data: { action: "click->modal#closeModal" } %>
       </div>
 
