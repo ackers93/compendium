@@ -156,14 +156,33 @@
             <div class="feature-icon">
               <i class="fa-solid fa-tags"></i>
             </div>
-            <h3 class="feature-title">Organize with Tags</h3>
+            <h3 class="feature-title">Topics</h3>
             <p class="feature-description">
               <% if current_user.can_create? %>
-                Tag your notes with topics and themes. Easily find and filter 
-                your content by category.
+                Organize verses by topics and themes. Add verses to topics to create 
+                collections that make thematic study easier. Browse existing topics 
+                to discover related Scripture passages.
               <% else %>
-                Browse notes by tags to find content on specific topics 
-                that interest you.
+                Browse topics to discover verses organized by themes. Topics help 
+                you find all related Scripture passages in one place.
+              <% end %>
+            </p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fa-solid fa-list-ol"></i>
+            </div>
+            <h3 class="feature-title">Bible Threads</h3>
+            <p class="feature-description">
+              <% if current_user.can_create? %>
+                Create thematic collections of verses with commentary. Build threads 
+                that follow a topic or doctrine through Scripture, verse by verse, 
+                with optional notes explaining each connection.
+              <% else %>
+                Explore Bible threads created by contributors. These thematic 
+                collections help you follow topics through Scripture with commentary 
+                on each verse.
               <% end %>
             </p>
           </div>
@@ -204,10 +223,14 @@
           <ul class="tips-list">
             <li>Start by exploring the Bible section to read scripture</li>
             <li>Check out Notes to see what others have written</li>
+            <li>Browse Topics to discover verses organized by themes</li>
+            <li>Explore Bible Threads for thematic verse collections with commentary</li>
             <li>Your role badge (<span class="role-badge <%= current_user.role %>"><%= current_user.role&.titleize %></span>) shows your access level</li>
             <% if current_user.can_create? %>
               <li>Use the "New Note" button to create your first study note</li>
               <li>Save drafts to work on notes privately before publishing</li>
+              <li>Add verses to topics to organize Scripture by themes</li>
+              <li>Create Bible threads to follow topics through Scripture with commentary</li>
             <% end %>
           </ul>
         </div>
