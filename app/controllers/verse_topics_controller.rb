@@ -4,6 +4,10 @@ class VerseTopicsController < ApplicationController
   before_action :set_bible_verse, except: [:edit, :update, :destroy]
   before_action :set_verse_topic, only: [:edit, :update, :destroy]
   
+  # Bible book order constants
+  OLD_TESTAMENT_BOOKS = BibleVersesController::OLD_TESTAMENT_BOOKS
+  NEW_TESTAMENT_BOOKS = BibleVersesController::NEW_TESTAMENT_BOOKS
+  
   def new
     @verse_topic = VerseTopic.new(bible_verse: @bible_verse)
   end
@@ -67,8 +71,9 @@ class VerseTopicsController < ApplicationController
           if params[:topic_id].present?
             @topic = Topic.find(params[:topic_id])
             verse_topics = @topic.verse_topics
+                                 .joins(:bible_verse)
                                  .includes(:bible_verse, :user)
-                                 .order('bible_verses.book ASC, bible_verses.chapter ASC, bible_verses.verse ASC')
+                                 .order(bible_order_sql)
             @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
             verse_count = @grouped_verse_topics.sum { |g| g.map { |vt| vt.bible_verse }.uniq.length }
             
@@ -123,8 +128,9 @@ class VerseTopicsController < ApplicationController
         # Determine context: topic page or verse page
         if params[:topic_id].present?
           verse_topics = @topic.verse_topics
+                               .joins(:bible_verse)
                                .includes(:bible_verse, :user)
-                               .order('bible_verses.book ASC, bible_verses.chapter ASC, bible_verses.verse ASC')
+                               .order(bible_order_sql)
           @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
           verse_count = @grouped_verse_topics.sum { |g| g.map { |vt| vt.bible_verse }.uniq.length }
           
@@ -172,6 +178,10 @@ class VerseTopicsController < ApplicationController
   def group_consecutive_verses(verse_topics)
     return [] if verse_topics.empty?
     
+    # Create book order hash for sorting
+    all_books = OLD_TESTAMENT_BOOKS + NEW_TESTAMENT_BOOKS
+    book_order = all_books.each_with_index.to_h
+    
     # First, group verse_topics by their verse (to collect all explanations for the same verse)
     verses_hash = {}
     verse_topics.each do |vt|
@@ -181,9 +191,11 @@ class VerseTopicsController < ApplicationController
     end
     
     # Convert to array of arrays, each inner array contains all VerseTopics for one verse
+    # Sort by Bible order: book order, then chapter, then verse
     verse_groups = verses_hash.values.sort_by do |vts|
       first_vt = vts.first
-      [first_vt.bible_verse.book, first_vt.bible_verse.chapter, first_vt.bible_verse.verse]
+      book_index = book_order[first_vt.bible_verse.book] || 999
+      [book_index, first_vt.bible_verse.chapter, first_vt.bible_verse.verse]
     end
     
     # Now group consecutive verses together
@@ -208,6 +220,15 @@ class VerseTopicsController < ApplicationController
     
     groups << current_group
     groups
+  end
+  
+  def bible_order_sql
+    # Build CASE statement for book order
+    all_books = OLD_TESTAMENT_BOOKS + NEW_TESTAMENT_BOOKS
+    book_order_cases = all_books.each_with_index.map { |book, index| "WHEN '#{book}' THEN #{index}" }.join(' ')
+    
+    # SQL order: book order (by CASE), then chapter, then verse
+    Arel.sql("CASE bible_verses.book #{book_order_cases} ELSE 999 END, bible_verses.chapter ASC, bible_verses.verse ASC")
   end
 end
 

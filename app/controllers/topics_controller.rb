@@ -2,6 +2,10 @@ class TopicsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_topic, only: [:show, :add_verse]
   
+  # Bible book order constants
+  OLD_TESTAMENT_BOOKS = BibleVersesController::OLD_TESTAMENT_BOOKS
+  NEW_TESTAMENT_BOOKS = BibleVersesController::NEW_TESTAMENT_BOOKS
+  
   def index
     @topics = Topic.includes(verse_topics: :bible_verse)
                    .left_joins(:verse_topics)
@@ -12,8 +16,9 @@ class TopicsController < ApplicationController
   
   def show
     verse_topics = @topic.verse_topics
+                         .joins(:bible_verse)
                          .includes(:bible_verse, :user)
-                         .order('bible_verses.book ASC, bible_verses.chapter ASC, bible_verses.verse ASC')
+                         .order(bible_order_sql)
     @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
     @errors = []
   end
@@ -28,8 +33,9 @@ class TopicsController < ApplicationController
     unless bible_verse
       @errors = ["Verse not found. Please select a valid book, chapter, and verse."]
       verse_topics = @topic.verse_topics
+                           .joins(:bible_verse)
                            .includes(:bible_verse, :user)
-                           .order('bible_verses.book ASC, bible_verses.chapter ASC, bible_verses.verse ASC')
+                           .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
       render :show, status: :unprocessable_entity
       return
@@ -51,8 +57,9 @@ class TopicsController < ApplicationController
         format.turbo_stream do
           # Reload the verse topics for this topic
           verse_topics = @topic.verse_topics
+                               .joins(:bible_verse)
                                .includes(:bible_verse, :user)
-                               .order('bible_verses.book ASC, bible_verses.chapter ASC, bible_verses.verse ASC')
+                               .order(bible_order_sql)
           @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
           @errors = []
           verse_count = @grouped_verse_topics.sum { |g| g.map { |vt| vt.bible_verse }.uniq.length }
@@ -68,8 +75,9 @@ class TopicsController < ApplicationController
     else
       @errors = @verse_topic.errors.full_messages
       verse_topics = @topic.verse_topics
+                           .joins(:bible_verse)
                            .includes(:bible_verse, :user)
-                           .order('bible_verses.book ASC, bible_verses.chapter ASC, bible_verses.verse ASC')
+                           .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
       render :show, status: :unprocessable_entity
     end
@@ -103,6 +111,10 @@ class TopicsController < ApplicationController
   def group_consecutive_verses(verse_topics)
     return [] if verse_topics.empty?
     
+    # Create book order hash for sorting
+    all_books = OLD_TESTAMENT_BOOKS + NEW_TESTAMENT_BOOKS
+    book_order = all_books.each_with_index.to_h
+    
     # First, group verse_topics by their verse (to collect all explanations for the same verse)
     verses_hash = {}
     verse_topics.each do |vt|
@@ -112,9 +124,11 @@ class TopicsController < ApplicationController
     end
     
     # Convert to array of arrays, each inner array contains all VerseTopics for one verse
+    # Sort by Bible order: book order, then chapter, then verse
     verse_groups = verses_hash.values.sort_by do |vts|
       first_vt = vts.first
-      [first_vt.bible_verse.book, first_vt.bible_verse.chapter, first_vt.bible_verse.verse]
+      book_index = book_order[first_vt.bible_verse.book] || 999
+      [book_index, first_vt.bible_verse.chapter, first_vt.bible_verse.verse]
     end
     
     # Now group consecutive verses together
@@ -147,6 +161,15 @@ class TopicsController < ApplicationController
   
   def topic_params
     params.require(:topic).permit(:name)
+  end
+  
+  def bible_order_sql
+    # Build CASE statement for book order
+    all_books = OLD_TESTAMENT_BOOKS + NEW_TESTAMENT_BOOKS
+    book_order_cases = all_books.each_with_index.map { |book, index| "WHEN '#{book}' THEN #{index}" }.join(' ')
+    
+    # SQL order: book order (by CASE), then chapter, then verse
+    Arel.sql("CASE bible_verses.book #{book_order_cases} ELSE 999 END, bible_verses.chapter ASC, bible_verses.verse ASC")
   end
 end
 
