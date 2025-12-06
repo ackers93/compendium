@@ -29,11 +29,17 @@ Rails.application.routes.draw do
     collection do
       get :autocomplete
     end
+    member do
+      post :add_verse
+    end
   end
   post 'topics', to: 'topics#create'
   get 'bible_verses/:book/:chapter/:verse/topics/new', to: 'verse_topics#new', as: :new_bible_verse_topic
   post 'bible_verses/:book/:chapter/:verse/topics', to: 'verse_topics#create', as: :bible_verse_topics
-  delete 'verse_topics/:id', to: 'verse_topics#destroy', as: :verse_topic
+  get 'verse_topics/:id/edit', to: 'verse_topics#edit', as: :edit_verse_topic
+  patch 'verse_topics/:id', to: 'verse_topics#update', as: :verse_topic
+  put 'verse_topics/:id', to: 'verse_topics#update'
+  delete 'verse_topics/:id', to: 'verse_topics#destroy'
   
   # Bible threads routes
   resources :bible_threads

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_03_231649) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_06_053250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -199,7 +199,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_231649) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["bible_verse_id", "topic_id"], name: "index_verse_topics_on_bible_verse_id_and_topic_id", unique: true
+    t.index ["bible_verse_id", "topic_id", "user_id"], name: "index_verse_topics_on_verse_topic_user", unique: true
     t.index ["bible_verse_id"], name: "index_verse_topics_on_bible_verse_id"
     t.index ["topic_id"], name: "index_verse_topics_on_topic_id"
     t.index ["user_id"], name: "index_verse_topics_on_user_id"

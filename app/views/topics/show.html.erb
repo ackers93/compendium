@@ -6,76 +6,21 @@
 <div class="content-section">
   <div class="section-header">
     <div class="d-flex justify-between items-center">
-      <h2 class="section-title">
-        <%= pluralize(@grouped_verse_topics.sum { |g| g.length }, 'verse') %> in this topic
+      <h2 class="section-title" id="verse-count">
+        <%= render partial: "verse_count", locals: { count: @grouped_verse_topics.sum { |g| g.map { |vt| vt.bible_verse }.uniq.length } } %>
       </h2>
       <%= link_to "← Back to Topics", topics_path, class: "btn btn-outline" %>
     </div>
   </div>
   
   <div class="section-content">
-    <% if @grouped_verse_topics.any? %>
-      <div class="topic-verses-list">
-        <% @grouped_verse_topics.each do |group| %>
-          <% first_verse = group.first.bible_verse %>
-          <% last_verse = group.last.bible_verse %>
-          <% is_range = group.length > 1 %>
-          
-          <div class="topic-verse-item">
-            <div class="topic-verse-header">
-              <h3 class="topic-verse-reference">
-                <% if is_range %>
-                  <%= link_to "#{first_verse.book} #{first_verse.chapter}:#{first_verse.verse}-#{last_verse.verse}", 
-                      bible_verse_show_path(
-                        book: first_verse.book, 
-                        chapter: first_verse.chapter, 
-                        verse: first_verse.verse
-                      ), 
-                      class: "verse-link font-semibold" %>
-                <% else %>
-                  <%= link_to first_verse.reference, 
-                      bible_verse_show_path(
-                        book: first_verse.book, 
-                        chapter: first_verse.chapter, 
-                        verse: first_verse.verse
-                      ), 
-                      class: "verse-link font-semibold" %>
-                <% end %>
-              </h3>
-            </div>
-            
-            <div class="topic-verse-content-wrapper">
-              <div class="topic-verse-text">
-                <% group.each do |verse_topic| %>
-                  <p class="text-gray-800 italic mb-2">
-                    <strong><%= verse_topic.bible_verse.reference %>:</strong> <%= verse_topic.bible_verse.text %>
-                  </p>
-                <% end %>
-              </div>
-              
-              <% explanations = group.select { |vt| vt.explanation.present? } %>
-              <% if explanations.any? %>
-                <div class="topic-verse-explanation">
-                  <h4 class="text-sm font-semibold text-gray-700 mb-3">Connection to Topic:</h4>
-                  <% explanations.each_with_index do |verse_topic, index| %>
-                    <div class="explanation-item <%= 'mt-3 pt-3 border-t border-gray-200' unless index == 0 %>">
-                      <div class="text-sm text-gray-700">
-                        <%= verse_topic.bible_verse.reference %>: <%= verse_topic.explanation %>
-                      </div>
-                      <div class="explanation-meta text-xs text-gray-500 mt-2">
-                        — <%= verse_topic.user.display_name %> • <%= time_ago_in_words(verse_topic.created_at) %> ago
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="text-center py-8 text-gray-500">
-        <p>No verses have been added to this topic yet.</p>
+    <%= render partial: "verses_list", locals: { grouped_verse_topics: @grouped_verse_topics, topic: @topic } %>
+    <% if current_user && current_user.can_create? %>
+      <div class="add-verse-section mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <h3 class="text-lg font-semibold mb-4">Add a Verse to This Topic</h3>
+        <div id="add-verse-to-topic-form">
+          <%= render partial: "add_verse_form", locals: { errors: @errors || [] } %>
+        </div>
       </div>
     <% end %>
   </div>

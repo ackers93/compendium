@@ -1,0 +1,21 @@
+<%= form_with(model: verse_topic, url: verse_topic_path(verse_topic, topic_id: local_assigns[:topic_id]), method: :patch, id: "verse-topic-edit-form", data: { turbo_frame: "modal" }) do |form| %>
+  <%= hidden_field_tag :topic_id, local_assigns[:topic_id] if local_assigns[:topic_id].present? %>
+  
+  <% if verse_topic.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% verse_topic.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <div class="form-group">
+    <%= form.label :explanation, "Explanation", class: "form-label" %>
+    <%= form.rich_text_area :explanation, class: "form-input" %>
+    <small class="form-help">Explain how this verse relates to the topic</small>
+  </div>
+  
+  <div class="form-actions mt-4">
+    <%= form.submit "Update Explanation", class: "btn btn-primary" %>
+  </div>
+<% end %>
