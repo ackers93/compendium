@@ -11,9 +11,10 @@ class TopicsController < ApplicationController
   end
   
   def show
-    @verse_topics = @topic.verse_topics
+    verse_topics = @topic.verse_topics
                          .includes(:bible_verse, :user)
-                         .order(created_at: :desc)
+                         .order('bible_verses.book ASC, bible_verses.chapter ASC, bible_verses.verse ASC')
+    @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
   end
   
   # Autocomplete endpoint for topic search
@@ -40,6 +41,31 @@ class TopicsController < ApplicationController
   end
   
   private
+  
+  def group_consecutive_verses(verse_topics)
+    return [] if verse_topics.empty?
+    
+    groups = []
+    current_group = [verse_topics.first]
+    
+    verse_topics.each_cons(2) do |prev, curr|
+      prev_verse = prev.bible_verse
+      curr_verse = curr.bible_verse
+      
+      # Check if verses are consecutive (same book, same chapter, verse number is +1)
+      if prev_verse.book == curr_verse.book && 
+         prev_verse.chapter == curr_verse.chapter && 
+         curr_verse.verse == prev_verse.verse + 1
+        current_group << curr
+      else
+        groups << current_group
+        current_group = [curr]
+      end
+    end
+    
+    groups << current_group
+    groups
+  end
   
   def set_topic
     @topic = Topic.find(params[:id])

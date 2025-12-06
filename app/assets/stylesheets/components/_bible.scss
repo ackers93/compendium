@@ -537,15 +537,32 @@
       color: $gray-600;
     }
     
+    .topic-verse-content-wrapper {
+      display: flex;
+      gap: $space-6;
+      align-items: flex-start;
+      
+      @media (max-width: $breakpoint-md) {
+        flex-direction: column;
+        gap: $space-4;
+      }
+    }
+    
     .topic-verse-text {
+      flex: 1;
       color: $gray-800;
       line-height: 1.6;
       font-style: italic;
+      min-width: 0; // Allows text to wrap properly
     }
     
     .topic-verse-explanation {
+      flex: 1;
       background: $gray-50;
       border-left: 4px solid $primary;
+      padding: $space-4;
+      border-radius: $radius-sm;
+      min-width: 0; // Allows content to wrap properly
       
       h4 {
         margin-bottom: $space-2;

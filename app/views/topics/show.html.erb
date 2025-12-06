@@ -7,44 +7,69 @@
   <div class="section-header">
     <div class="d-flex justify-between items-center">
       <h2 class="section-title">
-        <%= pluralize(@verse_topics.count, 'verse') %> in this topic
+        <%= pluralize(@grouped_verse_topics.sum { |g| g.length }, 'verse') %> in this topic
       </h2>
       <%= link_to "← Back to Topics", topics_path, class: "btn btn-outline" %>
     </div>
   </div>
   
   <div class="section-content">
-    <% if @verse_topics.any? %>
+    <% if @grouped_verse_topics.any? %>
       <div class="topic-verses-list">
-        <% @verse_topics.each do |verse_topic| %>
+        <% @grouped_verse_topics.each do |group| %>
+          <% first_verse = group.first.bible_verse %>
+          <% last_verse = group.last.bible_verse %>
+          <% is_range = group.length > 1 %>
+          
           <div class="topic-verse-item">
             <div class="topic-verse-header">
               <h3 class="topic-verse-reference">
-                <%= link_to verse_topic.bible_verse.reference, 
-                    bible_verse_show_path(
-                      book: verse_topic.bible_verse.book, 
-                      chapter: verse_topic.bible_verse.chapter, 
-                      verse: verse_topic.bible_verse.verse
-                    ), 
-                    class: "verse-link font-semibold" %>
+                <% if is_range %>
+                  <%= link_to "#{first_verse.book} #{first_verse.chapter}:#{first_verse.verse}-#{last_verse.verse}", 
+                      bible_verse_show_path(
+                        book: first_verse.book, 
+                        chapter: first_verse.chapter, 
+                        verse: first_verse.verse
+                      ), 
+                      class: "verse-link font-semibold" %>
+                <% else %>
+                  <%= link_to first_verse.reference, 
+                      bible_verse_show_path(
+                        book: first_verse.book, 
+                        chapter: first_verse.chapter, 
+                        verse: first_verse.verse
+                      ), 
+                      class: "verse-link font-semibold" %>
+                <% end %>
               </h3>
-              <div class="topic-verse-meta text-sm text-gray-600 mt-1">
-                Added by <%= verse_topic.user.display_name %> • <%= time_ago_in_words(verse_topic.created_at) %> ago
+            </div>
+            
+            <div class="topic-verse-content-wrapper">
+              <div class="topic-verse-text">
+                <% group.each do |verse_topic| %>
+                  <p class="text-gray-800 italic mb-2">
+                    <strong><%= verse_topic.bible_verse.reference %>:</strong> <%= verse_topic.bible_verse.text %>
+                  </p>
+                <% end %>
               </div>
-            </div>
-            
-            <div class="topic-verse-text mt-3">
-              <p class="text-gray-800 italic"><%= verse_topic.bible_verse.text %></p>
-            </div>
-            
-            <% if verse_topic.explanation.present? %>
-              <div class="topic-verse-explanation mt-4 p-4 bg-gray-50 rounded-lg border-l-4 border-primary">
-                <h4 class="text-sm font-semibold text-gray-700 mb-2">Connection to Topic:</h4>
-                <div class="text-sm text-gray-700">
-                  <%= verse_topic.explanation %>
+              
+              <% explanations = group.select { |vt| vt.explanation.present? } %>
+              <% if explanations.any? %>
+                <div class="topic-verse-explanation">
+                  <h4 class="text-sm font-semibold text-gray-700 mb-3">Connection to Topic:</h4>
+                  <% explanations.each_with_index do |verse_topic, index| %>
+                    <div class="explanation-item <%= 'mt-3 pt-3 border-t border-gray-200' unless index == 0 %>">
+                      <div class="text-sm text-gray-700">
+                        <%= verse_topic.bible_verse.reference %>: <%= verse_topic.explanation %>
+                      </div>
+                      <div class="explanation-meta text-xs text-gray-500 mt-2">
+                        — <%= verse_topic.user.display_name %> • <%= time_ago_in_words(verse_topic.created_at) %> ago
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>
