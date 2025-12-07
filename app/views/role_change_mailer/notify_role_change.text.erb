@@ -1,0 +1,35 @@
+Your Role Has Been Changed
+===========================
+
+Hello <%= @user.display_name %>!
+
+Your account role on Christadelphian Compendium has been updated by an administrator<% if @changed_by_admin.present? %> (<%= @changed_by_admin %>)<% end %>.
+
+ROLE CHANGE:
+<%= @old_role.titleize %> → <%= @new_role.titleize %>
+
+YOUR NEW PERMISSIONS:
+
+<% if @new_role == 'viewer' %>
+- View all content (notes, Bible verses, comments, cross-references)
+- Read-only access
+<% elsif @new_role == 'contributor' %>
+- View all content
+- Create new notes
+- Edit and delete your own notes
+- Add comments on any content
+- Edit and delete your own comments
+- Add cross-references
+- Edit and delete your own cross-references
+<% elsif @new_role == 'admin' %>
+- All Contributor permissions
+- Edit and delete ANY user's content
+- Access to Admin Dashboard
+- Manage user roles
+- Delete users
+<% end %>
+
+If you have any questions about your new role or permissions, please contact an administrator.
+
+---
+This is an automated message from Christadelphian Compendium. Please do not reply to this email.

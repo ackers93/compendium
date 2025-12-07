@@ -30,6 +30,11 @@ module Admin
           @user.update_column(:admin_onboarding_completed_at, nil)
         end
         
+        # Send email notification if role changed
+        if old_role != @user.role
+          RoleChangeMailer.notify_role_change(@user, old_role, @user.role, current_user.email).deliver_now
+        end
+        
         redirect_to admin_users_path, notice: "#{@user.email} was successfully updated to #{@user.role}."
       else
         render :edit, status: :unprocessable_entity
