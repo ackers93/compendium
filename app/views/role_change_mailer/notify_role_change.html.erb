@@ -95,7 +95,7 @@
     <div class="container">
       <h2>Your Role Has Been Changed</h2>
       
-      <p>Hello <%= @user.email %>!</p>
+      <p>Hello <%= @user.display_name %>!</p>
       
       <p>Your account role on Christadelphian Compendium has been updated by an administrator<% if @changed_by_admin.present? %> (<%= @changed_by_admin %>)<% end %>.</p>
       

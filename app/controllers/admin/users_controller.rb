@@ -32,7 +32,7 @@ module Admin
         
         # Send email notification if role changed
         if old_role != @user.role
-          RoleChangeMailer.notify_role_change(@user, old_role, @user.role, current_user.email).deliver_now
+          RoleChangeMailer.notify_role_change(@user, old_role, @user.role, current_user.display_name).deliver_now
         end
         
         redirect_to admin_users_path, notice: "#{@user.email} was successfully updated to #{@user.role}."
