@@ -1,0 +1,138 @@
+<div class="page-header">
+  <h1 class="page-title">Search</h1>
+  <p class="page-subtitle">Search through all your content</p>
+</div>
+
+<div class="search-form" style="margin-bottom: 2rem;">
+  <%= form_with url: search_path, method: :get, class: "d-flex gap-2", data: { controller: "search", search_target: "form" } do |form| %>
+    <%= form.text_field :q, 
+        value: params[:q],
+        placeholder: "Search topics, notes, threads, verses, comments...", 
+        class: "form-control search-input",
+        autocomplete: "off",
+        data: { 
+          action: "input->search#search",
+          search_target: "input"
+        } %>
+  <% end %>
+</div>
+
+<!-- Topics Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Topics</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "topics-search-results", src: (params[:q].present? ? search_topics_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search topics.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Threads Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Threads</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "threads-search-results", src: (params[:q].present? ? search_threads_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search threads.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Notes Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Notes</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "notes-search-results", src: (params[:q].present? ? search_notes_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search notes.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Comments on Verses Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Comments on Verses</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "verse-comments-search-results", src: (params[:q].present? ? search_verse_comments_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search comments on verses.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Comments on Cross References Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Comments on Cross References</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "cross-reference-comments-search-results", src: (params[:q].present? ? search_cross_reference_comments_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search comments on cross references.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Comments on Notes Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Comments on Notes</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "note-comments-search-results", src: (params[:q].present? ? search_note_comments_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search comments on notes.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

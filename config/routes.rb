@@ -81,6 +81,15 @@ Rails.application.routes.draw do
   post 'onboarding/complete', to: 'onboarding#complete', as: :complete_onboarding
   post 'onboarding/skip', to: 'onboarding#skip', as: :skip_onboarding
   
+  # Search routes
+  get 'search', to: 'searches#index', as: :search
+  get 'search/topics', to: 'searches#topics', as: :search_topics
+  get 'search/threads', to: 'searches#threads', as: :search_threads
+  get 'search/notes', to: 'searches#notes', as: :search_notes
+  get 'search/verse_comments', to: 'searches#verse_comments', as: :search_verse_comments
+  get 'search/cross_reference_comments', to: 'searches#cross_reference_comments', as: :search_cross_reference_comments
+  get 'search/note_comments', to: 'searches#note_comments', as: :search_note_comments
+  
   # Content flagging routes
   resources :content_flags, only: [:create]
   get 'my-flagged-content', to: 'my_flagged_content#index', as: :my_flagged_content
