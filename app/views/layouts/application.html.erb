@@ -70,21 +70,25 @@
         
         <!-- Desktop Navigation -->
         <ul class="nav-menu nav-menu-desktop">
-          <li class="nav-item">
-            <a href="/" class="nav-link nav-link-sm">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="/notes" class="nav-link nav-link-sm">Notes</a>
-          </li>
-          <li class="nav-item">
-            <a href="/bible_verses/books" class="nav-link nav-link-sm">Bible</a>
-          </li>
-          <li class="nav-item">
-            <%= link_to topics_path, class: "nav-link nav-link-sm" do %>
-              Topics
-            <% end %>
-          </li>
           <% if user_signed_in? %>
+            <li class="nav-item">
+              <a href="/" class="nav-link nav-link-sm">Home</a>
+            </li>
+            <li class="nav-item">
+              <%= link_to notes_path, class: "nav-link nav-link-sm" do %>
+                Notes
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to bible_verses_books_path, class: "nav-link nav-link-sm" do %>
+                Bible
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to topics_path, class: "nav-link nav-link-sm" do %>
+                Topics
+              <% end %>
+            </li>
             <li class="nav-item">
               <%= link_to my_flagged_content_path, class: "nav-link nav-link-sm" do %>
                 My Content
@@ -129,10 +133,14 @@
               <a href="/" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Home</a>
             </li>
             <li class="mobile-nav-item">
-              <a href="/notes" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Notes</a>
+              <%= link_to notes_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                Notes
+              <% end %>
             </li>
             <li class="mobile-nav-item">
-              <a href="/bible_verses/books" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Bible</a>
+              <%= link_to bible_verses_books_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                Bible
+              <% end %>
             </li>
             <li class="mobile-nav-item">
               <%= link_to topics_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
