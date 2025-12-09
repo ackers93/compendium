@@ -1,0 +1,43 @@
+<%= turbo_frame_tag "threads-search-results" do %>
+  <% if @bible_threads.any? %>
+    <div class="threads-list">
+      <% @bible_threads.each do |thread| %>
+        <div class="thread-card">
+          <div class="thread-header">
+            <h3 class="thread-title">
+              <%= link_to thread.title, bible_thread_path(thread), data: { turbo_frame: "_top" } %>
+            </h3>
+            <div class="thread-meta">
+              <span class="text-sm text-gray-600">
+                Created by <%= thread.user.display_name %> on <%= thread.created_at.strftime('%b %d, %Y') %>
+              </span>
+            </div>
+          </div>
+          <div class="thread-preview">
+            <% if thread.bible_thread_entries.any? %>
+              <p class="text-sm text-gray-600">
+                <%= pluralize(thread.bible_thread_entries.count, 'verse') %> in this thread
+              </p>
+              <% first_entry = thread.bible_thread_entries.first %>
+              <p class="verse-preview mt-2">
+                <strong><%= first_entry.bible_verse.reference %></strong>: 
+                <%= truncate(first_entry.bible_verse.text, length: 100) %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <% if params[:q].present? %>
+        <p>No threads found matching "<%= params[:q] %>".</p>
+        <p class="text-sm mt-2">
+          Try a different search term.
+        </p>
+      <% else %>
+        <p>Start typing to search threads.</p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

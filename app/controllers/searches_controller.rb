@@ -21,4 +21,18 @@ class SearchesController < ApplicationController
     
     render partial: 'topics_results'
   end
+  
+  def threads
+    # Search threads endpoint for turbo frame
+    @bible_threads = BibleThread.includes(:user, bible_thread_entries: :bible_verse)
+    
+    # Apply search filter if query parameter is present
+    if params[:q].present?
+      @bible_threads = @bible_threads.search_by_title_or_verses(params[:q])
+    end
+    
+    @bible_threads = @bible_threads.order(created_at: :desc)
+    
+    render partial: 'threads_results'
+  end
 end

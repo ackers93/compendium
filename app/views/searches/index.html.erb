@@ -36,3 +36,23 @@
     <% end %>
   </div>
 </div>
+
+<!-- Threads Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Threads</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "threads-search-results", src: (params[:q].present? ? search_threads_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search threads.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
