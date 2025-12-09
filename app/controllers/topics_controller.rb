@@ -9,9 +9,15 @@ class TopicsController < ApplicationController
   def index
     @topics = Topic.includes(verse_topics: :bible_verse)
                    .left_joins(:verse_topics)
-                   .group('topics.id')
-                   .order('COUNT(verse_topics.id) DESC, topics.name ASC')
-                   .select('topics.*, COUNT(verse_topics.id) as verses_count')
+    
+    # Apply search filter if query parameter is present
+    if params[:search].present?
+      @topics = @topics.search_by_name_or_verses(params[:search])
+    end
+    
+    @topics = @topics.group('topics.id')
+                     .order('COUNT(verse_topics.id) DESC, topics.name ASC')
+                     .select('topics.*, COUNT(verse_topics.id) as verses_count')
   end
   
   def show
