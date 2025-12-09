@@ -81,6 +81,10 @@ Rails.application.routes.draw do
   post 'onboarding/complete', to: 'onboarding#complete', as: :complete_onboarding
   post 'onboarding/skip', to: 'onboarding#skip', as: :skip_onboarding
   
+  # Search routes
+  get 'search', to: 'searches#index', as: :search
+  get 'search/topics', to: 'searches#topics', as: :search_topics
+  
   # Content flagging routes
   resources :content_flags, only: [:create]
   get 'my-flagged-content', to: 'my_flagged_content#index', as: :my_flagged_content

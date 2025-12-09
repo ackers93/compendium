@@ -90,6 +90,11 @@
               <% end %>
             </li>
             <li class="nav-item">
+              <%= link_to search_path, class: "nav-link nav-link-sm" do %>
+                Search
+              <% end %>
+            </li>
+            <li class="nav-item">
               <%= link_to my_flagged_content_path, class: "nav-link nav-link-sm" do %>
                 My Content
                 <% review_count = current_user.flagged_content_needing_review_count %>
