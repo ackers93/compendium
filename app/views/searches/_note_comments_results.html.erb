@@ -1,0 +1,39 @@
+<%= turbo_frame_tag "note-comments-search-results" do %>
+  <% if @comments.any? %>
+    <div class="comments-list">
+      <% @comments.each do |comment| %>
+        <% note = comment.commentable %>
+        <div class="comment-item mb-4 p-4 bg-gray-50 rounded">
+          <div class="comment-header text-xs text-gray-500 mb-2">
+            <span class="author-name">
+              <%= comment.user&.display_name || "Unknown User" %>
+            </span>
+            <span class="comment-date">
+              • <%= time_ago_in_words(comment.created_at) %> ago
+            </span>
+            <span class="ml-2">
+              • Comment on 
+              <%= link_to note.title, note_path(note),
+                  class: "text-blue-600 hover:text-blue-800",
+                  data: { turbo_frame: "_top" } %>
+            </span>
+          </div>
+          <div class="comment-content">
+            <%= comment.content %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <% if @query.present? %>
+        <p>No comments on notes found matching "<%= @query %>".</p>
+        <p class="text-sm mt-2">
+          Try a different search term.
+        </p>
+      <% else %>
+        <p>Start typing to search comments on notes.</p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

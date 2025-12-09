@@ -16,6 +16,9 @@ export default class extends Controller {
       { id: 'topics-search-results', path: '/search/topics' },
       { id: 'threads-search-results', path: '/search/threads' },
       { id: 'notes-search-results', path: '/search/notes' },
+      { id: 'verse-comments-search-results', path: '/search/verse_comments' },
+      { id: 'cross-reference-comments-search-results', path: '/search/cross_reference_comments' },
+      { id: 'note-comments-search-results', path: '/search/note_comments' },
       // Add more frames here as we add other content types
     ]
   }

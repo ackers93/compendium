@@ -58,4 +58,73 @@ class SearchesController < ApplicationController
     
     render partial: 'notes_results'
   end
+  
+  def verse_comments
+    # Search comments on verses endpoint for turbo frame
+    @query = params[:q].to_s.strip
+    
+    if @query.present?
+      query_downcase = @query.downcase
+      @comments = Comment.includes(:user, :rich_text_content)
+                         .where(commentable_type: 'BibleVerse')
+                         .joins("LEFT JOIN action_text_rich_texts ON action_text_rich_texts.record_id = comments.id AND action_text_rich_texts.record_type = 'Comment' AND action_text_rich_texts.name = 'content'")
+                         .where("LOWER(action_text_rich_texts.body) LIKE ?", "%#{query_downcase}%")
+                         .order(created_at: :desc)
+    else
+      @comments = Comment.includes(:user, :rich_text_content)
+                         .where(commentable_type: 'BibleVerse')
+                         .order(created_at: :desc)
+    end
+    
+    # Eager load the commentable (BibleVerse)
+    @comments = @comments.includes(:commentable)
+    
+    render partial: 'verse_comments_results'
+  end
+  
+  def cross_reference_comments
+    # Search comments on cross references endpoint for turbo frame
+    @query = params[:q].to_s.strip
+    
+    if @query.present?
+      query_downcase = @query.downcase
+      @comments = Comment.includes(:user, :rich_text_content)
+                         .where(commentable_type: 'CrossReference')
+                         .joins("LEFT JOIN action_text_rich_texts ON action_text_rich_texts.record_id = comments.id AND action_text_rich_texts.record_type = 'Comment' AND action_text_rich_texts.name = 'content'")
+                         .where("LOWER(action_text_rich_texts.body) LIKE ?", "%#{query_downcase}%")
+                         .order(created_at: :desc)
+    else
+      @comments = Comment.includes(:user, :rich_text_content)
+                         .where(commentable_type: 'CrossReference')
+                         .order(created_at: :desc)
+    end
+    
+    # Eager load cross references and their verses
+    @comments = @comments.includes(commentable: [:source_verse, :target_verse])
+    
+    render partial: 'cross_reference_comments_results'
+  end
+  
+  def note_comments
+    # Search comments on notes endpoint for turbo frame
+    @query = params[:q].to_s.strip
+    
+    if @query.present?
+      query_downcase = @query.downcase
+      @comments = Comment.includes(:user, :rich_text_content)
+                         .where(commentable_type: 'Note')
+                         .joins("LEFT JOIN action_text_rich_texts ON action_text_rich_texts.record_id = comments.id AND action_text_rich_texts.record_type = 'Comment' AND action_text_rich_texts.name = 'content'")
+                         .where("LOWER(action_text_rich_texts.body) LIKE ?", "%#{query_downcase}%")
+                         .order(created_at: :desc)
+    else
+      @comments = Comment.includes(:user, :rich_text_content)
+                         .where(commentable_type: 'Note')
+                         .order(created_at: :desc)
+    end
+    
+    # Eager load the commentable (Note)
+    @comments = @comments.includes(:commentable)
+    
+    render partial: 'note_comments_results'
+  end
 end

@@ -76,3 +76,63 @@
     <% end %>
   </div>
 </div>
+
+<!-- Comments on Verses Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Comments on Verses</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "verse-comments-search-results", src: (params[:q].present? ? search_verse_comments_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search comments on verses.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Comments on Cross References Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Comments on Cross References</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "cross-reference-comments-search-results", src: (params[:q].present? ? search_cross_reference_comments_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search comments on cross references.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Comments on Notes Section -->
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Comments on Notes</h2>
+  </div>
+  <div class="section-content">
+    <%= turbo_frame_tag "note-comments-search-results", src: (params[:q].present? ? search_note_comments_path(q: params[:q]) : nil) do %>
+      <% if params[:q].present? %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Loading...</p>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <p>Start typing to search comments on notes.</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
