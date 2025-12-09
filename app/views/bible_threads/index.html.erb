@@ -7,54 +7,78 @@
   <div class="section-header">
     <div class="d-flex justify-between items-center">
       <h2 class="section-title">All Threads</h2>
-      <% if current_user&.can_create? %>
-        <%= link_to new_bible_thread_path, class: "btn btn-primary" do %>
-          <i class="fa-solid fa-plus"></i>
-          New Thread
+      <div class="d-flex gap-2 items-center">
+        <div class="search-form" style="margin-bottom: 0;">
+          <%= form_with url: bible_threads_path, method: :get, class: "d-flex gap-2", data: { controller: "threads-search", threads_search_target: "form" } do |form| %>
+            <%= form.text_field :search, 
+                value: params[:search],
+                placeholder: "Search by title or verse...", 
+                class: "form-control search-input",
+                autocomplete: "off",
+                data: { 
+                  action: "input->threads-search#search",
+                  threads_search_target: "input"
+                } %>
+          <% end %>
+        </div>
+        <% if current_user&.can_create? %>
+          <%= link_to new_bible_thread_path, class: "btn btn-primary" do %>
+            <i class="fa-solid fa-plus"></i>
+            New Thread
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
   
   <div class="section-content">
-    <% if @bible_threads.any? %>
-      <div class="threads-list">
-        <% @bible_threads.each do |thread| %>
-          <div class="thread-card">
-            <div class="thread-header">
-              <h3 class="thread-title">
-                <%= link_to thread.title, bible_thread_path(thread) %>
-              </h3>
-              <div class="thread-meta">
-                <span class="text-sm text-gray-600">
-                  Created by <%= thread.user.display_name %> on <%= thread.created_at.strftime('%b %d, %Y') %>
-                </span>
+    <%= turbo_frame_tag "threads-list" do %>
+      <% if @bible_threads.any? %>
+        <div class="threads-list">
+          <% @bible_threads.each do |thread| %>
+            <div class="thread-card">
+              <div class="thread-header">
+                <h3 class="thread-title">
+                  <%= link_to thread.title, bible_thread_path(thread), data: { turbo_frame: "_top" } %>
+                </h3>
+                <div class="thread-meta">
+                  <span class="text-sm text-gray-600">
+                    Created by <%= thread.user.display_name %> on <%= thread.created_at.strftime('%b %d, %Y') %>
+                  </span>
+                </div>
+              </div>
+              <div class="thread-preview">
+                <% if thread.bible_thread_entries.any? %>
+                  <p class="text-sm text-gray-600">
+                    <%= pluralize(thread.bible_thread_entries.count, 'verse') %> in this thread
+                  </p>
+                  <% first_entry = thread.bible_thread_entries.first %>
+                  <p class="verse-preview mt-2">
+                    <strong><%= first_entry.bible_verse.reference %></strong>: 
+                    <%= truncate(first_entry.bible_verse.text, length: 100) %>
+                  </p>
+                <% end %>
               </div>
             </div>
-            <div class="thread-preview">
-              <% if thread.bible_thread_entries.any? %>
-                <p class="text-sm text-gray-600">
-                  <%= pluralize(thread.bible_thread_entries.count, 'verse') %> in this thread
-                </p>
-                <% first_entry = thread.bible_thread_entries.first %>
-                <p class="verse-preview mt-2">
-                  <strong><%= first_entry.bible_verse.reference %></strong>: 
-                  <%= truncate(first_entry.bible_verse.text, length: 100) %>
-                </p>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="text-center py-8 text-gray-500">
-        <p>No Bible threads yet.</p>
-        <% if current_user&.can_create? %>
-          <p class="text-sm mt-2">
-            <%= link_to "Create the first thread", new_bible_thread_path, class: "text-blue-600 hover:text-blue-800" %>
-          </p>
-        <% end %>
-      </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <% if params[:search].present? %>
+            <p>No threads found matching "<%= params[:search] %>".</p>
+            <p class="text-sm mt-2">
+              <%= link_to "Clear search", bible_threads_path, class: "text-blue-600 hover:text-blue-800", data: { turbo_frame: "_top" } %> or try a different search term.
+            </p>
+          <% else %>
+            <p>No Bible threads yet.</p>
+            <% if current_user&.can_create? %>
+              <p class="text-sm mt-2">
+                <%= link_to "Create the first thread", new_bible_thread_path, class: "text-blue-600 hover:text-blue-800", data: { turbo_frame: "_top" } %>
+              </p>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>

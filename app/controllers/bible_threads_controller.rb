@@ -8,7 +8,14 @@ class BibleThreadsController < ApplicationController
   before_action -> { authorize_delete!(@bible_thread) }, only: %i[ destroy ]
 
   def index
-    @bible_threads = BibleThread.includes(:user, :bible_verses).order(created_at: :desc)
+    @bible_threads = BibleThread.includes(:user, :bible_verses)
+    
+    # Apply search filter if query parameter is present
+    if params[:search].present?
+      @bible_threads = @bible_threads.search_by_title_or_verses(params[:search])
+    end
+    
+    @bible_threads = @bible_threads.order(created_at: :desc)
   end
 
   def show
