@@ -1,0 +1,73 @@
+<%= turbo_frame_tag "notes-search-results" do %>
+  <% if @notes.any? %>
+    <div class="table-container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Author</th>
+            <th>Tags</th>
+            <% if @query.present? %>
+              <th>Matched In</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @notes.each do |note| %>
+            <% 
+              # Determine which criteria matched
+              matches = []
+              query_downcase = @query&.downcase || ''
+              if query_downcase.present?
+                matches << 'title' if note.title.downcase.include?(query_downcase)
+                matches << 'content' if note.content.to_plain_text.downcase.include?(query_downcase)
+                matches << 'tags' if note.tag_list.any? { |tag| tag.downcase.include?(query_downcase) }
+              end
+            %>
+            <tr>
+              <td>
+                <%= link_to note.title, note_path(note), class: 'text-primary', data: { turbo_frame: "_top" } %>
+              </td>
+              <td><%= note.content.to_plain_text.truncate(50) %>...</td>
+              <td><%= note.user.display_name %></td>
+              <td>
+                <div class="d-flex flex-wrap gap-2">
+                  <% note.tag_list.each do |tag| %>
+                    <span class="badge badge-primary"><%= tag %></span>
+                  <% end %>
+                </div>
+              </td>
+              <% if @query.present? && matches.any? %>
+                <td>
+                  <div class="d-flex flex-wrap gap-2">
+                    <% matches.each do |criteria| %>
+                      <span class="badge badge-secondary">
+                        <%= criteria.capitalize %>
+                      </span>
+                    <% end %>
+                  </div>
+                </td>
+              <% elsif @query.present? %>
+                <td>
+                  <span class="text-gray-400 text-sm">—</span>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <% if @query.present? %>
+        <p>No notes found matching "<%= @query %>".</p>
+        <p class="text-sm mt-2">
+          Try a different search term.
+        </p>
+      <% else %>
+        <p>Start typing to search notes.</p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

@@ -15,8 +15,8 @@ export default class extends Controller {
     this.searchFrames = [
       { id: 'topics-search-results', path: '/search/topics' },
       { id: 'threads-search-results', path: '/search/threads' },
+      { id: 'notes-search-results', path: '/search/notes' },
       // Add more frames here as we add other content types
-      // { id: 'notes-search-results', path: '/search/notes' },
     ]
   }
   

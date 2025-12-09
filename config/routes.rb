@@ -85,6 +85,7 @@ Rails.application.routes.draw do
   get 'search', to: 'searches#index', as: :search
   get 'search/topics', to: 'searches#topics', as: :search_topics
   get 'search/threads', to: 'searches#threads', as: :search_threads
+  get 'search/notes', to: 'searches#notes', as: :search_notes
   
   # Content flagging routes
   resources :content_flags, only: [:create]
