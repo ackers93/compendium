@@ -31,7 +31,7 @@
             <div class="topic-card">
               <div class="topic-header">
                 <h3 class="topic-title">
-                  <%= link_to topic.name, topic_path(topic) %>
+                  <%= link_to topic.name, topic_path(topic), data: { turbo_frame: "_top" } %>
                 </h3>
               </div>
               <div class="topic-preview">
@@ -56,7 +56,8 @@
                             chapter: verse_topic.bible_verse.chapter,
                             verse: verse_topic.bible_verse.verse
                           ),
-                          class: "verse-ref-link" %><% unless index == ordered_verse_topics.count - 1 %>, <% end %>
+                          class: "verse-ref-link",
+                          data: { turbo_frame: "_top" } %><% unless index == ordered_verse_topics.count - 1 %>, <% end %>
                     <% end %>
                   </p>
                 <% end %>
@@ -69,12 +70,12 @@
           <% if params[:search].present? %>
             <p>No topics found matching "<%= params[:search] %>".</p>
             <p class="text-sm mt-2">
-              <%= link_to "Clear search", topics_path, class: "text-blue-600 hover:text-blue-800" %> or try a different search term.
+              <%= link_to "Clear search", topics_path, class: "text-blue-600 hover:text-blue-800", data: { turbo_frame: "_top" } %> or try a different search term.
             </p>
           <% else %>
             <p>No topics have been created yet.</p>
             <p class="text-sm mt-2">
-              Start by <%= link_to "browsing verses", bible_verses_books_path, class: "text-blue-600 hover:text-blue-800" %> and adding them to topics.
+              Start by <%= link_to "browsing verses", bible_verses_books_path, class: "text-blue-600 hover:text-blue-800", data: { turbo_frame: "_top" } %> and adding them to topics.
             </p>
           <% end %>
         </div>
