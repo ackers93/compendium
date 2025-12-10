@@ -142,7 +142,7 @@ export default class extends Controller {
     chapters.forEach(chapter => {
       const option = document.createElement("option")
       option.value = chapter
-      option.textContent = `Chapter ${chapter}`
+      option.textContent = `${chapter}`
       this.chapterSelectTarget.appendChild(option)
     })
     this.chapterSelectTarget.disabled = false
@@ -153,7 +153,7 @@ export default class extends Controller {
     verses.forEach(verse => {
       const option = document.createElement("option")
       option.value = verse.verse
-      option.textContent = `Verse ${verse.verse}`
+      option.textContent = `${verse.verse}`
       this.verseSelectTarget.appendChild(option)
     })
     this.verseSelectTarget.disabled = false

@@ -131,7 +131,7 @@ async function initializeVerseDialog(dialog, trixEditor) {
       data.chapters.forEach(chapter => {
         const option = document.createElement('option')
         option.value = chapter
-        option.textContent = `Chapter ${chapter}`
+        option.textContent = `${chapter}`
         chapterSelect.appendChild(option)
       })
       chapterSelect.disabled = false
@@ -158,7 +158,7 @@ async function initializeVerseDialog(dialog, trixEditor) {
       data.verses.forEach(verse => {
         const option = document.createElement('option')
         option.value = verse.verse
-        option.textContent = `Verse ${verse.verse}`
+        option.textContent = `${verse.verse}`
         verseSelect.appendChild(option)
       })
       verseSelect.disabled = false
