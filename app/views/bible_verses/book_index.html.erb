@@ -4,11 +4,32 @@
 </div>
 
 <div>
-  <div class="d-flex gap-4">
+  <div class="d-flex gap-4 justify-between items-center">
     <%= link_to bible_threads_path, class: "btn btn-primary" do %>
       <i class="fa-solid fa-list-ol"></i>
       Browse Bible Threads
     <% end %>
+    
+    <div class="form-group" style="min-width: 300px; max-width: 400px; margin-bottom: 0;" data-controller="bible-search">
+      <label class="form-label">Search Bible</label>
+      <div class="relative">
+        <input 
+          type="text" 
+          class="form-input" 
+          placeholder="Type to search (e.g., Genesis, John 3, Romans 8:1)"
+          autocomplete="off"
+          data-bible-search-target="input"
+          data-action="input->bible-search#search keydown->bible-search#handleKeydown" />
+        <div 
+          class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg hidden"
+          data-bible-search-target="dropdown">
+          <ul class="max-h-60 overflow-auto py-1 list-none m-0 p-0" data-bible-search-target="results">
+            <!-- Results will be populated here -->
+          </ul>
+        </div>
+      </div>
+      <small class="form-help">Start typing to see books, chapters, or verses</small>
+    </div>
   </div>
 </div>
 

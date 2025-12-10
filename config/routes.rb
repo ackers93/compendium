@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # Bible verses=
   get 'bible_verses/books', to: 'bible_verses#book_index'
   get 'bible_verses/verse_picker', to: 'bible_verses#verse_picker', as: :bible_verse_picker
+  get 'bible_verses/autocomplete', to: 'bible_verses#autocomplete', as: :bible_verses_autocomplete
   get 'bible_verses/:book/chapters', to: 'bible_verses#chapters', as: :bible_verse_chapters
   get 'bible_verses/:book/:chapter', to: 'bible_verses#verses', as: :bible_verse_verses
   get 'bible_verses/:book/:chapter/:verse', to: 'bible_verses#show', as: :bible_verse_show

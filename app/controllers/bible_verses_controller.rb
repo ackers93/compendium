@@ -83,4 +83,89 @@ class BibleVersesController < ApplicationController
       redirect_to bible_verse_chapters_path(book: @book), alert: "Verse not found"
     end
   end
+
+  def autocomplete
+    query = params[:q].to_s.strip
+    results = []
+    
+    return render json: [] if query.blank?
+    
+    query_downcase = query.downcase
+    
+    # Try to parse the query: book, book chapter, or book chapter:verse
+    # Patterns: "Genesis", "Genesis 1", "Genesis 1:1", "John 3:16", "Gen 1:1"
+    book_match = nil
+    chapter_match = nil
+    verse_match = nil
+    
+    # Try to match "book chapter:verse" pattern (e.g., "Genesis 1:1", "John 3:16")
+    if query.match?(/^(.+?)\s+(\d+):(\d+)$/i)
+      parts = query.match(/^(.+?)\s+(\d+):(\d+)$/i)
+      book_match = parts[1].strip
+      chapter_match = parts[2].to_i
+      verse_match = parts[3].to_i
+    # Try to match "book chapter" pattern (e.g., "Genesis 1", "John 3")
+    elsif query.match?(/^(.+?)\s+(\d+)$/i)
+      parts = query.match(/^(.+?)\s+(\d+)$/i)
+      book_match = parts[1].strip
+      chapter_match = parts[2].to_i
+    else
+      # Just book name (e.g., "Genesis", "Gen")
+      book_match = query.strip
+    end
+    
+    # Find matching book names (case-insensitive, partial match)
+    all_books = OLD_TESTAMENT_BOOKS + NEW_TESTAMENT_BOOKS
+    matching_books = all_books.select do |book|
+      book.downcase.start_with?(book_match.downcase) || 
+      book.downcase.include?(book_match.downcase)
+    end.sort_by { |book| book.downcase.start_with?(book_match.downcase) ? 0 : 1 }
+    
+    # If we have book, chapter, and verse, search for exact verse matches
+    if book_match && chapter_match && verse_match
+      matching_books.each do |book|
+        verse = BibleVerse.where("LOWER(book) = ? AND chapter = ? AND verse = ?", 
+                                 book.downcase, chapter_match, verse_match).first
+        if verse
+          results << {
+            type: "verse",
+            book: verse.book,
+            chapter: verse.chapter,
+            verse: verse.verse
+          }
+          break # Only need one match
+        end
+      end
+    end
+    
+    # If we have book and chapter (but no verse), search for chapter matches
+    if book_match && chapter_match && !verse_match
+      matching_books.each do |book|
+        chapter = BibleVerse.where("LOWER(book) = ? AND chapter = ?", 
+                                   book.downcase, chapter_match).first
+        if chapter
+          results << {
+            type: "chapter",
+            book: chapter.book,
+            chapter: chapter.chapter
+          }
+          break # Only need one match
+        end
+      end
+    end
+    
+    # Always include matching books (if not already in results)
+    matching_books.first(10).each do |book|
+      # Skip if this book is already in results
+      next if results.any? { |r| r[:book] == book }
+      
+      results << {
+        type: "book",
+        book: book
+      }
+    end
+    
+    # Limit total results
+    render json: results.first(10)
+  end
 end

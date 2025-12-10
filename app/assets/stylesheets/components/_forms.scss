@@ -193,8 +193,10 @@ select.form-input {
 }
 
 // Autocomplete dropdown styles
-[data-topic-autocomplete-target="dropdown"] {
-  [data-topic-autocomplete-target="results"] {
+[data-topic-autocomplete-target="dropdown"],
+[data-bible-search-target="dropdown"] {
+  [data-topic-autocomplete-target="results"],
+  [data-bible-search-target="results"] {
     list-style: none;
     margin: 0;
     padding: 0;
