@@ -66,8 +66,8 @@
     flex-wrap: wrap;
     
     .btn-lg {
-      padding: $space-4 $space-8;
-      font-size: $font-size-lg;
+      padding: $space-2 $space-5;
+      font-size: $font-size-base;
       font-weight: $font-weight-semibold;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       
@@ -100,12 +100,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: $space-8 $space-6;
+  padding: $space-5 $space-4;
   text-decoration: none;
   color: $white;
-  font-size: $font-size-xl;
+  font-size: $font-size-base;
   font-weight: $font-weight-semibold;
-  border-radius: $radius-lg;
+  border-radius: $radius;
   border: 2px solid transparent;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -136,13 +136,13 @@
   }
   
   .button-icon {
-    font-size: $font-size-3xl;
-    margin-bottom: $space-3;
+    font-size: $font-size-2xl;
+    margin-bottom: $space-2;
     opacity: 0.9;
   }
   
   .button-text {
-    font-size: $font-size-lg;
+    font-size: $font-size-base;
     font-weight: $font-weight-bold;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
@@ -321,14 +321,14 @@
   }
   
   .glossy-button {
-    padding: $space-6 $space-4;
+    padding: $space-4 $space-3;
     
     .button-icon {
-      font-size: $font-size-2xl;
+      font-size: $font-size-xl;
     }
     
     .button-text {
-      font-size: $font-size-base;
+      font-size: $font-size-sm;
     }
   }
 } 

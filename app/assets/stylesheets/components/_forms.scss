@@ -25,13 +25,13 @@
 .form-control,
 .form-input {
   width: 100%;
-  padding: $space-3 $space-4;
+  padding: $space-2 $space-3;
   font-size: $font-size-sm;
   line-height: $line-height-normal;
   color: $gray-900;
   background-color: $white;
   border: 1px solid $gray-300;
-  border-radius: $radius;
+  border-radius: $radius-sm;
   transition: all 0.2s ease;
   
   &:focus {
@@ -66,12 +66,12 @@ select.form-input {
 }
 
 .form-control-lg {
-  padding: $space-4 $space-5;
+  padding: $space-3 $space-4;
   font-size: $font-size-base;
 }
 
 .form-control-sm {
-  padding: $space-2 $space-3;
+  padding: $space-1 $space-2;
   font-size: $font-size-xs;
 }
 
