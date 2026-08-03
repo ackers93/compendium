@@ -5,7 +5,9 @@ set -e
 # Build JavaScript
 yarn build
 
-# Build CSS (if using jsbundling-rails with CSS)
-# Uncomment if you're using jsbundling for CSS as well
-# yarn build:css
-
+# Build CSS (needs font-awesome gem load path)
+FA_PATH="$(bundle show font-awesome-sass)/assets/stylesheets"
+sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css \
+  --no-source-map \
+  --load-path=node_modules \
+  --load-path="$FA_PATH"

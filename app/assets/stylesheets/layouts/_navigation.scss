@@ -9,11 +9,12 @@
     .nav-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 $space-1;
+      padding: $space-2 $space-1;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 3.25rem;
+      min-height: 3.25rem;
+      height: auto;
       position: relative;
     }
     
@@ -21,11 +22,17 @@
       display: flex;
       align-items: center;
       gap: $space-3;
-      color: $white;
-      font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
       text-decoration: none;
       z-index: $z-fixed;
+      
+      .brand-logo {
+        height: 4.5rem;
+        width: auto;
+        display: block;
+        padding: $space-1 $space-2;
+        background: $white;
+        border-radius: $radius-md;
+      }
       
       .brand-icon {
         font-size: $font-size-2xl;
@@ -165,11 +172,11 @@
     // Mobile Menu
     .nav-menu-mobile {
       position: fixed;
-      top: 4rem;
+      top: 7rem;
       right: -100%;
       width: 80%;
       max-width: 320px;
-      height: calc(100vh - 4rem);
+      height: calc(100vh - 7rem);
       background: linear-gradient(180deg, $gray-900 0%, $gray-800 100%);
       border-left: 1px solid rgba($white, 0.1);
       padding: $space-6;

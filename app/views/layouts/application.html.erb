@@ -65,15 +65,12 @@
     <nav class="navbar" data-controller="mobile-nav">
       <div class="nav-container">
         <a href="/" class="nav-brand">
-          Compendium
+          <%= image_tag "logo.png", alt: "Compendium", class: "brand-logo" %>
         </a>
         
         <!-- Desktop Navigation -->
         <ul class="nav-menu nav-menu-desktop">
           <% if user_signed_in? %>
-            <li class="nav-item">
-              <a href="/" class="nav-link nav-link-sm">Home</a>
-            </li>
             <li class="nav-item">
               <%= link_to notes_path, class: "nav-link nav-link-sm" do %>
                 Notes
