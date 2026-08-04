@@ -319,12 +319,24 @@
           width: 100%;
           text-align: center;
           padding: $space-3 $space-4;
+
+          &.btn-outline {
+            color: $gray-100;
+            border-color: rgba($white, 0.35);
+            background: transparent;
+
+            &:hover:not(:disabled) {
+              color: $white;
+              border-color: rgba($white, 0.6);
+              background-color: rgba($white, 0.1);
+            }
+          }
         }
 
         .mobile-nav-action-link {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           gap: $space-2;
         }
       }
