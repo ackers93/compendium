@@ -294,11 +294,26 @@
     }
     
     .hero-cta {
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $space-3;
+      width: 100%;
+      max-width: 360px;
+      margin: 0 auto;
       
       .btn-lg {
         width: 100%;
-        max-width: 300px;
+        max-width: none;
+        padding: $space-3 $space-2;
+        font-size: $font-size-sm;
+        justify-content: center;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.3;
+
+        i {
+          margin-right: $space-1;
+        }
       }
     }
   }
