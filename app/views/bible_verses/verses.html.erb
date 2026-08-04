@@ -5,9 +5,9 @@
 
 <div class="content-section" data-controller="verse-view-toggle">
   <div class="section-header">
-    <div class="d-flex justify-between items-center">
+    <div class="bible-section-actions">
       <h2 class="section-title">Chapter <%= @chapter %></h2>
-      <div class="d-flex gap-2 items-center">
+      <div class="bible-action-buttons">
         <button 
           type="button" 
           class="btn btn-outline btn-sm"
@@ -106,7 +106,7 @@
         <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
             class: "verse-item-list-link" do %>
           <div class="verse-item-list">
-            <div class="d-flex items-center justify-between gap-4">
+            <div class="verse-item-list-row">
               <div class="d-flex items-start gap-2 flex-1">
                 <span class="verse-number-list font-bold text-primary flex-shrink-0"><%= verse.verse %></span>
                 <span class="verse-text-list text-gray-700"><%= verse.text %></span>

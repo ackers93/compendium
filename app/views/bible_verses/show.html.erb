@@ -46,7 +46,7 @@
     <div id="comments-tab" class="tab-content active">
       <div class="comments-section">
         <div class="section-header">
-          <div class="d-flex justify-between items-center">
+          <div class="bible-section-actions">
             <h3 class="section-title">Comments on <%= @book %> <%= @chapter %>:<%= @verse %></h3>
             <div id="comment-count">
               <%= render 'comments/comment_count', commentable: @bible_verse %>
@@ -74,7 +74,7 @@
     <div id="cross-references-tab" class="tab-content">
       <div class="cross-references-section">
         <div class="section-header">
-          <div class="d-flex justify-between items-center">
+          <div class="bible-section-actions">
             <h3 class="section-title">Cross-References for <%= @book %> <%= @chapter %>:<%= @verse %></h3>
             <% if current_user&.can_create? %>
               <button class="btn btn-primary" onclick="showCrossReferenceModal()">
@@ -96,7 +96,7 @@
     <div id="threads-tab" class="tab-content">
       <div class="threads-section">
         <div class="section-header">
-          <div class="d-flex justify-between items-center">
+          <div class="bible-section-actions">
             <h3 class="section-title">Threads Containing This Verse</h3>
             <% if current_user&.can_create? %>
               <%= link_to new_bible_thread_path, class: "btn btn-primary" do %>
@@ -140,7 +140,7 @@
     <div id="topics-tab" class="tab-content">
       <div class="topics-section">
         <div class="section-header">
-          <div class="d-flex justify-between items-center">
+          <div class="bible-section-actions">
             <h3 class="section-title">Topics for <%= @book %> <%= @chapter %>:<%= @verse %></h3>
             <% if current_user&.can_create? %>
               <%= link_to new_bible_verse_topic_path(book: @book, chapter: @chapter, verse: @verse), 
@@ -160,7 +160,7 @@
     </div>
   </div>
   
-  <div class="d-flex justify-between mt-6">
+  <div class="bible-footer-actions mt-6">
     <%= link_to "← Back to Chapter", bible_verse_verses_path(book: @book, chapter: @chapter), 
         class: "btn btn-outline" %>
     <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>

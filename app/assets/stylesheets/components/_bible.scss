@@ -1,4 +1,44 @@
 // Bible-specific styles
+.bible-browse-toolbar {
+  display: flex;
+  gap: $space-4;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $space-6;
+}
+
+.bible-search-group {
+  min-width: 300px;
+  max-width: 400px;
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.bible-testaments {
+  display: flex;
+  gap: $space-8;
+}
+
+.bible-section-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-3;
+}
+
+.bible-action-buttons {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.bible-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
 .testament-section {
   flex: 1;
   max-width: 50%;
@@ -90,12 +130,14 @@
   }
   
   .verse-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-2;
     margin-top: $space-3;
     
     .nav-button {
       @extend .btn;
       @extend .btn-outline;
-      margin-right: $space-2;
     }
   }
 }
@@ -124,6 +166,8 @@
 .tabs-nav {
   display: flex;
   border-bottom: 1px solid $gray-200;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tab-button {
@@ -135,6 +179,8 @@
   font-weight: $font-weight-medium;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
   
   &:hover {
     background: $gray-100;
@@ -985,6 +1031,13 @@
       border-bottom: 1px solid $gray-200;
     }
   }
+
+  .verse-item-list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-4;
+  }
   
   .verse-number-list {
     font-size: $font-size-base;
@@ -1002,5 +1055,136 @@
     font-size: $font-size-xs;
     white-space: nowrap;
     padding-left: $space-3;
+  }
+}
+
+// Responsive — book / chapter / verse pages
+@media (max-width: $breakpoint-md) {
+  .bible-browse-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $space-4;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .bible-search-group {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+  }
+
+  .bible-testaments {
+    flex-direction: column;
+    gap: $space-6;
+  }
+
+  .testament-section {
+    max-width: 100%;
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .bible-section-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: $space-3;
+
+    .section-title {
+      font-size: $font-size-xl;
+    }
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .bible-action-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .bible-footer-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .verse-display {
+    padding: $space-4;
+  }
+
+  .verse-header {
+    .verse-reference {
+      font-size: $font-size-lg;
+    }
+
+    .verse-navigation {
+      flex-direction: column;
+
+      .nav-button {
+        width: 100%;
+        justify-content: center;
+        margin-right: 0;
+      }
+    }
+  }
+
+  .verse-content {
+    font-size: $font-size-base;
+  }
+
+  .tab-button {
+    padding: $space-3 $space-4;
+    font-size: $font-size-sm;
+  }
+
+  .tab-content {
+    padding: $space-4;
+  }
+
+  .verses-table-view {
+    .verse-table-row {
+      flex-direction: column;
+      gap: $space-3;
+      padding: $space-3 0;
+    }
+
+    .verse-column,
+    .verse-content-column {
+      width: 100%;
+    }
+  }
+
+  .verses-list-list-view {
+    .verse-item-list-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $space-2;
+    }
+
+    .verse-counts-cell {
+      padding-left: calc(32px + #{$space-2});
+    }
+  }
+
+  .chapters-grid {
+    grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
   }
 } 
