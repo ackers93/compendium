@@ -91,29 +91,51 @@
                 Search
               <% end %>
             </li>
-            <li class="nav-item">
-              <%= link_to my_flagged_content_path, class: "nav-link nav-link-sm" do %>
-                My Content
-                <% review_count = current_user.flagged_content_needing_review_count %>
-                <% if review_count > 0 %>
-                  <span class="badge badge-warning" style="margin-left: 0.5rem; font-size: 0.7rem;"><%= review_count %></span>
-                <% end %>
-              <% end %>
-            </li>
-          <% end %>
-          <% if user_signed_in? && current_user.can_manage_users? %>
-            <li class="nav-item">
-              <a href="/admin/users" class="nav-link nav-link-sm">Admin</a>
-            </li>
           <% end %>
         </ul>
         
         <div class="nav-actions nav-actions-desktop">
           <% if user_signed_in? %>
+            <%
+              content_review_count = current_user.flagged_content_needing_review_count
+              admin_pending_count = current_user.can_manage_users? ? ContentFlag.status_pending.count : 0
+              total_alert_count = content_review_count + admin_pending_count
+              display_name = current_user.name.presence || current_user.email
+            %>
             <span class="user-info">
               <span class="role-badge <%= current_user.role %>"><%= current_user.role&.titleize || 'Viewer' %></span>
             </span>
-            <%= link_to 'Profile', edit_user_registration_path, class: 'btn btn-outline' %>
+            <div class="nav-dropdown" data-controller="dropdown">
+              <button type="button"
+                      class="nav-dropdown-toggle btn btn-outline"
+                      data-dropdown-target="button"
+                      data-action="click->dropdown#toggle"
+                      aria-expanded="false"
+                      aria-haspopup="true">
+                <span class="nav-dropdown-label"><%= display_name %></span>
+                <% if total_alert_count > 0 %>
+                  <span class="badge badge-warning nav-dropdown-alert"><%= total_alert_count %></span>
+                <% end %>
+                <span class="nav-dropdown-caret" aria-hidden="true"></span>
+              </button>
+              <div class="nav-dropdown-menu" data-dropdown-target="menu" hidden>
+                <%= link_to my_flagged_content_path, class: "nav-dropdown-item" do %>
+                  <span>My Content</span>
+                  <% if content_review_count > 0 %>
+                    <span class="badge badge-warning"><%= content_review_count %></span>
+                  <% end %>
+                <% end %>
+                <% if current_user.can_manage_users? %>
+                  <%= link_to admin_users_path, class: "nav-dropdown-item" do %>
+                    <span>Admin</span>
+                    <% if admin_pending_count > 0 %>
+                      <span class="badge badge-warning"><%= admin_pending_count %></span>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                <%= link_to "Profile", edit_user_registration_path, class: "nav-dropdown-item" %>
+              </div>
+            </div>
             <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary', data: { turbo: false, confirm: 'Are you sure you want to log out?' } %>
           <% else %>
             <%= link_to 'Log In', new_user_session_path, class: 'btn btn-outline' %>
@@ -151,28 +173,38 @@
             </li>
             <% if user_signed_in? %>
               <li class="mobile-nav-item">
-                <%= link_to my_flagged_content_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
-                  My Content
-                  <% review_count = current_user.flagged_content_needing_review_count %>
-                  <% if review_count > 0 %>
-                    <span class="badge badge-warning" style="margin-left: 0.5rem;"><%= review_count %></span>
-                  <% end %>
+                <%= link_to search_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                  Search
                 <% end %>
-              </li>
-            <% end %>
-            <% if user_signed_in? && current_user.can_manage_users? %>
-              <li class="mobile-nav-item">
-                <a href="/admin/users" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Admin</a>
               </li>
             <% end %>
           </ul>
 
           <div class="mobile-nav-actions">
             <% if user_signed_in? %>
+              <%
+                content_review_count = current_user.flagged_content_needing_review_count
+                admin_pending_count = current_user.can_manage_users? ? ContentFlag.status_pending.count : 0
+                display_name = current_user.name.presence || current_user.email
+              %>
               <div class="mobile-user-info">
-                <div class="mobile-user-email"><%= current_user.email %></div>
+                <div class="mobile-user-email"><%= display_name %></div>
                 <span class="role-badge <%= current_user.role %>"><%= current_user.role&.titleize || 'Viewer' %></span>
               </div>
+              <%= link_to my_flagged_content_path, class: "btn btn-outline btn-block mobile-nav-action-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                <span>My Content</span>
+                <% if content_review_count > 0 %>
+                  <span class="badge badge-warning"><%= content_review_count %></span>
+                <% end %>
+              <% end %>
+              <% if current_user.can_manage_users? %>
+                <%= link_to admin_users_path, class: "btn btn-outline btn-block mobile-nav-action-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                  <span>Admin</span>
+                  <% if admin_pending_count > 0 %>
+                    <span class="badge badge-warning"><%= admin_pending_count %></span>
+                  <% end %>
+                <% end %>
+              <% end %>
               <%= link_to 'Profile', edit_user_registration_path, class: 'btn btn-outline btn-block', data: { action: "click->mobile-nav#closeMenu" } %>
               <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-block', data: { turbo: false, confirm: 'Are you sure you want to log out?', action: "click->mobile-nav#closeMenu" } %>
             <% else %>

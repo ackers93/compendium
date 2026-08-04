@@ -124,6 +124,76 @@
       }
     }
 
+    .nav-dropdown {
+      position: relative;
+
+      .nav-dropdown-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-2;
+        max-width: 16rem;
+
+        .nav-dropdown-label {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .nav-dropdown-caret {
+          width: 0.4rem;
+          height: 0.4rem;
+          border-right: 1.5px solid currentColor;
+          border-bottom: 1.5px solid currentColor;
+          transform: rotate(45deg);
+          opacity: 0.8;
+          flex-shrink: 0;
+          margin-top: -0.15rem;
+          transition: transform 0.15s ease;
+        }
+
+        .nav-dropdown-alert {
+          flex-shrink: 0;
+        }
+
+        &[aria-expanded="true"] .nav-dropdown-caret {
+          transform: rotate(225deg);
+          margin-top: 0.15rem;
+        }
+      }
+
+      .nav-dropdown-menu {
+        position: absolute;
+        top: calc(100% + #{$space-2});
+        right: 0;
+        min-width: 12rem;
+        padding: $space-1;
+        background: $white;
+        border: 1px solid $gray-200;
+        border-radius: $radius;
+        box-shadow: $shadow-lg;
+        z-index: $z-dropdown;
+      }
+
+      .nav-dropdown-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-3;
+        padding: $space-2 $space-3;
+        color: $gray-700;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        text-decoration: none;
+        border-radius: $radius-sm;
+        white-space: nowrap;
+
+        &:hover {
+          background: $gray-100;
+          color: $gray-900;
+        }
+      }
+    }
+
     // Hamburger Button
     .hamburger {
       display: none;
@@ -249,6 +319,13 @@
           width: 100%;
           text-align: center;
           padding: $space-3 $space-4;
+        }
+
+        .mobile-nav-action-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: $space-2;
         }
       }
     }

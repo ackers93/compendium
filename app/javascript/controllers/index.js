@@ -8,6 +8,7 @@ import TopicsSearchController from "./topics_search_controller"
 import ThreadsSearchController from "./threads_search_controller"
 import SearchController from "./search_controller"
 import BibleSearchController from "./bible_search_controller"
+import DropdownController from "./dropdown_controller"
 
 application.register("modal", ModalController)
 application.register("mobile-nav", MobileNavController)
@@ -18,5 +19,6 @@ application.register("topics-search", TopicsSearchController)
 application.register("threads-search", ThreadsSearchController)
 application.register("search", SearchController)
 application.register("bible-search", BibleSearchController)
+application.register("dropdown", DropdownController)
 
 export { application } 
