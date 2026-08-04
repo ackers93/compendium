@@ -39,6 +39,9 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+# Keep RDoc in sync so IRB/web-console don't load two versions at boot
+gem "rdoc", "~> 6.17"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
