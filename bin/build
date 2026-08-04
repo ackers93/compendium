@@ -2,12 +2,6 @@
 
 set -e
 
-# Build JavaScript
+# Build JavaScript (CSS is compiled by Rails/sprockets + sassc-rails,
+# which resolves Font Awesome font-path helpers correctly)
 yarn build
-
-# Build CSS (needs font-awesome gem load path)
-FA_PATH="$(bundle show font-awesome-sass)/assets/stylesheets"
-sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css \
-  --no-source-map \
-  --load-path=node_modules \
-  --load-path="$FA_PATH"
