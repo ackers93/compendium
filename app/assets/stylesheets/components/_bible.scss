@@ -279,7 +279,6 @@
   }
   
   .comment-item {
-    border-left: 3px solid $theme-primary;
     max-width: 100%;
     word-break: normal;
     overflow-wrap: break-word;
@@ -604,7 +603,6 @@
     .topic-verse-explanation {
       flex: 1;
       background: $gray-50;
-      border-left: 4px solid $theme-primary;
       padding: $space-4;
       border-radius: $radius-sm;
       min-width: 0; // Allows content to wrap properly
@@ -677,7 +675,6 @@
       background: $gray-50;
       padding: $space-3;
       border-radius: $radius-sm;
-      border-left: 3px solid $theme-primary;
       margin-top: $space-3;
     }
   }
