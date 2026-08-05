@@ -8,7 +8,7 @@ class AdminNotificationMailer < ApplicationMailer
     
     mail(
       to: @admin_email,
-      subject: "New User Signup: #{user.email}"
+      subject: "Contributor Agreement Accepted: #{user.email}"
     )
   end
 end

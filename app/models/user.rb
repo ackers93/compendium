@@ -18,12 +18,29 @@ class User < ApplicationRecord
     
     # Set default role after initialization
     after_initialize :set_default_role, if: :new_record?
-    
-    # Send notification to head admin when new user signs up
-    after_create :notify_admin_of_signup
-    
+
     # OTP/2FA Configuration
     OTP_EXPIRY_TIME = 10.minutes
+
+    CONTRIBUTOR_AGREEMENT_TERMS = [
+      {
+        title: "Human-written content",
+        body: "All content you contribute must be written by you. AI tools may be used sparingly for light editing or research, but the substance of your notes, comments, and other contributions should be your own work."
+      },
+      {
+        title: "Kindness and encouragement",
+        body: "Be kind, courteous, and encouraging. There are plenty of places to debate Scripture; Compendium is for sharing helpful notes that build up your brothers and sisters."
+      },
+      {
+        title: "Report problems",
+        body: "If you find inaccurate, rude, or unhelpful content, please report it using the flagging system so it can be reviewed."
+      },
+      {
+        title: "Grace under review",
+        body: "The admin team is here to help. If your content is flagged and a review or change is requested, please respond with grace and understanding. Clearer contributions make Compendium more helpful for everyone."
+      }
+    ].freeze
+
     
     # Generate a 6-digit OTP code
     def generate_otp
@@ -103,6 +120,24 @@ class User < ApplicationRecord
     def self.reset_all_user_onboarding!
       update_all(onboarding_completed_at: nil)
     end
+
+    def accepted_contributor_agreement?
+      contributor_agreement_accepted_at.present?
+    end
+
+    def eligible_for_contributor_promotion?
+      accepted_contributor_agreement?
+    end
+
+    # Records acceptance and notifies admins once. Safe to call repeatedly.
+    def accept_contributor_agreement!
+      return true if accepted_contributor_agreement?
+
+      update!(contributor_agreement_accepted_at: Time.current)
+      notify_admin_of_signup
+      true
+    end
+
     
     # Get count of flagged content needing review for this user
     def flagged_content_needing_review_count
@@ -164,6 +199,7 @@ class User < ApplicationRecord
     def notify_admin_of_signup
       AdminNotificationMailer.new_user_signup(self).deliver_later
     end
+
     
     # Defensive methods to prevent serialization issues
     def empty?

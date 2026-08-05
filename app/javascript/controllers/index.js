@@ -11,6 +11,7 @@ import BibleSearchController from "./bible_search_controller"
 import DropdownController from "./dropdown_controller"
 import ThemeFormController from "./theme_form_controller"
 import OnboardingController from "./onboarding_controller"
+import ContributorAgreementController from "./contributor_agreement_controller"
 
 application.register("modal", ModalController)
 application.register("mobile-nav", MobileNavController)
@@ -24,5 +25,6 @@ application.register("bible-search", BibleSearchController)
 application.register("dropdown", DropdownController)
 application.register("theme-form", ThemeFormController)
 application.register("onboarding", OnboardingController)
+application.register("contributor-agreement", ContributorAgreementController)
 
 export { application } 

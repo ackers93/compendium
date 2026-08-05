@@ -82,3 +82,22 @@
     border: 1px solid color-mix(in srgb, $theme-primary 35%, transparent);
   }
 } 
+.agreement-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  i {
+    font-size: 0.85em;
+  }
+
+  &.agreement-status-accepted {
+    color: $success;
+  }
+
+  &.agreement-status-pending {
+    color: $warning;
+  }
+}

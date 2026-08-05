@@ -31,6 +31,22 @@
           <span class="info-label">Member Since</span>
           <span class="info-value"><%= @user.created_at.strftime("%B %d, %Y") %></span>
         </div>
+        <div class="info-item">
+          <span class="info-label">Contributor Agreement</span>
+          <span class="info-value">
+            <% if @user.accepted_contributor_agreement? %>
+              <span class="agreement-status agreement-status-accepted">
+                <i class="fa-solid fa-circle-check"></i>
+                Accepted <%= @user.contributor_agreement_accepted_at.strftime("%b %d, %Y") %>
+              </span>
+            <% else %>
+              <span class="agreement-status agreement-status-pending">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                Not accepted — promotion blocked
+              </span>
+            <% end %>
+          </span>
+        </div>
       </div>
     </div>
     
@@ -40,16 +56,26 @@
           <i class="fa-solid fa-user-shield"></i>
           Change Role
         </h2>
+
+        <% unless @user.eligible_for_contributor_promotion? %>
+          <div class="alert alert-warning mb-4">
+            <p class="mb-0">
+              This user has not accepted the Contributor Agreement. They can accept it from
+              their Profile or during onboarding. Until then, they can only remain a Viewer.
+            </p>
+          </div>
+        <% end %>
         
         <div class="form-group">
           <%= form.label :role, "Select New Role", class: "form-label" %>
           <div class="role-select-wrapper">
+            <% role_options = [['Viewer - Can only view content', 'viewer']] %>
+            <% if @user.eligible_for_contributor_promotion? || @user.role_contributor? || @user.role_admin? %>
+              <% role_options << ['Contributor - Can create and manage their own content', 'contributor'] %>
+              <% role_options << ['Admin - Can manage all content and users', 'admin'] %>
+            <% end %>
             <%= form.select :role, 
-                options_for_select([
-                  ['Viewer - Can only view content', 'viewer'],
-                  ['Contributor - Can create and manage their own content', 'contributor'],
-                  ['Admin - Can manage all content and users', 'admin']
-                ], @user.role),
+                options_for_select(role_options, @user.role),
                 {},
                 class: "form-select" %>
           </div>

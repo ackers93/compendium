@@ -10,8 +10,16 @@ class OnboardingController < ApplicationController
   def complete
     case params[:type]
     when "user"
+      accepted_agreement = ActiveModel::Type::Boolean.new.cast(params[:accept_contributor_agreement])
+
+      if accepted_agreement
+        current_user.accept_contributor_agreement!
+        flash[:notice] = "Welcome to Compendium! You've accepted the Contributor Agreement—an admin can now promote you when ready."
+      else
+        flash[:notice] = "Welcome to Compendium! You're signed in as a Viewer. Accept the Contributor Agreement anytime from your Profile to request Contributor access."
+      end
+
       current_user.complete_user_onboarding!
-      flash[:notice] = "Welcome to Compendium! Let's get started."
       redirect_to root_path
     when "admin"
       current_user.complete_admin_onboarding!
@@ -26,6 +34,7 @@ class OnboardingController < ApplicationController
     case params[:type]
     when "user"
       current_user.complete_user_onboarding!
+      flash[:notice] = "Welcome to Compendium! You're signed in as a Viewer. Accept the Contributor Agreement anytime from your Profile to request Contributor access."
     when "admin"
       current_user.complete_admin_onboarding!
     end
@@ -66,7 +75,7 @@ class OnboardingController < ApplicationController
         title: "Notes",
         body: can_create ?
           "Create study notes, save sermon insights, and organize your thoughts. Keep drafts private while you work, then publish when you're ready to share with the community." :
-          "Browse and read notes from contributors. Ask an administrator to promote you to Contributor when you're ready to write your own.",
+          "Browse and read notes from contributors. Accept the Contributor Agreement at the end of this tour (or later in Profile) so an admin can promote you to write your own.",
         screenshot: "onboarding/notes.png"
       },
       {
@@ -138,13 +147,14 @@ class OnboardingController < ApplicationController
         screenshot: "onboarding/flagging.png"
       },
       {
-        key: "ready",
-        icon: "fa-rocket",
-        title: "You're ready",
+        key: "agreement",
+        icon: "fa-file-signature",
+        title: "Contributor Agreement",
         body: can_create ?
-          "Start with the Bible section, open a verse, or create your first note. You can revisit features anytime from the navigation bar." :
-          "You're signed in as a Viewer—you can read and explore everything. Ask an admin for Contributor access when you want to create content.",
-        screenshot: nil
+          "You're already a Contributor. Please review and confirm the agreement below. Admins are notified when you accept." :
+          "To become a Contributor, read and accept the agreement below. Accepting notifies an administrator, who can then promote your account. You can also continue as a Viewer and accept later from your Profile.",
+        screenshot: nil,
+        agreement: true
       }
     ]
   end

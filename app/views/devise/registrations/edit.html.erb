@@ -61,6 +61,64 @@
 
 <div class="content-section mt-8">
   <div class="section-header">
+    <h2 class="section-title">Contributor Agreement</h2>
+  </div>
+
+  <div class="section-content">
+    <% if current_user.accepted_contributor_agreement? %>
+      <div class="content-surface">
+        <p class="text-sm text-gray-600 mb-0">
+          <span class="agreement-status agreement-status-accepted">
+            <i class="fa-solid fa-circle-check"></i>
+            Accepted <%= current_user.contributor_agreement_accepted_at.strftime("%B %d, %Y") %>
+          </span>
+        </p>
+        <p class="text-sm text-gray-600 mt-3 mb-0">
+          Admins can promote your account to Contributor. Thank you for agreeing to help keep Compendium helpful and kind.
+        </p>
+      </div>
+    <% else %>
+      <div class="content-surface" data-controller="contributor-agreement">
+        <p class="text-sm text-gray-600 mb-4">
+          Accepting this agreement notifies an administrator that you're ready for Contributor access.
+          Until you accept, you can browse as a Viewer but cannot be promoted.
+        </p>
+
+        <ol class="onboarding-agreement-list mb-4">
+          <% User::CONTRIBUTOR_AGREEMENT_TERMS.each do |term| %>
+            <li class="onboarding-agreement-item">
+              <strong><%= term[:title] %></strong>
+              <span><%= term[:body] %></span>
+            </li>
+          <% end %>
+        </ol>
+
+        <%= form_with url: contributor_agreement_path, method: :post do %>
+          <label class="onboarding-agreement-check mb-4">
+            <input type="checkbox"
+                   name="accept_contributor_agreement"
+                   value="1"
+                   required
+                   data-contributor-agreement-target="checkbox"
+                   data-action="change->contributor-agreement#sync">
+            <span>I have read and agree to the Contributor Agreement</span>
+          </label>
+
+          <%= button_tag type: "submit",
+                class: "btn btn-primary",
+                disabled: true,
+                data: { contributor_agreement_target: "submit" } do %>
+            <i class="fa-solid fa-file-signature"></i>
+            Accept Agreement
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="content-section mt-8">
+  <div class="section-header">
     <h2 class="section-title">Style</h2>
   </div>
 

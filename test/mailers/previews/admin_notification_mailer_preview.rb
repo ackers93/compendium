@@ -8,7 +8,8 @@ class AdminNotificationMailerPreview < ActionMailer::Preview
       name: 'John Smith',
       ecclesia: 'Springfield Christadelphian Ecclesia',
       role: 'viewer',
-      created_at: Time.current
+      created_at: Time.current,
+      contributor_agreement_accepted_at: Time.current
     )
     
     # Set HEAD_ADMIN_EMAIL for preview

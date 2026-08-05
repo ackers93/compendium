@@ -83,6 +83,9 @@ Rails.application.routes.draw do
   get 'onboarding', to: 'onboarding#show', as: :onboarding
   post 'onboarding/complete', to: 'onboarding#complete', as: :complete_onboarding
   post 'onboarding/skip', to: 'onboarding#skip', as: :skip_onboarding
+
+  # Contributor agreement (can also be accepted during onboarding)
+  post 'contributor_agreement', to: 'contributor_agreements#create', as: :contributor_agreement
   
   # Search routes
   get 'search', to: 'searches#index', as: :search

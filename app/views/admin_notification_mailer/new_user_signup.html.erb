@@ -98,12 +98,12 @@
   <body>
     <div class="container">
       <div class="header">
-        <h2>🎉 New User Signup</h2>
+        <h2>Contributor Agreement Accepted</h2>
       </div>
       
       <p>Hello Admin,</p>
       
-      <p>A new user has just signed up for Compendium. Here are their details:</p>
+      <p>A user has accepted the Contributor Agreement and is ready for review. Here are their details:</p>
       
       <div class="user-info">
         <div class="info-row">
@@ -136,6 +136,13 @@
           <div class="info-label">Signed Up:</div>
           <div class="info-value"><%= @user.created_at.strftime('%B %d, %Y at %I:%M %p') %></div>
         </div>
+
+        <div class="info-row">
+          <div class="info-label">Agreement:</div>
+          <div class="info-value">
+            Accepted<%= @user.contributor_agreement_accepted_at.present? ? " on #{@user.contributor_agreement_accepted_at.strftime('%B %d, %Y at %I:%M %p')}" : "" %>
+          </div>
+        </div>
         
         <div class="info-row">
           <div class="info-label">User ID:</div>
@@ -144,12 +151,11 @@
       </div>
       
       <div class="action-section">
-        <strong>📋 Next Steps:</strong>
+        <strong>Next Steps:</strong>
         <ul style="margin: 10px 0 0 0; padding-left: 20px;">
           <li>Review this user's information to verify their identity</li>
-          <li>Check if they should be promoted from Viewer to Contributor</li>
-          <li>Consider if they have admin privileges needs</li>
-          <li>Log in to the Admin Dashboard to manage their role</li>
+          <li>They have accepted the Contributor Agreement and can now be promoted</li>
+          <li>Log in to the Admin Dashboard to promote them to Contributor if appropriate</li>
         </ul>
       </div>
       

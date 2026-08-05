@@ -24,7 +24,7 @@ class AdminNotificationMailerTest < ActionMailer::TestCase
     end
 
     assert_equal ['admin@example.com'], email.to
-    assert_equal "New User Signup: #{@user.email}", email.subject
+    assert_equal "Contributor Agreement Accepted: #{@user.email}", email.subject
     assert_match @user.email, email.body.encoded
     assert_match @user.name, email.body.encoded
     assert_match @user.ecclesia, email.body.encoded
@@ -55,8 +55,8 @@ class AdminNotificationMailerTest < ActionMailer::TestCase
 
     assert_not_nil email.html_part
     assert_not_nil email.text_part
-    assert_match 'New User Signup', email.html_part.body.to_s
-    assert_match 'New User Signup', email.text_part.body.to_s
+    assert_match 'Contributor Agreement Accepted', email.html_part.body.to_s
+    assert_match 'Contributor Agreement Accepted', email.text_part.body.to_s
   end
 end
 

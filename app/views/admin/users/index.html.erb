@@ -86,6 +86,7 @@
             <th>Email</th>
             <th>Name</th>
             <th>Role</th>
+            <th>Agreement</th>
             <th>Created</th>
             <th>Actions</th>
           </tr>
@@ -106,6 +107,19 @@
                 <span class="role-badge <%= user.role %>">
                   <%= user.role&.titleize || 'Viewer' %>
                 </span>
+              </td>
+              <td>
+                <% if user.accepted_contributor_agreement? %>
+                  <span class="agreement-status agreement-status-accepted" title="Accepted <%= user.contributor_agreement_accepted_at.strftime('%b %d, %Y') %>">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Accepted
+                  </span>
+                <% else %>
+                  <span class="agreement-status agreement-status-pending">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    Pending
+                  </span>
+                <% end %>
               </td>
               <td class="date-cell"><%= user.created_at.strftime("%b %d, %Y") %></td>
               <td class="actions-cell">

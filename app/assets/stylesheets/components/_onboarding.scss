@@ -248,6 +248,95 @@
   background: $gray-100;
 }
 
+.onboarding-step-agreement {
+  text-align: left;
+
+  .onboarding-step-header {
+    text-align: center;
+  }
+}
+
+.onboarding-agreement {
+  border: 1px solid $gray-200;
+  border-radius: $radius-md;
+  background: $gray-50;
+  padding: $space-5;
+  text-align: left;
+}
+
+.onboarding-agreement-list {
+  list-style: none;
+  margin: 0 0 $space-5;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  counter-reset: agreement-term;
+}
+
+.onboarding-agreement-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: $space-1 $space-3;
+  counter-increment: agreement-term;
+
+  &::before {
+    content: counter(agreement-term);
+    grid-row: 1 / span 2;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: $radius-full;
+    background: $theme-primary;
+    color: $white;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+  }
+
+  strong {
+    color: $theme-text;
+    font-size: $font-size-base;
+  }
+
+  span {
+    color: $gray-600;
+    font-size: $font-size-sm;
+    line-height: $line-height-relaxed;
+  }
+}
+
+.onboarding-agreement-check {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-4;
+  border: 1px solid $gray-200;
+  border-radius: $radius;
+  background: $theme-surface;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  color: $theme-text;
+  font-weight: $font-weight-medium;
+
+  input[type="checkbox"] {
+    margin-top: 0.15rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: $theme-primary;
+    flex-shrink: 0;
+  }
+}
+
+.onboarding-finish-actions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
 @keyframes onboarding-fade-in {
   from {
     opacity: 0;
@@ -292,7 +381,8 @@
     flex-direction: column;
   }
 
-  .onboarding-footer-actions {
+  .onboarding-footer-actions,
+  .onboarding-finish-actions {
     flex-direction: column;
     width: 100%;
   }

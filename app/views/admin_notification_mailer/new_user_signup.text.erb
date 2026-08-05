@@ -1,9 +1,9 @@
-New User Signup - Compendium
-================================
+Contributor Agreement Accepted - Compendium
+===========================================
 
 Hello Admin,
 
-A new user has just signed up for Compendium. Here are their details:
+A user has accepted the Contributor Agreement and is ready for review. Here are their details:
 
 USER INFORMATION
 ----------------
@@ -12,14 +12,14 @@ Email: <%= @user.email %>
 <% if @user.ecclesia.present? %>Ecclesia: <%= @user.ecclesia %><% end %>
 Current Role: <%= @user.role&.titleize || 'Viewer' %>
 Signed Up: <%= @user.created_at.strftime('%B %d, %Y at %I:%M %p') %>
+Agreement: Accepted<%= @user.contributor_agreement_accepted_at.present? ? " on #{@user.contributor_agreement_accepted_at.strftime('%B %d, %Y at %I:%M %p')}" : "" %>
 User ID: #<%= @user.id %>
 
 NEXT STEPS
 ----------
 - Review this user's information to verify their identity
-- Check if they should be promoted from Viewer to Contributor
-- Consider if they have admin privileges needs
-- Log in to the Admin Dashboard to manage their role
+- They have accepted the Contributor Agreement and can now be promoted
+- Log in to the Admin Dashboard to promote them to Contributor if appropriate
 
 ADMIN DASHBOARD
 ---------------
@@ -33,4 +33,3 @@ ABOUT USER ROLES
 
 ---
 This is an automated notification from Compendium.
-

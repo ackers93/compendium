@@ -23,7 +23,14 @@ module Admin
     
     def update
       old_role = @user.role
-      
+      new_role = user_params[:role]
+
+      if promoting_without_agreement?(old_role, new_role)
+        redirect_to edit_admin_user_path(@user),
+                    alert: "#{@user.email} has not accepted the Contributor Agreement yet. They must accept it before they can be promoted."
+        return
+      end
+
       if @user.update(user_params)
         # Reset admin onboarding if user was promoted to admin
         if @user.role_admin? && old_role != 'admin'
@@ -64,6 +71,14 @@ module Admin
     
     def user_params
       params.require(:user).permit(:role)
+    end
+
+    def promoting_without_agreement?(old_role, new_role)
+      return false if @user.eligible_for_contributor_promotion?
+      return false if new_role.blank? || new_role == old_role
+      return false if new_role == 'viewer'
+
+      old_role == 'viewer' && %w[contributor admin].include?(new_role)
     end
   end
 end

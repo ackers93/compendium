@@ -50,8 +50,8 @@
             </div>
             <h3 class="onboarding-feature-title">Role Assignment</h3>
             <p class="onboarding-feature-description">
-              Promote viewers to contributors when they're ready to create content,
-              or elevate trusted users to admin status.
+              Promote viewers to contributors only after they have accepted the Contributor
+              Agreement, or elevate trusted users to admin status.
             </p>
           </div>
         </div>
@@ -64,7 +64,7 @@
           <ul class="onboarding-tips-list">
             <li>Access the Admin Dashboard from the navigation bar</li>
             <li>Use role filters to quickly find users by their access level</li>
-            <li>The "Admin" badge will appear next to your name throughout the app</li>
+            <li>Only users who accepted the Contributor Agreement can be promoted</li>
             <li>You can still review content flagged on your own posts in "My Content"</li>
           </ul>
         </div>
@@ -104,7 +104,7 @@
 
         <div class="onboarding-steps">
           <% @steps.each_with_index do |step, index| %>
-            <div class="onboarding-step<%= " is-active" if index.zero? %>"
+            <div class="onboarding-step<%= " is-active" if index.zero? %><%= " onboarding-step-agreement" if step[:agreement] %>"
                  data-onboarding-target="step"
                  data-step-key="<%= step[:key] %>"
                  <%= "hidden" unless index.zero? %>>
@@ -116,7 +116,25 @@
                 <p class="onboarding-subtitle"><%= step[:body] %></p>
               </div>
 
-              <% if step[:screenshot].present? %>
+              <% if step[:agreement] %>
+                <div class="onboarding-agreement">
+                  <ol class="onboarding-agreement-list">
+                    <% User::CONTRIBUTOR_AGREEMENT_TERMS.each do |term| %>
+                      <li class="onboarding-agreement-item">
+                        <strong><%= term[:title] %></strong>
+                        <span><%= term[:body] %></span>
+                      </li>
+                    <% end %>
+                  </ol>
+
+                  <label class="onboarding-agreement-check">
+                    <input type="checkbox"
+                           data-onboarding-target="agreementCheckbox"
+                           data-action="change->onboarding#syncAgreementState">
+                    <span>I have read and agree to the Contributor Agreement</span>
+                  </label>
+                </div>
+              <% elsif step[:screenshot].present? %>
                 <div class="onboarding-screenshot">
                   <%= image_tag step[:screenshot],
                         alt: "#{step[:title]} screenshot",
@@ -138,12 +156,12 @@
           </button>
 
           <div class="onboarding-footer-actions">
-            <%= form_with url: skip_onboarding_path, method: :post do %>
-              <%= hidden_field_tag :type, "user" %>
-              <%= button_tag type: "submit", class: "btn btn-outline" do %>
-                Skip tour
-              <% end %>
-            <% end %>
+            <button type="button"
+                    class="btn btn-outline"
+                    data-onboarding-target="skip"
+                    data-action="click->onboarding#jumpToAgreement">
+              Skip tour
+            </button>
 
             <button type="button"
                     class="btn btn-primary"
@@ -153,12 +171,25 @@
               <i class="fa-solid fa-arrow-right"></i>
             </button>
 
-            <div data-onboarding-target="finish" hidden>
+            <div class="onboarding-finish-actions" data-onboarding-target="finish" hidden>
               <%= form_with url: complete_onboarding_path, method: :post do %>
                 <%= hidden_field_tag :type, "user" %>
-                <%= button_tag type: "submit", class: "btn btn-primary" do %>
-                  <i class="fa-solid fa-rocket"></i>
-                  Get Started
+                <%= button_tag type: "submit",
+                      class: "btn btn-outline",
+                      data: { onboarding_target: "viewerSubmit" } do %>
+                  Continue as Viewer
+                <% end %>
+              <% end %>
+
+              <%= form_with url: complete_onboarding_path, method: :post do %>
+                <%= hidden_field_tag :type, "user" %>
+                <%= hidden_field_tag :accept_contributor_agreement, "1" %>
+                <%= button_tag type: "submit",
+                      class: "btn btn-primary",
+                      disabled: true,
+                      data: { onboarding_target: "agreeSubmit" } do %>
+                  <i class="fa-solid fa-file-signature"></i>
+                  Accept &amp; Get Started
                 <% end %>
               <% end %>
             </div>

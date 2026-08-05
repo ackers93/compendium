@@ -1,11 +1,23 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["step", "dot", "prev", "next", "finish", "counter"]
+  static targets = [
+    "step",
+    "dot",
+    "prev",
+    "next",
+    "finish",
+    "counter",
+    "skip",
+    "agreementCheckbox",
+    "agreeSubmit",
+    "viewerSubmit"
+  ]
   static values = { index: { type: Number, default: 0 } }
 
   connect() {
     this.showStep(this.indexValue)
+    this.syncAgreementState()
   }
 
   next() {
@@ -25,6 +37,22 @@ export default class extends Controller {
     if (!Number.isNaN(index)) {
       this.showStep(index)
     }
+  }
+
+  jumpToAgreement() {
+    const agreementIndex = this.stepTargets.findIndex(
+      (step) => step.dataset.stepKey === "agreement"
+    )
+    if (agreementIndex >= 0) {
+      this.showStep(agreementIndex)
+    }
+  }
+
+  syncAgreementState() {
+    if (!this.hasAgreementCheckboxTarget || !this.hasAgreeSubmitTarget) return
+
+    const checked = this.agreementCheckboxTarget.checked
+    this.agreeSubmitTarget.disabled = !checked
   }
 
   showStep(index) {
@@ -53,9 +81,14 @@ export default class extends Controller {
     if (this.hasFinishTarget) {
       this.finishTarget.hidden = !isLast
     }
+    if (this.hasSkipTarget) {
+      this.skipTarget.hidden = isLast
+    }
 
     if (this.hasCounterTarget) {
       this.counterTarget.textContent = `Step ${index + 1} of ${this.stepTargets.length}`
     }
+
+    this.syncAgreementState()
   }
 }
