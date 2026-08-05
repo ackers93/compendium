@@ -99,7 +99,11 @@ Rails.application.routes.draw do
   
   # Admin routes
   namespace :admin do
-    resources :users, only: [:index, :edit, :update, :destroy]
+    resources :users, only: [:index, :edit, :update, :destroy] do
+      collection do
+        post :reset_onboarding
+      end
+    end
     resources :content_flags, only: [:index] do
       member do
         patch :approve

@@ -3,6 +3,17 @@
 <div class="page-header">
   <h1 class="page-title">User Management</h1>
   <p class="page-subtitle">Manage user roles and permissions</p>
+  <div class="mt-4">
+    <%= button_to reset_onboarding_admin_users_path,
+        method: :post,
+        class: "btn btn-outline",
+        data: {
+          turbo_confirm: "Reset the feature tour for ALL users? Everyone will be required to go through onboarding again on their next visit."
+        } do %>
+      <i class="fa-solid fa-rotate-left"></i>
+      Reset onboarding for all users
+    <% end %>
+  </div>
 </div>
 
 <div class="content-section">

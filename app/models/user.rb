@@ -99,6 +99,10 @@ class User < ApplicationRecord
     def complete_admin_onboarding!
       update(admin_onboarding_completed_at: Time.current)
     end
+
+    def self.reset_all_user_onboarding!
+      update_all(onboarding_completed_at: nil)
+    end
     
     # Get count of flagged content needing review for this user
     def flagged_content_needing_review_count

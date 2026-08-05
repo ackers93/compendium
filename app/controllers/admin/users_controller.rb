@@ -49,6 +49,12 @@ module Admin
         redirect_to admin_users_path, notice: "User was successfully deleted."
       end
     end
+
+    def reset_onboarding
+      count = User.count
+      User.reset_all_user_onboarding!
+      redirect_to onboarding_path, notice: "Onboarding reset for #{count} #{'user'.pluralize(count)}. Everyone will see the feature tour again."
+    end
     
     private
     
