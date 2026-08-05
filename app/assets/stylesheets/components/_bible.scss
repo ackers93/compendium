@@ -46,19 +46,21 @@
 
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $space-3;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: $space-2;
 }
 
 .book-link {
   display: block;
-  padding: $space-3 $space-4;
+  padding: $space-2 $space-3;
   background: $white;
   border: 1px solid $gray-200;
   border-radius: $radius-md;
   text-decoration: none;
   color: $gray-700;
   font-weight: $font-weight-medium;
+  text-align: center;
+  font-size: $font-size-sm;
   transition: all 0.2s ease;
   
   &:hover {
@@ -1096,7 +1098,7 @@
   }
 
   .books-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
 
   .bible-section-actions {

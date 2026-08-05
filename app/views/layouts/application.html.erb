@@ -243,6 +243,25 @@
         <%= yield %>
       </div>
     </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <nav class="site-footer-links" aria-label="Features">
+          <%= link_to "Notes", notes_path, class: "site-footer-link" %>
+          <%= link_to "Bible", bible_verses_books_path, class: "site-footer-link" %>
+          <%= link_to "Topics", topics_path, class: "site-footer-link" %>
+          <%= link_to "Threads", bible_threads_path, class: "site-footer-link" %>
+          <%= link_to "Search", search_path, class: "site-footer-link" %>
+        </nav>
+
+        <% if user_signed_in? %>
+          <p class="site-footer-contact">
+            For questions, ideas or issues, contact
+            <%= mail_to "christadelphiancompendium@gmail.com", "christadelphiancompendium@gmail.com", class: "site-footer-email" %>.
+          </p>
+        <% end %>
+      </div>
+    </footer>
     
     <%= turbo_frame_tag "modal" %>
   </body>
