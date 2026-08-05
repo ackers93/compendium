@@ -6,8 +6,9 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+# Migrate on boot only when not on Fly (Fly runs db:prepare via release_command).
+# Skipping here lets Puma bind immediately so health checks can pass.
+if [ -z "${FLY_APP_NAME}" ] && [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   ./bin/rails db:prepare
 fi
 

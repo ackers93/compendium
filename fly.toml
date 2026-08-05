@@ -9,6 +9,9 @@ console_command = '/rails/bin/rails console'
 
 [build]
 
+[deploy]
+  release_command = './bin/rails db:prepare'
+
 [http_service]
   internal_port = 3000
   force_https = true
@@ -17,9 +20,9 @@ console_command = '/rails/bin/rails console'
   min_machines_running = 0
   processes = ['app']
 
-# Lightweight /up (no DB); extra grace for cold start (Puma bind + first request).
+# Health check against Rails' built-in /up endpoint.
 [[http_service.checks]]
-  grace_period = "60s"
+  grace_period = "120s"
   interval = "15s"
   timeout = "10s"
   method = "GET"
