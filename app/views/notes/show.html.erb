@@ -19,7 +19,7 @@
     </div>
     
     <% if current_user&.can_create? %>
-      <div class="mt-6">
+      <div class="content-surface mt-6">
         <h3 class="text-lg font-semibold mb-4">Add a comment</h3>
         <%= render 'comments/form', comment: @comment %>
       </div>

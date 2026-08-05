@@ -31,16 +31,10 @@
 }
 
 .content-section {
-  background: $theme-surface;
-  border-radius: $radius-md;
-  box-shadow: $shadow-sm;
-  border: 1px solid $gray-200;
-  overflow: hidden;
-
   .section-header {
-    padding: $space-6;
+    padding: 0 0 $space-4;
+    margin-bottom: $space-4;
     border-bottom: 1px solid $gray-200;
-    background: $gray-50;
 
     .section-title {
       font-family: $font-family-sans;
@@ -52,6 +46,16 @@
   }
 
   .section-content {
-    padding: $space-6;
+    padding: 0;
   }
+}
+
+// Use when a section is itself the card (no nested card children)
+.content-surface {
+  background: $theme-surface;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  border: 1px solid $gray-200;
+  overflow: hidden;
+  padding: $space-6;
 }

@@ -110,12 +110,11 @@
 
 // Verse display styles
 .verse-display {
-  background: $white;
+  background: $theme-surface;
   border-radius: $radius-lg;
   box-shadow: $shadow-sm;
   border: 1px solid $gray-200;
   padding: $space-6;
-  margin-top: $space-6;
 }
 
 .verse-header {
@@ -151,7 +150,7 @@
 
 // Tabs styles
 .tabs-section {
-  background: $white;
+  background: $theme-surface;
   border-radius: $radius-lg;
   box-shadow: $shadow-sm;
   border: 1px solid $gray-200;
@@ -851,16 +850,22 @@
 
 // Verses table view styles (Card View)
 .verses-table-view {
+  background: $theme-surface;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  border: 1px solid $gray-200;
+  overflow: hidden;
+
   .verse-table-row {
     display: flex;
     gap: $space-4;
     padding: $space-4;
     border-bottom: 1px solid $gray-200;
-    
+
     &:last-child {
       border-bottom: none;
     }
-    
+
     &:hover {
       background-color: $gray-50;
     }
@@ -1009,24 +1014,31 @@
 
 // Verses list view styles
 .verses-list-list-view {
+  background: $theme-surface;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+  border: 1px solid $gray-200;
+  overflow: hidden;
+  padding: $space-4 $space-6;
+
   .verse-item-list-link {
     display: block;
     text-decoration: none;
     color: inherit;
     transition: background-color 0.15s ease;
-    
+
     &:hover {
       background-color: $gray-50;
     }
-    
+
     &:active {
       background-color: $gray-100;
     }
   }
-  
+
   .verse-item-list {
     padding: $space-2 0;
-    
+
     &:not(:last-child) {
       border-bottom: 1px solid $gray-200;
     }
