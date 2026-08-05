@@ -17,6 +17,14 @@ console_command = '/rails/bin/rails console'
   min_machines_running = 0
   processes = ['app']
 
+# Lightweight /up (no DB); extra grace for cold start (Puma bind + first request).
+[[http_service.checks]]
+  grace_period = "60s"
+  interval = "15s"
+  timeout = "10s"
+  method = "GET"
+  path = "/up"
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
