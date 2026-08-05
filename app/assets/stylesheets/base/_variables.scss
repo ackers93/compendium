@@ -1,7 +1,7 @@
-// Brand palette — forest green
-$primary: #2d4739;
-$primary-dark: #1e3228;
-$primary-light: #4a6b58;
+// Brand palette — forest header, gold accent
+$primary: #be9627;
+$primary-dark: #94751e;
+$primary-light: #d0b363;
 
 $secondary: #5c6b63;
 $secondary-dark: #3d4a43;
@@ -38,7 +38,7 @@ $gray-900: #1a2e24;
 $black: #000000;
 
 // Themeable surfaces (defaults; overridden at runtime via CSS vars)
-$header: $primary-dark;
+$header: #1e3228;
 $header-text: $gray-300;
 $page-background: $gray-50;
 $body-text: $gray-900;

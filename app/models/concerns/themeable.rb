@@ -7,7 +7,7 @@ module Themeable
   HEX_COLOR = /\A#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\z/
 
   DEFAULT_THEME = {
-    "primary" => "#2d4739",
+    "primary" => "#be9627",
     "header" => "#1e3228",
     "text" => "#1a2e24",
     "background" => "#f3f5f3"
@@ -69,7 +69,7 @@ module Themeable
 
       hex = normalize_hex(value)
       unless hex.match?(HEX_COLOR)
-        errors.add(:theme_preferences, "#{THEME_LABELS[key] || key} must be a valid hex color (e.g. #2d4739)")
+        errors.add(:theme_preferences, "#{THEME_LABELS[key] || key} must be a valid hex color (e.g. #be9627)")
         next
       end
 
