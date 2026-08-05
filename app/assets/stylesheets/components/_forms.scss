@@ -36,8 +36,8 @@
   
   &:focus {
     outline: none;
-    border-color: $primary;
-    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    border-color: $theme-primary;
+    box-shadow: 0 0 0 3px $theme-primary-muted;
   }
   
   &:disabled {
@@ -136,11 +136,11 @@ select.form-input {
   width: 80px;
   height: 80px;
   margin: 0 auto;
-  background: rgba($primary, 0.1);
+  background: $theme-primary-muted;
   border-radius: 50%;
   
   i {
-    color: $primary;
+    color: $theme-primary;
   }
 }
 
@@ -168,6 +168,13 @@ select.form-input {
     color: $info;
   }
   
+  &.alert-success {
+    background: $success-light;
+    border: 1px solid rgba($success, 0.25);
+    color: $success-dark;
+  }
+  
+  &.alert-danger,
   &.alert-error {
     background: rgba($danger, 0.1);
     border: 1px solid rgba($danger, 0.2);
@@ -234,3 +241,77 @@ select.form-input {
     }
   }
 } 
+// Theme preference form (profile style section)
+.theme-form-intro {
+  max-width: 36rem;
+}
+
+.theme-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: $space-5;
+  margin-bottom: $space-6;
+}
+
+.theme-field {
+  .form-label {
+    display: block;
+    font-weight: $font-weight-medium;
+    color: $gray-700;
+    margin-bottom: $space-2;
+    font-size: $font-size-sm;
+  }
+}
+
+.theme-field-controls {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.theme-swatch {
+  width: 2rem;
+  height: 2rem;
+  border-radius: $radius-sm;
+  border: 1px solid $gray-300;
+  flex-shrink: 0;
+}
+
+.theme-color-picker {
+  width: 2.5rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid $gray-300;
+  border-radius: $radius-sm;
+  background: $white;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 2px;
+  }
+
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+  }
+}
+
+.theme-hex-input {
+  font-family: $font-family-mono;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
+  max-width: 8.5rem;
+}
+
+.theme-form-actions {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+}
+
+.theme-form-reset {
+  .btn {
+    font-size: $font-size-sm;
+  }
+}

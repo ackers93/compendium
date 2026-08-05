@@ -1,0 +1,28 @@
+// Runtime theme tokens — overridden per-user via inline :root styles
+:root {
+  --color-primary: #{$primary};
+  --color-primary-dark: #{$primary-dark};
+  --color-primary-light: #{$primary-light};
+  --color-header: #{$header};
+  --color-header-text: #{$header-text};
+  --color-text: #{$body-text};
+  --color-background: #{$page-background};
+  --color-surface: #{$surface};
+
+  // Derived accents (follow primary when user rethemes)
+  --color-primary-muted: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  --color-primary-soft: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  --color-header-border: color-mix(in srgb, var(--color-header-text) 20%, transparent);
+}
+
+// Convenience aliases used throughout stylesheets
+$theme-primary: var(--color-primary);
+$theme-primary-dark: var(--color-primary-dark);
+$theme-primary-light: var(--color-primary-light);
+$theme-header: var(--color-header);
+$theme-header-text: var(--color-header-text);
+$theme-text: var(--color-text);
+$theme-background: var(--color-background);
+$theme-surface: var(--color-surface);
+$theme-primary-muted: var(--color-primary-muted);
+$theme-primary-soft: var(--color-primary-soft);

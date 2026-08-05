@@ -62,9 +62,9 @@
   transition: all 0.2s ease;
   
   &:hover {
-    background: $primary;
+    background: $theme-primary;
     color: $white;
-    border-color: $primary;
+    border-color: $theme-primary;
     transform: translateY(-2px);
     box-shadow: $shadow-md;
   }
@@ -96,9 +96,9 @@
   transition: all 0.2s ease;
   
   &:hover {
-    background: $primary;
+    background: $theme-primary;
     color: $white;
-    border-color: $primary;
+    border-color: $theme-primary;
     transform: translateY(-1px);
     box-shadow: $shadow-sm;
   }
@@ -188,8 +188,8 @@
   }
   
   &.active {
-    color: $primary;
-    border-bottom-color: $primary;
+    color: $theme-primary;
+    border-bottom-color: $theme-primary;
     background: $white;
   }
 }
@@ -257,7 +257,7 @@
   }
   
   .verse-link {
-    color: $primary;
+    color: $theme-primary;
     text-decoration: none;
     font-weight: $font-weight-medium;
     word-break: break-word;
@@ -280,7 +280,7 @@
   }
   
   .comment-item {
-    border-left: 3px solid $primary;
+    border-left: 3px solid $theme-primary;
     max-width: 100%;
     word-break: normal;
     overflow-wrap: break-word;
@@ -356,8 +356,8 @@
     
     &:focus {
       outline: none;
-      border-color: $primary;
-      box-shadow: 0 0 0 3px rgba($primary, 0.1);
+      border-color: $theme-primary;
+      box-shadow: 0 0 0 3px $theme-primary-muted;
     }
   }
   
@@ -394,8 +394,8 @@
       
       &:focus {
         outline: none;
-        border-color: $primary;
-        box-shadow: 0 0 0 2px rgba($primary, 0.1);
+        border-color: $theme-primary;
+        box-shadow: 0 0 0 2px $theme-primary-muted;
       }
     }
   }
@@ -438,7 +438,7 @@
     
     &:hover {
       box-shadow: $shadow-md;
-      border-color: $primary;
+      border-color: $theme-primary;
     }
     
     .thread-title {
@@ -451,7 +451,7 @@
         text-decoration: none;
         
         &:hover {
-          color: $primary;
+          color: $theme-primary;
         }
       }
     }
@@ -468,7 +468,7 @@
       color: $gray-700;
       
       strong {
-        color: $primary;
+        color: $theme-primary;
       }
     }
   }
@@ -483,7 +483,7 @@
     
     &:hover {
       box-shadow: $shadow-sm;
-      border-color: $primary;
+      border-color: $theme-primary;
     }
   }
   
@@ -493,7 +493,7 @@
       text-decoration: none;
       
       &:hover {
-        color: $primary;
+        color: $theme-primary;
       }
     }
   }
@@ -514,7 +514,7 @@
     
     &:hover {
       box-shadow: $shadow-md;
-      border-color: $primary;
+      border-color: $theme-primary;
     }
     
     .topic-header {
@@ -531,7 +531,7 @@
         text-decoration: none;
         
         &:hover {
-          color: $primary;
+          color: $theme-primary;
         }
       }
     }
@@ -544,7 +544,7 @@
         line-height: 1.6;
         
         .verse-ref-link {
-          color: $primary;
+          color: $theme-primary;
           text-decoration: none;
           
           &:hover {
@@ -567,7 +567,7 @@
     
     &:hover {
       box-shadow: $shadow-sm;
-      border-color: $primary;
+      border-color: $theme-primary;
     }
     
     .topic-verse-header {
@@ -605,7 +605,7 @@
     .topic-verse-explanation {
       flex: 1;
       background: $gray-50;
-      border-left: 4px solid $primary;
+      border-left: 4px solid $theme-primary;
       padding: $space-4;
       border-radius: $radius-sm;
       min-width: 0; // Allows content to wrap properly
@@ -618,7 +618,7 @@
 }
 
 .topic-link {
-  color: $primary;
+  color: $theme-primary;
   text-decoration: none;
   
   &:hover {
@@ -643,7 +643,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: $primary;
+      background: $theme-primary;
       color: $white;
       border-radius: 50%;
       font-weight: $font-weight-bold;
@@ -659,7 +659,7 @@
     }
     
     .verse-link {
-      color: $primary;
+      color: $theme-primary;
       text-decoration: none;
       font-size: $font-size-lg;
       
@@ -678,7 +678,7 @@
       background: $gray-50;
       padding: $space-3;
       border-radius: $radius-sm;
-      border-left: 3px solid $primary;
+      border-left: 3px solid $theme-primary;
       margin-top: $space-3;
     }
   }
@@ -738,7 +738,7 @@
         justify-content: center;
         width: 28px;
         height: 28px;
-        background: $primary;
+        background: $theme-primary;
         color: $white;
         border-radius: 50%;
         font-size: $font-size-sm;
@@ -810,8 +810,8 @@
       
       &:focus {
         outline: none;
-        border-color: $primary;
-        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        border-color: $theme-primary;
+        box-shadow: 0 0 0 3px $theme-primary-muted;
       }
       
       &:disabled {
@@ -834,8 +834,8 @@
       
       &:focus {
         outline: none;
-        border-color: $primary;
-        box-shadow: 0 0 0 3px rgba($primary, 0.1);
+        border-color: $theme-primary;
+        box-shadow: 0 0 0 3px $theme-primary-muted;
       }
       
       &::placeholder {
@@ -878,7 +878,7 @@
       
       &:hover {
         .verse-number {
-          color: darken($primary, 10%);
+          color: $theme-primary-dark;
         }
         
         .verse-text {
@@ -917,7 +917,7 @@
       transition: all 0.2s ease;
       
       &:hover {
-        border-color: $primary;
+        border-color: $theme-primary;
         box-shadow: $shadow-sm;
         
         .comment-preview-text {
@@ -956,7 +956,7 @@
     font-size: $font-size-sm;
     
     .cross-ref-link {
-      color: $primary;
+      color: $theme-primary;
       text-decoration: none;
       
       &:hover {
@@ -969,7 +969,7 @@
     font-size: $font-size-sm;
     
     .thread-link {
-      color: $primary;
+      color: $theme-primary;
       text-decoration: none;
       
       &:hover {
@@ -989,7 +989,7 @@
     }
     
     .topic-tag {
-      color: $primary;
+      color: $theme-primary;
       font-weight: $font-weight-medium;
       
       &.topic-link {

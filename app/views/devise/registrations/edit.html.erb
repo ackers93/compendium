@@ -61,6 +61,69 @@
 
 <div class="content-section mt-8">
   <div class="section-header">
+    <h2 class="section-title">Style</h2>
+  </div>
+
+  <div class="section-content">
+    <p class="theme-form-intro text-sm text-gray-600 mb-6">
+      Customize accent, header, text, and background colors. Changes preview live; save to keep them.
+    </p>
+
+    <% theme = current_user.resolved_theme %>
+    <div data-controller="theme-form">
+      <%= form_with url: users_theme_path, method: :patch, class: "theme-form", data: { turbo: false } do %>
+        <div class="theme-fields">
+          <% Themeable::THEME_KEYS.each do |key| %>
+            <% value = theme[key] %>
+            <div class="theme-field">
+              <label class="form-label" for="theme_<%= key %>_hex">
+                <%= Themeable::THEME_LABELS[key] %>
+              </label>
+              <div class="theme-field-controls">
+                <span class="theme-swatch"
+                      data-theme-form-target="swatch"
+                      data-theme-key="<%= key %>"
+                      style="background-color: <%= value %>"></span>
+                <input type="color"
+                       value="<%= value %>"
+                       class="theme-color-picker"
+                       data-theme-form-target="picker"
+                       data-theme-key="<%= key %>"
+                       data-action="input->theme-form#preview"
+                       aria-label="<%= Themeable::THEME_LABELS[key] %> color picker">
+                <input type="text"
+                       id="theme_<%= key %>_hex"
+                       name="theme[<%= key %>]"
+                       value="<%= value %>"
+                       class="form-control theme-hex-input"
+                       maxlength="7"
+                       pattern="^#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?$"
+                       placeholder="#2d4739"
+                       data-theme-form-target="hex"
+                       data-theme-key="<%= key %>"
+                       data-action="input->theme-form#preview"
+                       autocomplete="off">
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="theme-form-actions form-actions">
+          <%= submit_tag "Save Style", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <div class="theme-form-reset mt-3">
+        <%= button_to "Reset to Defaults", users_theme_path, method: :delete,
+              class: "btn btn-outline",
+              data: { turbo: false, confirm: "Reset your colors to the default forest theme?" } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-section mt-8">
+  <div class="section-header">
     <h2 class="section-title">Security Settings</h2>
   </div>
   

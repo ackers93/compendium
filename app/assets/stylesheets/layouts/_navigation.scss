@@ -1,7 +1,6 @@
 .navbar {
-    background: linear-gradient(135deg, $gray-900 0%, $gray-800 100%);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba($white, 0.1);
+    background: $theme-header;
+    border-bottom: 1px solid var(--color-header-border);
     position: sticky;
     top: 0;
     z-index: $z-sticky;
@@ -36,7 +35,7 @@
       
       .brand-icon {
         font-size: $font-size-2xl;
-        color: $primary;
+        color: $theme-primary;
       }
     }
     
@@ -50,21 +49,22 @@
       
       .nav-item {
         .nav-link {
-          color: $gray-300;
+          color: $theme-header-text;
           text-decoration: none;
           font-weight: $font-weight-medium;
+          font-family: $font-family-ui;
           padding: $space-2 $space-3;
           border-radius: $radius;
-          transition: all 0.2s ease;
+          transition: color 0.15s ease, background-color 0.15s ease;
           
           &:hover {
             color: $white;
-            background-color: rgba($white, 0.1);
+            background-color: rgba($white, 0.08);
           }
           
           &.active {
-            color: $primary;
-            background-color: rgba($primary, 0.1);
+            color: $white;
+            background-color: rgba($white, 0.12);
           }
           
           &.nav-link-sm {
@@ -80,7 +80,7 @@
       gap: $space-4;
       
       .user-info {
-        color: $gray-300;
+        color: $theme-header-text;
         font-size: $font-size-sm;
         display: flex;
         align-items: center;
@@ -92,27 +92,27 @@
         border-radius: $radius;
         font-weight: $font-weight-medium;
         text-decoration: none;
-        transition: all 0.2s ease;
+        transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
         
         &.btn-outline {
-          color: $gray-300;
-          border: 1px solid $gray-600;
+          color: $theme-header-text;
+          border: 1px solid rgba($white, 0.25);
           
           &:hover {
             color: $white;
-            border-color: $gray-400;
-            background-color: rgba($white, 0.1);
+            border-color: rgba($white, 0.45);
+            background-color: rgba($white, 0.08);
           }
         }
         
         &.btn-primary {
-          background-color: $primary;
+          background-color: $theme-primary-light;
           color: $white;
-          border: 1px solid $primary;
+          border: 1px solid $theme-primary-light;
           
           &:hover {
-            background-color: $primary-dark;
-            border-color: $primary-dark;
+            background-color: $theme-primary;
+            border-color: $theme-primary;
           }
         }
 
@@ -247,8 +247,8 @@
       width: 80%;
       max-width: 320px;
       height: calc(100vh - 7rem);
-      background: linear-gradient(180deg, $gray-900 0%, $gray-800 100%);
-      border-left: 1px solid rgba($white, 0.1);
+      background: $theme-header;
+      border-left: 1px solid var(--color-header-border);
       padding: $space-6;
       transition: right 0.3s ease;
       overflow-y: auto;
@@ -268,22 +268,23 @@
           
           .mobile-nav-link {
             display: block;
-            color: $gray-300;
+            color: $theme-header-text;
             text-decoration: none;
             font-weight: $font-weight-medium;
+            font-family: $font-family-ui;
             font-size: $font-size-lg;
             padding: $space-4;
             border-radius: $radius;
-            transition: all 0.2s ease;
+            transition: color 0.15s ease, background-color 0.15s ease;
             
             &:hover {
               color: $white;
-              background-color: rgba($white, 0.1);
+              background-color: rgba($white, 0.08);
             }
             
             &.active {
-              color: $primary;
-              background-color: rgba($primary, 0.1);
+              color: $white;
+              background-color: rgba($white, 0.12);
             }
           }
         }

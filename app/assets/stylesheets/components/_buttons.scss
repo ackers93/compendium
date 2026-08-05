@@ -4,6 +4,7 @@
   justify-content: center;
   gap: $space-1;
   padding: $space-2 $space-3;
+  font-family: $font-family-ui;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   line-height: $line-height-tight;
@@ -11,51 +12,49 @@
   border: 1px solid transparent;
   border-radius: $radius-sm;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
-  
+
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    box-shadow: 0 0 0 3px $theme-primary-muted;
   }
-  
+
   .btn-icon {
     width: 1em;
     height: 1em;
   }
 }
 
-// Button variants
 .btn-primary {
   @extend .btn;
-  background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
-  border-color: $primary;
+  background: $theme-primary;
+  border-color: $theme-primary;
   color: $white;
-  
+
   &:hover:not(:disabled) {
-    background: linear-gradient(135deg, $primary-dark 0%, darken($primary-dark, 10%) 100%);
-    border-color: $primary-dark;
-    transform: translateY(-1px);
-    box-shadow: $shadow-md;
+    background: $theme-primary-dark;
+    border-color: $theme-primary-dark;
+    color: $white;
+    text-decoration: none;
   }
 }
 
 .btn-secondary {
   @extend .btn;
-  background: linear-gradient(135deg, $secondary 0%, $secondary-dark 100%);
+  background: $secondary;
   border-color: $secondary;
   color: $white;
-  
+
   &:hover:not(:disabled) {
-    background: linear-gradient(135deg, $secondary-dark 0%, darken($secondary-dark, 10%) 100%);
+    background: $secondary-dark;
     border-color: $secondary-dark;
-    transform: translateY(-1px);
-    box-shadow: $shadow-md;
+    color: $white;
+    text-decoration: none;
   }
 }
 
@@ -64,11 +63,12 @@
   background: transparent;
   border-color: $gray-300;
   color: $gray-700;
-  
+
   &:hover:not(:disabled) {
     background: $gray-50;
     border-color: $gray-400;
-    color: $gray-900;
+    color: $theme-text;
+    text-decoration: none;
   }
 }
 
@@ -77,14 +77,40 @@
   background: transparent;
   border-color: transparent;
   color: $gray-600;
-  
+
   &:hover:not(:disabled) {
     background: $gray-100;
-    color: $gray-900;
+    color: $theme-text;
+    text-decoration: none;
   }
 }
 
-// Button sizes
+.btn-danger {
+  @extend .btn;
+  background: $danger;
+  border-color: $danger;
+  color: $white;
+
+  &:hover:not(:disabled) {
+    background: $danger-dark;
+    border-color: $danger-dark;
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.btn-outline-danger {
+  @extend .btn;
+  background: transparent;
+  border-color: $danger;
+  color: $danger;
+
+  &:hover:not(:disabled) {
+    background: $danger-light;
+    text-decoration: none;
+  }
+}
+
 .btn-sm {
   padding: $space-1 $space-2;
   font-size: $font-size-xs;
@@ -95,26 +121,30 @@
   font-size: $font-size-base;
 }
 
-// Button groups
+.btn-block {
+  width: 100%;
+  display: flex;
+}
+
 .btn-group {
   display: inline-flex;
   border-radius: $radius;
   overflow: hidden;
   box-shadow: $shadow-sm;
-  
+
   .btn {
     border-radius: 0;
     border-right: 1px solid $gray-200;
-    
+
     &:first-child {
       border-top-left-radius: $radius;
       border-bottom-left-radius: $radius;
     }
-    
+
     &:last-child {
       border-right: none;
       border-top-right-radius: $radius;
       border-bottom-right-radius: $radius;
     }
   }
-} 
+}

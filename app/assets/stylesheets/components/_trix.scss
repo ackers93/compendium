@@ -34,7 +34,7 @@
   }
   
   blockquote {
-    border-left: 4px solid $primary;
+    border-left: 4px solid $theme-primary;
     padding-left: $space-4;
     margin: $space-4 0;
     font-style: italic;
@@ -66,7 +66,7 @@
   }
   
   a {
-    color: $primary;
+    color: $theme-primary;
     text-decoration: none;
     
     &:hover {
@@ -131,7 +131,7 @@
     }
     
     &.trix-active {
-      background: $primary;
+      background: $theme-primary;
       color: $white;
     }
   }
@@ -148,8 +148,8 @@
   
   &:focus {
     outline: none;
-    border-color: $primary;
-    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+    border-color: $theme-primary;
+    box-shadow: 0 0 0 3px $theme-primary-muted;
   }
   
   &::placeholder {

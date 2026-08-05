@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+    include Themeable
+
     has_many :notes, dependent: :destroy
     has_many :comments, dependent: :destroy
     has_many :cross_references, dependent: :destroy

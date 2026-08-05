@@ -1,6 +1,6 @@
 .main-content {
   min-height: calc(100vh - 7rem);
-  background: linear-gradient(135deg, $gray-50 0%, $white 100%);
+  background-color: $theme-background;
   padding: $space-6 0;
 }
 
@@ -13,18 +13,15 @@
 .page-header {
   text-align: center;
   margin-bottom: $space-8;
-  
+
   .page-title {
+    font-family: $font-family-sans;
     font-size: $font-size-3xl;
     font-weight: $font-weight-bold;
-    color: $gray-900;
+    color: $theme-text;
     margin-bottom: $space-2;
-    background: linear-gradient(135deg, $gray-900 0%, $primary 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
-  
+
   .page-subtitle {
     font-size: $font-size-base;
     color: $gray-600;
@@ -34,26 +31,27 @@
 }
 
 .content-section {
-  background: $white;
-  border-radius: $radius-lg;
+  background: $theme-surface;
+  border-radius: $radius-md;
   box-shadow: $shadow-sm;
   border: 1px solid $gray-200;
   overflow: hidden;
-  
+
   .section-header {
     padding: $space-6;
     border-bottom: 1px solid $gray-200;
-    background: linear-gradient(135deg, $gray-50 0%, $white 100%);
-    
+    background: $gray-50;
+
     .section-title {
+      font-family: $font-family-sans;
       font-size: $font-size-2xl;
       font-weight: $font-weight-semibold;
-      color: $gray-900;
+      color: $theme-text;
       margin: 0;
     }
   }
-  
+
   .section-content {
     padding: $space-6;
   }
-} 
+}

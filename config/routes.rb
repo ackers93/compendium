@@ -75,6 +75,8 @@ Rails.application.routes.draw do
     post 'otp/verify', to: 'otp_sessions#create'
     post 'otp/resend', to: 'otp_sessions#resend', as: :otp_resend
     patch 'two_factor_settings', to: 'two_factor_settings#update', as: :two_factor_settings
+    patch 'theme', to: 'themes#update', as: :theme
+    delete 'theme', to: 'themes#destroy'
   end
   
   # Onboarding routes

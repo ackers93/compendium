@@ -1,12 +1,12 @@
 // Color utility classes
-.text-primary { color: $primary; }
+.text-primary { color: $theme-primary; }
 .text-secondary { color: $secondary; }
 .text-success { color: $success; }
 .text-warning { color: $warning; }
 .text-danger { color: $danger; }
 .text-info { color: $info; }
 
-.bg-primary { background-color: $primary; }
+.bg-primary { background-color: $theme-primary; }
 .bg-secondary { background-color: $secondary; }
 .bg-success { background-color: $success; }
 .bg-warning { background-color: $warning; }
@@ -34,4 +34,4 @@
 .bg-gray-600 { background-color: $gray-600; }
 .bg-gray-700 { background-color: $gray-700; }
 .bg-gray-800 { background-color: $gray-800; }
-.bg-gray-900 { background-color: $gray-900; } 
+.bg-gray-900 { background-color: $gray-900; }

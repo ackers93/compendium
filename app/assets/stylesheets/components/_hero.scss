@@ -105,34 +105,20 @@
   color: $white;
   font-size: $font-size-base;
   font-weight: $font-weight-semibold;
+  font-family: $font-family-ui;
   border-radius: $radius;
-  border: 2px solid transparent;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   
   &:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: $shadow-xl;
-    
-    &::before {
-      left: 100%;
-    }
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+    color: $white;
+    text-decoration: none;
   }
   
   &:active {
-    transform: translateY(-2px) scale(1.01);
+    transform: translateY(0);
   }
   
   .button-icon {
@@ -144,36 +130,35 @@
   .button-text {
     font-size: $font-size-base;
     font-weight: $font-weight-bold;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
   
   &.btn-notes {
-    background: linear-gradient(135deg, $danger 0%, darken($danger, 15%) 100%);
+    background: $danger;
     border-color: $danger;
     
     &:hover {
-      background: linear-gradient(135deg, darken($danger, 10%) 0%, darken($danger, 25%) 100%);
-      border-color: darken($danger, 15%);
+      background: $danger-dark;
+      border-color: $danger-dark;
     }
   }
   
   &.btn-readings {
-    background: linear-gradient(135deg, $primary 0%, darken($primary, 15%) 100%);
-    border-color: $primary;
+    background: $theme-primary;
+    border-color: $theme-primary;
     
     &:hover {
-      background: linear-gradient(135deg, darken($primary, 10%) 0%, darken($primary, 25%) 100%);
-      border-color: darken($primary, 15%);
+      background: $theme-primary-dark;
+      border-color: $theme-primary-dark;
     }
   }
   
   &.btn-classes {
-    background: linear-gradient(135deg, $success 0%, darken($success, 15%) 100%);
+    background: $success;
     border-color: $success;
     
     &:hover {
-      background: linear-gradient(135deg, darken($success, 10%) 0%, darken($success, 25%) 100%);
-      border-color: darken($success, 15%);
+      background: $success-dark;
+      border-color: $success-dark;
     }
   }
 }
@@ -181,7 +166,7 @@
 // Features Section
 .features-section {
   padding: $space-20 $space-6;
-  background: linear-gradient(to bottom, $gray-50 0%, $white 50%, $gray-50 100%);
+  background: $theme-background;
   
   .container {
     max-width: 1200px;
@@ -220,22 +205,20 @@
   }
   
   .feature-card {
-    background: $white;
-    border-radius: $radius-lg;
+    background: $theme-surface;
+    border-radius: $radius-md;
     padding: $space-8;
     box-shadow: $shadow-sm;
     border: 1px solid $gray-200;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     text-align: center;
     
     &:hover {
-      transform: translateY(-8px);
-      box-shadow: $shadow-xl;
-      border-color: $primary;
+      box-shadow: $shadow-md;
+      border-color: $theme-primary;
       
       .feature-icon {
-        transform: scale(1.1);
-        background: $primary;
+        background: $theme-primary;
         
         i {
           color: $white;
@@ -251,14 +234,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba($primary, 0.1);
+    background: $theme-primary-muted;
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease;
     
     i {
       font-size: $font-size-3xl;
-      color: $primary;
-      transition: all 0.3s ease;
+      color: $theme-primary;
+      transition: color 0.2s ease;
     }
   }
   

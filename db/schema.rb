@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_06_053250) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_04_150000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -189,6 +189,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_053250) do
     t.boolean "otp_required_for_login", default: true, null: false
     t.datetime "onboarding_completed_at"
     t.datetime "admin_onboarding_completed_at"
+    t.jsonb "theme_preferences", default: {}, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

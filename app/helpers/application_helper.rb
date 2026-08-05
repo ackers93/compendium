@@ -49,4 +49,11 @@ module ApplicationHelper
       text
     end
   end
+
+  def theme_style_tag
+    return unless user_signed_in?
+
+    declarations = current_user.theme_css_variables.map { |key, value| "#{key}: #{value};" }.join("\n      ")
+    tag.style(":root {\n      #{declarations}\n    }".html_safe)
+  end
 end
