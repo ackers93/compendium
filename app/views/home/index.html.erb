@@ -2,129 +2,64 @@
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1 class="hero-title">Christadelphian Compendium</h1>
-    
+
     <hr class="hero-divider">
-    
+
     <p class="hero-subtitle">
       A crowd-sourced community for studying Scripture together
     </p>
-    
+
     <div class="hero-cta">
-      <a href="/bible_verses/books" class="btn btn-primary btn-lg">
+      <%= link_to bible_verses_books_path, class: "btn btn-primary btn-lg" do %>
         <i class="fa-solid fa-book-open"></i>
         Explore the Bible
-      </a>
-      <a href="/notes" class="btn btn-outline btn-lg">
+      <% end %>
+      <%= link_to notes_path, class: "btn btn-outline btn-lg" do %>
         <i class="fa-solid fa-sticky-note"></i>
         Browse Notes
-      </a>
-      <a href="/topics" class="btn btn-outline btn-lg">
-        <i class="fa-solid fa-tags"></i>
-        Browse Topics
-      </a>
-      <a href="/bible_threads" class="btn btn-outline btn-lg">
-        <i class="fa-solid fa-list-ol"></i>
-        Browse Threads
-      </a>
+      <% end %>
     </div>
   </div>
 </div>
 
 <div class="features-section">
-  <div class="container">
-    <h2 class="section-title">Discover the Features</h2>
-    <p class="section-subtitle">Everything you need to study Scripture with your brothers and sisters in Christ</p>
-    
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-book-bible"></i>
+  <div class="features-intro">
+    <h2 class="section-title">Working with our Ecclesial family to build a knowledge base, to help with daily readings, writing classes and personal study.</h2>
+    <p class="section-subtitle">
+      Crowd-sourced Notes, Comments and Connections.
+    </p>
+  </div>
+
+  <div class="feature-showcases">
+    <% @features.each_with_index do |feature, index| %>
+      <section class="feature-showcase<%= " feature-showcase--reverse" if index.odd? %>">
+        <div class="feature-showcase-copy">
+          <h3 class="feature-showcase-title"><%= feature[:title] %></h3>
+          <p class="feature-showcase-body"><%= feature[:body] %></p>
+          <%= link_to feature[:path], class: "feature-showcase-cta" do %>
+            <%= feature[:cta] %>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          <% end %>
         </div>
-        <h3 class="feature-title">Complete Bible</h3>
-        <p class="feature-description">
-          Access the full King James Version of the Bible. Read, search, and study Scripture chapter by chapter, verse by verse.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-users"></i>
+        <div class="feature-showcase-media">
+          <%= image_tag feature[:image],
+                alt: "#{feature[:title]} screenshot",
+                class: "feature-showcase-image" %>
         </div>
-        <h3 class="feature-title">Crowd-Sourced Knowledge</h3>
-        <p class="feature-description">
-          Learn from the collective wisdom of the Christadelphian community. Discover insights and understanding shared by brothers and sisters worldwide.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-pen-to-square"></i>
-        </div>
-        <h3 class="feature-title">Share Your Notes</h3>
-        <p class="feature-description">
-          Document your Bible study insights and share them with others. Create rich, formatted notes with tags for easy organization and discovery.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-link"></i>
-        </div>
-        <h3 class="feature-title">Cross References</h3>
-        <p class="feature-description">
-          Create and edit connections between related Bible passages. Build a deeper understanding of Scripture's interconnected themes and teachings.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-tags"></i>
-        </div>
-        <h3 class="feature-title">Topics</h3>
-        <p class="feature-description">
-          Organize verses by topics and themes. Create or browse topics to discover all related Scripture passages in one place, making thematic study easier.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-list-ol"></i>
-        </div>
-        <h3 class="feature-title">Bible Threads</h3>
-        <p class="feature-description">
-          Create thematic collections of verses with commentary. Follow a topic or doctrine through Scripture, verse by verse, with optional notes on each connection.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-comments"></i>
-        </div>
-        <h3 class="feature-title">Community Discussion</h3>
-        <p class="feature-description">
-          Engage in meaningful conversations about daily readings, verses, notes, cross references, and threads. Share perspectives and grow together in faith.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-flag"></i>
-        </div>
-        <h3 class="feature-title">Content Moderation</h3>
-        <p class="feature-description">
-          Help maintain quality by flagging inappropriate content. Admins review flagged items to ensure the community remains focused on edifying discussion.
-        </p>
-      </div>
-      
-      <div class="feature-card">
-        <div class="feature-icon">
-          <i class="fa-solid fa-heart"></i>
-        </div>
-        <h3 class="feature-title">Fellowship</h3>
-        <p class="feature-description">
-          Connect with brothers and sisters in Christ. Build relationships through shared study, discussion, and mutual encouragement in the faith.
-        </p>
+      </section>
+    <% end %>
+  </div>
+
+  <% unless user_signed_in? %>
+    <div class="home-join">
+      <h2 class="home-join-title">Join the community</h2>
+      <p class="home-join-body">
+        Sign up to read, explore, and contribute as you grow in study with others.
+      </p>
+      <div class="home-join-actions">
+        <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary btn-lg" %>
+        <%= link_to "Log In", new_user_session_path, class: "btn btn-outline btn-lg" %>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
