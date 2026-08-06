@@ -471,6 +471,58 @@
         color: $theme-primary;
       }
     }
+
+    .thread-remaining-verses {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: $space-2;
+      font-size: $font-size-sm;
+      color: $gray-700;
+      line-height: 1.6;
+
+      .thread-remaining-refs {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .verse-ref-link {
+        color: $theme-primary;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .thread-expanded-verses {
+      .verse-preview {
+        margin-top: $space-2;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .thread-see-more-btn {
+      appearance: none;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: $theme-primary;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
   
   .thread-item {

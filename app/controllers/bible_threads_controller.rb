@@ -8,7 +8,7 @@ class BibleThreadsController < ApplicationController
   before_action -> { authorize_delete!(@bible_thread) }, only: %i[ destroy ]
 
   def index
-    @bible_threads = BibleThread.includes(:user, :bible_verses)
+    @bible_threads = BibleThread.includes(:user, bible_thread_entries: :bible_verse)
     
     # Apply search filter if query parameter is present
     if params[:search].present?

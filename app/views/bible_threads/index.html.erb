@@ -47,16 +47,62 @@
                   </span>
                 </div>
               </div>
-              <div class="thread-preview">
-                <% if thread.bible_thread_entries.any? %>
+              <div class="thread-preview" <% if thread.bible_thread_entries.size > 1 %>data-controller="thread-verses-expand"<% end %>>
+                <% entries = thread.bible_thread_entries.to_a %>
+                <% if entries.any? %>
                   <p class="text-sm text-gray-600">
-                    <%= pluralize(thread.bible_thread_entries.count, 'verse') %> in this thread
+                    <%= pluralize(entries.count, 'verse') %> in this thread
                   </p>
-                  <% first_entry = thread.bible_thread_entries.first %>
-                  <p class="verse-preview mt-2">
-                    <strong><%= first_entry.bible_verse.reference %></strong>: 
-                    <%= truncate(first_entry.bible_verse.text, length: 100) %>
-                  </p>
+                  <% remaining_entries = entries.drop(1) %>
+                  <% if remaining_entries.any? %>
+                    <div data-thread-verses-expand-target="summary">
+                      <% first_entry = entries.first %>
+                      <p class="verse-preview mt-2">
+                        <strong><%= first_entry.bible_verse.reference %></strong>:
+                        <%= truncate(first_entry.bible_verse.text, length: 100) %>
+                      </p>
+                      <div class="thread-remaining-verses mt-2">
+                        <span class="thread-remaining-refs">
+                          <% remaining_entries.each_with_index do |entry, index| %>
+                            <%= link_to entry.bible_verse.reference,
+                                bible_verse_show_path(
+                                  book: entry.bible_verse.book,
+                                  chapter: entry.bible_verse.chapter,
+                                  verse: entry.bible_verse.verse
+                                ),
+                                class: "verse-ref-link",
+                                data: { turbo_frame: "_top" } %><% unless index == remaining_entries.count - 1 %>, <% end %>
+                          <% end %>
+                        </span>
+                        <button type="button"
+                                class="thread-see-more-btn"
+                                data-action="click->thread-verses-expand#toggle"
+                                aria-expanded="false">
+                          See more
+                        </button>
+                      </div>
+                    </div>
+                    <div class="thread-expanded-verses mt-2" data-thread-verses-expand-target="details" hidden>
+                      <% entries.each do |entry| %>
+                        <p class="verse-preview">
+                          <strong><%= entry.bible_verse.reference %></strong>:
+                          <%= entry.bible_verse.text %>
+                        </p>
+                      <% end %>
+                      <button type="button"
+                              class="thread-see-more-btn"
+                              data-action="click->thread-verses-expand#toggle"
+                              aria-expanded="true">
+                        See less
+                      </button>
+                    </div>
+                  <% else %>
+                    <% first_entry = entries.first %>
+                    <p class="verse-preview mt-2">
+                      <strong><%= first_entry.bible_verse.reference %></strong>:
+                      <%= truncate(first_entry.bible_verse.text, length: 100) %>
+                    </p>
+                  <% end %>
                 <% end %>
               </div>
             </div>

@@ -12,6 +12,7 @@ import DropdownController from "./dropdown_controller"
 import ThemeFormController from "./theme_form_controller"
 import OnboardingController from "./onboarding_controller"
 import ContributorAgreementController from "./contributor_agreement_controller"
+import ThreadVersesExpandController from "./thread_verses_expand_controller"
 
 application.register("modal", ModalController)
 application.register("mobile-nav", MobileNavController)
@@ -26,5 +27,6 @@ application.register("dropdown", DropdownController)
 application.register("theme-form", ThemeFormController)
 application.register("onboarding", OnboardingController)
 application.register("contributor-agreement", ContributorAgreementController)
+application.register("thread-verses-expand", ThreadVersesExpandController)
 
 export { application } 
