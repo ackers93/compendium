@@ -1,6 +1,9 @@
 class TopicsController < ApplicationController
+  include Authorizable
+
   before_action :authenticate_user!
   before_action :set_topic, only: [:show, :add_verse]
+  before_action :authorize_create!, only: %i[new create]
   
   # Bible book order constants
   OLD_TESTAMENT_BOOKS = BibleVersesController::OLD_TESTAMENT_BOOKS
@@ -27,6 +30,10 @@ class TopicsController < ApplicationController
                          .order(bible_order_sql)
     @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
     @errors = []
+  end
+
+  def new
+    @topic = Topic.new
   end
   
   def add_verse
@@ -101,14 +108,20 @@ class TopicsController < ApplicationController
     end
   end
   
-  # Create a new topic
   def create
-    @topic = Topic.find_or_create_by_name(topic_params[:name])
-    
-    if @topic.persisted?
-      render json: { id: @topic.id, name: @topic.name }, status: :created
-    else
-      render json: { errors: @topic.errors.full_messages }, status: :unprocessable_entity
+    name = topic_params[:name].to_s.strip
+    existing = name.present? && Topic.find_by("LOWER(name) = ?", name.downcase)
+    @topic = Topic.find_or_create_by_name(name)
+
+    respond_to do |format|
+      if @topic.persisted?
+        notice = existing ? "Opened existing topic '#{@topic.name}'." : "Topic '#{@topic.name}' was created."
+        format.html { redirect_to topic_path(@topic), notice: notice }
+        format.json { render json: { id: @topic.id, name: @topic.name }, status: :created }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: { errors: @topic.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
   

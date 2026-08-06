@@ -1,0 +1,21 @@
+<%= form_with(model: topic, id: "topic-form", data: { turbo_frame: "_top" }) do |form| %>
+  <% if topic.errors.any? %>
+    <div class="form-errors mb-4">
+      <ul class="list-disc list-inside text-red-600 text-sm">
+        <% topic.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name, "Topic name", class: "form-label" %>
+    <%= form.text_field :name,
+        class: "form-control",
+        placeholder: "e.g. Faith, Prayer, Salvation",
+        autofocus: true,
+        required: true %>
+    <small class="form-help">Topics group related verses by theme</small>
+  </div>
+<% end %>
