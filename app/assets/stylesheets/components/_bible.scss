@@ -35,7 +35,7 @@
 
 .bible-footer-actions {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: $space-3;
 }
 
@@ -129,6 +129,27 @@
     font-weight: $font-weight-bold;
     color: $gray-900;
   }
+
+  .verse-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: $space-2;
+  }
+
+  .verse-breadcrumb-link {
+    color: $theme-primary;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .verse-breadcrumb-sep {
+    color: $gray-400;
+    font-weight: $font-weight-normal;
+  }
   
   .verse-navigation {
     display: flex;
@@ -141,6 +162,37 @@
       @extend .btn-outline;
     }
   }
+}
+
+.chapter-title-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-4;
+}
+
+.chapter-title-arrow {
+  color: $theme-primary;
+  text-decoration: none;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  padding: $space-1 $space-2;
+  border-radius: $radius-sm;
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    color: $theme-primary-dark;
+    background: rgba($theme-primary, 0.08);
+  }
+}
+
+.chapter-title-arrow-disabled {
+  color: $gray-300;
+  pointer-events: none;
+}
+
+.chapter-title-text {
+  min-width: 0;
 }
 
 .verse-content {

@@ -1,5 +1,30 @@
+<% prev_chapter = previous_bible_chapter(@book, @chapter) %>
+<% next_chapter = next_bible_chapter(@book, @chapter) %>
+
 <div class="page-header">
-  <h1 class="page-title"><%= @book %> <%= @chapter %></h1>
+  <h1 class="page-title chapter-title-nav">
+    <% if prev_chapter %>
+      <%= link_to "←",
+          bible_verse_verses_path(book: prev_chapter[:book], chapter: prev_chapter[:chapter]),
+          class: "chapter-title-arrow",
+          title: bible_chapter_label(prev_chapter),
+          aria: { label: "Previous chapter: #{bible_chapter_label(prev_chapter)}" } %>
+    <% else %>
+      <span class="chapter-title-arrow chapter-title-arrow-disabled" aria-hidden="true">←</span>
+    <% end %>
+
+    <span class="chapter-title-text"><%= @book %> <%= @chapter %></span>
+
+    <% if next_chapter %>
+      <%= link_to "→",
+          bible_verse_verses_path(book: next_chapter[:book], chapter: next_chapter[:chapter]),
+          class: "chapter-title-arrow",
+          title: bible_chapter_label(next_chapter),
+          aria: { label: "Next chapter: #{bible_chapter_label(next_chapter)}" } %>
+    <% else %>
+      <span class="chapter-title-arrow chapter-title-arrow-disabled" aria-hidden="true">→</span>
+    <% end %>
+  </h1>
   <p class="page-subtitle">All verses in this chapter</p>
 </div>
 
@@ -15,8 +40,8 @@
           data-action="click->verse-view-toggle#toggle">
           Switch to List View
         </button>
-        <%= link_to "← Back to Chapters", bible_verse_chapters_path(book: @book), class: "btn btn-outline" %>
-        <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>
+        <%= link_to @book, bible_verse_chapters_path(book: @book), class: "btn btn-outline" %>
+        <%= link_to "Bible", bible_verses_books_path, class: "btn btn-outline" %>
       </div>
     </div>
   </div>

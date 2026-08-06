@@ -1,28 +1,43 @@
+<% next_verse = BibleVerse.find_by(book: @book, chapter: @chapter, verse: @verse + 1) %>
+<% prev_verse_ref = @verse > 1 ? { book: @book, chapter: @chapter, verse: @verse - 1 } : nil %>
+<% next_verse_ref = next_verse ? { book: @book, chapter: @chapter, verse: @verse + 1 } : nil %>
+
 <div class="page-header">
-  <h1 class="page-title"><%= @book %> <%= @chapter %>:<%= @verse %></h1>
+  <h1 class="page-title chapter-title-nav">
+    <% if prev_verse_ref %>
+      <%= link_to "←",
+          bible_verse_show_path(**prev_verse_ref),
+          class: "chapter-title-arrow",
+          title: "#{prev_verse_ref[:book]} #{prev_verse_ref[:chapter]}:#{prev_verse_ref[:verse]}",
+          aria: { label: "Previous verse: #{prev_verse_ref[:book]} #{prev_verse_ref[:chapter]}:#{prev_verse_ref[:verse]}" } %>
+    <% else %>
+      <span class="chapter-title-arrow chapter-title-arrow-disabled" aria-hidden="true">←</span>
+    <% end %>
+
+    <span class="chapter-title-text"><%= @book %> <%= @chapter %>:<%= @verse %></span>
+
+    <% if next_verse_ref %>
+      <%= link_to "→",
+          bible_verse_show_path(**next_verse_ref),
+          class: "chapter-title-arrow",
+          title: "#{next_verse_ref[:book]} #{next_verse_ref[:chapter]}:#{next_verse_ref[:verse]}",
+          aria: { label: "Next verse: #{next_verse_ref[:book]} #{next_verse_ref[:chapter]}:#{next_verse_ref[:verse]}" } %>
+    <% else %>
+      <span class="chapter-title-arrow chapter-title-arrow-disabled" aria-hidden="true">→</span>
+    <% end %>
+  </h1>
   <p class="page-subtitle">King James Version</p>
 </div>
 
 <div class="content-section">
   <div class="verse-display">
     <div class="verse-header">
-      <div class="verse-reference">
-        <%= @book %> <%= @chapter %>:<%= @verse %>
-      </div>
-      <div class="verse-navigation">
-        <% if @verse > 1 %>
-          <%= link_to "← Previous Verse", bible_verse_show_path(book: @book, chapter: @chapter, verse: @verse - 1), 
-              class: "nav-button" %>
-        <% end %>
-        
-        <%= link_to "Chapter", bible_verse_verses_path(book: @book, chapter: @chapter), 
-            class: "nav-button" %>
-        
-        <% next_verse = BibleVerse.find_by(book: @book, chapter: @chapter, verse: @verse + 1) %>
-        <% if next_verse %>
-          <%= link_to "Next Verse →", bible_verse_show_path(book: @book, chapter: @chapter, verse: @verse + 1), 
-              class: "nav-button" %>
-        <% end %>
+      <div class="verse-reference verse-breadcrumb">
+        <%= link_to "Bible", bible_verses_books_path, class: "verse-breadcrumb-link" %>
+        <span class="verse-breadcrumb-sep" aria-hidden="true">/</span>
+        <%= link_to @book, bible_verse_chapters_path(book: @book), class: "verse-breadcrumb-link" %>
+        <span class="verse-breadcrumb-sep" aria-hidden="true">/</span>
+        <%= link_to @chapter, bible_verse_verses_path(book: @book, chapter: @chapter), class: "verse-breadcrumb-link" %>:<%= @verse %>
       </div>
     </div>
     
@@ -161,9 +176,10 @@
   </div>
   
   <div class="bible-footer-actions mt-6">
-    <%= link_to "← Back to Chapter", bible_verse_verses_path(book: @book, chapter: @chapter), 
+    <%= link_to "← Chapter #{@chapter}", bible_verse_verses_path(book: @book, chapter: @chapter), 
         class: "btn btn-outline" %>
-    <%= link_to "← Back to Books", bible_verses_books_path, class: "btn btn-outline" %>
+    <%= link_to "← #{@book}", bible_verse_chapters_path(book: @book), class: "btn btn-outline" %>
+    <%= link_to "← Bible", bible_verses_books_path, class: "btn btn-outline" %>
   </div>
 </div>
 
