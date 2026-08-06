@@ -8,6 +8,7 @@
   border-radius: $radius-full;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-decoration: none;
   
   &.badge-primary {
     background-color: $theme-primary;
@@ -50,6 +51,18 @@
     &.badge-secondary {
       color: $secondary;
     }
+  }
+}
+
+a.badge {
+  cursor: pointer;
+  transition: opacity 0.15s ease, filter 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: none;
+    opacity: 0.88;
+    filter: brightness(1.05);
   }
 }
 

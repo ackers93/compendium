@@ -8,7 +8,12 @@ class NotesController < ApplicationController
   before_action -> { authorize_delete!(@note) }, only: %i[ destroy ]
 
   def index
-    @notes = Note.published.order(created_at: :desc)
+    @tag = params[:tag].presence
+    @notes = if @tag
+               Note.published.tagged_with(@tag).order(created_at: :desc)
+             else
+               Note.published.order(created_at: :desc)
+             end
   end
   
   def drafts

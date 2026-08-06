@@ -17,6 +17,8 @@
       <h2 class="section-title">
         <% if request.path == drafts_notes_path %>
           My Drafts
+        <% elsif @tag.present? %>
+          Notes tagged “<%= @tag %>”
         <% else %>
           All Notes
         <% end %>
@@ -40,6 +42,21 @@
   </div>
   
   <div class="section-content">
+    <% if @tag.present? %>
+      <div class="tag-filter-banner">
+        <div class="d-flex flex-wrap gap-2 items-center justify-between">
+          <p class="tag-filter-banner__text mb-0">
+            Showing notes tagged
+            <span class="badge badge-primary"><%= @tag %></span>
+            <%= link_to "Clear filter", notes_path, class: "tag-filter-banner__clear" %>
+          </p>
+          <p class="tag-filter-banner__search mb-0">
+            <%= link_to "Looking for a more thorough search?", search_path(q: @tag) %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+
     <div class="search-form">
       <%= form_with url: notes_list_path, method: :get, class: "d-flex gap-2" do |form| %>
         <%= form.text_field :query, placeholder: "Search by title, content, or tags", class: "form-control search-input" %>

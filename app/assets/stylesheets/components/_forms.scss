@@ -199,6 +199,29 @@ select.form-input {
   }
 }
 
+.tag-filter-banner {
+  margin-bottom: $space-4;
+  padding: $space-3 $space-4;
+  border: 1px solid color-mix(in srgb, $theme-primary 25%, transparent);
+  border-radius: $radius-md;
+  background-color: color-mix(in srgb, $theme-primary 8%, transparent);
+
+  &__text,
+  &__search {
+    font-size: $font-size-sm;
+    color: $gray-700;
+  }
+
+  &__clear {
+    margin-left: $space-2;
+    font-size: $font-size-sm;
+  }
+
+  &__search a {
+    font-weight: $font-weight-medium;
+  }
+}
+
 // Autocomplete dropdown styles
 [data-topic-autocomplete-target="dropdown"],
 [data-bible-search-target="dropdown"] {
