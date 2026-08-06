@@ -7,31 +7,29 @@ class SearchesController < ApplicationController
   
   def topics
     # Search topics endpoint for turbo frame
-    @topics = Topic.includes(verse_topics: :bible_verse)
-                   .left_joins(:verse_topics)
-    
-    # Apply search filter if query parameter is present
     if params[:q].present?
-      @topics = @topics.search_by_name_or_verses(params[:q])
-    end
-    
-    @topics = @topics.group('topics.id')
+      @topics = Topic.includes(verse_topics: :bible_verse)
+                     .left_joins(:verse_topics)
+                     .search_by_name_or_verses(params[:q])
+                     .group('topics.id')
                      .order('COUNT(verse_topics.id) DESC, topics.name ASC')
                      .select('topics.*, COUNT(verse_topics.id) as verses_count')
+    else
+      @topics = Topic.none
+    end
     
     render partial: 'topics_results'
   end
   
   def threads
     # Search threads endpoint for turbo frame
-    @bible_threads = BibleThread.includes(:user, bible_thread_entries: :bible_verse)
-    
-    # Apply search filter if query parameter is present
     if params[:q].present?
-      @bible_threads = @bible_threads.search_by_title_or_verses(params[:q])
+      @bible_threads = BibleThread.includes(:user, bible_thread_entries: :bible_verse)
+                                  .search_by_title_or_verses(params[:q])
+                                  .order(created_at: :desc)
+    else
+      @bible_threads = BibleThread.none
     end
-    
-    @bible_threads = @bible_threads.order(created_at: :desc)
     
     render partial: 'threads_results'
   end
@@ -53,7 +51,7 @@ class SearchesController < ApplicationController
                    .distinct
                    .order(created_at: :desc)
     else
-      @notes = Note.published.includes(:user, :rich_text_content).order(created_at: :desc)
+      @notes = Note.none
     end
     
     render partial: 'notes_results'
@@ -65,19 +63,14 @@ class SearchesController < ApplicationController
     
     if @query.present?
       query_downcase = @query.downcase
-      @comments = Comment.includes(:user, :rich_text_content)
+      @comments = Comment.includes(:user, :rich_text_content, :commentable)
                          .where(commentable_type: 'BibleVerse')
                          .joins("LEFT JOIN action_text_rich_texts ON action_text_rich_texts.record_id = comments.id AND action_text_rich_texts.record_type = 'Comment' AND action_text_rich_texts.name = 'content'")
                          .where("LOWER(action_text_rich_texts.body) LIKE ?", "%#{query_downcase}%")
                          .order(created_at: :desc)
     else
-      @comments = Comment.includes(:user, :rich_text_content)
-                         .where(commentable_type: 'BibleVerse')
-                         .order(created_at: :desc)
+      @comments = Comment.none
     end
-    
-    # Eager load the commentable (BibleVerse)
-    @comments = @comments.includes(:commentable)
     
     render partial: 'verse_comments_results'
   end
@@ -88,19 +81,14 @@ class SearchesController < ApplicationController
     
     if @query.present?
       query_downcase = @query.downcase
-      @comments = Comment.includes(:user, :rich_text_content)
+      @comments = Comment.includes(:user, :rich_text_content, commentable: [:source_verse, :target_verse])
                          .where(commentable_type: 'CrossReference')
                          .joins("LEFT JOIN action_text_rich_texts ON action_text_rich_texts.record_id = comments.id AND action_text_rich_texts.record_type = 'Comment' AND action_text_rich_texts.name = 'content'")
                          .where("LOWER(action_text_rich_texts.body) LIKE ?", "%#{query_downcase}%")
                          .order(created_at: :desc)
     else
-      @comments = Comment.includes(:user, :rich_text_content)
-                         .where(commentable_type: 'CrossReference')
-                         .order(created_at: :desc)
+      @comments = Comment.none
     end
-    
-    # Eager load cross references and their verses
-    @comments = @comments.includes(commentable: [:source_verse, :target_verse])
     
     render partial: 'cross_reference_comments_results'
   end
@@ -111,19 +99,14 @@ class SearchesController < ApplicationController
     
     if @query.present?
       query_downcase = @query.downcase
-      @comments = Comment.includes(:user, :rich_text_content)
+      @comments = Comment.includes(:user, :rich_text_content, :commentable)
                          .where(commentable_type: 'Note')
                          .joins("LEFT JOIN action_text_rich_texts ON action_text_rich_texts.record_id = comments.id AND action_text_rich_texts.record_type = 'Comment' AND action_text_rich_texts.name = 'content'")
                          .where("LOWER(action_text_rich_texts.body) LIKE ?", "%#{query_downcase}%")
                          .order(created_at: :desc)
     else
-      @comments = Comment.includes(:user, :rich_text_content)
-                         .where(commentable_type: 'Note')
-                         .order(created_at: :desc)
+      @comments = Comment.none
     end
-    
-    # Eager load the commentable (Note)
-    @comments = @comments.includes(:commentable)
     
     render partial: 'note_comments_results'
   end
