@@ -13,7 +13,7 @@
             </span>
             <span class="ml-2">
               • Comment on 
-              <%= link_to verse.reference, 
+              <%= link_to comment.verse_reference || verse.reference, 
                   bible_verse_show_path(book: verse.book, chapter: verse.chapter, verse: verse.verse),
                   class: "text-blue-600 hover:text-blue-800",
                   data: { turbo_frame: "_top" } %>

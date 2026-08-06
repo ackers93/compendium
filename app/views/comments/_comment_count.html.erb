@@ -1,5 +1,11 @@
-<% if commentable.comments.any? %>
+<% if commentable.is_a?(BibleVerse) %>
+  <% count = commentable.visible_comments.count %>
+<% else %>
+  <% count = commentable.comments.count %>
+<% end %>
+
+<% if count > 0 %>
   <span class="comment-count-badge">
-    <%= pluralize(commentable.comments.count, 'comment') %>
+    <%= pluralize(count, 'comment') %>
   </span>
-<% end %> 
+<% end %>

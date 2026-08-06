@@ -1,5 +1,6 @@
 class BibleVerse < ApplicationRecord
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :comments_as_end_verse, class_name: 'Comment', foreign_key: 'end_verse_id', dependent: :nullify
   
   # Cross-references where this verse is the source
   has_many :cross_references_as_source, class_name: 'CrossReference', foreign_key: 'source_verse_id', dependent: :destroy
@@ -29,6 +30,25 @@ class BibleVerse < ApplicationRecord
   # Get human-readable reference (e.g., "John 3:16")
   def reference
     "#{book} #{chapter}:#{verse}"
+  end
+  
+  # Comments on this verse, plus ranged comments that include it
+  def visible_comments
+    Comment
+      .joins("INNER JOIN bible_verses AS cv ON comments.commentable_type = 'BibleVerse' AND comments.commentable_id = cv.id")
+      .joins("LEFT JOIN bible_verses AS cev ON comments.end_verse_id = cev.id")
+      .where(
+        "(comments.commentable_id = :id AND comments.commentable_type = 'BibleVerse')
+         OR comments.end_verse_id = :id
+         OR (
+           comments.end_verse_id IS NOT NULL
+           AND cv.book = :book
+           AND cv.chapter = :chapter
+           AND cv.verse <= :verse
+           AND cev.verse >= :verse
+         )",
+        id: id, book: book, chapter: chapter, verse: verse
+      )
   end
   
   # Get all cross-references for this verse (as source, target start/end, or within a target range)

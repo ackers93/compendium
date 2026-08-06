@@ -58,17 +58,21 @@
           <% end %>
           <div class="verse-content-column">
             <!-- Comments Section -->
-            <% if verse.comments.any? %>
+            <% visible_comments = verse.visible_comments.includes(:user, :end_verse, :commentable, :rich_text_content).order(created_at: :desc) %>
+            <% if visible_comments.any? %>
               <div class="verse-comments-section mb-3">
-                <% verse.comments.order(created_at: :desc).each do |comment| %>
+                <% visible_comments.each do |comment| %>
                   <div class="comment-preview" data-comment-id="<%= comment.id %>">
                     <div class="comment-preview-text">
-                      <%= plain_text_from_rich_text(comment.content, 40) %>
+                      <% if comment.range? %><span class="text-xs text-gray-500"><%= comment.verse_reference %>: </span><% end %><%= plain_text_from_rich_text(comment.content, 40) %>
                     </div>
                     <div class="comment-full-text">
                       <div class="comment-header text-xs text-gray-500 mb-1">
                         <span class="author-name"><%= comment.user&.display_name || "Unknown User" %></span>
                         <span class="comment-date">• <%= time_ago_in_words(comment.created_at) %> ago</span>
+                        <% if comment.range? %>
+                          <span>• on <%= comment.verse_reference %></span>
+                        <% end %>
                       </div>
                       <div class="comment-content">
                         <%= comment.content %>
@@ -154,7 +158,7 @@
               </div>
               <div class="verse-counts-cell flex-shrink-0 text-sm text-gray-500">
                 <% counts = [] %>
-                <% counts << "C:#{verse.comments.count}" if verse.comments.any? %>
+                <% counts << "C:#{verse.visible_comments.count}" if verse.visible_comments.any? %>
                 <% counts << "CR:#{verse.all_cross_references.count}" if verse.all_cross_references.any? %>
                 <% counts << "T:#{verse.bible_threads.count}" if verse.bible_threads.any? %>
                 <% counts << "TP:#{verse.topics.count}" if verse.topics.any? %>

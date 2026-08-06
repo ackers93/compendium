@@ -83,7 +83,7 @@
                 <div class="review-location">
                   <strong>Location:</strong>
                   <% if comment.commentable.is_a?(BibleVerse) %>
-                    <%= link_to comment.commentable.reference, 
+                    <%= link_to comment.verse_reference, 
                         bible_verse_show_path(book: comment.commentable.book, chapter: comment.commentable.chapter, verse: comment.commentable.verse),
                         class: "text-blue-600 hover:text-blue-800",
                         target: "_blank" %>

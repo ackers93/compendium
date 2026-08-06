@@ -63,7 +63,7 @@ class SearchesController < ApplicationController
     
     if @query.present?
       query_downcase = @query.downcase
-      @comments = Comment.includes(:user, :rich_text_content, :commentable)
+      @comments = Comment.includes(:user, :rich_text_content, :end_verse, :commentable)
                          .where(commentable_type: 'BibleVerse')
                          .joins("LEFT JOIN action_text_rich_texts ON action_text_rich_texts.record_id = comments.id AND action_text_rich_texts.record_type = 'Comment' AND action_text_rich_texts.name = 'content'")
                          .where("LOWER(action_text_rich_texts.body) LIKE ?", "%#{query_downcase}%")

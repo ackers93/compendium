@@ -10,6 +10,7 @@
         <% if @commentable.is_a?(BibleVerse) %>
           <p class="text-sm text-gray-600 mb-4">
             <%= @commentable.book %> <%= @commentable.chapter %>:<%= @commentable.verse %>
+            <span class="text-gray-500">— optionally extend through another verse in this chapter</span>
           </p>
         <% end %>
         <%= render 'comments/form', comment: @comment %>

@@ -1,9 +1,15 @@
-<% if commentable.comments.any? %>
-  <% commentable.comments.order(created_at: :desc).each do |comment| %>
-    <%= render 'comments/comment', comment: comment %>
+<% comments = if commentable.is_a?(BibleVerse)
+     commentable.visible_comments.includes(:user, :end_verse, :commentable, :rich_text_content).order(created_at: :desc)
+   else
+     commentable.comments.includes(:user, :rich_text_content).order(created_at: :desc)
+   end %>
+
+<% if comments.any? %>
+  <% comments.each do |comment| %>
+    <%= render 'comments/comment', comment: comment, page_verse: commentable.is_a?(BibleVerse) ? commentable : nil %>
   <% end %>
 <% else %>
   <div class="text-center py-8 text-gray-500">
     <p>No comments yet. Be the first to share your thoughts!</p>
   </div>
-<% end %> 
+<% end %>

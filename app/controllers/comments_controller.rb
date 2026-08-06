@@ -26,9 +26,21 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(comment_params)
     @comment.user = current_user
+    end_verse_error = resolve_end_verse(@comment, @commentable)
 
     respond_to do |format|
-      if @comment.save
+      if end_verse_error
+        @comment.errors.add(:end_verse, end_verse_error)
+        format.turbo_stream {
+          render turbo_stream: [
+            turbo_stream.replace("comment-form",
+              partial: "comments/form", locals: { comment: @comment }
+            )
+          ]
+        }
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      elsif @comment.save
         format.turbo_stream { 
           if @commentable.is_a?(CrossReference)
 
@@ -39,7 +51,7 @@ class CommentsController < ApplicationController
               ),
               turbo_stream.replace("modal", "")
             ]
-          elsif @commentable.comments.count == 1
+          elsif display_comments_count(@commentable) == 1
             # First comment - replace the "no comments" message with the comment
             render turbo_stream: [
               turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
@@ -50,7 +62,7 @@ class CommentsController < ApplicationController
           else
             # Additional comments - append to existing list
             render turbo_stream: [
-              turbo_stream.append("comments", partial: "comments/comment", locals: { comment: @comment }),
+              turbo_stream.append("comments", partial: "comments/comment", locals: { comment: @comment, page_verse: @commentable.is_a?(BibleVerse) ? @commentable : nil }),
               turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build }),
               turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable }),
               turbo_stream.replace("modal", "")
@@ -61,6 +73,8 @@ class CommentsController < ApplicationController
           if @commentable.is_a?(CrossReference)
             # Cross-references use Turbo Streams, so this shouldn't be reached
             redirect_to root_path
+          elsif @commentable.is_a?(BibleVerse)
+            redirect_to bible_verse_show_path(book: @commentable.book, chapter: @commentable.chapter, verse: @commentable.verse), notice: "Comment was successfully created."
           else
             redirect_to @commentable, notice: "Comment was successfully created."
           end
@@ -94,8 +108,21 @@ class CommentsController < ApplicationController
   end
 
   def update
+    end_verse_error = resolve_end_verse(@comment, @comment.commentable)
+
     respond_to do |format|
-      if @comment.update(comment_params)
+      if end_verse_error
+        @comment.errors.add(:end_verse, end_verse_error)
+        format.turbo_stream {
+          render turbo_stream: [
+            turbo_stream.replace("modal",
+              partial: "comments/edit", locals: { comment: @comment }
+            )
+          ]
+        }
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      elsif @comment.update(comment_params)
         notice_message = if @comment.flagged_content_was_updated
           "Comment was successfully updated and has been submitted back to admins for review. Thank you for addressing the feedback!"
         else
@@ -116,7 +143,7 @@ class CommentsController < ApplicationController
           else
             render turbo_stream: [
               turbo_stream.replace("modal", ""),
-              turbo_stream.replace(dom_id(@comment), partial: "comments/comment", locals: { comment: @comment })
+              turbo_stream.replace(dom_id(@comment), partial: "comments/comment", locals: { comment: @comment, page_verse: @comment.commentable.is_a?(BibleVerse) ? @comment.commentable : nil })
             ]
           end
         }
@@ -149,35 +176,29 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @commentable = @comment.commentable
+    page_verse = page_verse_for_comment(@comment)
     @comment.destroy
     
     respond_to do |format|
       format.turbo_stream { 
         if @commentable.is_a?(CrossReference)
           # Handle cross-reference comment deletion
-          if @commentable.comments.any?
-            # Still have comments - update the comments summary
-            render turbo_stream: [
-              turbo_stream.replace("comments-summary-#{@commentable.id}", 
-                partial: "cross_references/comments_summary", locals: { cross_ref: @commentable }
-              )
-            ]
-          else
-            # No more comments - show the "no comments" message
-            render turbo_stream: [
-              turbo_stream.replace("comments-summary-#{@commentable.id}", 
-                partial: "cross_references/comments_summary", locals: { cross_ref: @commentable }
-              )
-            ]
-          end
+          render turbo_stream: [
+            turbo_stream.replace("comments-summary-#{@commentable.id}", 
+              partial: "cross_references/comments_summary", locals: { cross_ref: @commentable }
+            )
+          ]
+        elsif @commentable.is_a?(BibleVerse)
+          render turbo_stream: [
+            turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: page_verse }),
+            turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: page_verse })
+          ]
         elsif @commentable.comments.any?
-          # Still have comments - update the list and count
           render turbo_stream: [
             turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
             turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
           ]
         else
-          # No more comments - show the "no comments" message and update count
           render turbo_stream: [
             turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
             turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
@@ -186,7 +207,7 @@ class CommentsController < ApplicationController
       }
       format.html { 
         if @commentable.is_a?(BibleVerse)
-          redirect_to bible_verse_show_path(book: @commentable.book, chapter: @commentable.chapter, verse: @commentable.verse), notice: "Comment was successfully deleted."
+          redirect_to bible_verse_show_path(book: page_verse.book, chapter: page_verse.chapter, verse: page_verse.verse), notice: "Comment was successfully deleted."
         else
           redirect_to @commentable, notice: "Comment was successfully deleted."
         end
@@ -226,5 +247,53 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:content)
+  end
+
+  def resolve_end_verse(comment, commentable)
+    return nil unless commentable.is_a?(BibleVerse)
+    return nil unless params[:comment]&.key?(:end_verse) || params[:comment]&.key?("end_verse")
+
+    end_verse_param = params.dig(:comment, :end_verse)
+    if end_verse_param.blank?
+      comment.end_verse = nil
+      return nil
+    end
+
+    found = BibleVerse.find_by(
+      book: commentable.book,
+      chapter: commentable.chapter,
+      verse: end_verse_param.to_i
+    )
+    return "not found" unless found
+
+    comment.end_verse = found
+    nil
+  end
+
+  def display_comments_count(commentable)
+    if commentable.is_a?(BibleVerse)
+      commentable.visible_comments.count
+    else
+      commentable.comments.count
+    end
+  end
+
+  def page_verse_for_comment(comment)
+    return comment.commentable unless comment.commentable.is_a?(BibleVerse)
+
+    if params[:book] && params[:chapter] && params[:verse_number]
+      found = BibleVerse.find_by(book: params[:book], chapter: params[:chapter].to_i, verse: params[:verse_number].to_i)
+      return found if found && comment.involves_verse?(found)
+    end
+
+    if request.referer
+      referer_path = URI.parse(request.referer).path rescue nil
+      if referer_path&.match(%r{/bible_verses/([^/]+)/(\d+)/(\d+)})
+        found = BibleVerse.find_by(book: CGI.unescape($1), chapter: $2.to_i, verse: $3.to_i)
+        return found if found && comment.involves_verse?(found)
+      end
+    end
+
+    comment.commentable
   end
 end

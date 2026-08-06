@@ -6,6 +6,11 @@
     <span class="comment-date">
       • <%= time_ago_in_words(comment.created_at) %> ago
     </span>
+    <% if comment.commentable.is_a?(BibleVerse) && comment.range? %>
+      <span class="comment-range">
+        • on <%= comment.verse_reference %>
+      </span>
+    <% end %>
     <% if current_user %>
       <span class="ml-2">
         <% if current_user.can_edit?(comment) %>
@@ -15,7 +20,12 @@
           <span class="mx-1">•</span>
         <% end %>
         <% if current_user.can_delete?(comment) %>
-          <%= link_to "Delete", comment_path(comment), 
+          <% delete_params = if local_assigns[:page_verse]
+               { book: page_verse.book, chapter: page_verse.chapter, verse_number: page_verse.verse }
+             else
+               {}
+             end %>
+          <%= link_to "Delete", comment_path(comment, delete_params), 
               class: "text-red-500 hover:text-red-700",
               data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
         <% else %>

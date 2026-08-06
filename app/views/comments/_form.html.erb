@@ -8,6 +8,22 @@
       <% end %>
     </div>
   <% end %>
+
+  <% if comment.commentable.is_a?(BibleVerse) %>
+    <div class="form-group">
+      <label for="comment_end_verse" class="form-label">Through verse <span class="text-sm text-gray-500 font-normal">(optional)</span></label>
+      <input type="number"
+             name="comment[end_verse]"
+             id="comment_end_verse"
+             class="form-input"
+             min="<%= comment.commentable.verse + 1 %>"
+             value="<%= comment.end_verse&.verse %>"
+             placeholder="e.g. <%= comment.commentable.verse + 2 %> for a range">
+      <p class="text-sm text-gray-500 mt-1">
+        Same chapter only (<%= comment.commentable.book %> <%= comment.commentable.chapter %>). Leave blank for this verse alone.
+      </p>
+    </div>
+  <% end %>
   
   <div class="form-group">
     <%= form.label :content, class: "form-label" %>
