@@ -45,8 +45,14 @@
 </template>
 
 <script>
-// Make functions globally accessible
-window.verseEntryIndex = <%= bible_thread.bible_thread_entries.any? ? bible_thread.bible_thread_entries.maximum(:position) : 0 %>;
+// Make functions globally accessible.
+// Use in-memory entries (not maximum(:position), which only queries the DB and
+// returns nil for a new thread's built-but-unsaved entries — that rendered
+// `window.verseEntryIndex = ;` and broke the whole script).
+window.verseEntryIndex = <%= [
+  bible_thread.bible_thread_entries.reject(&:marked_for_destruction?).size,
+  bible_thread.bible_thread_entries.map { |e| e.position.to_i }.max || 0
+].max %>;
 
 window.addVerseEntry = function() {
   window.verseEntryIndex++;
