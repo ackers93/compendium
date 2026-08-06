@@ -959,11 +959,20 @@
   border: 1px solid $gray-200;
   overflow: hidden;
 
+  --range-slot-width: 14px;
+  --range-slot-gap: 4px;
+  --range-line-width: 2px;
+
+  &.has-range-tracks {
+    overflow: visible;
+  }
+
   .verse-table-row {
     display: flex;
-    gap: $space-4;
+    gap: 0;
     padding: $space-4;
     border-bottom: 1px solid $gray-200;
+    position: relative;
 
     &:last-child {
       border-bottom: none;
@@ -977,6 +986,7 @@
   .verse-column {
     width: 30%;
     flex-shrink: 0;
+    margin-right: $space-4;
     
     &.verse-column-link {
       text-decoration: none;
@@ -999,6 +1009,129 @@
   .verse-content-column {
     width: 70%;
     flex: 1;
+    min-width: 0;
+  }
+
+  .verse-range-rail {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+    align-self: stretch;
+    gap: var(--range-slot-gap);
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .range-rail-slot {
+    position: relative;
+    width: var(--range-slot-width);
+    flex-shrink: 0;
+    align-self: stretch;
+
+    &::before,
+    &::after {
+      content: none;
+      position: absolute;
+      background: var(--range-color);
+      pointer-events: none;
+    }
+  }
+
+  .range-rail-slot--start {
+    &::after {
+      // Vertical from elbow to bottom of row (bleed into border)
+      content: '';
+      left: 50%;
+      top: var(--range-elbow-y, 1.5rem);
+      bottom: -1px;
+      width: var(--range-line-width);
+      transform: translateX(-50%);
+    }
+  }
+
+  .range-rail-slot--middle {
+    &::after {
+      content: '';
+      left: 50%;
+      top: -1px;
+      bottom: -1px;
+      width: var(--range-line-width);
+      transform: translateX(-50%);
+    }
+  }
+
+  .range-rail-slot--end {
+    &::after {
+      // Vertical from top of row down to a short end cap
+      content: '';
+      left: 50%;
+      top: -1px;
+      height: var(--range-elbow-y, 1.25rem);
+      width: var(--range-line-width);
+      transform: translateX(-50%);
+    }
+
+    &::before {
+      // Small inward tick at the end
+      content: '';
+      right: 50%;
+      left: auto;
+      width: calc(var(--range-slot-width) / 2);
+      top: var(--range-elbow-y, 1.25rem);
+      height: var(--range-line-width);
+      transform: translateY(-50%);
+    }
+  }
+
+  .ranged-comment-with-connector {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: $space-2;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .comment-preview {
+      flex: 0 1 auto;
+      max-width: calc(100% - 1.5rem);
+      margin-bottom: 0;
+      border-color: var(--range-color);
+      border-left-width: 3px;
+      border-left-color: var(--range-color);
+    }
+
+    .range-comment-connector {
+      flex: 1 1 auto;
+      height: var(--range-line-width);
+      min-width: 0.75rem;
+      background: var(--range-color);
+      align-self: center;
+      position: relative;
+
+      // Continue into the rail up to this track's vertical line
+      &::after {
+        content: '';
+        position: absolute;
+        left: 100%;
+        top: 0;
+        height: var(--range-line-width);
+        width: calc(
+          var(--range-track) * (var(--range-slot-width) + var(--range-slot-gap)) +
+          (var(--range-slot-width) / 2)
+        );
+        background: var(--range-color);
+      }
+    }
+  }
+
+  .range-comment-badge {
+    display: inline-block;
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: var(--range-color, $gray-600);
+    margin-right: 0.25rem;
   }
   
   .verse-number {
@@ -1035,6 +1168,10 @@
         .comment-full-text {
           display: block;
         }
+      }
+
+      &.comment-preview--ranged:hover {
+        border-color: var(--range-color);
       }
       
       .comment-preview-text {
@@ -1299,9 +1436,25 @@
       padding: $space-3 $space-4;
     }
 
-    .verse-column,
+    .verse-column {
+      width: 100%;
+      margin-right: 0;
+    }
+
     .verse-content-column {
       width: 100%;
+    }
+
+    .verse-range-rail {
+      position: absolute;
+      right: $space-2;
+      top: 0;
+      bottom: 0;
+      padding-left: 0;
+    }
+
+    .ranged-comment-with-connector {
+      padding-right: calc(var(--range-track-count, 1) * 18px);
     }
   }
 

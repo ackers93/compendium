@@ -1,4 +1,11 @@
 module BibleVersesHelper
+  RANGE_COMMENT_COLORS = [
+    '#c45c26', # rust
+    '#2a6f7f', # teal
+    '#5c7a3a', # olive
+    '#8a5a2b'  # umber
+  ].freeze
+
   # Returns { book:, chapter: } for the previous chapter, or nil at Genesis 1.
   def previous_bible_chapter(book, chapter)
     chapter = chapter.to_i
@@ -37,6 +44,57 @@ module BibleVersesHelper
     return nil unless ref
 
     "#{ref[:book]} #{ref[:chapter]}"
+  end
+
+  # Assign stacking tracks + colors for overlapping ranged comments in a chapter.
+  # Returns a hash: comment_id => { track:, color:, start_verse:, end_verse: }
+  def assign_range_comment_tracks(ranged_comments)
+    ranges = ranged_comments.select(&:range?).sort_by do |comment|
+      [comment.commentable.verse, comment.end_verse.verse, comment.id]
+    end
+
+    occupied_tracks = []
+    assignments = {}
+
+    ranges.each do |comment|
+      start_v = comment.commentable.verse
+      end_v = comment.end_verse.verse
+
+      track = occupied_tracks.find_index do |intervals|
+        intervals.none? { |s, e| start_v <= e && end_v >= s }
+      end
+
+      if track.nil?
+        track = occupied_tracks.length
+        occupied_tracks << []
+      end
+
+      occupied_tracks[track] << [start_v, end_v]
+      assignments[comment.id] = {
+        track: track,
+        color: RANGE_COMMENT_COLORS[track % RANGE_COMMENT_COLORS.length],
+        start_verse: start_v,
+        end_verse: end_v
+      }
+    end
+
+    assignments
+  end
+
+  def range_rail_segment_for(verse_number, assignment)
+    start_v = assignment[:start_verse]
+    end_v = assignment[:end_verse]
+    return nil if verse_number < start_v || verse_number > end_v
+
+    if verse_number == start_v && verse_number == end_v
+      'single'
+    elsif verse_number == start_v
+      'start'
+    elsif verse_number == end_v
+      'end'
+    else
+      'middle'
+    end
   end
 
   private

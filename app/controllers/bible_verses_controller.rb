@@ -58,9 +58,20 @@ class BibleVersesController < ApplicationController
     @book = params[:book]
     @chapter = params[:chapter].to_i
     @verses = BibleVerse.where(book: @book, chapter: @chapter).order(:verse)
-    
+
     respond_to do |format|
-      format.html
+      format.html do
+        verse_ids = @verses.map(&:id)
+        @chapter_comments_by_verse_id = Comment
+          .where(commentable_type: 'BibleVerse', commentable_id: verse_ids)
+          .includes(:user, :end_verse, :commentable, :rich_text_content)
+          .order(created_at: :desc)
+          .group_by(&:commentable_id)
+
+        ranged = @chapter_comments_by_verse_id.values.flatten.select(&:range?)
+        @range_comment_tracks = view_context.assign_range_comment_tracks(ranged)
+        @range_track_count = @range_comment_tracks.values.map { |a| a[:track] }.max.then { |m| m ? m + 1 : 0 }
+      end
       format.json { render json: { verses: @verses.as_json(only: [:id, :verse, :text]) } }
     end
   end

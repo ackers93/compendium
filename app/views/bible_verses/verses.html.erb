@@ -1,5 +1,8 @@
 <% prev_chapter = previous_bible_chapter(@book, @chapter) %>
 <% next_chapter = next_bible_chapter(@book, @chapter) %>
+<% range_tracks = @range_comment_tracks || {} %>
+<% range_track_count = @range_track_count || 0 %>
+<% comments_by_verse = @chapter_comments_by_verse_id || {} %>
 
 <div class="page-header">
   <h1 class="page-title chapter-title-nav">
@@ -48,37 +51,62 @@
   
   <div class="section-content">
     <!-- Card View (Table Style) -->
-    <div data-verse-view-toggle-target="cardView" class="verses-table-view">
+    <div data-verse-view-toggle-target="cardView"
+         data-controller="range-brackets"
+         class="verses-table-view <%= 'has-range-tracks' if range_track_count > 0 %>"
+         style="<%= "--range-track-count: #{range_track_count};" if range_track_count > 0 %>">
       <% @verses.each do |verse| %>
-        <div class="verse-table-row">
+        <% verse_comments = comments_by_verse[verse.id] || [] %>
+        <% row_range_assignments = range_tracks.select { |_id, a| verse.verse.between?(a[:start_verse], a[:end_verse]) } %>
+        <div class="verse-table-row" data-verse-number="<%= verse.verse %>">
           <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse), 
               class: "verse-column verse-column-link" do %>
             <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
             <span class="verse-text text-gray-700"><%= verse.text %></span>
           <% end %>
           <div class="verse-content-column">
-            <!-- Comments Section -->
-            <% visible_comments = verse.visible_comments.includes(:user, :end_verse, :commentable, :rich_text_content).order(created_at: :desc) %>
-            <% if visible_comments.any? %>
+            <!-- Comments Section: single-verse always; ranged only on start verse -->
+            <% if verse_comments.any? %>
               <div class="verse-comments-section mb-3">
-                <% visible_comments.each do |comment| %>
-                  <div class="comment-preview" data-comment-id="<%= comment.id %>">
-                    <div class="comment-preview-text">
-                      <% if comment.range? %><span class="text-xs text-gray-500"><%= comment.verse_reference %>: </span><% end %><%= plain_text_from_rich_text(comment.content, 40) %>
-                    </div>
-                    <div class="comment-full-text">
-                      <div class="comment-header text-xs text-gray-500 mb-1">
-                        <span class="author-name"><%= comment.user&.display_name || "Unknown User" %></span>
-                        <span class="comment-date">• <%= time_ago_in_words(comment.created_at) %> ago</span>
-                        <% if comment.range? %>
-                          <span>• on <%= comment.verse_reference %></span>
-                        <% end %>
+                <% verse_comments.each do |comment| %>
+                  <% if comment.range? %>
+                    <% assignment = range_tracks[comment.id] %>
+                    <div class="ranged-comment-with-connector"
+                         style="--range-color: <%= assignment[:color] %>; --range-track: <%= assignment[:track] %>;">
+                      <div class="comment-preview comment-preview--ranged" data-comment-id="<%= comment.id %>">
+                        <div class="comment-preview-text">
+                          <span class="range-comment-badge"><%= comment.verse_reference %></span>
+                          <%= plain_text_from_rich_text(comment.content, 40) %>
+                        </div>
+                        <div class="comment-full-text">
+                          <div class="comment-header text-xs text-gray-500 mb-1">
+                            <span class="author-name"><%= comment.user&.display_name || "Unknown User" %></span>
+                            <span class="comment-date">• <%= time_ago_in_words(comment.created_at) %> ago</span>
+                            <span>• on <%= comment.verse_reference %></span>
+                          </div>
+                          <div class="comment-content">
+                            <%= comment.content %>
+                          </div>
+                        </div>
                       </div>
-                      <div class="comment-content">
-                        <%= comment.content %>
+                      <div class="range-comment-connector" aria-hidden="true"></div>
+                    </div>
+                  <% else %>
+                    <div class="comment-preview" data-comment-id="<%= comment.id %>">
+                      <div class="comment-preview-text">
+                        <%= plain_text_from_rich_text(comment.content, 40) %>
+                      </div>
+                      <div class="comment-full-text">
+                        <div class="comment-header text-xs text-gray-500 mb-1">
+                          <span class="author-name"><%= comment.user&.display_name || "Unknown User" %></span>
+                          <span class="comment-date">• <%= time_ago_in_words(comment.created_at) %> ago</span>
+                        </div>
+                        <div class="comment-content">
+                          <%= comment.content %>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  <% end %>
                 <% end %>
               </div>
             <% end %>
@@ -141,6 +169,18 @@
               </div>
             <% end %>
           </div>
+
+          <% if range_track_count > 0 %>
+            <div class="verse-range-rail" aria-hidden="true">
+              <% range_track_count.times do |track_index| %>
+                <% assignment = row_range_assignments.values.find { |a| a[:track] == track_index } %>
+                <% segment = assignment ? range_rail_segment_for(verse.verse, assignment) : nil %>
+                <div class="range-rail-slot <%= "range-rail-slot--#{segment}" if segment %>"
+                     data-track="<%= track_index %>"
+                     style="<%= "--range-color: #{assignment[:color]}; --range-track: #{track_index};" if assignment %>"></div>
+              <% end %>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -158,7 +198,8 @@
               </div>
               <div class="verse-counts-cell flex-shrink-0 text-sm text-gray-500">
                 <% counts = [] %>
-                <% counts << "C:#{verse.visible_comments.count}" if verse.visible_comments.any? %>
+                <% start_comment_count = (comments_by_verse[verse.id] || []).size %>
+                <% counts << "C:#{start_comment_count}" if start_comment_count > 0 %>
                 <% counts << "CR:#{verse.all_cross_references.count}" if verse.all_cross_references.any? %>
                 <% counts << "T:#{verse.bible_threads.count}" if verse.bible_threads.any? %>
                 <% counts << "TP:#{verse.topics.count}" if verse.topics.any? %>
@@ -170,4 +211,4 @@
       <% end %>
     </div>
   </div>
-</div> 
+</div>
