@@ -1007,7 +1007,25 @@
   }
   
   .verse-actions-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $space-3;
     font-size: $font-size-sm;
+  }
+
+  .verse-action-link {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-1;
+    color: $theme-primary;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+
+    &:hover {
+      color: $theme-primary-dark;
+      text-decoration: underline;
+    }
   }
 }
 

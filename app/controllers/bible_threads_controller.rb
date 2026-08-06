@@ -24,7 +24,20 @@ class BibleThreadsController < ApplicationController
 
   def new
     @bible_thread = BibleThread.new
-    @bible_thread.bible_thread_entries.build
+    if params[:book].present? && params[:chapter].present? && params[:verse].present?
+      verse = BibleVerse.find_by(
+        book: params[:book],
+        chapter: params[:chapter].to_i,
+        verse: params[:verse].to_i
+      )
+      if verse
+        @bible_thread.bible_thread_entries.build(bible_verse: verse, position: 1)
+      else
+        @bible_thread.bible_thread_entries.build
+      end
+    else
+      @bible_thread.bible_thread_entries.build
+    end
   end
 
   def create

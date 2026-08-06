@@ -36,21 +36,24 @@ class CommentsController < ApplicationController
               turbo_stream.replace("cross-references", 
                 partial: "cross_references/cross_references_list", 
                 locals: { cross_references: @commentable.source_verse.ordered_cross_references, verse: @commentable.source_verse }
-              )
+              ),
+              turbo_stream.replace("modal", "")
             ]
           elsif @commentable.comments.count == 1
             # First comment - replace the "no comments" message with the comment
             render turbo_stream: [
               turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
               turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build }),
-              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
+              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable }),
+              turbo_stream.replace("modal", "")
             ]
           else
             # Additional comments - append to existing list
             render turbo_stream: [
               turbo_stream.append("comments", partial: "comments/comment", locals: { comment: @comment }),
               turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build }),
-              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
+              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable }),
+              turbo_stream.replace("modal", "")
             ]
           end
         }

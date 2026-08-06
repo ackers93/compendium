@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   delete 'cross_references/:id', to: 'cross_references#destroy', as: :cross_reference
   
   # Topics routes
-  resources :topics, only: [:index, :show] do
+  resources :topics, only: [:index, :show, :new, :create] do
     collection do
       get :autocomplete
     end
@@ -38,7 +38,6 @@ Rails.application.routes.draw do
       post :add_verse
     end
   end
-  post 'topics', to: 'topics#create'
   get 'bible_verses/:book/:chapter/:verse/topics/new', to: 'verse_topics#new', as: :new_bible_verse_topic
   post 'bible_verses/:book/:chapter/:verse/topics', to: 'verse_topics#create', as: :bible_verse_topics
   get 'verse_topics/:id/edit', to: 'verse_topics#edit', as: :edit_verse_topic
