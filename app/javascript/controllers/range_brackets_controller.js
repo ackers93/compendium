@@ -23,9 +23,10 @@ export default class extends Controller {
         const railSlot = row.querySelector(`.range-rail-slot[data-track="${track}"]`)
         if (!connector || !railSlot) return
 
-        const rowRect = row.getBoundingClientRect()
+        // Elbow Y is relative to the rail slot (which bleeds into row padding)
+        const slotRect = railSlot.getBoundingClientRect()
         const connectorRect = connector.getBoundingClientRect()
-        const elbowY = connectorRect.top + connectorRect.height / 2 - rowRect.top
+        const elbowY = connectorRect.top + connectorRect.height / 2 - slotRect.top
         railSlot.style.setProperty("--range-elbow-y", `${Math.max(elbowY, 0)}px`)
       })
     })
