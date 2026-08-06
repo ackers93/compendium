@@ -89,7 +89,7 @@
                         target: "_blank" %>
                   <% elsif comment.commentable.is_a?(CrossReference) %>
                     Cross-reference: 
-                    <%= link_to "#{comment.commentable.source_verse.reference} → #{comment.commentable.target_verse.reference}",
+                    <%= link_to comment.commentable.connection_label,
                         bible_verse_show_path(book: comment.commentable.source_verse.book, chapter: comment.commentable.source_verse.chapter, verse: comment.commentable.source_verse.verse),
                         class: "text-blue-600 hover:text-blue-800",
                         target: "_blank" %>
@@ -163,7 +163,7 @@
                       class: "text-blue-600 hover:text-blue-800",
                       target: "_blank" %>
                   <i class="fa-solid fa-arrow-right mx-2"></i>
-                  <%= link_to cross_ref.target_verse.reference, 
+                  <%= link_to cross_ref.target_reference, 
                       bible_verse_show_path(book: cross_ref.target_verse.book, chapter: cross_ref.target_verse.chapter, verse: cross_ref.target_verse.verse),
                       class: "text-blue-600 hover:text-blue-800",
                       target: "_blank" %>
@@ -176,7 +176,7 @@
                       <%= truncate(cross_ref.source_verse.text, length: 150) %>
                     </div>
                     <div class="verse-item mt-2">
-                      <strong><%= cross_ref.target_verse.reference %>:</strong>
+                      <strong><%= cross_ref.target_reference %>:</strong>
                       <%= truncate(cross_ref.target_verse.text, length: 150) %>
                     </div>
                   </div>

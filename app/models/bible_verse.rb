@@ -9,6 +9,9 @@ class BibleVerse < ApplicationRecord
   has_many :cross_references_as_target, class_name: 'CrossReference', foreign_key: 'target_verse_id', dependent: :destroy
   has_many :source_verses, through: :cross_references_as_target, source: :source_verse
   
+  # Cross-references where this verse is the end of a target range
+  has_many :cross_references_as_target_end, class_name: 'CrossReference', foreign_key: 'target_end_verse_id', dependent: :nullify
+  
   # Bible threads
   has_many :bible_thread_entries, dependent: :destroy
   has_many :bible_threads, through: :bible_thread_entries
@@ -28,9 +31,24 @@ class BibleVerse < ApplicationRecord
     "#{book} #{chapter}:#{verse}"
   end
   
-  # Get all cross-references for this verse (both as source and target)
+  # Get all cross-references for this verse (as source, target start/end, or within a target range)
   def all_cross_references
-    CrossReference.where('source_verse_id = ? OR target_verse_id = ?', id, id)
+    CrossReference
+      .joins("INNER JOIN bible_verses AS cr_target ON cr_target.id = cross_references.target_verse_id")
+      .joins("LEFT JOIN bible_verses AS cr_target_end ON cr_target_end.id = cross_references.target_end_verse_id")
+      .where(
+        "cross_references.source_verse_id = :id
+         OR cross_references.target_verse_id = :id
+         OR cross_references.target_end_verse_id = :id
+         OR (
+           cross_references.target_end_verse_id IS NOT NULL
+           AND cr_target.book = :book
+           AND cr_target.chapter = :chapter
+           AND cr_target.verse <= :verse
+           AND cr_target_end.verse >= :verse
+         )",
+        id: id, book: book, chapter: chapter, verse: verse
+      )
   end
   
   # Get all connected verses (both as source and target)
@@ -41,7 +59,7 @@ class BibleVerse < ApplicationRecord
   
   # Get cross-references ordered by biblical order
   def ordered_cross_references
-    all_cross_references.includes(:source_verse, :target_verse).order(
+    all_cross_references.includes(:source_verse, :target_verse, :target_end_verse).order(
       Arel.sql("CASE 
         WHEN source_verse_id = #{id} THEN target_verse_id 
         ELSE source_verse_id 

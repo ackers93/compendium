@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_05_190152) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_06_173740) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -118,8 +118,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_05_190152) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.bigint "target_end_verse_id"
     t.index ["source_verse_id", "target_verse_id"], name: "index_cross_references_on_source_and_target", unique: true
     t.index ["source_verse_id"], name: "index_cross_references_on_source_verse_id"
+    t.index ["target_end_verse_id"], name: "index_cross_references_on_target_end_verse_id"
     t.index ["target_verse_id"], name: "index_cross_references_on_target_verse_id"
     t.index ["user_id"], name: "index_cross_references_on_user_id"
   end
@@ -215,6 +217,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_05_190152) do
   add_foreign_key "content_flags", "users"
   add_foreign_key "content_flags", "users", column: "resolved_by_id"
   add_foreign_key "cross_references", "bible_verses", column: "source_verse_id"
+  add_foreign_key "cross_references", "bible_verses", column: "target_end_verse_id"
   add_foreign_key "cross_references", "bible_verses", column: "target_verse_id"
   add_foreign_key "cross_references", "users"
   add_foreign_key "taggings", "tags"

@@ -14,17 +14,17 @@
         <tbody>
           <% cross_references.each do |cross_ref| %>
             <% 
-              # Determine which verse is the "other" one (not the current verse)
-              other_verse = cross_ref.source_verse_id == verse.id ? cross_ref.target_verse : cross_ref.source_verse
+              link_verse = cross_ref.link_verse_for(verse)
+              display_ref = cross_ref.display_reference_for(verse)
             %>
             <tr>
               <td>
-                <a href="<%= bible_verse_show_path(book: other_verse.book, chapter: other_verse.chapter, verse: other_verse.verse) %>" 
+                <a href="<%= bible_verse_show_path(book: link_verse.book, chapter: link_verse.chapter, verse: link_verse.verse) %>" 
                    class="verse-link">
-                  <%= other_verse.book %> <%= other_verse.chapter %>:<%= other_verse.verse %>
+                  <%= display_ref %>
                 </a>
                 <div class="verse-preview text-sm text-gray-600 mt-1">
-                  <%= truncate(other_verse.text, length: 100) %>
+                  <%= truncate(cross_ref.preview_text_for(verse), length: 100) %>
                 </div>
               </td>
               <td>

@@ -10,12 +10,12 @@ module Admin
         @comments = Comment.includes(:user, :commentable).order(created_at: :desc)
         @cross_references = []
       elsif params[:type] == 'cross_references'
-        @cross_references = CrossReference.includes(:user, :source_verse, :target_verse).order(created_at: :desc)
+        @cross_references = CrossReference.includes(:user, :source_verse, :target_verse, :target_end_verse).order(created_at: :desc)
         @comments = []
       else
         # Show both, ordered by most recent
         @comments = Comment.includes(:user, :commentable).order(created_at: :desc)
-        @cross_references = CrossReference.includes(:user, :source_verse, :target_verse).order(created_at: :desc)
+        @cross_references = CrossReference.includes(:user, :source_verse, :target_verse, :target_end_verse).order(created_at: :desc)
       end
       
       # Get counts for stats

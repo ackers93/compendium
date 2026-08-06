@@ -31,7 +31,29 @@ class CrossReferencesController < ApplicationController
       return
     end
     
-    if @source_verse.id == target_verse.id
+    target_end_verse = nil
+    if params[:end_verse].present?
+      target_end_verse = BibleVerse.find_by(book: params[:book], chapter: params[:chapter], verse: params[:end_verse])
+      
+      if target_end_verse.nil?
+        respond_to do |format|
+          format.turbo_stream { 
+            render turbo_stream: turbo_stream.replace("cross-reference-form", 
+              partial: "cross_references/form", locals: { 
+                error: "End verse not found",
+                book: @book,
+                chapter: @chapter,
+                verse: @verse
+              }
+            )
+          }
+          format.html { redirect_to bible_verse_show_path(book: @book, chapter: @chapter, verse: @verse), alert: "End verse not found" }
+        end
+        return
+      end
+    end
+    
+    if @source_verse.id == target_verse.id || (target_end_verse && @source_verse.id == target_end_verse.id)
       respond_to do |format|
         format.turbo_stream { 
           render turbo_stream: turbo_stream.replace("cross-reference-form", 
@@ -48,7 +70,7 @@ class CrossReferencesController < ApplicationController
       return
     end
     
-    # Check if cross-reference already exists (in either direction)
+    # Check if cross-reference already exists (in either direction, matching start verse)
     existing_ref = CrossReference.find_by(
       '(source_verse_id = ? AND target_verse_id = ?) OR (source_verse_id = ? AND target_verse_id = ?)',
       @source_verse.id, target_verse.id, target_verse.id, @source_verse.id
@@ -92,6 +114,7 @@ class CrossReferencesController < ApplicationController
       @cross_reference = CrossReference.new(
         source_verse: @source_verse,
         target_verse: target_verse,
+        target_end_verse: target_end_verse,
         user: current_user
       )
       
@@ -147,12 +170,10 @@ class CrossReferencesController < ApplicationController
       end
     end
     
-    # If we can't determine from params/referer, check if current verse matches source or target
+    # If we can't determine from params/referer, check if current verse matches source or target range
     if current_verse.nil?
-      # Default to source verse, but we could also check referer more carefully
       current_verse = source_verse
-    elsif current_verse.id != source_verse.id && current_verse.id != target_verse.id
-      # If the verse doesn't match either, default to source
+    elsif !@cross_reference.involves_verse?(current_verse)
       current_verse = source_verse
     end
     

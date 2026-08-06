@@ -84,9 +84,9 @@
               <div class="verse-cross-refs-section mb-3">
                 <span class="verse-cross-refs-section-title">CRs:</span>
                 <% verse.ordered_cross_references.each_with_index do |cross_ref, index| %>
-                  <% other_verse = cross_ref.source_verse_id == verse.id ? cross_ref.target_verse : cross_ref.source_verse %>
-                  <%= link_to "#{other_verse.book} #{other_verse.chapter}:#{other_verse.verse}", 
-                      bible_verse_show_path(book: other_verse.book, chapter: other_verse.chapter, verse: other_verse.verse),
+                  <% link_verse = cross_ref.link_verse_for(verse) %>
+                  <%= link_to cross_ref.display_reference_for(verse),
+                      bible_verse_show_path(book: link_verse.book, chapter: link_verse.chapter, verse: link_verse.verse),
                       class: "cross-ref-link" %><% unless index == verse.ordered_cross_references.count - 1 %>, <% end %>
                 <% end %>
               </div>

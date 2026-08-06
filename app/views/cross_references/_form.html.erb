@@ -45,9 +45,16 @@
     </div>
     
     <div class="form-group">
+      <label for="end_verse" class="form-label">Through verse <span class="text-sm text-gray-500 font-normal">(optional)</span></label>
+      <input type="number" name="end_verse" id="end_verse" class="form-input" min="1"
+             placeholder="e.g. 18 for a range like 16–18">
+      <p class="text-sm text-gray-500 mt-1">Same chapter only. Leave blank for a single verse.</p>
+    </div>
+    
+    <div class="form-group">
       <label for="comment_content" class="form-label">Comment (Optional)</label>
       <textarea name="comment[content]" id="comment_content" class="form-textarea" rows="3" 
                 placeholder="Explain how these verses are connected..."></textarea>
     </div>
   <% end %>
-</div> 
+</div>

@@ -34,7 +34,7 @@ class ContentFlag < ApplicationRecord
     when 'Comment'
       "Comment on #{flaggable.commentable_type}"
     when 'CrossReference'
-      "Cross-reference: #{flaggable.source_verse.reference} → #{flaggable.target_verse.reference}"
+      "Cross-reference: #{flaggable.connection_label}"
     else
       flaggable_type
     end

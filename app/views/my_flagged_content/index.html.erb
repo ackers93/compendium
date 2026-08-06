@@ -180,7 +180,7 @@
                   <% end %>
                 <% when 'CrossReference' %>
                   <% if flag.flaggable %>
-                    <%= flag.flaggable.source_verse.reference %> → <%= flag.flaggable.target_verse.reference %>
+                    <%= flag.flaggable.connection_label %>
                   <% else %>
                     <em class="text-danger">Content has been deleted</em>
                   <% end %>
