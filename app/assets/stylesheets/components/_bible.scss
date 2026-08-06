@@ -961,7 +961,7 @@
 
   --range-slot-width: 14px;
   --range-slot-gap: 4px;
-  --range-line-width: 2px;
+  --range-line-width: 3px;
 
   &.has-range-tracks {
     overflow: visible;
@@ -1040,10 +1040,22 @@
   }
 
   .range-rail-slot--start {
+    // Horizontal stub so the elbow joins cleanly with the comment connector
+    &::before {
+      content: '';
+      right: 50%;
+      left: auto;
+      width: calc(var(--range-slot-width) / 2 + var(--range-line-width));
+      top: var(--range-elbow-y, 1.5rem);
+      height: var(--range-line-width);
+      transform: translateY(-50%);
+    }
+
     &::after {
       content: '';
       left: 50%;
-      top: var(--range-elbow-y, 1.5rem);
+      // Overlap the horizontal stub for a solid corner
+      top: calc(var(--range-elbow-y, 1.5rem) - var(--range-line-width) / 2);
       bottom: 0;
       width: var(--range-line-width);
       transform: translateX(-50%);
@@ -1066,7 +1078,8 @@
       content: '';
       left: 50%;
       top: 0;
-      height: var(--range-elbow-y, 1.25rem);
+      // Overlap the horizontal stub for a solid corner
+      height: calc(var(--range-elbow-y, 1.25rem) + var(--range-line-width) / 2);
       width: var(--range-line-width);
       transform: translateX(-50%);
     }
@@ -1075,7 +1088,7 @@
       content: '';
       right: 50%;
       left: auto;
-      width: calc(var(--range-slot-width) / 2);
+      width: calc(var(--range-slot-width) / 2 + var(--range-line-width));
       top: var(--range-elbow-y, 1.25rem);
       height: var(--range-line-width);
       transform: translateY(-50%);
@@ -1113,7 +1126,7 @@
       align-self: center;
       position: relative;
 
-      // Continue into the rail up to this track's vertical line
+      // Continue into the rail up to this track's vertical line (overlap for a solid join)
       &::after {
         content: '';
         position: absolute;
@@ -1123,7 +1136,8 @@
         width: calc(
           #{$space-2} +
           var(--range-track) * (var(--range-slot-width) + var(--range-slot-gap)) +
-          (var(--range-slot-width) / 2)
+          (var(--range-slot-width) / 2) +
+          var(--range-line-width)
         );
         background: var(--range-color);
       }
@@ -1440,6 +1454,15 @@
       padding: $space-3 $space-4;
     }
 
+    // Reserve a right gutter for absolute-positioned range tracks so verse
+    // text and comments stop before the vertical lines.
+    &.has-range-tracks .verse-table-row {
+      padding-right: calc(
+        #{$space-4} +
+        var(--range-track-count, 1) * (var(--range-slot-width) + var(--range-slot-gap))
+      );
+    }
+
     .verse-column {
       width: 100%;
       margin-right: 0;
@@ -1460,7 +1483,19 @@
     }
 
     .ranged-comment-with-connector {
-      padding-right: calc(var(--range-track-count, 1) * 18px);
+      // Row padding provides the track gutter on mobile
+      padding-right: 0;
+
+      .range-comment-connector::after {
+        // Absolute rail sits in the row's padding-right; reach track center + overlap
+        width: calc(
+          #{$space-2} +
+          var(--range-slot-gap) +
+          (var(--range-slot-width) / 2) +
+          var(--range-track) * (var(--range-slot-width) + var(--range-slot-gap)) +
+          var(--range-line-width)
+        );
+      }
     }
   }
 
