@@ -92,6 +92,8 @@ class BibleVersesController < ApplicationController
     
     if @bible_verse.nil?
       redirect_to bible_verse_chapters_path(book: @book), alert: "Verse not found"
+    else
+      @published_mentions = @bible_verse.published_mentions
     end
   end
 

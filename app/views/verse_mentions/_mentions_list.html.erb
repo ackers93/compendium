@@ -1,0 +1,27 @@
+<% mentions = local_assigns.fetch(:mentions) { bible_verse.published_mentions } %>
+
+<% if mentions.any? %>
+  <div class="threads-list mentions-list">
+    <% mentions.each do |mention| %>
+      <% mentionable = mention.mentionable %>
+      <% next unless mentionable %>
+
+      <div class="thread-item">
+        <div class="thread-title-link">
+          <%= link_to verse_mention_title(mentionable), verse_mention_path(mentionable), class: "font-semibold text-lg" %>
+        </div>
+        <div class="thread-meta text-sm text-gray-600 mt-1">
+          <%= verse_mention_kind_label(mentionable) %>
+          by <%= mentionable.user.display_name %>
+          <% if mentionable.is_a?(Comment) %>
+            · <%= plain_text_from_rich_text(mentionable.content, 120) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-8 text-gray-500">
+    <p>This verse is not mentioned in any published notes or comments yet.</p>
+  </div>
+<% end %>

@@ -54,6 +54,9 @@
         <button class="tab-button" onclick="showTab('cross-references')">Cross-References</button>
         <button class="tab-button" onclick="showTab('threads')">Threads</button>
         <button class="tab-button" onclick="showTab('topics')">Topics</button>
+        <button class="tab-button" onclick="showTab('mentions')">
+          Mentions<% if @published_mentions.size > 0 %> (<%= @published_mentions.size %>)<% end %>
+        </button>
       </div>
     </div>
     
@@ -170,6 +173,21 @@
         
         <div id="topics-list" class="topics-content mb-6">
           <%= render 'verse_topics/topics_list', bible_verse: @bible_verse %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mentions Tab -->
+    <div id="mentions-tab" class="tab-content">
+      <div class="mentions-section">
+        <div class="section-header">
+          <div class="bible-section-actions">
+            <h3 class="section-title">Mentions of <%= @book %> <%= @chapter %>:<%= @verse %></h3>
+          </div>
+        </div>
+
+        <div id="mentions-list" class="mentions-content mb-6">
+          <%= render 'verse_mentions/mentions_list', bible_verse: @bible_verse, mentions: @published_mentions %>
         </div>
       </div>
     </div>

@@ -1,10 +1,13 @@
 class Comment < ApplicationRecord
   include Flaggable
+  include MentionsVerses
   
   belongs_to :user
   belongs_to :commentable, polymorphic: true
   belongs_to :end_verse, class_name: 'BibleVerse', optional: true
+  has_many :verse_mentions, as: :mentionable, dependent: :destroy
   has_rich_text :content
+
   
   validates :content, presence: true
   validate :end_verse_valid

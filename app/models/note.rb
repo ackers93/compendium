@@ -1,10 +1,13 @@
 class Note < ApplicationRecord
   include Flaggable
+  include MentionsVerses
   
   belongs_to :user
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :verse_mentions, as: :mentionable, dependent: :destroy
   has_rich_text :content
   acts_as_taggable_on :tags
+
   
   validates :title, presence: true
   validates :user_id, presence: true

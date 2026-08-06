@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_06_175500) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_06_191658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -199,6 +199,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_06_175500) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "verse_mentions", force: :cascade do |t|
+    t.bigint "bible_verse_id", null: false
+    t.string "mentionable_type", null: false
+    t.bigint "mentionable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bible_verse_id", "mentionable_type", "mentionable_id"], name: "index_verse_mentions_uniqueness", unique: true
+    t.index ["bible_verse_id"], name: "index_verse_mentions_on_bible_verse_id"
+    t.index ["mentionable_type", "mentionable_id"], name: "index_verse_mentions_on_mentionable"
+  end
+
   create_table "verse_topics", force: :cascade do |t|
     t.bigint "bible_verse_id", null: false
     t.bigint "topic_id", null: false
@@ -224,6 +235,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_06_175500) do
   add_foreign_key "cross_references", "bible_verses", column: "target_verse_id"
   add_foreign_key "cross_references", "users"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "verse_mentions", "bible_verses"
   add_foreign_key "verse_topics", "bible_verses"
   add_foreign_key "verse_topics", "topics"
   add_foreign_key "verse_topics", "users"

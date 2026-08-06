@@ -50,6 +50,70 @@ module ApplicationHelper
     end
   end
 
+  def verse_mention_title(mentionable)
+    case mentionable
+    when Note
+      mentionable.title
+    when Comment
+      commentable = mentionable.commentable
+      case commentable
+      when Note
+        commentable.title
+      when BibleVerse
+        commentable.reference
+      when CrossReference
+        commentable.connection_label
+      else
+        "Comment"
+      end
+    else
+      "Mention"
+    end
+  end
+
+  def verse_mention_kind_label(mentionable)
+    case mentionable
+    when Note
+      "Note"
+    when Comment
+      commentable = mentionable.commentable
+      case commentable
+      when Note
+        "Comment on note"
+      when BibleVerse
+        "Comment on #{commentable.reference}"
+      when CrossReference
+        "Comment on cross-reference"
+      else
+        "Comment"
+      end
+    else
+      "Mention"
+    end
+  end
+
+  def verse_mention_path(mentionable)
+    case mentionable
+    when Note
+      note_path(mentionable)
+    when Comment
+      commentable = mentionable.commentable
+      case commentable
+      when Note
+        note_path(commentable)
+      when BibleVerse
+        bible_verse_show_path(book: commentable.book, chapter: commentable.chapter, verse: commentable.verse)
+      when CrossReference
+        source = commentable.source_verse
+        bible_verse_show_path(book: source.book, chapter: source.chapter, verse: source.verse)
+      else
+        root_path
+      end
+    else
+      root_path
+    end
+  end
+
   def theme_style_tag
     return unless user_signed_in?
 

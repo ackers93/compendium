@@ -20,6 +20,9 @@ class BibleVerse < ApplicationRecord
   # Topics
   has_many :verse_topics, dependent: :destroy
   has_many :topics, through: :verse_topics
+
+  # Mentions from notes/comments that link to this verse
+  has_many :verse_mentions, dependent: :destroy
   
   validates :book, presence: true
   validates :chapter, presence: true
@@ -85,5 +88,83 @@ class BibleVerse < ApplicationRecord
         ELSE source_verse_id 
       END")
     )
+  end
+
+  # Published notes/comments that link to this verse (excluding comments on this verse itself)
+  def published_mentions
+    mentions = VerseMention
+      .where(id: published_note_mention_ids)
+      .or(VerseMention.where(id: published_comment_mention_ids))
+      .includes(:mentionable)
+      .order(created_at: :desc)
+      .to_a
+
+    preload_mentionables(mentions)
+    mentions
+  end
+
+  private
+
+  def published_note_mention_ids
+    verse_mentions
+      .where(mentionable_type: "Note")
+      .joins("INNER JOIN notes ON notes.id = verse_mentions.mentionable_id")
+      .where(notes: { status: "published" })
+      .select(:id)
+  end
+
+  def published_comment_mention_ids
+    verse_mentions
+      .where(mentionable_type: "Comment")
+      .joins("INNER JOIN comments ON comments.id = verse_mentions.mentionable_id")
+      .joins(<<~SQL.squish)
+        LEFT JOIN notes AS comment_notes
+          ON comments.commentable_type = 'Note'
+          AND comments.commentable_id = comment_notes.id
+      SQL
+      .joins(<<~SQL.squish)
+        LEFT JOIN bible_verses AS comment_verses
+          ON comments.commentable_type = 'BibleVerse'
+          AND comments.commentable_id = comment_verses.id
+      SQL
+      .joins(<<~SQL.squish)
+        LEFT JOIN bible_verses AS comment_end_verses
+          ON comments.end_verse_id = comment_end_verses.id
+      SQL
+      .where(<<~SQL.squish, id: id, book: book, chapter: chapter, verse: verse)
+        (
+          comments.commentable_type = 'Note'
+          AND comment_notes.status = 'published'
+        )
+        OR comments.commentable_type = 'CrossReference'
+        OR (
+          comments.commentable_type = 'BibleVerse'
+          AND NOT (
+            comments.commentable_id = :id
+            OR (comments.end_verse_id IS NOT NULL AND comments.end_verse_id = :id)
+            OR (
+              comments.end_verse_id IS NOT NULL
+              AND comment_verses.book = :book
+              AND comment_verses.chapter = :chapter
+              AND comment_verses.verse <= :verse
+              AND comment_end_verses.verse >= :verse
+            )
+          )
+        )
+      SQL
+      .select(:id)
+  end
+
+  def preload_mentionables(mentions)
+    mentionables = mentions.map(&:mentionable).compact
+    notes = mentionables.select { |m| m.is_a?(Note) }
+    comments = mentionables.select { |m| m.is_a?(Comment) }
+
+    ActiveRecord::Associations::Preloader.new(records: notes, associations: :user).call if notes.any?
+    if comments.any?
+      ActiveRecord::Associations::Preloader.new(records: comments, associations: [:user, :commentable]).call
+      cross_refs = comments.filter_map { |c| c.commentable if c.commentable.is_a?(CrossReference) }
+      ActiveRecord::Associations::Preloader.new(records: cross_refs, associations: [:source_verse, :target_verse, :target_end_verse]).call if cross_refs.any?
+    end
   end
 end
