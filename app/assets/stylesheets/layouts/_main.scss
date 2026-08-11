@@ -2,12 +2,27 @@
   flex: 1;
   background-color: $theme-background;
   padding: $space-6 0;
+
+  // Modest, even breathing room when a flash sits between the nav and page content
+  &:has(> .container > .alert:first-child) {
+    padding-top: $space-3;
+  }
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 $space-6;
+
+  > .alert:first-child {
+    margin-top: 0;
+    margin-bottom: $space-3;
+  }
+
+  > .alert + .alert {
+    margin-top: -$space-1;
+    margin-bottom: $space-3;
+  }
 }
 
 .page-header {
