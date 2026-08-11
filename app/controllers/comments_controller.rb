@@ -53,7 +53,7 @@ class CommentsController < ApplicationController
                 partial: "cross_references/cross_references_list", 
                 locals: { cross_references: @page_commentable.source_verse.ordered_cross_references, verse: @page_commentable.source_verse }
               ),
-              turbo_stream.replace("modal", "")
+              turbo_stream.update("modal", "")
             ]
           elsif @comment.reply?
             render turbo_stream: [
@@ -67,14 +67,14 @@ class CommentsController < ApplicationController
                 }
               ),
               turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @page_commentable }),
-              turbo_stream.replace("modal", "")
+              turbo_stream.update("modal", "")
             ]
           elsif display_comments_count(@page_commentable) == 1
             render turbo_stream: [
               turbo_stream.update("comments", partial: "comments/comments_list", locals: { commentable: @page_commentable }),
               turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @page_commentable.comments.build, page_commentable: @page_commentable }),
               turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @page_commentable }),
-              turbo_stream.replace("modal", "")
+              turbo_stream.update("modal", "")
             ]
           else
             render turbo_stream: [
@@ -89,7 +89,7 @@ class CommentsController < ApplicationController
               ),
               turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @page_commentable.comments.build, page_commentable: @page_commentable }),
               turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @page_commentable }),
-              turbo_stream.replace("modal", "")
+              turbo_stream.update("modal", "")
             ]
           end
         }
@@ -159,7 +159,7 @@ class CommentsController < ApplicationController
         format.turbo_stream { 
           if @comment.commentable.is_a?(CrossReference)
             render turbo_stream: [
-              turbo_stream.replace("modal", ""),
+              turbo_stream.update("modal", ""),
               turbo_stream.replace("cross-references", 
                 partial: "cross_references/cross_references_list", 
                 locals: { cross_references: @comment.commentable.source_verse.ordered_cross_references, verse: @comment.commentable.source_verse }
@@ -167,7 +167,7 @@ class CommentsController < ApplicationController
             ]
           else
             render turbo_stream: [
-              turbo_stream.replace("modal", ""),
+              turbo_stream.update("modal", ""),
               turbo_stream.replace(dom_id(@comment, :body),
                 partial: "comments/comment_body",
                 locals: {
