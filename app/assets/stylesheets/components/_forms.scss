@@ -193,6 +193,19 @@ select.form-input {
     flex: 1;
     max-width: 400px;
   }
+
+  &--wide {
+    width: 100%;
+
+    form {
+      width: 100%;
+    }
+
+    .search-input {
+      max-width: none;
+      width: 100%;
+    }
+  }
   
   .search-button {
     white-space: nowrap;
