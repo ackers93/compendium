@@ -1,9 +1,8 @@
 .onboarding-container {
-  min-height: calc(100vh - 7rem);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: $space-6 $space-4;
+  padding: $space-2 $space-4 $space-6;
 }
 
 .onboarding-card {
@@ -156,7 +155,7 @@
 }
 
 .onboarding-footer-wizard {
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .onboarding-footer-actions {
@@ -168,15 +167,34 @@
 
 // Multi-step wizard
 .onboarding-wizard-top {
-  padding: $space-5 $space-6 $space-4;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
   border-bottom: 1px solid $gray-200;
+}
+
+.onboarding-nav-slot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+
+  &.onboarding-nav-slot-end {
+    justify-content: flex-end;
+  }
+}
+
+.onboarding-wizard-progress {
   text-align: center;
+  min-width: 0;
 }
 
 .onboarding-counter {
   font-size: $font-size-sm;
   color: $gray-500;
-  margin: 0 0 $space-3;
+  margin: 0 0 $space-2;
   font-weight: $font-weight-medium;
 }
 
@@ -213,8 +231,8 @@
 }
 
 .onboarding-steps {
-  padding: $space-6;
-  min-height: 22rem;
+  padding: $space-4 $space-5;
+  min-height: 0;
 }
 
 .onboarding-step {
@@ -226,7 +244,14 @@
 }
 
 .onboarding-step-header {
-  margin-bottom: $space-6;
+  margin-bottom: $space-4;
+}
+
+.onboarding-step-icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0 auto $space-3;
+  font-size: $font-size-xl;
 }
 
 .onboarding-screenshot {
@@ -350,22 +375,30 @@
 
 @media (max-width: $breakpoint-md) {
   .onboarding-container {
-    padding: $space-4 $space-3;
-    align-items: flex-start;
+    padding: $space-2 $space-3 $space-4;
   }
 
   .onboarding-title {
     font-size: $font-size-2xl;
   }
 
+  .onboarding-wizard-top {
+    padding: $space-2 $space-3;
+    gap: $space-2;
+  }
+
+  .onboarding-nav-label {
+    display: none;
+  }
+
   .onboarding-steps {
-    padding: $space-4;
-    min-height: 0;
+    padding: $space-3 $space-4;
   }
 
   .onboarding-footer {
     flex-direction: column;
     align-items: stretch;
+    padding: $space-3 $space-4;
 
     .btn,
     form {

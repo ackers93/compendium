@@ -88,17 +88,40 @@
     <% else %>
       <div class="onboarding-wizard" data-controller="onboarding">
         <div class="onboarding-wizard-top">
-          <p class="onboarding-counter" data-onboarding-target="counter">Step 1 of <%= @steps.size %></p>
-          <div class="onboarding-progress" role="tablist" aria-label="Onboarding progress">
-            <% @steps.each_with_index do |_step, index| %>
-              <button type="button"
-                      class="onboarding-dot<%= " is-active" if index.zero? %>"
-                      data-onboarding-target="dot"
-                      data-step-index="<%= index %>"
-                      data-action="click->onboarding#goTo"
-                      aria-label="Go to step <%= index + 1 %>"
-                      aria-current="<%= index.zero? ? "step" : "false" %>"></button>
-            <% end %>
+          <div class="onboarding-nav-slot">
+            <button type="button"
+                    class="btn btn-outline"
+                    data-onboarding-target="prev"
+                    data-action="click->onboarding#previous"
+                    disabled>
+              <i class="fa-solid fa-arrow-left"></i>
+              <span class="onboarding-nav-label">Back</span>
+            </button>
+          </div>
+
+          <div class="onboarding-wizard-progress">
+            <p class="onboarding-counter" data-onboarding-target="counter">Step 1 of <%= @steps.size %></p>
+            <div class="onboarding-progress" role="tablist" aria-label="Onboarding progress">
+              <% @steps.each_with_index do |_step, index| %>
+                <button type="button"
+                        class="onboarding-dot<%= " is-active" if index.zero? %>"
+                        data-onboarding-target="dot"
+                        data-step-index="<%= index %>"
+                        data-action="click->onboarding#goTo"
+                        aria-label="Go to step <%= index + 1 %>"
+                        aria-current="<%= index.zero? ? "step" : "false" %>"></button>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="onboarding-nav-slot onboarding-nav-slot-end">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-onboarding-target="next"
+                    data-action="click->onboarding#next">
+              <span class="onboarding-nav-label">Next</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
           </div>
         </div>
 
@@ -146,29 +169,12 @@
         </div>
 
         <div class="onboarding-footer onboarding-footer-wizard">
-          <button type="button"
-                  class="btn btn-outline"
-                  data-onboarding-target="prev"
-                  data-action="click->onboarding#previous"
-                  disabled>
-            <i class="fa-solid fa-arrow-left"></i>
-            Back
-          </button>
-
           <div class="onboarding-footer-actions">
             <button type="button"
                     class="btn btn-outline"
                     data-onboarding-target="skip"
                     data-action="click->onboarding#jumpToAgreement">
               Skip tour
-            </button>
-
-            <button type="button"
-                    class="btn btn-primary"
-                    data-onboarding-target="next"
-                    data-action="click->onboarding#next">
-              Next
-              <i class="fa-solid fa-arrow-right"></i>
             </button>
 
             <div class="onboarding-finish-actions" data-onboarding-target="finish" hidden>
