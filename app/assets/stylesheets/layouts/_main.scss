@@ -65,6 +65,13 @@
   }
 }
 
+// Search stacks sections in separate turbo-frames; space them evenly
+.search-results {
+  .content-section {
+    margin-bottom: $space-8;
+  }
+}
+
 // Use when a section is itself the card (no nested card children)
 .content-surface {
   background: $theme-surface;

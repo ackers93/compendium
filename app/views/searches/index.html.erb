@@ -17,9 +17,11 @@
   <% end %>
 </div>
 
-<%= turbo_frame_tag "topics-search-results", src: (params[:q].present? ? search_topics_path(q: params[:q]) : nil) %>
-<%= turbo_frame_tag "threads-search-results", src: (params[:q].present? ? search_threads_path(q: params[:q]) : nil) %>
-<%= turbo_frame_tag "notes-search-results", src: (params[:q].present? ? search_notes_path(q: params[:q]) : nil) %>
-<%= turbo_frame_tag "verse-comments-search-results", src: (params[:q].present? ? search_verse_comments_path(q: params[:q]) : nil) %>
-<%= turbo_frame_tag "cross-reference-comments-search-results", src: (params[:q].present? ? search_cross_reference_comments_path(q: params[:q]) : nil) %>
-<%= turbo_frame_tag "note-comments-search-results", src: (params[:q].present? ? search_note_comments_path(q: params[:q]) : nil) %>
+<div class="search-results">
+  <%= turbo_frame_tag "topics-search-results", src: (params[:q].present? ? search_topics_path(q: params[:q]) : nil) %>
+  <%= turbo_frame_tag "threads-search-results", src: (params[:q].present? ? search_threads_path(q: params[:q]) : nil) %>
+  <%= turbo_frame_tag "notes-search-results", src: (params[:q].present? ? search_notes_path(q: params[:q]) : nil) %>
+  <%= turbo_frame_tag "verse-comments-search-results", src: (params[:q].present? ? search_verse_comments_path(q: params[:q]) : nil) %>
+  <%= turbo_frame_tag "cross-reference-comments-search-results", src: (params[:q].present? ? search_cross_reference_comments_path(q: params[:q]) : nil) %>
+  <%= turbo_frame_tag "note-comments-search-results", src: (params[:q].present? ? search_note_comments_path(q: params[:q]) : nil) %>
+</div>
