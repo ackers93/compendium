@@ -1,44 +1,22 @@
-<div id="<%= dom_id comment %>" class="comment-item mb-2 p-2 bg-gray-50 rounded">
-  <div class="comment-header text-xs text-gray-500 mb-1">
-    <span class="author-name">
-      <%= comment.user&.display_name || "Unknown User" %>
-    </span>
-    <span class="comment-date">
-      • <%= time_ago_in_words(comment.created_at) %> ago
-    </span>
-    <% if comment.commentable.is_a?(BibleVerse) && comment.range? %>
-      <span class="comment-range">
-        • on <%= comment.verse_reference %>
-      </span>
+<% depth = local_assigns.fetch(:depth, 0) %>
+<% children_by_parent = local_assigns.fetch(:children_by_parent, {}) %>
+<% page_verse = local_assigns[:page_verse] %>
+<% child_comments = children_by_parent[comment.id] || [] %>
+
+<div id="<%= dom_id(comment) %>" class="comment-thread<%= ' comment-reply' if depth > 0 %>">
+  <%= render 'comments/comment_body',
+      comment: comment,
+      page_verse: page_verse,
+      depth: depth,
+      has_replies: child_comments.any? %>
+
+  <div id="<%= dom_id(comment, :replies) %>" class="comment-replies">
+    <% child_comments.each do |reply| %>
+      <%= render 'comments/comment',
+            comment: reply,
+            children_by_parent: children_by_parent,
+            page_verse: page_verse,
+            depth: depth + 1 %>
     <% end %>
-    <% if current_user %>
-      <span class="ml-2">
-        <% if current_user.can_edit?(comment) %>
-          <%= link_to "Edit", edit_comment_path(comment), 
-              class: "text-blue-500 hover:text-blue-700",
-              data: { turbo_frame: "modal" } %>
-          <span class="mx-1">•</span>
-        <% end %>
-        <% if current_user.can_delete?(comment) %>
-          <% delete_params = if local_assigns[:page_verse]
-               { book: page_verse.book, chapter: page_verse.chapter, verse_number: page_verse.verse }
-             else
-               {}
-             end %>
-          <%= link_to "Delete", comment_path(comment, delete_params), 
-              class: "text-red-500 hover:text-red-700",
-              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-        <% else %>
-          <span class="mx-1">•</span>
-          <%= link_to "Flag", "javascript:void(0)", 
-              onclick: "flagContent('Comment', #{comment.id})",
-              class: "text-yellow-600 hover:text-yellow-800" %>
-        <% end %>
-      </span>
-    <% end %>
-  </div>
-  
-  <div class="comment-content">
-    <%= comment.content %>
   </div>
 </div>

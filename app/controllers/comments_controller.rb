@@ -20,13 +20,18 @@ class CommentsController < ApplicationController
   end
 
   def new
-    @comment = @commentable.comments.build
+    @comment = Comment.new(commentable: @commentable)
+    assign_parent(@comment, params[:parent_id])
   end
 
   def create
-    @comment = @commentable.comments.build(comment_params)
+    @page_commentable = @commentable
+    @comment = Comment.new(comment_params.except(:parent_id))
     @comment.user = current_user
-    end_verse_error = resolve_end_verse(@comment, @commentable)
+    @comment.commentable = @commentable
+
+    assign_parent(@comment, comment_params[:parent_id])
+    end_verse_error = @comment.reply? ? nil : resolve_end_verse(@comment, @comment.commentable)
 
     respond_to do |format|
       if end_verse_error
@@ -42,56 +47,78 @@ class CommentsController < ApplicationController
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       elsif @comment.save
         format.turbo_stream { 
-          if @commentable.is_a?(CrossReference)
-
+          if @page_commentable.is_a?(CrossReference)
             render turbo_stream: [
               turbo_stream.replace("cross-references", 
                 partial: "cross_references/cross_references_list", 
-                locals: { cross_references: @commentable.source_verse.ordered_cross_references, verse: @commentable.source_verse }
+                locals: { cross_references: @page_commentable.source_verse.ordered_cross_references, verse: @page_commentable.source_verse }
               ),
               turbo_stream.replace("modal", "")
             ]
-          elsif display_comments_count(@commentable) == 1
-            # First comment - replace the "no comments" message with the comment
+          elsif @comment.reply?
             render turbo_stream: [
-              turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
-              turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build }),
-              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable }),
+              turbo_stream.append(dom_id(@comment.parent, :replies),
+                partial: "comments/comment",
+                locals: {
+                  comment: @comment,
+                  children_by_parent: {},
+                  page_verse: @page_commentable.is_a?(BibleVerse) ? @page_commentable : nil,
+                  depth: @comment.depth
+                }
+              ),
+              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @page_commentable }),
+              turbo_stream.replace("modal", "")
+            ]
+          elsif display_comments_count(@page_commentable) == 1
+            render turbo_stream: [
+              turbo_stream.update("comments", partial: "comments/comments_list", locals: { commentable: @page_commentable }),
+              turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @page_commentable.comments.build, page_commentable: @page_commentable }),
+              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @page_commentable }),
               turbo_stream.replace("modal", "")
             ]
           else
-            # Additional comments - append to existing list
             render turbo_stream: [
-              turbo_stream.append("comments", partial: "comments/comment", locals: { comment: @comment, page_verse: @commentable.is_a?(BibleVerse) ? @commentable : nil }),
-              turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @commentable.comments.build }),
-              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable }),
+              turbo_stream.prepend("comments",
+                partial: "comments/comment",
+                locals: {
+                  comment: @comment,
+                  children_by_parent: {},
+                  page_verse: @page_commentable.is_a?(BibleVerse) ? @page_commentable : nil,
+                  depth: 0
+                }
+              ),
+              turbo_stream.replace("comment-form", partial: "comments/form", locals: { comment: @page_commentable.comments.build, page_commentable: @page_commentable }),
+              turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @page_commentable }),
               turbo_stream.replace("modal", "")
             ]
           end
         }
         format.html { 
-          if @commentable.is_a?(CrossReference)
-            # Cross-references use Turbo Streams, so this shouldn't be reached
+          if @page_commentable.is_a?(CrossReference)
             redirect_to root_path
-          elsif @commentable.is_a?(BibleVerse)
-            redirect_to bible_verse_show_path(book: @commentable.book, chapter: @commentable.chapter, verse: @commentable.verse), notice: "Comment was successfully created."
+          elsif @page_commentable.is_a?(BibleVerse)
+            redirect_to bible_verse_show_path(book: @page_commentable.book, chapter: @page_commentable.chapter, verse: @page_commentable.verse), notice: "Comment was successfully created."
           else
-            redirect_to @commentable, notice: "Comment was successfully created."
+            redirect_to @page_commentable, notice: "Comment was successfully created."
           end
         }
         format.json { render json: { id: @comment.id, content: @comment.content }, status: :created, location: @comment }
       else
         format.turbo_stream { 
-          if @commentable.is_a?(CrossReference)
-            # Re-render the cross-reference comment modal with errors
+          if @page_commentable.is_a?(CrossReference)
             render turbo_stream: turbo_stream.replace("modal", 
-              partial: "cross_references/new_comment", locals: { cross_ref: @commentable, comment: @comment }
+              partial: "cross_references/new_comment", locals: { cross_ref: @page_commentable, comment: @comment }
+            )
+          elsif @comment.reply?
+            @commentable = @page_commentable
+            render turbo_stream: turbo_stream.replace(
+              "modal",
+              html: render_to_string(template: "comments/new", layout: false)
             )
           else
-            # Just re-render the form with errors
             render turbo_stream: [
               turbo_stream.replace("comment-form", 
-                partial: "comments/form", locals: { comment: @comment }
+                partial: "comments/form", locals: { comment: @comment, page_commentable: @page_commentable }
               )
             ]
           end
@@ -108,7 +135,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    end_verse_error = resolve_end_verse(@comment, @comment.commentable)
+    end_verse_error = @comment.reply? ? nil : resolve_end_verse(@comment, @comment.commentable)
 
     respond_to do |format|
       if end_verse_error
@@ -122,7 +149,7 @@ class CommentsController < ApplicationController
         }
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
-      elsif @comment.update(comment_params)
+      elsif @comment.update(comment_params.except(:parent_id))
         notice_message = if @comment.flagged_content_was_updated
           "Comment was successfully updated and has been submitted back to admins for review. Thank you for addressing the feedback!"
         else
@@ -130,9 +157,7 @@ class CommentsController < ApplicationController
         end
         
         format.turbo_stream { 
-          # Normal modal updates - direct_edit cases will use HTML format
           if @comment.commentable.is_a?(CrossReference)
-            # Handle cross-reference comment updates - replace the entire cross-references list
             render turbo_stream: [
               turbo_stream.replace("modal", ""),
               turbo_stream.replace("cross-references", 
@@ -143,12 +168,19 @@ class CommentsController < ApplicationController
           else
             render turbo_stream: [
               turbo_stream.replace("modal", ""),
-              turbo_stream.replace(dom_id(@comment), partial: "comments/comment", locals: { comment: @comment, page_verse: @comment.commentable.is_a?(BibleVerse) ? @comment.commentable : nil })
+              turbo_stream.replace(dom_id(@comment, :body),
+                partial: "comments/comment_body",
+                locals: {
+                  comment: @comment,
+                  page_verse: @comment.commentable.is_a?(BibleVerse) ? @comment.commentable : nil,
+                  depth: @comment.depth,
+                  has_replies: @comment.replies.exists?
+                }
+              )
             ]
           end
         }
         format.html { 
-          # If editing from flagged content review, redirect appropriately
           if params[:direct_edit] && @comment.flagged_content_was_updated
             redirect_to my_flagged_content_path, notice: notice_message
           elsif @comment.commentable.is_a?(BibleVerse)
@@ -160,7 +192,6 @@ class CommentsController < ApplicationController
         format.json { render json: { id: @comment.id, content: @comment.content }, status: :ok, location: @comment }
       else
         format.turbo_stream { 
-          # Re-render the edit modal with errors
           render turbo_stream: [
             turbo_stream.replace("modal", 
               partial: "comments/edit", locals: { comment: @comment }
@@ -182,7 +213,6 @@ class CommentsController < ApplicationController
     respond_to do |format|
       format.turbo_stream { 
         if @commentable.is_a?(CrossReference)
-          # Handle cross-reference comment deletion
           render turbo_stream: [
             turbo_stream.replace("comments-summary-#{@commentable.id}", 
               partial: "cross_references/comments_summary", locals: { cross_ref: @commentable }
@@ -190,17 +220,12 @@ class CommentsController < ApplicationController
           ]
         elsif @commentable.is_a?(BibleVerse)
           render turbo_stream: [
-            turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: page_verse }),
+            turbo_stream.update("comments", partial: "comments/comments_list", locals: { commentable: page_verse }),
             turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: page_verse })
-          ]
-        elsif @commentable.comments.any?
-          render turbo_stream: [
-            turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
-            turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
           ]
         else
           render turbo_stream: [
-            turbo_stream.replace("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
+            turbo_stream.update("comments", partial: "comments/comments_list", locals: { commentable: @commentable }),
             turbo_stream.replace("comment-count", partial: "comments/comment_count", locals: { commentable: @commentable })
           ]
         end
@@ -231,7 +256,6 @@ class CommentsController < ApplicationController
                    elsif params[:cross_reference_id]
                      CrossReference.find(params[:cross_reference_id])
                    elsif params[:id] && request.path.include?('cross_references')
-                     # Handle comments on cross-references
                      CrossReference.find(params[:id])
                    else
                      nil
@@ -240,13 +264,32 @@ class CommentsController < ApplicationController
 
   def ensure_frame_response
     return unless Rails.env.development?
-    # Allow direct access if coming from admin or with direct_edit param
     return if params[:direct_edit] || request.referer&.include?('admin')
     redirect_to root_path unless turbo_frame_request?
   end
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:content, :parent_id)
+  end
+
+  def assign_parent(comment, parent_id)
+    return if parent_id.blank?
+
+    parent = Comment.find_by(id: parent_id)
+    return unless parent && reply_allowed?(parent, @commentable || comment.commentable)
+
+    comment.parent = parent
+    comment.commentable = parent.commentable
+    comment.end_verse = nil
+  end
+
+  def reply_allowed?(parent, page_commentable)
+    return false unless page_commentable
+    return true if parent.commentable == page_commentable
+
+    page_commentable.is_a?(BibleVerse) &&
+      parent.commentable.is_a?(BibleVerse) &&
+      parent.involves_verse?(page_commentable)
   end
 
   def resolve_end_verse(comment, commentable)

@@ -1,12 +1,13 @@
-<% comments = if commentable.is_a?(BibleVerse)
-     commentable.visible_comments.includes(:user, :end_verse, :commentable, :rich_text_content).order(created_at: :desc)
-   else
-     commentable.comments.includes(:user, :rich_text_content).order(created_at: :desc)
-   end %>
+<% roots, children_by_parent = Comment.thread_for(commentable) %>
+<% page_verse = commentable.is_a?(BibleVerse) ? commentable : nil %>
 
-<% if comments.any? %>
-  <% comments.each do |comment| %>
-    <%= render 'comments/comment', comment: comment, page_verse: commentable.is_a?(BibleVerse) ? commentable : nil %>
+<% if roots.any? %>
+  <% roots.each do |comment| %>
+    <%= render 'comments/comment',
+          comment: comment,
+          children_by_parent: children_by_parent,
+          page_verse: page_verse,
+          depth: 0 %>
   <% end %>
 <% else %>
   <div class="text-center py-8 text-gray-500">

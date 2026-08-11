@@ -30,7 +30,6 @@ class NotesController < ApplicationController
     
     @commentable = @note
     @comment = @commentable.comments.build
-    @comments = Comment.where(commentable: @note).includes(:user, :rich_text_content).order(created_at: :desc)
   end
 
   def new

@@ -1,7 +1,12 @@
-<% if cross_ref.comments.any? %>
-  <% cross_ref.comments.each do |comment| %>
-    <%= render 'comments/comment', comment: comment %>
+<% roots, children_by_parent = Comment.thread_for(cross_ref) %>
+
+<% if roots.any? %>
+  <% roots.each do |comment| %>
+    <%= render 'comments/comment',
+          comment: comment,
+          children_by_parent: children_by_parent,
+          depth: 0 %>
   <% end %>
 <% else %>
   <span class="text-gray-400">No comments</span>
-<% end %> 
+<% end %>

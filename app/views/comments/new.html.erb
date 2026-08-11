@@ -2,18 +2,31 @@
   <div class="modal-overlay" data-controller="modal">
     <div class="modal modal-md" data-modal-target="modal">
       <div class="modal-header">
-        <h2 class="modal-title">Add Comment</h2>
+        <h2 class="modal-title">
+          <% if @comment.parent.present? %>
+            Reply to <%= @comment.parent.user&.display_name || "comment" %>
+          <% else %>
+            Add Comment
+          <% end %>
+        </h2>
         <%= link_to "×", "#", class: "modal-close", data: { action: "click->modal#closeModal" } %>
       </div>
 
       <div class="modal-body">
-        <% if @commentable.is_a?(BibleVerse) %>
+        <% if @comment.parent.present? %>
+          <div class="reply-context mb-4">
+            <p class="text-sm text-gray-500 mb-1">Replying to:</p>
+            <div class="reply-context-quote">
+              <%= truncate(plain_text_from_rich_text(@comment.parent.content), length: 180) %>
+            </div>
+          </div>
+        <% elsif @commentable.is_a?(BibleVerse) %>
           <p class="text-sm text-gray-600 mb-4">
             <%= @commentable.book %> <%= @commentable.chapter %>:<%= @commentable.verse %>
             <span class="text-gray-500">— optionally extend through another verse in this chapter</span>
           </p>
         <% end %>
-        <%= render 'comments/form', comment: @comment %>
+        <%= render 'comments/form', comment: @comment, page_commentable: @commentable %>
       </div>
 
       <div class="modal-footer">

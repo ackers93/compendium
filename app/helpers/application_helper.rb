@@ -23,13 +23,9 @@ module ApplicationHelper
     end
   end
   
-  def bible_verse_form_url_for(comment)
+  def bible_verse_form_url_for(comment, page_commentable: nil)
     if comment.new_record?
-      if comment.commentable.is_a?(BibleVerse)
-        bible_verse_comments_path(book: comment.commentable.book, chapter: comment.commentable.chapter, verse: comment.commentable.verse)
-      else
-        polymorphic_path([comment.commentable, comment])
-      end
+      comment_create_url_for(page_commentable || comment.commentable)
     else
       if comment.commentable.is_a?(BibleVerse)
         bible_verse_comment_path(book: comment.commentable.book, chapter: comment.commentable.chapter, verse: comment.commentable.verse, id: comment.id)
@@ -37,6 +33,34 @@ module ApplicationHelper
         # For cross-reference comments, use the individual comment routes
         comment_path(comment)
       end
+    end
+  end
+
+  def comment_create_url_for(commentable)
+    case commentable
+    when BibleVerse
+      bible_verse_comments_path(book: commentable.book, chapter: commentable.chapter, verse: commentable.verse)
+    when Note
+      note_comments_path(commentable)
+    else
+      polymorphic_path([commentable, Comment.new])
+    end
+  end
+
+  def new_comment_reply_path_for(comment, page_commentable: nil)
+    commentable = page_commentable || comment.commentable
+    case commentable
+    when BibleVerse
+      new_bible_verse_comment_path(
+        book: commentable.book,
+        chapter: commentable.chapter,
+        verse: commentable.verse,
+        parent_id: comment.id
+      )
+    when Note
+      new_note_comment_path(commentable, parent_id: comment.id)
+    else
+      nil
     end
   end
   

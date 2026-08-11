@@ -7,21 +7,20 @@
 <div class="content-section mt-8">
   <div class="section-header">
     <h2 class="section-title">Comments</h2>
+    <div id="comment-count">
+      <%= render 'comments/comment_count', commentable: @note %>
+    </div>
   </div>
   
   <div class="section-content">
-    <div id="comments">
-      <% if @comments.any? %>
-        <%= render @comments %>
-      <% else %>
-        <p class="text-gray-500 text-center py-8">No comments yet. Be the first to comment!</p>
-      <% end %>
+    <div id="comments" class="comments-list">
+      <%= render 'comments/comments_list', commentable: @note %>
     </div>
     
     <% if current_user&.can_create? %>
       <div class="content-surface mt-6">
         <h3 class="text-lg font-semibold mb-4">Add a comment</h3>
-        <%= render 'comments/form', comment: @comment %>
+        <%= render 'comments/form', comment: @comment, page_commentable: @note %>
       </div>
     <% end %>
   </div>

@@ -1,5 +1,6 @@
-<%= form_with(model: comment, url: bible_verse_form_url_for(comment), id: "comment-form", data: { turbo_frame: params[:direct_edit] ? "_top" : nil }) do |form| %>
+<%= form_with(model: comment, url: bible_verse_form_url_for(comment, page_commentable: local_assigns[:page_commentable]), id: comment.reply? || comment.parent_id.present? ? nil : "comment-form", data: { turbo_frame: params[:direct_edit] ? "_top" : nil }) do |form| %>
   <%= hidden_field_tag :direct_edit, params[:direct_edit] if params[:direct_edit] %>
+  <%= form.hidden_field :parent_id if comment.parent_id.present? || comment.parent.present? %>
   
   <% if comment.errors.any? %>
     <div class="alert alert-error mb-4">
@@ -9,7 +10,7 @@
     </div>
   <% end %>
 
-  <% if comment.commentable.is_a?(BibleVerse) %>
+  <% if comment.commentable.is_a?(BibleVerse) && comment.root? && comment.parent.nil? && comment.parent_id.blank? %>
     <div class="form-group">
       <label for="comment_end_verse" class="form-label">Through verse <span class="text-sm text-gray-500 font-normal">(optional)</span></label>
       <input type="number"
@@ -27,10 +28,11 @@
   
   <div class="form-group">
     <%= form.label :content, class: "form-label" %>
-    <%= form.rich_text_area :content, class: "form-input" %>
+    <%# Unique id so modal/reply Trix editors don't sync to the page's empty comment form %>
+    <%= form.rich_text_area :content, class: "form-input", id: "comment_content_#{comment.id || "new_#{comment.parent_id || comment.object_id}"}" %>
   </div>
   
   <div class="form-actions mt-4">
-    <%= form.submit comment.new_record? ? "Save Comment" : "Update Comment", class: "btn btn-primary" %>
+    <%= form.submit comment.new_record? ? (comment.parent_id.present? || comment.parent.present? ? "Post Reply" : "Save Comment") : "Update Comment", class: "btn btn-primary" %>
   </div>
 <% end %>

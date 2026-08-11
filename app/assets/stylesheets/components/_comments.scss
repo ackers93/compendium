@@ -1,45 +1,75 @@
-.comment-item {
-  background: $theme-surface;
-  border: 1px solid $gray-200;
-  border-radius: $radius;
-  padding: $space-4;
+.comment-thread {
   margin-bottom: $space-4;
-  box-shadow: $shadow-sm;
-  
+
   &:last-child {
     margin-bottom: 0;
   }
 }
 
+.comment-item {
+  background: $theme-surface;
+  border: 1px solid $gray-200;
+  border-radius: $radius;
+  padding: $space-4;
+  margin-bottom: $space-2;
+  box-shadow: $shadow-sm;
+
+  &--nested {
+    background: $gray-100;
+    box-shadow: none;
+  }
+}
+
+.comment-replies {
+  margin-left: $space-4;
+  padding-left: $space-4;
+  border-left: 2px solid $gray-200;
+
+  .comment-replies {
+    margin-left: $space-3;
+    padding-left: $space-3;
+  }
+
+  .comment-replies .comment-replies {
+    margin-left: $space-2;
+    padding-left: $space-2;
+  }
+}
+
 .comment-header {
   margin-bottom: $space-3;
-  
+
   .comment-author {
     display: flex;
     align-items: center;
     gap: $space-2;
-    
+
     i {
       color: $theme-primary;
       font-size: $font-size-lg;
     }
-    
+
     .author-name {
       font-weight: $font-weight-semibold;
       color: $gray-900;
     }
-    
+
     .comment-date {
       font-size: $font-size-sm;
       color: $gray-500;
       margin-left: auto;
     }
   }
+
+  .author-name {
+    font-weight: $font-weight-semibold;
+    color: $gray-900;
+  }
 }
 
 .comment-content {
-  margin-bottom: $space-4;
-  
+  margin-bottom: 0;
+
   .trix-content {
     font-size: $font-size-base;
     line-height: $line-height-relaxed;
@@ -54,6 +84,15 @@
   border-top: 1px solid $gray-200;
 }
 
+.reply-context-quote {
+  background: $gray-100;
+  border-left: 3px solid $theme-primary;
+  padding: $space-2 $space-3;
+  border-radius: $radius;
+  font-size: $font-size-sm;
+  color: $gray-700;
+}
+
 // Button size variants
 .btn-sm {
   padding: $space-1 $space-2;
@@ -65,11 +104,12 @@
   background: linear-gradient(135deg, $danger 0%, darken($danger, 15%) 100%);
   border-color: $danger;
   color: $white;
-  
+
   &:hover:not(:disabled) {
     background: linear-gradient(135deg, darken($danger, 10%) 0%, darken($danger, 25%) 100%);
     border-color: darken($danger, 15%);
     transform: translateY(-1px);
     box-shadow: $shadow-md;
   }
-} 
+}
+ 

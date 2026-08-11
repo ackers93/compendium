@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_06_191658) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_11_163000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -92,8 +92,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_06_191658) do
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
     t.bigint "end_verse_id"
+    t.bigint "parent_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["end_verse_id"], name: "index_comments_on_end_verse_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
   end
 
   create_table "content_flags", force: :cascade do |t|
@@ -228,6 +230,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_06_191658) do
   add_foreign_key "bible_thread_entries", "bible_verses"
   add_foreign_key "bible_threads", "users"
   add_foreign_key "comments", "bible_verses", column: "end_verse_id"
+  add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "content_flags", "users"
   add_foreign_key "content_flags", "users", column: "resolved_by_id"
   add_foreign_key "cross_references", "bible_verses", column: "source_verse_id"
