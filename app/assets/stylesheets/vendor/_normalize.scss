@@ -179,5 +179,7 @@ template {
 }
 
 [hidden] {
-  display: none;
+  // !important so utility/component display rules (e.g. .btn { display: inline-flex })
+  // cannot override the HTML hidden attribute.
+  display: none !important;
 } 
