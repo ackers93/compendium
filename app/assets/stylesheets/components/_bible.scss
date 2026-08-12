@@ -1518,6 +1518,17 @@
 }
 
 // Chiasms
+.chiasm-form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-3;
+
+  &--top {
+    margin-bottom: $space-6;
+  }
+}
+
 .chiasms-list {
   display: flex;
   flex-direction: column;

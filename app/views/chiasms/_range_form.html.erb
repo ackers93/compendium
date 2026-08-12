@@ -1,4 +1,9 @@
 <%= form_with(model: chiasm, class: "chiasm-range-form", data: { controller: "chiasm-range" }) do |form| %>
+  <div class="chiasm-form-actions chiasm-form-actions--top">
+    <%= link_to "← Cancel", chiasms_path, class: "btn btn-outline" %>
+    <%= form.submit "Continue to limbs", class: "btn btn-primary" %>
+  </div>
+
   <% if chiasm.errors.any? %>
     <div class="alert alert-error mb-4">
       <h3><%= pluralize(chiasm.errors.count, "error") %> prohibited this chiasm from being saved:</h3>
@@ -97,9 +102,5 @@
       </div>
       <%= form.hidden_field :end_verse_id, data: { chiasm_range_target: "endVerseId" } %>
     </div>
-  </div>
-
-  <div class="form-actions mt-6">
-    <%= form.submit "Continue to limbs", class: "btn btn-primary" %>
   </div>
 <% end %>

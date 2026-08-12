@@ -2,6 +2,11 @@
 <% limbs = chiasm.chiasm_limbs.reject(&:marked_for_destruction?).sort_by { |l| l.position.to_i } %>
 
 <%= form_with(model: chiasm, class: "chiasm-limbs-form", data: { controller: "chiasm-limbs" }) do |form| %>
+  <div class="chiasm-form-actions chiasm-form-actions--top">
+    <%= link_to "← Cancel", chiasm_path(chiasm), class: "btn btn-outline" %>
+    <%= form.submit "Save Chiasm", class: "btn btn-primary" %>
+  </div>
+
   <% if chiasm.errors.any? %>
     <div class="alert alert-error mb-4">
       <h3><%= pluralize(chiasm.errors.count, "error") %> prohibited this chiasm from being saved:</h3>
@@ -101,8 +106,4 @@
                 placeholder="Optional note...">__NOTE__</textarea>
     </div>
   </template>
-
-  <div class="form-actions mt-6">
-    <%= form.submit "Save Chiasm", class: "btn btn-primary" %>
-  </div>
 <% end %>
