@@ -1,0 +1,75 @@
+<div class="page-header">
+  <h1 class="page-title">Chiasms</h1>
+  <p class="page-subtitle">Explore chiastic structures in Scripture</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">All Chiasms</h2>
+      <div class="d-flex gap-2 items-center">
+        <div class="search-form" style="margin-bottom: 0;">
+          <%= form_with url: chiasms_path, method: :get, class: "d-flex gap-2", data: { controller: "chiasms-search", chiasms_search_target: "form" } do |form| %>
+            <%= form.text_field :search,
+                value: params[:search],
+                placeholder: "Search by title or verse...",
+                class: "form-control search-input",
+                autocomplete: "off",
+                data: {
+                  action: "input->chiasms-search#search",
+                  chiasms_search_target: "input"
+                } %>
+          <% end %>
+        </div>
+        <% if current_user&.can_create? %>
+          <%= link_to new_chiasm_path, class: "btn btn-primary" do %>
+            <i class="fa-solid fa-plus"></i>
+            New Chiasm
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-content">
+    <%= turbo_frame_tag "chiasms-list" do %>
+      <% if @chiasms.any? %>
+        <div class="chiasms-list">
+          <% @chiasms.each do |chiasm| %>
+            <div class="chiasm-card">
+              <div class="chiasm-card-header">
+                <h3 class="chiasm-card-title">
+                  <%= link_to chiasm.title, chiasm_path(chiasm), data: { turbo_frame: "_top" } %>
+                </h3>
+                <div class="chiasm-card-meta">
+                  <span class="text-sm text-gray-600">
+                    <%= chiasm.range_reference %> ·
+                    <%= pluralize(chiasm.chiasm_limbs.size, "limb") %> ·
+                    <%= chiasm.user.display_name %> ·
+                    <%= chiasm.created_at.strftime('%b %d, %Y') %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="text-center py-8 text-gray-500">
+          <% if params[:search].present? %>
+            <p>No chiasms found matching "<%= params[:search] %>".</p>
+            <p class="text-sm mt-2">
+              <%= link_to "Clear search", chiasms_path, class: "text-blue-600 hover:text-blue-800", data: { turbo_frame: "_top" } %> or try a different search term.
+            </p>
+          <% else %>
+            <p>No chiasms yet.</p>
+            <% if current_user&.can_create? %>
+              <p class="text-sm mt-2">
+                <%= link_to "Create the first chiasm", new_chiasm_path, class: "text-blue-600 hover:text-blue-800", data: { turbo_frame: "_top" } %>
+              </p>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

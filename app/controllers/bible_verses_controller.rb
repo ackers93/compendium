@@ -71,6 +71,26 @@ class BibleVersesController < ApplicationController
         ranged = @chapter_comments_by_verse_id.values.flatten.select(&:range?)
         @range_comment_tracks = view_context.assign_range_comment_tracks(ranged)
         @range_track_count = @range_comment_tracks.values.map { |a| a[:track] }.max.then { |m| m ? m + 1 : 0 }
+
+        max_verse = @verses.maximum(:verse) || 1
+        overlapping_chiasms = Chiasm
+          .includes(:user, :start_verse, :end_verse)
+          .joins("INNER JOIN bible_verses AS chiasm_start ON chiasm_start.id = chiasms.start_verse_id")
+          .joins("INNER JOIN bible_verses AS chiasm_end ON chiasm_end.id = chiasms.end_verse_id")
+          .where("chiasm_start.book = ?", @book)
+          .where(
+            "(chiasm_start.chapter < :c OR (chiasm_start.chapter = :c AND chiasm_start.verse <= :max_v))",
+            c: @chapter, max_v: max_verse
+          )
+          .where(
+            "(chiasm_end.chapter > :c OR (chiasm_end.chapter = :c AND chiasm_end.verse >= 1))",
+            c: @chapter
+          )
+
+        @chiasms_by_verse_id = {}
+        @verses.each do |verse|
+          @chiasms_by_verse_id[verse.id] = overlapping_chiasms.select { |c| c.contains_verse?(verse) }
+        end
       end
       format.json { render json: { verses: @verses.as_json(only: [:id, :verse, :text]) } }
     end
@@ -94,6 +114,7 @@ class BibleVersesController < ApplicationController
       redirect_to bible_verse_chapters_path(book: @book), alert: "Verse not found"
     else
       @published_mentions = @bible_verse.published_mentions
+      @verse_chiasms = Chiasm.containing_verse(@bible_verse).includes(:user, :chiasm_limbs)
     end
   end
 

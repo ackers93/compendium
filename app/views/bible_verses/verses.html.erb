@@ -133,6 +133,17 @@
                 <% end %>
               </div>
             <% end %>
+
+            <!-- Chiasms Section -->
+            <% verse_chiasms = (@chiasms_by_verse_id || {})[verse.id] || [] %>
+            <% if verse_chiasms.any? %>
+              <div class="verse-chiasms-section">
+                <span class="verse-chiasms-section-title">X:</span>
+                <% verse_chiasms.each_with_index do |chiasm, index| %>
+                  <%= link_to chiasm.title, chiasm_path(chiasm), class: "chiasm-link" %><% unless index == verse_chiasms.count - 1 %>, <% end %>
+                <% end %>
+              </div>
+            <% end %>
             
             <!-- Topics Section -->
             <% if verse.topics.any? %>
@@ -160,6 +171,10 @@
                 <%= link_to new_bible_thread_path(book: @book, chapter: @chapter, verse: verse.verse),
                     class: "verse-action-link" do %>
                   <i class="fa-solid fa-list-ol"></i> Thread
+                <% end %>
+                <%= link_to new_chiasm_path(book: @book, chapter: @chapter, verse: verse.verse),
+                    class: "verse-action-link" do %>
+                  <i class="fa-solid fa-arrows-left-right-to-line"></i> Chiasm
                 <% end %>
                 <%= link_to new_bible_verse_topic_path(book: @book, chapter: @chapter, verse: verse.verse),
                     class: "verse-action-link",
@@ -202,6 +217,8 @@
                 <% counts << "C:#{start_comment_count}" if start_comment_count > 0 %>
                 <% counts << "CR:#{verse.all_cross_references.count}" if verse.all_cross_references.any? %>
                 <% counts << "T:#{verse.bible_threads.count}" if verse.bible_threads.any? %>
+                <% chiasm_count = ((@chiasms_by_verse_id || {})[verse.id] || []).size %>
+                <% counts << "X:#{chiasm_count}" if chiasm_count > 0 %>
                 <% counts << "TP:#{verse.topics.count}" if verse.topics.any? %>
                 <%= counts.join(' | ') if counts.any? %>
               </div>

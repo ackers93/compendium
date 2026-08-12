@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_11_163000) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_12_110708) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -81,6 +81,30 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_11_163000) do
     t.datetime "updated_at", null: false
     t.string "testament"
     t.index ["book", "chapter", "verse"], name: "index_bible_verses_on_book_and_chapter_and_verse", unique: true
+  end
+
+  create_table "chiasm_limbs", force: :cascade do |t|
+    t.bigint "chiasm_id", null: false
+    t.integer "position", null: false
+    t.integer "start_offset", null: false
+    t.integer "end_offset", null: false
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chiasm_id", "position"], name: "index_chiasm_limbs_on_chiasm_id_and_position"
+    t.index ["chiasm_id"], name: "index_chiasm_limbs_on_chiasm_id"
+  end
+
+  create_table "chiasms", force: :cascade do |t|
+    t.string "title", null: false
+    t.bigint "user_id", null: false
+    t.bigint "start_verse_id", null: false
+    t.bigint "end_verse_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["end_verse_id"], name: "index_chiasms_on_end_verse_id"
+    t.index ["start_verse_id"], name: "index_chiasms_on_start_verse_id"
+    t.index ["user_id"], name: "index_chiasms_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -229,6 +253,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_11_163000) do
   add_foreign_key "bible_thread_entries", "bible_threads"
   add_foreign_key "bible_thread_entries", "bible_verses"
   add_foreign_key "bible_threads", "users"
+  add_foreign_key "chiasm_limbs", "chiasms"
+  add_foreign_key "chiasms", "bible_verses", column: "end_verse_id"
+  add_foreign_key "chiasms", "bible_verses", column: "start_verse_id"
+  add_foreign_key "chiasms", "users"
   add_foreign_key "comments", "bible_verses", column: "end_verse_id"
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "content_flags", "users"

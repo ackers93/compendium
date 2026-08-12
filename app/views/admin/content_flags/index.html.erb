@@ -106,6 +106,10 @@
                 <i class="fa-solid fa-comment"></i> Comment
               <% when 'CrossReference' %>
                 <i class="fa-solid fa-link"></i> Cross-Reference
+              <% when 'BibleThread' %>
+                <i class="fa-solid fa-list-ol"></i> Bible Thread
+              <% when 'Chiasm' %>
+                <i class="fa-solid fa-arrows-left-right-to-line"></i> Chiasm
               <% end %>
             </div>
             <div class="flag-status">
@@ -169,6 +173,10 @@
                   <% end %>
                 <% when 'CrossReference' %>
                   <%= flag.flaggable.connection_label %>
+                <% when 'BibleThread' %>
+                  <%= flag.flaggable.title %>
+                <% when 'Chiasm' %>
+                  <%= flag.flaggable.title %> — <%= flag.flaggable.range_reference %>
                 <% end %>
               </div>
             </div>
@@ -222,6 +230,10 @@
                   end
                 when 'CrossReference'
                   bible_verse_show_path(flag.flaggable.source_verse.book, flag.flaggable.source_verse.chapter, flag.flaggable.source_verse.verse)
+                when 'BibleThread'
+                  bible_thread_path(flag.flaggable)
+                when 'Chiasm'
+                  chiasm_path(flag.flaggable)
                 end
               %>
               <%= link_to "View Content", view_path, class: "btn btn-sm btn-outline", target: "_blank" %>

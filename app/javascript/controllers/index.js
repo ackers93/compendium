@@ -14,6 +14,9 @@ import OnboardingController from "./onboarding_controller"
 import ContributorAgreementController from "./contributor_agreement_controller"
 import ThreadVersesExpandController from "./thread_verses_expand_controller"
 import RangeBracketsController from "./range_brackets_controller"
+import ChiasmLimbsController from "./chiasm_limbs_controller"
+import ChiasmRangeController from "./chiasm_range_controller"
+import ChiasmsSearchController from "./chiasms_search_controller"
 
 application.register("modal", ModalController)
 application.register("mobile-nav", MobileNavController)
@@ -30,5 +33,8 @@ application.register("onboarding", OnboardingController)
 application.register("contributor-agreement", ContributorAgreementController)
 application.register("thread-verses-expand", ThreadVersesExpandController)
 application.register("range-brackets", RangeBracketsController)
+application.register("chiasm-limbs", ChiasmLimbsController)
+application.register("chiasm-range", ChiasmRangeController)
+application.register("chiasms-search", ChiasmsSearchController)
 
 export { application } 

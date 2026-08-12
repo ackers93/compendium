@@ -5,6 +5,7 @@ class User < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_many :cross_references, dependent: :destroy
     has_many :bible_threads, dependent: :destroy
+    has_many :chiasms, dependent: :destroy
     
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -145,9 +146,10 @@ class User < ApplicationRecord
       comment_ids = comments.pluck(:id)
       cross_ref_ids = cross_references.pluck(:id)
       thread_ids = bible_threads.pluck(:id)
+      chiasm_ids = chiasms.pluck(:id)
       
       # Return 0 if user has no content
-      return 0 if note_ids.empty? && comment_ids.empty? && cross_ref_ids.empty? && thread_ids.empty?
+      return 0 if note_ids.empty? && comment_ids.empty? && cross_ref_ids.empty? && thread_ids.empty? && chiasm_ids.empty?
       
       conditions = []
       params = []
@@ -170,6 +172,11 @@ class User < ApplicationRecord
       unless thread_ids.empty?
         conditions << '(flaggable_type = ? AND flaggable_id IN (?))'
         params += ['BibleThread', thread_ids]
+      end
+
+      unless chiasm_ids.empty?
+        conditions << '(flaggable_type = ? AND flaggable_id IN (?))'
+        params += ['Chiasm', chiasm_ids]
       end
       
       ContentFlag.where(conditions.join(' OR '), *params)

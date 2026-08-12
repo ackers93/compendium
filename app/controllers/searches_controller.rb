@@ -33,6 +33,18 @@ class SearchesController < ApplicationController
     
     render partial: 'threads_results'
   end
+
+  def chiasms
+    if params[:q].present?
+      @chiasms = Chiasm.includes(:user, :start_verse, :end_verse, :chiasm_limbs)
+                       .search_by_title_or_verses(params[:q])
+                       .order(created_at: :desc)
+    else
+      @chiasms = Chiasm.none
+    end
+
+    render partial: 'chiasms_results'
+  end
   
   def notes
     # Search notes endpoint for turbo frame

@@ -1,0 +1,71 @@
+<div class="page-header">
+  <h1 class="page-title"><%= @chiasm.title %></h1>
+  <p class="page-subtitle">
+    <%= @chiasm.range_reference %> ·
+    Created by <%= @chiasm.user.display_name %> on <%= @chiasm.created_at.strftime('%b %d, %Y') %>
+  </p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">Chiastic Structure</h2>
+      <div class="d-flex gap-2">
+        <% if current_user&.can_update?(@chiasm) %>
+          <%= link_to edit_chiasm_path(@chiasm), class: "btn btn-secondary" do %>
+            <i class="fa-solid fa-edit"></i>
+            Edit
+          <% end %>
+        <% end %>
+        <% if current_user&.can_delete?(@chiasm) %>
+          <%= button_to chiasm_path(@chiasm),
+              method: :delete,
+              class: "btn btn-danger",
+              data: { turbo_confirm: "Are you sure you want to delete this chiasm?" } do %>
+            <i class="fa-solid fa-trash"></i>
+            Delete
+          <% end %>
+        <% elsif current_user %>
+          <%= link_to "javascript:void(0)",
+              onclick: "flagContent('Chiasm', #{@chiasm.id})",
+              class: "btn btn-outline" do %>
+            <i class="fa-solid fa-flag"></i>
+            Flag
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-content">
+    <% if @chiasm_limbs.any? %>
+      <div class="chiasm-structure">
+        <% @chiasm_limbs.each do |limb| %>
+          <div class="chiasm-limb <%= 'chiasm-limb--center' if limb.center? %>"
+               style="--chiasm-layer-color: <%= limb.color %>; --chiasm-depth: <%= limb.depth %>;">
+            <div class="chiasm-limb-label"><%= limb.label %></div>
+            <div class="chiasm-limb-body">
+              <div class="chiasm-limb-text"><%= limb.text_slice %></div>
+              <% if limb.note.present? %>
+                <div class="chiasm-limb-note"><%= limb.note %></div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-8 text-gray-500">
+        <p>No limbs defined yet.</p>
+        <% if current_user&.can_update?(@chiasm) %>
+          <p class="text-sm mt-2">
+            <%= link_to "Add limbs", edit_chiasm_path(@chiasm), class: "text-blue-600 hover:text-blue-800" %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-between mt-6">
+    <%= link_to "← Back to Chiasms", chiasms_path, class: "btn btn-outline" %>
+  </div>
+</div>

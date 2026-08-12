@@ -35,6 +35,10 @@ class ContentFlag < ApplicationRecord
       "Comment on #{flaggable.commentable_type}"
     when 'CrossReference'
       "Cross-reference: #{flaggable.connection_label}"
+    when 'BibleThread'
+      flaggable.title
+    when 'Chiasm'
+      flaggable.title
     else
       flaggable_type
     end

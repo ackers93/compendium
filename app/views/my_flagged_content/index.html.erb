@@ -107,6 +107,10 @@
                 <i class="fa-solid fa-comment"></i> Your Comment
               <% when 'CrossReference' %>
                 <i class="fa-solid fa-link"></i> Your Cross-Reference
+              <% when 'BibleThread' %>
+                <i class="fa-solid fa-list-ol"></i> Your Thread
+              <% when 'Chiasm' %>
+                <i class="fa-solid fa-arrows-left-right-to-line"></i> Your Chiasm
               <% end %>
             </div>
             <div class="flag-status">
@@ -184,6 +188,18 @@
                   <% else %>
                     <em class="text-danger">Content has been deleted</em>
                   <% end %>
+                <% when 'BibleThread' %>
+                  <% if flag.flaggable %>
+                    <%= flag.flaggable.title %>
+                  <% else %>
+                    <em class="text-danger">Content has been deleted</em>
+                  <% end %>
+                <% when 'Chiasm' %>
+                  <% if flag.flaggable %>
+                    <%= flag.flaggable.title %> — <%= flag.flaggable.range_reference %>
+                  <% else %>
+                    <em class="text-danger">Content has been deleted</em>
+                  <% end %>
                 <% end %>
               </div>
             </div>
@@ -200,6 +216,10 @@
                   edit_comment_path(flag.flaggable)
                 when 'CrossReference'
                   nil # Cross-references can't be edited
+                when 'BibleThread'
+                  edit_bible_thread_path(flag.flaggable)
+                when 'Chiasm'
+                  edit_chiasm_path(flag.flaggable)
                 end
               %>
               
@@ -227,6 +247,10 @@
                   end
                 when 'CrossReference'
                   bible_verse_show_path(flag.flaggable.source_verse.book, flag.flaggable.source_verse.chapter, flag.flaggable.source_verse.verse)
+                when 'BibleThread'
+                  bible_thread_path(flag.flaggable)
+                when 'Chiasm'
+                  chiasm_path(flag.flaggable)
                 end
               %>
               
@@ -254,6 +278,10 @@
                   end
                 when 'CrossReference'
                   bible_verse_show_path(flag.flaggable.source_verse.book, flag.flaggable.source_verse.chapter, flag.flaggable.source_verse.verse)
+                when 'BibleThread'
+                  bible_thread_path(flag.flaggable)
+                when 'Chiasm'
+                  chiasm_path(flag.flaggable)
                 end
               %>
               

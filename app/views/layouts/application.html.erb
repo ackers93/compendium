@@ -49,6 +49,8 @@
             idInput.name = 'cross_reference_id';
           } else if (contentType === 'BibleThread') {
             idInput.name = 'bible_thread_id';
+          } else if (contentType === 'Chiasm') {
+            idInput.name = 'chiasm_id';
           }
           idInput.value = contentId;
           form.appendChild(idInput);
@@ -95,6 +97,11 @@
             <li class="nav-item">
               <%= link_to bible_threads_path, class: "nav-link nav-link-sm" do %>
                 Threads
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to chiasms_path, class: "nav-link nav-link-sm" do %>
+                Chiasms
               <% end %>
             </li>
             <li class="nav-item">
@@ -187,6 +194,11 @@
                 Threads
               <% end %>
             </li>
+            <li class="mobile-nav-item">
+              <%= link_to chiasms_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                Chiasms
+              <% end %>
+            </li>
             <% if user_signed_in? %>
               <li class="mobile-nav-item">
                 <%= link_to search_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
@@ -251,6 +263,7 @@
           <%= link_to "Bible", bible_verses_books_path, class: "site-footer-link" %>
           <%= link_to "Topics", topics_path, class: "site-footer-link" %>
           <%= link_to "Threads", bible_threads_path, class: "site-footer-link" %>
+          <%= link_to "Chiasms", chiasms_path, class: "site-footer-link" %>
           <%= link_to "Search", search_path, class: "site-footer-link" %>
         </nav>
 

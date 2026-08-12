@@ -1,0 +1,29 @@
+<%= turbo_frame_tag "chiasms-search-results" do %>
+  <% if @chiasms.any? %>
+    <div class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Chiasms</h2>
+      </div>
+      <div class="section-content">
+        <div class="chiasms-list">
+          <% @chiasms.each do |chiasm| %>
+            <div class="chiasm-card">
+              <div class="chiasm-card-header">
+                <h3 class="chiasm-card-title">
+                  <%= link_to chiasm.title, chiasm_path(chiasm), data: { turbo_frame: "_top" } %>
+                </h3>
+                <div class="chiasm-card-meta">
+                  <span class="text-sm text-gray-600">
+                    <%= chiasm.range_reference %> ·
+                    <%= pluralize(chiasm.chiasm_limbs.size, "limb") %> ·
+                    Created by <%= chiasm.user.display_name %> on <%= chiasm.created_at.strftime('%b %d, %Y') %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

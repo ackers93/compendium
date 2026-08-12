@@ -1,0 +1,105 @@
+<%= form_with(model: chiasm, class: "chiasm-range-form", data: { controller: "chiasm-range" }) do |form| %>
+  <% if chiasm.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <h3><%= pluralize(chiasm.errors.count, "error") %> prohibited this chiasm from being saved:</h3>
+      <ul>
+        <% chiasm.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, "Title", class: "form-label" %>
+    <%= form.text_field :title, class: "form-input", placeholder: "e.g., The Flood Narrative" %>
+  </div>
+
+  <div class="chiasm-range-pickers">
+    <div class="chiasm-range-block">
+      <h3 class="chiasm-range-heading">Start</h3>
+      <div class="verse-selectors">
+        <select class="verse-select"
+                data-chiasm-range-target="startBook"
+                data-action="change->chiasm-range#startBookChanged">
+          <option value="">Book...</option>
+          <optgroup label="Old Testament">
+            <% BibleVersesController::OLD_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>" <%= 'selected' if book_option == chiasm.start_verse&.book %>><%= book_option %></option>
+            <% end %>
+          </optgroup>
+          <optgroup label="New Testament">
+            <% BibleVersesController::NEW_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>" <%= 'selected' if book_option == chiasm.start_verse&.book %>><%= book_option %></option>
+            <% end %>
+          </optgroup>
+        </select>
+        <select class="verse-select"
+                data-chiasm-range-target="startChapter"
+                data-selected="<%= chiasm.start_verse&.chapter %>"
+                data-action="change->chiasm-range#startChapterChanged"
+                <%= 'disabled' unless chiasm.start_verse %>>
+          <option value="">Ch...</option>
+          <% if chiasm.start_verse %>
+            <option value="<%= chiasm.start_verse.chapter %>" selected><%= chiasm.start_verse.chapter %></option>
+          <% end %>
+        </select>
+        <select class="verse-select"
+                data-chiasm-range-target="startVerse"
+                data-selected="<%= chiasm.start_verse&.verse %>"
+                data-action="change->chiasm-range#startVerseChanged"
+                <%= 'disabled' unless chiasm.start_verse %>>
+          <option value="">V...</option>
+          <% if chiasm.start_verse %>
+            <option value="<%= chiasm.start_verse.verse %>" selected><%= chiasm.start_verse.verse %></option>
+          <% end %>
+        </select>
+      </div>
+      <%= form.hidden_field :start_verse_id, data: { chiasm_range_target: "startVerseId" } %>
+    </div>
+
+    <div class="chiasm-range-block">
+      <h3 class="chiasm-range-heading">End <span class="text-sm text-gray-500 font-normal">(same book)</span></h3>
+      <div class="verse-selectors">
+        <select class="verse-select" data-chiasm-range-target="endBook" disabled>
+          <option value="">Book...</option>
+          <optgroup label="Old Testament">
+            <% BibleVersesController::OLD_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>" <%= 'selected' if book_option == (chiasm.end_verse&.book || chiasm.start_verse&.book) %>><%= book_option %></option>
+            <% end %>
+          </optgroup>
+          <optgroup label="New Testament">
+            <% BibleVersesController::NEW_TESTAMENT_BOOKS.each do |book_option| %>
+              <option value="<%= book_option %>" <%= 'selected' if book_option == (chiasm.end_verse&.book || chiasm.start_verse&.book) %>><%= book_option %></option>
+            <% end %>
+          </optgroup>
+        </select>
+        <select class="verse-select"
+                data-chiasm-range-target="endChapter"
+                data-selected="<%= chiasm.end_verse&.chapter %>"
+                data-action="change->chiasm-range#endChapterChanged"
+                <%= 'disabled' unless chiasm.end_verse || chiasm.start_verse %>>
+          <option value="">Ch...</option>
+          <% if chiasm.end_verse %>
+            <option value="<%= chiasm.end_verse.chapter %>" selected><%= chiasm.end_verse.chapter %></option>
+          <% end %>
+        </select>
+        <select class="verse-select"
+                data-chiasm-range-target="endVerse"
+                data-selected="<%= chiasm.end_verse&.verse %>"
+                data-action="change->chiasm-range#endVerseChanged"
+                <%= 'disabled' unless chiasm.end_verse %>>
+          <option value="">V...</option>
+          <% if chiasm.end_verse %>
+            <option value="<%= chiasm.end_verse.verse %>" selected><%= chiasm.end_verse.verse %></option>
+          <% end %>
+        </select>
+      </div>
+      <%= form.hidden_field :end_verse_id, data: { chiasm_range_target: "endVerseId" } %>
+    </div>
+  </div>
+
+  <div class="form-actions mt-6">
+    <%= form.submit "Continue to limbs", class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1514,4 +1514,219 @@
   .chapters-grid {
     grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
   }
-} 
+}
+
+// Chiasms
+.chiasms-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.chiasm-card {
+  background: $theme-surface;
+  border: 1px solid $gray-200;
+  border-radius: $radius-md;
+  padding: $space-4;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    border-color: $theme-primary;
+  }
+}
+
+.chiasm-card-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  margin: 0 0 $space-2;
+
+  a {
+    color: $theme-text;
+    text-decoration: none;
+
+    &:hover {
+      color: $theme-primary;
+    }
+  }
+}
+
+.chiasm-card-meta {
+  color: $gray-600;
+}
+
+.chiasm-range-pickers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-6;
+  margin-top: $space-4;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chiasm-range-heading {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  margin: 0 0 $space-3;
+  color: $theme-text;
+}
+
+.chiasm-editor-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: $space-6;
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chiasm-panel-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  margin: 0;
+  color: $theme-text;
+}
+
+.chiasm-passage-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-3;
+  margin-bottom: $space-3;
+  flex-wrap: wrap;
+}
+
+.chiasm-passage {
+  white-space: pre-wrap;
+  font-family: $font-family-sans;
+  font-size: $font-size-base;
+  line-height: 1.7;
+  background: $theme-surface;
+  border: 1px solid $gray-200;
+  border-radius: $radius-md;
+  padding: $space-4;
+  max-height: 32rem;
+  overflow: auto;
+  user-select: text;
+}
+
+.chiasm-passage-mark {
+  background: color-mix(in srgb, var(--chiasm-layer-color) 22%, transparent);
+  border-bottom: 2px solid var(--chiasm-layer-color);
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+.chiasm-limbs-editor-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-top: $space-3;
+}
+
+.chiasm-limb-editor-item {
+  border: 1px solid $gray-200;
+  border-left: 4px solid var(--chiasm-layer-color, $theme-primary);
+  border-radius: $radius-md;
+  padding: $space-3;
+  background: $theme-surface;
+}
+
+.chiasm-limb-editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $space-2;
+}
+
+.chiasm-limb-editor-label {
+  font-weight: $font-weight-bold;
+  color: var(--chiasm-layer-color, $theme-primary);
+  font-family: $font-family-sans;
+  font-size: $font-size-lg;
+}
+
+.chiasm-limb-editor-snippet {
+  font-size: $font-size-sm;
+  color: $gray-700;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.chiasm-structure {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.chiasm-limb {
+  --chiasm-indent: calc(var(--chiasm-depth, 0) * #{$space-6});
+  display: flex;
+  gap: $space-3;
+  margin-left: var(--chiasm-indent);
+  padding: $space-3 $space-4;
+  border-left: 4px solid var(--chiasm-layer-color);
+  background: color-mix(in srgb, var(--chiasm-layer-color) 8%, $theme-surface);
+  border-radius: 0 $radius-md $radius-md 0;
+}
+
+.chiasm-limb--center {
+  font-weight: $font-weight-semibold;
+  background: color-mix(in srgb, var(--chiasm-layer-color) 16%, $theme-surface);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--chiasm-layer-color) 35%, transparent);
+}
+
+.chiasm-limb-label {
+  flex-shrink: 0;
+  min-width: 2rem;
+  font-family: $font-family-sans;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-lg;
+  color: var(--chiasm-layer-color);
+  line-height: 1.4;
+}
+
+.chiasm-limb-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.chiasm-limb-text {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: $theme-text;
+}
+
+.chiasm-limb-note {
+  margin-top: $space-2;
+  padding-top: $space-2;
+  border-top: 1px solid $gray-200;
+  font-size: $font-size-sm;
+  color: $gray-600;
+  font-style: italic;
+}
+
+.verse-chiasms-section {
+  margin-top: $space-2;
+  font-size: $font-size-sm;
+}
+
+.verse-chiasms-section-title {
+  font-weight: $font-weight-semibold;
+  color: $gray-600;
+  margin-right: $space-1;
+}
+
+.chiasm-link {
+  color: $theme-primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+ 

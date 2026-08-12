@@ -1,0 +1,12 @@
+<div class="page-header">
+  <h1 class="page-title">Create New Chiasm</h1>
+  <p class="page-subtitle">Choose a title and scripture range, then map the chiastic limbs</p>
+</div>
+
+<div class="content-section">
+  <%= render 'range_form', chiasm: @chiasm %>
+
+  <div class="d-flex justify-between mt-6">
+    <%= link_to "← Cancel", chiasms_path, class: "btn btn-outline" %>
+  </div>
+</div>

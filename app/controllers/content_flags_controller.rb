@@ -43,6 +43,8 @@ class ContentFlagsController < ApplicationController
       CrossReference.find_by(id: params[:cross_reference_id])
     elsif params[:bible_thread_id]
       BibleThread.find_by(id: params[:bible_thread_id])
+    elsif params[:chiasm_id]
+      Chiasm.find_by(id: params[:chiasm_id])
     end
   end
   

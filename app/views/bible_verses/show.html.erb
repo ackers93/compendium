@@ -53,6 +53,7 @@
         <button class="tab-button active" onclick="showTab('comments')">Comments</button>
         <button class="tab-button" onclick="showTab('cross-references')">Cross-References</button>
         <button class="tab-button" onclick="showTab('threads')">Threads</button>
+        <button class="tab-button" onclick="showTab('chiasms')">Chiasms</button>
         <button class="tab-button" onclick="showTab('topics')">Topics</button>
         <button class="tab-button" onclick="showTab('mentions')">
           Mentions<% if @published_mentions.size > 0 %> (<%= @published_mentions.size %>)<% end %>
@@ -154,6 +155,54 @@
       </div>
     </div>
     
+    <!-- Chiasms Tab -->
+    <div id="chiasms-tab" class="tab-content">
+      <div class="chiasms-section">
+        <div class="section-header">
+          <div class="bible-section-actions">
+            <h3 class="section-title">Chiasms Containing This Verse</h3>
+            <% if current_user&.can_create? %>
+              <%= link_to new_chiasm_path(book: @book, chapter: @chapter, verse: @verse), class: "btn btn-primary" do %>
+                <i class="fa-solid fa-plus"></i>
+                New Chiasm
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+        <div id="chiasms-list" class="chiasms-content mb-6">
+          <% chiasms = @verse_chiasms || [] %>
+          <% if chiasms.any? %>
+            <div class="chiasms-list">
+              <% chiasms.each do |chiasm| %>
+                <div class="chiasm-card">
+                  <div class="chiasm-card-header">
+                    <h3 class="chiasm-card-title">
+                      <%= link_to chiasm.title, chiasm_path(chiasm) %>
+                    </h3>
+                    <div class="chiasm-card-meta text-sm text-gray-600 mt-1">
+                      <%= chiasm.range_reference %> ·
+                      Created by <%= chiasm.user.display_name %> ·
+                      <%= pluralize(chiasm.chiasm_limbs.size, 'limb') %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-center py-8 text-gray-500">
+              <p>This verse is not part of any chiasms yet.</p>
+              <% if current_user&.can_create? %>
+                <p class="text-sm mt-2">
+                  <%= link_to "Create a chiasm", new_chiasm_path(book: @book, chapter: @chapter, verse: @verse), class: "text-blue-600 hover:text-blue-800" %> covering this passage.
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
     <!-- Topics Tab -->
     <div id="topics-tab" class="tab-content">
       <div class="topics-section">

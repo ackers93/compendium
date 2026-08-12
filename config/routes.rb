@@ -47,6 +47,9 @@ Rails.application.routes.draw do
   
   # Bible threads routes
   resources :bible_threads
+
+  # Chiasms routes
+  resources :chiasms
   
   # Comments on cross-references
   
@@ -94,6 +97,7 @@ Rails.application.routes.draw do
   get 'search', to: 'searches#index', as: :search
   get 'search/topics', to: 'searches#topics', as: :search_topics
   get 'search/threads', to: 'searches#threads', as: :search_threads
+  get 'search/chiasms', to: 'searches#chiasms', as: :search_chiasms
   get 'search/notes', to: 'searches#notes', as: :search_notes
   get 'search/verse_comments', to: 'searches#verse_comments', as: :search_verse_comments
   get 'search/cross_reference_comments', to: 'searches#cross_reference_comments', as: :search_cross_reference_comments

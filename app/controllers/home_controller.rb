@@ -44,8 +44,15 @@ class HomeController < ApplicationController
         cta: "Browse Threads"
       },
       {
+        title: "Chiasms",
+        body: "Map chiastic structures across a passage. Highlight limbs that may cut mid-verse, then read the outline indented by layer.",
+        image: "onboarding/threads1.png",
+        path: chiasms_path,
+        cta: "Browse Chiasms"
+      },
+      {
         title: "Search",
-        body: "Find topics, notes, threads, verses, and comments from one place. Use Search whenever you need to locate something quickly.",
+        body: "Find topics, notes, threads, chiasms, verses, and comments from one place. Use Search whenever you need to locate something quickly.",
         image: "onboarding/search.png",
         path: search_path,
         cta: "Search Compendium"

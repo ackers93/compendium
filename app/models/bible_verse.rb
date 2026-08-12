@@ -16,6 +16,10 @@ class BibleVerse < ApplicationRecord
   # Bible threads
   has_many :bible_thread_entries, dependent: :destroy
   has_many :bible_threads, through: :bible_thread_entries
+
+  # Chiasms that start or end on this verse
+  has_many :chiasms_as_start, class_name: 'Chiasm', foreign_key: 'start_verse_id', dependent: :restrict_with_error
+  has_many :chiasms_as_end, class_name: 'Chiasm', foreign_key: 'end_verse_id', dependent: :restrict_with_error
   
   # Topics
   has_many :verse_topics, dependent: :destroy

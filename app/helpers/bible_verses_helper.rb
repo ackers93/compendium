@@ -1,10 +1,5 @@
 module BibleVersesHelper
-  RANGE_COMMENT_COLORS = [
-    '#c45c26', # rust
-    '#2a6f7f', # teal
-    '#5c7a3a', # olive
-    '#8a5a2b'  # umber
-  ].freeze
+  RANGE_COMMENT_COLORS = RangeColors::COLORS
 
   # Returns { book:, chapter: } for the previous chapter, or nil at Genesis 1.
   def previous_bible_chapter(book, chapter)

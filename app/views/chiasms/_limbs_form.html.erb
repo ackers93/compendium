@@ -1,0 +1,108 @@
+<% passage_text = chiasm.passage_text %>
+<% limbs = chiasm.chiasm_limbs.reject(&:marked_for_destruction?).sort_by { |l| l.position.to_i } %>
+
+<%= form_with(model: chiasm, class: "chiasm-limbs-form", data: { controller: "chiasm-limbs" }) do |form| %>
+  <% if chiasm.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <h3><%= pluralize(chiasm.errors.count, "error") %> prohibited this chiasm from being saved:</h3>
+      <ul>
+        <% chiasm.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+        <% chiasm.chiasm_limbs.each do |limb| %>
+          <% limb.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, "Title", class: "form-label" %>
+    <%= form.text_field :title, class: "form-input" %>
+  </div>
+
+  <p class="chiasm-range-locked text-sm text-gray-600 mb-4">
+    Passage: <strong><%= chiasm.range_reference %></strong>
+  </p>
+
+  <div class="chiasm-editor-layout">
+    <div class="chiasm-passage-panel">
+      <div class="chiasm-passage-toolbar">
+        <h3 class="chiasm-panel-title">Passage</h3>
+        <button type="button"
+                class="btn btn-secondary"
+                data-action="click->chiasm-limbs#addFromSelection">
+          <i class="fa-solid fa-plus"></i>
+          Add limb from selection
+        </button>
+      </div>
+      <div class="chiasm-passage"
+           data-chiasm-limbs-target="passage"><%= passage_text %></div>
+      <p class="text-sm text-gray-500 mt-2">
+        Select a span of text (mid-verse is fine), then add it as the next limb in reading order.
+      </p>
+    </div>
+
+    <div class="chiasm-limbs-panel">
+      <h3 class="chiasm-panel-title">Limbs</h3>
+      <div data-chiasm-limbs-target="emptyState" class="text-sm text-gray-500" <%= 'hidden' if limbs.any? %>>
+        No limbs yet. Highlight text in the passage to begin.
+      </div>
+      <div class="chiasm-limbs-editor-list" data-chiasm-limbs-target="limbsList">
+        <% limbs.each_with_index do |limb, index| %>
+          <%= form.fields_for :chiasm_limbs, limb do |limb_form| %>
+            <div class="chiasm-limb-editor-item"
+                 data-persisted="<%= limb.persisted? %>"
+                 style="--chiasm-layer-color: <%= limb.color %>;">
+              <%= limb_form.hidden_field :id if limb.persisted? %>
+              <%= limb_form.hidden_field :position, value: limb.position || index + 1 %>
+              <%= limb_form.hidden_field :start_offset %>
+              <%= limb_form.hidden_field :end_offset %>
+              <%= limb_form.hidden_field :_destroy, value: "0" %>
+              <div class="chiasm-limb-editor-header">
+                <span class="chiasm-limb-editor-label" data-limb-label><%= limb.label %></span>
+                <button type="button"
+                        class="btn-icon btn-icon-danger"
+                        data-action="click->chiasm-limbs#removeLimb"
+                        title="Remove">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+              <div class="chiasm-limb-editor-snippet"><%= limb.text_slice %></div>
+              <%= limb_form.text_area :note, class: "form-input mt-2", rows: 2, placeholder: "Optional note..." %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <template data-chiasm-limbs-target="template">
+    <div class="chiasm-limb-editor-item" data-persisted="false">
+      <input type="hidden" name="chiasm[chiasm_limbs_attributes][__INDEX__][position]" value="__POSITION__" />
+      <input type="hidden" name="chiasm[chiasm_limbs_attributes][__INDEX__][start_offset]" value="__START__" />
+      <input type="hidden" name="chiasm[chiasm_limbs_attributes][__INDEX__][end_offset]" value="__END__" />
+      <input type="hidden" name="chiasm[chiasm_limbs_attributes][__INDEX__][_destroy]" value="0" />
+      <div class="chiasm-limb-editor-header">
+        <span class="chiasm-limb-editor-label" data-limb-label>A</span>
+        <button type="button"
+                class="btn-icon btn-icon-danger"
+                data-action="click->chiasm-limbs#removeLimb"
+                title="Remove">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+      <div class="chiasm-limb-editor-snippet">__SNIPPET__</div>
+      <textarea name="chiasm[chiasm_limbs_attributes][__INDEX__][note]"
+                class="form-input mt-2"
+                rows="2"
+                placeholder="Optional note...">__NOTE__</textarea>
+    </div>
+  </template>
+
+  <div class="form-actions mt-6">
+    <%= form.submit "Save Chiasm", class: "btn btn-primary" %>
+  </div>
+<% end %>

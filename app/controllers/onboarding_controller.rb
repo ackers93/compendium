@@ -133,17 +133,26 @@ class OnboardingController < ApplicationController
         screenshot: "onboarding/threads2.png"
       },
       {
+        key: "chiasms",
+        icon: "fa-arrows-left-right-to-line",
+        title: "Chiasms",
+        body: can_create ?
+          "Select a scripture range and highlight chiastic limbs—even mid-verse. Layers indent and color so the structure is easy to read." :
+          "Explore chiastic outlines created by contributors, with indented layers that reveal the passage’s mirrored structure.",
+        screenshot: "onboarding/threads1.png"
+      },
+      {
         key: "search",
         icon: "fa-magnifying-glass",
         title: "Search",
-        body: "Search across topics, notes, threads, verses, and comments from one place. Use Search in the navigation whenever you need to find something quickly.",
+        body: "Search across topics, notes, threads, chiasms, verses, and comments from one place. Use Search in the navigation whenever you need to find something quickly.",
         screenshot: "onboarding/search.png"
       },
       {
         key: "flagging",
         icon: "fa-flag",
         title: "Flagging content",
-        body: "See something inappropriate or incorrect? Use Flag on notes, comments, cross-references, or threads to report it. Admins review flags and can request changes or remove content. Check My Content in your profile menu for items that need your attention.",
+        body: "See something inappropriate or incorrect? Use Flag on notes, comments, cross-references, threads, or chiasms to report it. Admins review flags and can request changes or remove content. Check My Content in your profile menu for items that need your attention.",
         screenshot: "onboarding/flagging.png"
       },
       {
