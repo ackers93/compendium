@@ -168,8 +168,7 @@ export default class extends Controller {
   }
 
   colorAt(depth) {
-    const colors = ["#c45c26", "#2a6f7f", "#5c7a3a", "#8a5a2b"]
-    return colors[depth % colors.length]
+    return `var(--color-range-${(depth % 4) + 1})`
   }
 
   escapeHtml(value) {

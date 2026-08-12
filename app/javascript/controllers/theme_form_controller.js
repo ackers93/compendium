@@ -14,7 +14,7 @@ export default class extends Controller {
     if (!/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(value)) return
 
     const normalized = this.expandHex(value)
-    document.documentElement.style.setProperty(`--color-${key}`, normalized)
+    document.documentElement.style.setProperty(this.cssVarFor(key), normalized)
 
     if (key === "primary") {
       document.documentElement.style.setProperty(
@@ -35,6 +35,12 @@ export default class extends Controller {
     }
 
     this.syncPair(key, normalized)
+  }
+
+  cssVarFor(key) {
+    const rangeMatch = key.match(/^range_(\d+)$/)
+    if (rangeMatch) return `--color-range-${rangeMatch[1]}`
+    return `--color-${key}`
   }
 
   syncPair(key, hex) {

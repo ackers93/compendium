@@ -1,14 +1,25 @@
 module RangeColors
+  COUNT = 4
+
+  # Default hex values — mirrored in Themeable::DEFAULT_THEME and :root CSS.
   COLORS = [
-    '#c45c26', # rust
-    '#2a6f7f', # teal
-    '#5c7a3a', # olive
-    '#8a5a2b'  # umber
+    Themeable::DEFAULT_THEME.fetch("range_1"),
+    Themeable::DEFAULT_THEME.fetch("range_2"),
+    Themeable::DEFAULT_THEME.fetch("range_3"),
+    Themeable::DEFAULT_THEME.fetch("range_4")
   ].freeze
 
   module_function
 
   def color_at(index)
-    COLORS[index % COLORS.length]
+    css_var_at(index)
+  end
+
+  def css_var_at(index)
+    "var(--color-range-#{(index % COUNT) + 1})"
+  end
+
+  def hex_at(index)
+    COLORS[index % COUNT]
   end
 end

@@ -8,6 +8,10 @@
   --color-text: #{$body-text};
   --color-background: #{$page-background};
   --color-surface: #{$surface};
+  --color-range-1: #c45c26;
+  --color-range-2: #2a6f7f;
+  --color-range-3: #5c7a3a;
+  --color-range-4: #8a5a2b;
 
   // Derived accents (follow primary when user rethemes)
   --color-primary-muted: color-mix(in srgb, var(--color-primary) 12%, transparent);

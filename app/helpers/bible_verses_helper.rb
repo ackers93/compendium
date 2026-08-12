@@ -67,7 +67,7 @@ module BibleVersesHelper
       occupied_tracks[track] << [start_v, end_v]
       assignments[comment.id] = {
         track: track,
-        color: RANGE_COMMENT_COLORS[track % RANGE_COMMENT_COLORS.length],
+        color: RangeColors.css_var_at(track),
         start_verse: start_v,
         end_verse: end_v
       }

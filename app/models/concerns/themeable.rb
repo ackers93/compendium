@@ -3,21 +3,29 @@
 module Themeable
   extend ActiveSupport::Concern
 
-  THEME_KEYS = %w[primary header text background].freeze
+  THEME_KEYS = %w[primary header text background range_1 range_2 range_3 range_4].freeze
   HEX_COLOR = /\A#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})\z/
 
   DEFAULT_THEME = {
     "primary" => "#be9627",
     "header" => "#1e3228",
     "text" => "#1a2e24",
-    "background" => "#f3f5f3"
+    "background" => "#f3f5f3",
+    "range_1" => "#c45c26",
+    "range_2" => "#2a6f7f",
+    "range_3" => "#5c7a3a",
+    "range_4" => "#8a5a2b"
   }.freeze
 
   THEME_LABELS = {
     "primary" => "Accent / buttons",
     "header" => "Header background",
     "text" => "Text color",
-    "background" => "Page background"
+    "background" => "Page background",
+    "range_1" => "Range / chiasm color 1",
+    "range_2" => "Range / chiasm color 2",
+    "range_3" => "Range / chiasm color 3",
+    "range_4" => "Range / chiasm color 4"
   }.freeze
 
   class_methods do
@@ -43,7 +51,11 @@ module Themeable
       "--color-header-text" => readable_on_dark(theme["header"]),
       "--color-text" => theme["text"],
       "--color-background" => theme["background"],
-      "--color-surface" => "#ffffff"
+      "--color-surface" => "#ffffff",
+      "--color-range-1" => theme["range_1"],
+      "--color-range-2" => theme["range_2"],
+      "--color-range-3" => theme["range_3"],
+      "--color-range-4" => theme["range_4"]
     }
   end
 
