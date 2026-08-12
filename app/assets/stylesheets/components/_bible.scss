@@ -786,6 +786,37 @@
   }
 }
 
+// Shared book/chapter/verse pickers (threads, chiasms, etc.)
+.verse-selectors {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: $space-2;
+  margin-bottom: $space-3;
+}
+
+.verse-select {
+  width: 100%;
+  padding: $space-2;
+  border: 1px solid $gray-300;
+  border-radius: $radius-sm;
+  background: $white;
+  font-size: $font-size-sm;
+  color: $gray-700;
+  transition: all 0.15s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $theme-primary;
+    box-shadow: 0 0 0 3px $theme-primary-muted;
+  }
+
+  &:disabled {
+    background: $gray-100;
+    color: $gray-500;
+    cursor: not-allowed;
+  }
+}
+
 .bible-thread-form {
   .verses-section {
     margin-top: $space-6;
@@ -891,36 +922,6 @@
     
     .verse-entry-body {
       padding: $space-3;
-    }
-    
-    .verse-selectors {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: $space-2;
-      margin-bottom: $space-3;
-    }
-    
-    .verse-select {
-      width: 100%;
-      padding: $space-2;
-      border: 1px solid $gray-300;
-      border-radius: $radius-sm;
-      background: $white;
-      font-size: $font-size-sm;
-      color: $gray-700;
-      transition: all 0.15s ease;
-      
-      &:focus {
-        outline: none;
-        border-color: $theme-primary;
-        box-shadow: 0 0 0 3px $theme-primary-muted;
-      }
-      
-      &:disabled {
-        background: $gray-100;
-        color: $gray-500;
-        cursor: not-allowed;
-      }
     }
     
     .verse-comment-input {
