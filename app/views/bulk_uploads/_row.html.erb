@@ -1,0 +1,41 @@
+<tr data-bulk-upload-target="row">
+  <td data-label="Verse">
+    <div class="form-group">
+      <label class="form-label sr-only" for="entries_<%= index %>_reference">Verse reference</label>
+      <input
+        type="text"
+        name="entries[<%= index %>][reference]"
+        id="entries_<%= index %>_reference"
+        class="form-input <%= 'is-invalid' if row[:result]&.dig(:error) %>"
+        placeholder="e.g. gen1:1 or John 3:16-18"
+        value="<%= row[:reference] %>"
+        autocomplete="off" />
+    </div>
+  </td>
+
+  <td data-label="Comment">
+    <div class="form-group">
+      <label class="form-label sr-only" for="entries_<%= index %>_content">Comment</label>
+      <textarea
+        name="entries[<%= index %>][content]"
+        id="entries_<%= index %>_content"
+        class="form-input bulk-upload-comment <%= 'is-invalid' if row[:result]&.dig(:error) %>"
+        rows="2"
+        placeholder="Your comment"><%= row[:content] %></textarea>
+    </div>
+  </td>
+
+  <td data-label="Status">
+    <% if row[:result]&.dig(:success) %>
+      <span class="bulk-upload-status-success" title="<%= row[:result][:reference] %>">
+        <i class="fa-solid fa-check" aria-hidden="true"></i>
+        Saved
+      </span>
+    <% elsif row[:result]&.dig(:error) %>
+      <span class="bulk-upload-status-error" title="<%= row[:result][:error] %>">
+        <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+        <%= row[:result][:error] %>
+      </span>
+    <% end %>
+  </td>
+</tr>

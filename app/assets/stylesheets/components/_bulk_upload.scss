@@ -1,0 +1,132 @@
+.bulk-upload-help {
+  margin-bottom: $space-6;
+  color: $gray-600;
+
+  ul {
+    margin: $space-2 0 0;
+    padding-left: $space-5;
+  }
+
+  code {
+    font-size: $font-size-sm;
+    background: $gray-100;
+    padding: 0.1em 0.35em;
+    border-radius: $radius-sm;
+  }
+}
+
+.bulk-upload-table {
+  .table {
+    table-layout: fixed;
+  }
+
+  th:nth-child(1),
+  td:nth-child(1) {
+    width: 22%;
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 58%;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    width: 20%;
+  }
+
+  td {
+    vertical-align: top;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .bulk-upload-comment {
+    min-height: 4.5rem;
+    resize: vertical;
+  }
+}
+
+.bulk-upload-status-success {
+  color: $success;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-size: $font-size-sm;
+}
+
+.bulk-upload-status-error {
+  color: $danger;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: $space-1;
+  font-size: $font-size-sm;
+  line-height: 1.4;
+}
+
+.bulk-upload-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $space-3;
+  margin-top: $space-4;
+  flex-wrap: wrap;
+}
+
+.bulk-upload-submit {
+  display: flex;
+  gap: $space-2;
+  align-items: center;
+}
+
+.form-input.is-invalid {
+  border-color: $danger;
+}
+
+@media (max-width: $breakpoint-md) {
+  .bulk-upload-table .table {
+    display: block;
+  }
+
+  .bulk-upload-table thead {
+    display: none;
+  }
+
+  .bulk-upload-table tbody,
+  .bulk-upload-table tr,
+  .bulk-upload-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .bulk-upload-table tr {
+    padding: $space-4;
+    border-bottom: 1px solid $gray-200;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .bulk-upload-table td {
+    padding: 0 0 $space-3;
+    border-bottom: none;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &::before {
+      content: attr(data-label);
+      display: block;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $gray-500;
+      margin-bottom: $space-1;
+    }
+  }
+}

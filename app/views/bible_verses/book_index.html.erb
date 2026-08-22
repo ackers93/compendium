@@ -4,6 +4,12 @@
 </div>
 
 <div class="bible-browse-toolbar">
+  <% if current_user&.can_create? %>
+    <%= link_to new_bulk_upload_path, class: "btn btn-outline" do %>
+      Bulk Upload
+    <% end %>
+  <% end %>
+
   <div class="bible-search-group form-group" data-controller="bible-search">
     <label class="form-label">Search Bible</label>
     <div class="relative">
