@@ -19,7 +19,7 @@
       <textarea
         name="entries[<%= index %>][content]"
         id="entries_<%= index %>_content"
-        class="form-input bulk-upload-comment <%= 'is-invalid' if row[:result]&.dig(:error) %>"
+        class="form-textarea bulk-upload-comment <%= 'is-invalid' if row[:result]&.dig(:error) %>"
         rows="2"
         placeholder="Your comment"><%= row[:content] %></textarea>
     </div>

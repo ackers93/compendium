@@ -23,9 +23,13 @@
 }
 
 .form-control,
-.form-input {
+.form-input,
+.form-textarea,
+.form-select {
+  display: block;
   width: 100%;
   padding: $space-2 $space-3;
+  font-family: inherit;
   font-size: $font-size-sm;
   line-height: $line-height-normal;
   color: $gray-900;
@@ -33,22 +37,27 @@
   border: 1px solid $gray-300;
   border-radius: $radius-sm;
   transition: all 0.2s ease;
-  
+
   &:focus {
     outline: none;
     border-color: $theme-primary;
     box-shadow: 0 0 0 3px $theme-primary-muted;
   }
-  
+
   &:disabled {
     background-color: $gray-100;
     color: $gray-500;
     cursor: not-allowed;
   }
-  
+
   &::placeholder {
     color: $gray-400;
   }
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 4.5rem;
 }
 
 // Ensure selects work with form-input class

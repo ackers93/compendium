@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'bible_verses/books', to: 'bible_verses#book_index'
   get 'bible_verses/bulk_upload', to: 'bulk_uploads#new', as: :new_bulk_upload
   post 'bible_verses/bulk_upload', to: 'bulk_uploads#create', as: :bulk_upload
+  get 'bible_verses/bulk_cross_references', to: 'bulk_cross_references#new', as: :new_bulk_cross_reference
+  post 'bible_verses/bulk_cross_references', to: 'bulk_cross_references#create', as: :bulk_cross_reference
   get 'bible_verses/verse_picker', to: 'bible_verses#verse_picker', as: :bible_verse_picker
   get 'bible_verses/autocomplete', to: 'bible_verses#autocomplete', as: :bible_verses_autocomplete
   get 'bible_verses/:book/chapters', to: 'bible_verses#chapters', as: :bible_verse_chapters

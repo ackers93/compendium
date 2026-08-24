@@ -1,0 +1,55 @@
+<div class="bulk-xref-row" data-bulk-upload-target="row">
+  <div class="bulk-xref-fields">
+    <div class="form-group bulk-xref-field">
+      <label class="form-label" for="entries_<%= index %>_source_reference">Source verse</label>
+      <input
+        type="text"
+        name="entries[<%= index %>][source_reference]"
+        id="entries_<%= index %>_source_reference"
+        class="form-input <%= 'is-invalid' if row[:result]&.dig(:error) %>"
+        placeholder="e.g. gen1:1"
+        value="<%= row[:source_reference] %>"
+        autocomplete="off" />
+    </div>
+
+    <div class="form-group bulk-xref-field">
+      <label class="form-label" for="entries_<%= index %>_target_reference">Target verse</label>
+      <input
+        type="text"
+        name="entries[<%= index %>][target_reference]"
+        id="entries_<%= index %>_target_reference"
+        class="form-input <%= 'is-invalid' if row[:result]&.dig(:error) %>"
+        placeholder="e.g. john3:16 or john3:16-18"
+        value="<%= row[:target_reference] %>"
+        autocomplete="off" />
+    </div>
+
+    <div class="form-group bulk-xref-field bulk-xref-field--comment">
+      <label class="form-label" for="entries_<%= index %>_content">
+        Comment <span class="bulk-xref-optional">(optional)</span>
+      </label>
+      <textarea
+        name="entries[<%= index %>][content]"
+        id="entries_<%= index %>_content"
+        class="form-textarea bulk-upload-comment"
+        rows="2"
+        placeholder="How are these verses connected?"><%= row[:content] %></textarea>
+    </div>
+  </div>
+
+  <% if row[:result]&.dig(:success) || row[:result]&.dig(:error) %>
+    <div class="bulk-xref-status">
+      <% if row[:result]&.dig(:success) %>
+        <span class="bulk-upload-status-success" title="<%= row[:result][:reference] %>">
+          <i class="fa-solid fa-check" aria-hidden="true"></i>
+          Saved
+        </span>
+      <% elsif row[:result]&.dig(:error) %>
+        <span class="bulk-upload-status-error" title="<%= row[:result][:error] %>">
+          <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+          <%= row[:result][:error] %>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+</div>
