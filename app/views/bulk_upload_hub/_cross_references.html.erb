@@ -1,0 +1,28 @@
+<div class="bulk-upload-help">
+  <p>Enter a source verse and target verse on each row. Comments are optional. Supported formats:</p>
+  <ul>
+    <li><code>gen1:1</code>, <code>Gen 1:1</code>, or <code>Genesis 1:1</code></li>
+    <li>Target ranges: <code>john3:16-18</code> (source must be a single verse)</li>
+  </ul>
+</div>
+
+<%= form_with url: bulk_cross_reference_path, method: :post, class: "bulk-xref-form", data: { controller: "bulk-upload" } do %>
+  <div class="bulk-xref-list" data-bulk-upload-target="rows">
+    <% @xref_rows.each_with_index do |row, index| %>
+      <%= render "bulk_cross_references/row", index: index, row: row %>
+    <% end %>
+  </div>
+
+  <template data-bulk-upload-target="template">
+    <%= render "bulk_cross_references/row", index: "__INDEX__", row: { source_reference: "", target_reference: "", content: "" } %>
+  </template>
+
+  <div class="bulk-upload-actions">
+    <button type="button" class="btn btn-outline" data-action="bulk-upload#addRow">
+      Add row
+    </button>
+    <div class="bulk-upload-submit">
+      <%= submit_tag "Upload cross references", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

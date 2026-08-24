@@ -18,6 +18,7 @@ import ChiasmLimbsController from "./chiasm_limbs_controller"
 import ChiasmRangeController from "./chiasm_range_controller"
 import ChiasmsSearchController from "./chiasms_search_controller"
 import BulkUploadController from "./bulk_upload_controller"
+import BulkUploadTabsController from "./bulk_upload_tabs_controller"
 
 application.register("modal", ModalController)
 application.register("mobile-nav", MobileNavController)
@@ -38,5 +39,6 @@ application.register("chiasm-limbs", ChiasmLimbsController)
 application.register("chiasm-range", ChiasmRangeController)
 application.register("chiasms-search", ChiasmsSearchController)
 application.register("bulk-upload", BulkUploadController)
+application.register("bulk-upload-tabs", BulkUploadTabsController)
 
 export { application } 

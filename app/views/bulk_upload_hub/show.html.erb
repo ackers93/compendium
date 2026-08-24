@@ -1,0 +1,59 @@
+<div class="page-header">
+  <h1 class="page-title">Bulk Upload</h1>
+  <p class="page-subtitle">Add comments, cross references, topics, or threads in bulk</p>
+</div>
+
+<div class="content-section">
+  <div class="section-content">
+    <div class="tabs-section" data-controller="bulk-upload-tabs" data-bulk-upload-tabs-active-value="<%= @tab %>">
+      <div class="tabs-header">
+        <nav class="tabs-nav" aria-label="Bulk upload types">
+          <%= link_to "Verse Comments",
+              bulk_upload_hub_path(tab: "comments"),
+              class: "tab-button #{'active' if @tab == 'comments'}",
+              data: { bulk_upload_tabs_target: "tab", tab: "comments", action: "click->bulk-upload-tabs#select" } %>
+          <%= link_to "Cross References",
+              bulk_upload_hub_path(tab: "cross_references"),
+              class: "tab-button #{'active' if @tab == 'cross_references'}",
+              data: { bulk_upload_tabs_target: "tab", tab: "cross_references", action: "click->bulk-upload-tabs#select" } %>
+          <%= link_to "Topics",
+              bulk_upload_hub_path(tab: "topics"),
+              class: "tab-button #{'active' if @tab == 'topics'}",
+              data: { bulk_upload_tabs_target: "tab", tab: "topics", action: "click->bulk-upload-tabs#select" } %>
+          <%= link_to "Threads",
+              bulk_upload_hub_path(tab: "threads"),
+              class: "tab-button #{'active' if @tab == 'threads'}",
+              data: { bulk_upload_tabs_target: "tab", tab: "threads", action: "click->bulk-upload-tabs#select" } %>
+        </nav>
+      </div>
+
+      <div class="tab-content <%= 'active' if @tab == 'comments' %>"
+           data-bulk-upload-tabs-target="panel"
+           data-tab="comments"
+           role="tabpanel">
+        <%= render "bulk_upload_hub/comments" %>
+      </div>
+
+      <div class="tab-content <%= 'active' if @tab == 'cross_references' %>"
+           data-bulk-upload-tabs-target="panel"
+           data-tab="cross_references"
+           role="tabpanel">
+        <%= render "bulk_upload_hub/cross_references" %>
+      </div>
+
+      <div class="tab-content <%= 'active' if @tab == 'topics' %>"
+           data-bulk-upload-tabs-target="panel"
+           data-tab="topics"
+           role="tabpanel">
+        <%= render "bulk_upload_hub/topics" %>
+      </div>
+
+      <div class="tab-content <%= 'active' if @tab == 'threads' %>"
+           data-bulk-upload-tabs-target="panel"
+           data-tab="threads"
+           role="tabpanel">
+        <%= render "bulk_upload_hub/threads" %>
+      </div>
+    </div>
+  </div>
+</div>

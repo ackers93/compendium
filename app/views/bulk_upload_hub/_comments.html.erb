@@ -1,0 +1,39 @@
+<div class="bulk-upload-help">
+  <p>Enter a verse reference and your comment on each row. Supported formats:</p>
+  <ul>
+    <li><code>gen1:1</code> or <code>Gen 1:1</code> or <code>Genesis 1:1</code></li>
+    <li>Verse ranges: <code>gen1:1-4</code> or <code>John 3:16-18</code></li>
+  </ul>
+</div>
+
+<%= form_with url: bulk_upload_path, method: :post, class: "bulk-upload-form", data: { controller: "bulk-upload" } do %>
+  <div class="table-container bulk-upload-table">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Verse</th>
+          <th scope="col">Comment</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody data-bulk-upload-target="rows">
+        <% @comment_rows.each_with_index do |row, index| %>
+          <%= render "bulk_uploads/row", index: index, row: row %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <template data-bulk-upload-target="template">
+    <%= render "bulk_uploads/row", index: "__INDEX__", row: { reference: "", content: "" } %>
+  </template>
+
+  <div class="bulk-upload-actions">
+    <button type="button" class="btn btn-outline" data-action="bulk-upload#addRow">
+      Add row
+    </button>
+    <div class="bulk-upload-submit">
+      <%= submit_tag "Upload comments", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

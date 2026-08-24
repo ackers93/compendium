@@ -1,0 +1,36 @@
+<div class="bulk-upload-help">
+  <p>Create a topic from a list of verses, then add an explanation for each verse on the topic page.</p>
+  <ul>
+    <li><code>gen1:2, 2Chron3:4, Gal2:5</code></li>
+    <li><code>Genesis 1:1, John 3:16-18</code></li>
+  </ul>
+</div>
+
+<%= form_with url: bulk_topic_thread_path, method: :post, class: "bulk-simple-form" do %>
+  <%= hidden_field_tag :kind, "topic" %>
+
+  <div class="form-group">
+    <%= label_tag :title, "Topic name", class: "form-label" %>
+    <%= text_field_tag :title, @topic_title, class: "form-input", placeholder: "e.g. Creation", required: true %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :verse_refs, "Verses", class: "form-label" %>
+    <%= text_area_tag :verse_refs, @topic_verse_refs, class: "form-textarea bulk-verse-refs-input", rows: 5, placeholder: "gen1:2, 2Chron3:4, Gal2:5", required: true %>
+    <p class="form-help">Separate references with commas, semicolons, or new lines.</p>
+  </div>
+
+  <% if @topic_errors.present? %>
+    <div class="alert alert-error mb-4">
+      <% @topic_errors.each do |error| %>
+        <div><%= error %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="bulk-upload-actions">
+    <div class="bulk-upload-submit">
+      <%= submit_tag "Create topic and add notes", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

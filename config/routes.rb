@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   
   # Bible verses=
   get 'bible_verses/books', to: 'bible_verses#book_index'
+  get 'bulk_upload', to: 'bulk_upload_hub#show', as: :bulk_upload_hub
   get 'bible_verses/bulk_upload', to: 'bulk_uploads#new', as: :new_bulk_upload
   post 'bible_verses/bulk_upload', to: 'bulk_uploads#create', as: :bulk_upload
   get 'bible_verses/bulk_cross_references', to: 'bulk_cross_references#new', as: :new_bulk_cross_reference

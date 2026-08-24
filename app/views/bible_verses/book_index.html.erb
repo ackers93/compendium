@@ -5,17 +5,8 @@
 
 <div class="bible-browse-toolbar">
   <% if current_user&.can_create? %>
-    <%= link_to new_bulk_upload_path, class: "btn btn-outline" do %>
-      Bulk Upload Verse Comments
-    <% end %>
-    <%= link_to new_bulk_cross_reference_path, class: "btn btn-outline" do %>
-      Bulk Upload Cross References
-    <% end %>
-    <%= link_to new_bulk_topic_thread_path(kind: "topic"), class: "btn btn-outline" do %>
-      Bulk Upload Topics
-    <% end %>
-    <%= link_to new_bulk_topic_thread_path(kind: "thread"), class: "btn btn-outline" do %>
-      Bulk Upload Threads
+    <%= link_to bulk_upload_hub_path, class: "btn btn-outline" do %>
+      Bulk Upload
     <% end %>
   <% end %>
 

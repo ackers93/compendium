@@ -22,7 +22,7 @@
           <% end %>
         </div>
         <% if current_user&.can_create? %>
-          <%= link_to new_bulk_topic_thread_path(kind: "thread"), class: "btn btn-outline" do %>
+          <%= link_to bulk_upload_hub_path(tab: "threads"), class: "btn btn-outline" do %>
             Bulk Upload
           <% end %>
           <%= link_to new_bible_thread_path, class: "btn btn-primary" do %>
