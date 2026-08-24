@@ -264,3 +264,65 @@
     grid-template-columns: 1fr;
   }
 }
+
+.bulk-simple-form {
+  max-width: 720px;
+
+  .form-group {
+    margin-bottom: $space-4;
+  }
+
+  .form-input,
+  .form-textarea {
+    display: block;
+    width: 100%;
+    padding: $space-2 $space-3;
+    font-family: inherit;
+    font-size: $font-size-sm;
+    line-height: $line-height-normal;
+    color: $gray-900;
+    background-color: $white;
+    border: 1px solid $gray-300;
+    border-radius: $radius-sm;
+
+    &:focus {
+      outline: none;
+      border-color: $theme-primary;
+      box-shadow: 0 0 0 3px $theme-primary-muted;
+    }
+
+    &::placeholder {
+      color: $gray-400;
+    }
+  }
+
+  .bulk-verse-refs-input {
+    min-height: 8rem;
+    resize: vertical;
+    font-family: $font-family-mono;
+  }
+}
+
+.bulk-kind-toggle {
+  border: none;
+  margin: 0 0 $space-4;
+  padding: 0;
+
+  .form-label {
+    margin-bottom: $space-2;
+  }
+}
+
+.bulk-kind-options {
+  display: flex;
+  gap: $space-4;
+}
+
+.bulk-kind-option {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $font-size-sm;
+  color: $gray-700;
+  cursor: pointer;
+}

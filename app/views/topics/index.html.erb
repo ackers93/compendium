@@ -22,6 +22,9 @@
           <% end %>
         </div>
         <% if current_user&.can_create? %>
+          <%= link_to new_bulk_topic_thread_path(kind: "topic"), class: "btn btn-outline" do %>
+            Bulk Upload
+          <% end %>
           <%= link_to new_topic_path, class: "btn btn-primary", data: { turbo_frame: "modal" } do %>
             <i class="fa-solid fa-plus"></i>
             New Topic

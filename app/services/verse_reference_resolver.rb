@@ -1,8 +1,48 @@
 class VerseReferenceResolver
   Result = Struct.new(:parsed, :verse, :end_verse, :error, keyword_init: true)
+  ParseListResult = Struct.new(:verses, :errors, keyword_init: true)
 
   def self.call(reference, allow_range: true)
     new(reference, allow_range: allow_range).resolve
+  end
+
+  def self.parse_list(refs_string)
+    refs = refs_string.to_s.split(/[,;\n]+/).map(&:strip).reject(&:blank?)
+    return ParseListResult.new(verses: [], errors: ["Add at least one verse reference."]) if refs.empty?
+
+    verses = []
+    errors = []
+    seen_ids = {}
+
+    refs.each do |ref|
+      result = call(ref, allow_range: true)
+      if result.error
+        errors << "#{ref}: #{result.error}"
+        next
+      end
+
+      expanded = result.end_verse ? expand_range(result.verse, result.end_verse) : [result.verse]
+      if expanded.empty?
+        errors << "#{ref}: No verses found."
+        next
+      end
+
+      expanded.each do |verse|
+        next if seen_ids[verse.id]
+
+        seen_ids[verse.id] = true
+        verses << verse
+      end
+    end
+
+    ParseListResult.new(verses: verses, errors: errors)
+  end
+
+  def self.expand_range(start_verse, end_verse)
+    BibleVerse.where(book: start_verse.book, chapter: start_verse.chapter)
+              .where(verse: start_verse.verse..end_verse.verse)
+              .order(:verse)
+              .to_a
   end
 
   def initialize(reference, allow_range: true)

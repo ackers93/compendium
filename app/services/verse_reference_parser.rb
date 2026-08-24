@@ -24,8 +24,8 @@ class VerseReferenceParser
     "2sa" => "2 Samuel", "2sam" => "2 Samuel",
     "1ki" => "1 Kings", "1kings" => "1 Kings",
     "2ki" => "2 Kings", "2kings" => "2 Kings",
-    "1ch" => "1 Chronicles", "1chr" => "1 Chronicles",
-    "2ch" => "2 Chronicles", "2chr" => "2 Chronicles",
+    "1ch" => "1 Chronicles", "1chr" => "1 Chronicles", "1chron" => "1 Chronicles",
+    "2ch" => "2 Chronicles", "2chr" => "2 Chronicles", "2chron" => "2 Chronicles",
     "ezr" => "Ezra",
     "neh" => "Nehemiah",
     "est" => "Esther",
@@ -136,8 +136,10 @@ class VerseReferenceParser
     if normalized.match?(/\A\d+[a-z]+/)
       number = normalized[/\A\d+/]
       rest = normalized[number.length..]
+      return ABBREVIATIONS[normalized] if ABBREVIATIONS.key?(normalized)
+
       candidates = ALL_BOOKS.select { |book| book.downcase.start_with?("#{number} ") }
-      found = pick_best_match(candidates, rest)
+      found = pick_best_match(candidates, rest, numbered: true)
       return found if found
     end
 
@@ -153,9 +155,14 @@ class VerseReferenceParser
     pick_best_match(include_matches, normalized)
   end
 
-  def pick_best_match(candidates, token)
+  def pick_best_match(candidates, token, numbered: false)
     return nil if candidates.empty?
     return candidates.first if candidates.one?
+
+    if numbered
+      return candidates.find { |book| book.downcase.gsub(/\s+/, "").start_with?("#{token.downcase}") } ||
+             candidates.find { |book| book.downcase.include?(token) }
+    end
 
     candidates.min_by do |book|
       compact = book.downcase.gsub(/\s+/, "")

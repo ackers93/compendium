@@ -11,6 +11,12 @@
     <%= link_to new_bulk_cross_reference_path, class: "btn btn-outline" do %>
       Bulk Upload Cross References
     <% end %>
+    <%= link_to new_bulk_topic_thread_path(kind: "topic"), class: "btn btn-outline" do %>
+      Bulk Upload Topics
+    <% end %>
+    <%= link_to new_bulk_topic_thread_path(kind: "thread"), class: "btn btn-outline" do %>
+      Bulk Upload Threads
+    <% end %>
   <% end %>
 
   <div class="bible-search-group form-group" data-controller="bible-search">
