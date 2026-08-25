@@ -49,6 +49,23 @@ class NotificationDispatcher
       end
     end
 
+    def thread_entry_created(entry)
+      actor = entry.user
+      thread = entry.bible_thread
+      return unless actor && thread
+
+      recipient_ids = thread.contributor_ids - [actor.id]
+
+      User.where(id: recipient_ids).find_each do |recipient|
+        create_notification(
+          recipient: recipient,
+          actor: actor,
+          action: "thread_contribution",
+          notifiable: entry
+        )
+      end
+    end
+
     def review_requested(content_flag, actor:)
       author = content_flag.content_author
       return unless author && actor

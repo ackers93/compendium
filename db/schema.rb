@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_25_040524) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_25_200000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -59,9 +59,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_25_040524) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["bible_thread_id", "position"], name: "index_bible_thread_entries_on_bible_thread_id_and_position"
     t.index ["bible_thread_id"], name: "index_bible_thread_entries_on_bible_thread_id"
     t.index ["bible_verse_id"], name: "index_bible_thread_entries_on_bible_verse_id"
+    t.index ["user_id"], name: "index_bible_thread_entries_on_user_id"
   end
 
   create_table "bible_threads", force: :cascade do |t|
@@ -269,6 +271,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_25_040524) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bible_thread_entries", "bible_threads"
   add_foreign_key "bible_thread_entries", "bible_verses"
+  add_foreign_key "bible_thread_entries", "users"
   add_foreign_key "bible_threads", "users"
   add_foreign_key "chiasm_limbs", "chiasms"
   add_foreign_key "chiasms", "bible_verses", column: "end_verse_id"

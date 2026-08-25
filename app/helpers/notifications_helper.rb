@@ -12,6 +12,9 @@ module NotificationsHelper
     when "topic_contribution"
       topic_name = notification.notifiable&.topic&.name || "a topic"
       "#{actor_name} added a verse to #{topic_name}"
+    when "thread_contribution"
+      thread_title = notification.notifiable&.bible_thread&.title || "a thread"
+      "#{actor_name} added a verse to \"#{thread_title}\""
     when "review_requested"
       "An admin requested a review of your #{flaggable_label(notification.notifiable)}"
     else
@@ -28,6 +31,8 @@ module NotificationsHelper
       my_flagged_content_path(status: "review_requested")
     when "topic_contribution"
       topic_path(notifiable.topic)
+    when "thread_contribution"
+      bible_thread_path(notifiable.bible_thread)
     when "comment", "reply"
       path_for_comment(notifiable)
     else
@@ -42,6 +47,7 @@ module NotificationsHelper
     when "comment" then "fa-solid fa-comment"
     when "reply" then "fa-solid fa-reply"
     when "topic_contribution" then "fa-solid fa-bookmark"
+    when "thread_contribution" then "fa-solid fa-link"
     when "review_requested" then "fa-solid fa-flag"
     else "fa-solid fa-bell"
     end

@@ -19,7 +19,7 @@ class BibleThreadsController < ApplicationController
   end
 
   def show
-    @bible_thread_entries = @bible_thread.bible_thread_entries.includes(:bible_verse).order(:position)
+    @bible_thread_entries = @bible_thread.bible_thread_entries.includes(:bible_verse, :user).order(:position)
   end
 
   def new
@@ -41,8 +41,10 @@ class BibleThreadsController < ApplicationController
   end
 
   def create
+    ensure_thread_entry_columns!
     @bible_thread = BibleThread.new(bible_thread_params)
     @bible_thread.user = current_user
+    @bible_thread.current_editor = current_user
 
     if @bible_thread.save
       redirect_to @bible_thread, notice: "Bible thread was successfully created."
@@ -55,6 +57,9 @@ class BibleThreadsController < ApplicationController
   end
 
   def update
+    ensure_thread_entry_columns!
+    @bible_thread.current_editor = current_user
+
     if @bible_thread.update(bible_thread_params)
       redirect_to @bible_thread, notice: "Bible thread was successfully updated."
     else
@@ -71,6 +76,13 @@ class BibleThreadsController < ApplicationController
 
   def set_bible_thread
     @bible_thread = BibleThread.includes(bible_thread_entries: :bible_verse).find(params[:id])
+  end
+
+  # Migrations that add columns aren't visible to a still-running process until reload.
+  def ensure_thread_entry_columns!
+    return if BibleThreadEntry.has_attribute?(:user_id)
+
+    BibleThreadEntry.reset_column_information
   end
 
   def bible_thread_params

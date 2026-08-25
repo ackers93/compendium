@@ -125,6 +125,84 @@ class NotificationDispatcherTest < ActiveSupport::TestCase
     end
   end
 
+  test "notifies thread owner when someone else adds a verse" do
+    thread = BibleThread.create!(title: "Salvation", user: @owner, current_editor: @owner)
+    thread.bible_thread_entries.create!(bible_verse: @verse, user: @owner, position: 1)
+    Notification.delete_all
+
+    other_verse = BibleVerse.create!(
+      book: "Romans",
+      chapter: 5,
+      verse: 8,
+      text: "But God commendeth his love toward us",
+      testament: "NT"
+    )
+    entry = thread.bible_thread_entries.create!(bible_verse: other_verse, user: @commenter, position: 2)
+
+    notification = Notification.find_by(
+      recipient: @owner,
+      notifiable: entry,
+      action: "thread_contribution"
+    )
+    assert_not_nil notification
+    assert_equal @commenter, notification.actor
+  end
+
+  test "notifies prior thread contributors when a verse is added" do
+    thread = BibleThread.create!(title: "Grace", user: @owner, current_editor: @owner)
+    thread.bible_thread_entries.create!(bible_verse: @verse, user: @owner, position: 1)
+
+    second_verse = BibleVerse.create!(
+      book: "Ephesians",
+      chapter: 2,
+      verse: 8,
+      text: "For by grace are ye saved through faith",
+      testament: "NT"
+    )
+    thread.bible_thread_entries.create!(bible_verse: second_verse, user: @commenter, position: 2)
+    Notification.delete_all
+
+    third_verse = BibleVerse.create!(
+      book: "Titus",
+      chapter: 2,
+      verse: 11,
+      text: "For the grace of God that bringeth salvation",
+      testament: "NT"
+    )
+    entry = thread.bible_thread_entries.create!(bible_verse: third_verse, user: @other, position: 3)
+
+    assert_not_nil Notification.find_by(recipient: @owner, notifiable: entry, action: "thread_contribution")
+    assert_not_nil Notification.find_by(recipient: @commenter, notifiable: entry, action: "thread_contribution")
+    assert_nil Notification.find_by(recipient: @other, notifiable: entry)
+  end
+
+  test "does not notify when thread creator adds their own verse" do
+    thread = BibleThread.create!(title: "Faith", user: @owner, current_editor: @owner)
+    thread.bible_thread_entries.create!(bible_verse: @verse, user: @owner, position: 1)
+    Notification.delete_all
+
+    other_verse = BibleVerse.create!(
+      book: "Hebrews",
+      chapter: 11,
+      verse: 1,
+      text: "Now faith is the substance of things hoped for",
+      testament: "NT"
+    )
+
+    assert_no_difference -> { Notification.count } do
+      thread.bible_thread_entries.create!(bible_verse: other_verse, user: @owner, position: 2)
+    end
+  end
+
+  test "contributor can edit another users thread but not delete it" do
+    thread = BibleThread.create!(title: "Shared", user: @owner)
+
+    assert @commenter.can_edit?(thread)
+    assert @commenter.can_update?(thread)
+    assert_not @commenter.can_delete?(thread)
+    assert @owner.can_delete?(thread)
+  end
+
   test "notifies content author when review is requested" do
     flag = ContentFlag.create!(
       user: @other,

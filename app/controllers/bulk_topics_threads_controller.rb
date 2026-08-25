@@ -90,6 +90,7 @@ class BulkTopicsThreadsController < ApplicationController
 
   def create_thread(title, verse_refs, verses)
     thread = BibleThread.new(title: title, user: current_user)
+    thread.current_editor = current_user
 
     verses.each_with_index do |verse, index|
       thread.bible_thread_entries.build(bible_verse: verse, position: index + 1)

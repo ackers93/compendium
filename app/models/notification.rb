@@ -1,5 +1,5 @@
 class Notification < ApplicationRecord
-  ACTIONS = %w[comment reply topic_contribution review_requested].freeze
+  ACTIONS = %w[comment reply topic_contribution thread_contribution review_requested].freeze
 
   belongs_to :recipient, class_name: "User"
   belongs_to :actor, class_name: "User"

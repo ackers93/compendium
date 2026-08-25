@@ -81,8 +81,11 @@ class User < ApplicationRecord
     def can_edit?(resource)
       return true if role_admin?
       return false unless role_contributor?
-      
-      # Contributors can only edit their own content
+
+      # Threads are collaborative — any contributor can edit
+      return true if resource.is_a?(BibleThread)
+
+      # Contributors can only edit their own content otherwise
       resource.respond_to?(:user_id) && resource.user_id == id
     end
     
@@ -91,7 +94,11 @@ class User < ApplicationRecord
     end
     
     def can_delete?(resource)
-      can_edit?(resource)
+      return true if role_admin?
+      return false unless role_contributor?
+
+      # Only the creator (or admin) can delete, including collaborative threads
+      resource.respond_to?(:user_id) && resource.user_id == id
     end
     
     def can_manage_users?

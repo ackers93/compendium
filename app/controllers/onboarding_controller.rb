@@ -119,7 +119,7 @@ class OnboardingController < ApplicationController
         icon: "fa-list-ol",
         title: "Threads",
         body: can_create ?
-          "Browse ordered verse collections that follow a doctrine or theme. Search existing threads or create a new one to build your own sequence." :
+          "Browse ordered verse collections that follow a doctrine or theme. Search existing threads, create a new one, or add verses to a thread someone else started." :
           "Explore Bible threads created by contributors—thematic verse sequences you can open and follow.",
         screenshot: "onboarding/threads1.png"
       },
@@ -128,7 +128,7 @@ class OnboardingController < ApplicationController
         icon: "fa-book-bible",
         title: "Inside a Thread",
         body: can_create ?
-          "Each thread walks through Scripture verse by verse, with optional commentary on every step. Edit the sequence or add verses as your study grows." :
+          "Each thread walks through Scripture verse by verse, with optional commentary on every step. Any contributor can edit the sequence or add verses as the study grows." :
           "Open a thread to follow the verses in order, with commentary explaining each connection along the way.",
         screenshot: "onboarding/threads2.png"
       },
