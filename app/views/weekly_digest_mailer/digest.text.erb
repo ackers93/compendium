@@ -1,0 +1,36 @@
+Compendium Weekly Digest
+========================
+
+<%= @week_start.strftime('%B %-d') %> – <%= @week_end.strftime('%B %-d, %Y') %>
+
+Hello<%= @user.name.present? ? " #{@user.name}" : "" %>,
+
+Here's what was added to Compendium last week.
+
+<% @active_sections.each do |section| %>
+<%= section.label.upcase %>
+<%= "-" * section.label.length %>
+<%= pluralize(section.count, "item") %> added
+<% section.examples.each do |example| %>
+- <%= example.title %>
+<% if example.detail.present? %>
+  <%= example.detail %>
+<% end %>
+  <%= example.url %>
+<% end %>
+
+<% end %>
+<% if @empty_sections.any? %>
+<%= @empty_summary.upcase %>
+<%= "-" * @empty_summary.length %>
+Do you have anything to contribute?
+<% @empty_sections.each do |section| %>
+- <%= section.label %>: <%= section.contribute_path %>
+<% end %>
+
+<% end %>
+---
+You're receiving this because weekly digests are enabled on your account.
+Manage email preferences: <%= @profile_url %>
+
+This is an automated notification from Compendium.

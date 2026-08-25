@@ -1,11 +1,2 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  bible_verse: one
-  topic: one
-  user: one
-
-two:
-  bible_verse: two
-  topic: two
-  user: two
+# Intentionally empty — tests create verse topics as needed.
+# (Previous scaffold fixtures referenced missing user/bible_verse fixtures.)

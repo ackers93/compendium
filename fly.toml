@@ -3,6 +3,9 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
+# Cron-style weekly digest is run via a scheduled Fly machine (see lib/tasks/digest.rake).
+# Do not rely on in-process scheduling — web machines auto-stop (min_machines_running = 0).
+
 app = 'compendium'
 primary_region = 'sjc'
 console_command = '/rails/bin/rails console'

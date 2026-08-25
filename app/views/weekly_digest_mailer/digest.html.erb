@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 30px;
+        border: 1px solid #e0e0e0;
+      }
+      .header {
+        background: #2d4739;
+        color: white;
+        padding: 20px;
+        border-radius: 8px 8px 0 0;
+        margin: -30px -30px 20px -30px;
+        text-align: center;
+      }
+      .header-logo {
+        display: block;
+        margin: 0 auto 12px auto;
+        max-width: 200px;
+        height: auto;
+        padding: 6px;
+        border-radius: 8px;
+        background: #ffffff;
+      }
+      .header h2 {
+        margin: 0;
+        font-size: 22px;
+      }
+      .header p {
+        margin: 8px 0 0 0;
+        opacity: 0.9;
+        font-size: 14px;
+      }
+      .section {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin: 16px 0;
+        border-left: 4px solid #2d4739;
+      }
+      .section h3 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        color: #2d4739;
+      }
+      .count {
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      .examples {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .examples li {
+        margin: 8px 0;
+      }
+      .examples a {
+        color: #2d4739;
+      }
+      .example-detail {
+        display: block;
+        margin-top: 4px;
+        color: #666;
+        font-size: 13px;
+        font-style: italic;
+      }
+      .empty-section {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin: 16px 0;
+        border-left: 4px solid #c4a35a;
+      }
+      .empty-section h3 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        color: #2d4739;
+      }
+      .empty-section p {
+        margin: 0 0 14px 0;
+        color: #555;
+      }
+      .contribute-buttons {
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+      }
+      .contribute-btn {
+        display: inline-block;
+        text-align: center;
+        background: #2d4739;
+        color: #ffffff !important;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 1.2;
+        padding: 6px 8px;
+        border-radius: 5px;
+        margin: 0 4px 0 0;
+      }
+      .footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+        font-size: 12px;
+        color: #777;
+      }
+      .footer a {
+        color: #2d4739;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <%= image_tag attachments["logo.png"].url,
+              alt: "Compendium",
+              class: "header-logo",
+              style: "display:block;margin:0 auto 12px auto;max-width:200px;height:auto;padding:6px;border-radius:8px;background:#ffffff;" %>
+        <h2>Weekly Digest</h2>
+        <p><%= @week_start.strftime('%B %-d') %> – <%= @week_end.strftime('%B %-d, %Y') %></p>
+      </div>
+
+      <p>Hello<%= @user.name.present? ? " #{@user.name}" : "" %>,</p>
+      <p>Here’s what was added to Compendium last week.</p>
+
+      <% @active_sections.each do |section| %>
+        <div class="section">
+          <h3><%= section.label %></h3>
+          <div class="count"><%= pluralize(section.count, "item") %> added</div>
+          <% if section.examples.any? %>
+            <ul class="examples">
+              <% section.examples.each do |example| %>
+                <li>
+                  <a href="<%= example.url %>"><%= example.title %></a>
+                  <% if example.detail.present? %>
+                    <span class="example-detail"><%= example.detail %></span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if @empty_sections.any? %>
+        <div class="empty-section">
+          <h3><%= @empty_summary %></h3>
+          <p>Do you have anything to contribute?</p>
+          <div class="contribute-buttons">
+            <% @empty_sections.each do |section| %>
+              <a class="contribute-btn" href="<%= section.contribute_path %>" style="display:inline-block;text-align:center;background:#2d4739;color:#ffffff;text-decoration:none;font-weight:600;font-size:11px;line-height:1.2;padding:6px 8px;border-radius:5px;margin:0 4px 4px 0;"><%= section.label %></a>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="footer">
+        <p>You’re receiving this because weekly digests are enabled on your account.</p>
+        <p><a href="<%= @profile_url %>">Manage email preferences in your profile</a></p>
+        <p style="margin-top: 15px;">This is an automated notification from Compendium.</p>
+      </div>
+    </div>
+  </body>
+</html>
