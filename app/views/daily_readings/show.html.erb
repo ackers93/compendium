@@ -57,15 +57,10 @@
             </h3>
             <ul class="daily-readings-passage-list">
               <% passages.each do |passage| %>
-                <li class="daily-readings-passage">
-                  <span class="daily-readings-passage-label"><%= passage.display_label %></span>
-                  <span class="daily-readings-chapter-links">
-                    <% passage.chapters.each do |chapter| %>
-                      <%= link_to "#{passage.book} #{chapter}",
-                          bible_verse_verses_path(book: passage.book, chapter: chapter),
-                          class: "daily-readings-chapter-link" %>
-                    <% end %>
-                  </span>
+                <li>
+                  <%= link_to passage.display_label,
+                      bible_verse_verses_path(book: passage.book, chapter: passage.start_chapter),
+                      class: "daily-readings-passage-link" %>
                 </li>
               <% end %>
             </ul>

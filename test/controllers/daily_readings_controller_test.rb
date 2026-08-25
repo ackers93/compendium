@@ -40,8 +40,7 @@ class DailyReadingsControllerTest < ActionDispatch::IntegrationTest
     travel_to Date.new(2026, 1, 1) do
       get daily_readings_path
       assert_response :success
-      assert_select ".daily-readings-passage-label", text: "Genesis 1–2"
-      assert_select "a.daily-readings-chapter-link", text: "Genesis 1"
+      assert_select "a.daily-readings-passage-link", text: "Genesis 1–2"
     end
   end
 
