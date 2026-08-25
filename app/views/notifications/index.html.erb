@@ -1,0 +1,40 @@
+<div class="page-header">
+  <div class="page-header-row">
+    <div>
+      <h1 class="page-title">Notifications</h1>
+      <p class="page-subtitle">Comments, replies, topic updates, and review requests</p>
+    </div>
+    <% if @notifications.any? { |n| n.unread? } %>
+      <%= button_to "Mark all as read", mark_all_read_notifications_path, method: :patch, class: "btn btn-outline" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="content-section">
+  <% if @notifications.any? %>
+    <ul class="notification-list">
+      <% @notifications.each do |notification| %>
+        <li class="notification-item <%= 'notification-item--unread' if notification.unread? %>">
+          <%= link_to notification_path(notification), class: "notification-link" do %>
+            <span class="notification-icon" aria-hidden="true">
+              <i class="<%= notification_icon(notification) %>"></i>
+            </span>
+            <span class="notification-body">
+              <span class="notification-message"><%= notification_message(notification) %></span>
+              <span class="notification-meta">
+                <%= time_ago_in_words(notification.created_at) %> ago
+                <% if notification.unread? %>
+                  <span class="notification-unread-dot" aria-label="Unread"></span>
+                <% end %>
+              </span>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="empty-state">
+      <p>No notifications yet. You'll see activity here when someone comments on your content, replies to you, or adds to a topic you've contributed to.</p>
+    </div>
+  <% end %>
+</div>

@@ -42,10 +42,9 @@ module Admin
         resolved_at: Time.current,
         admin_note: params[:admin_note]
       )
-      
-      # TODO: Send notification to content author about review request
-      # You could implement email notification here
-      
+
+      NotificationDispatcher.review_requested(@flag, actor: current_user)
+
       redirect_to admin_content_flags_path, notice: "Review has been requested from the author."
     end
     

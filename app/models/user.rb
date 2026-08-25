@@ -6,6 +6,7 @@ class User < ApplicationRecord
     has_many :cross_references, dependent: :destroy
     has_many :bible_threads, dependent: :destroy
     has_many :chiasms, dependent: :destroy
+    has_many :notifications, foreign_key: :recipient_id, dependent: :destroy, inverse_of: :recipient
     
     # Include default devise modules. Others available are:
     # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -182,6 +183,10 @@ class User < ApplicationRecord
       ContentFlag.where(conditions.join(' OR '), *params)
                  .status_review_requested
                  .count
+    end
+
+    def unread_notifications_count
+      notifications.unread.count
     end
     
     # Display name in format "name - ecclesia"

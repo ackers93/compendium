@@ -117,7 +117,8 @@
             <%
               content_review_count = current_user.flagged_content_needing_review_count
               admin_pending_count = current_user.can_manage_users? ? ContentFlag.status_pending.count : 0
-              total_alert_count = content_review_count + admin_pending_count
+              unread_notifications_count = current_user.unread_notifications_count
+              total_alert_count = content_review_count + admin_pending_count + unread_notifications_count
               display_name = current_user.name.presence || current_user.email
             %>
             <span class="user-info">
@@ -137,6 +138,12 @@
                 <span class="nav-dropdown-caret" aria-hidden="true"></span>
               </button>
               <div class="nav-dropdown-menu" data-dropdown-target="menu" hidden>
+                <%= link_to notifications_path, class: "nav-dropdown-item" do %>
+                  <span>Notifications</span>
+                  <% if unread_notifications_count > 0 %>
+                    <span class="badge badge-warning"><%= unread_notifications_count %></span>
+                  <% end %>
+                <% end %>
                 <%= link_to my_flagged_content_path, class: "nav-dropdown-item" do %>
                   <span>My Content</span>
                   <% if content_review_count > 0 %>
@@ -216,12 +223,19 @@
               <%
                 content_review_count = current_user.flagged_content_needing_review_count
                 admin_pending_count = current_user.can_manage_users? ? ContentFlag.status_pending.count : 0
+                unread_notifications_count = current_user.unread_notifications_count
                 display_name = current_user.name.presence || current_user.email
               %>
               <div class="mobile-user-info">
                 <div class="mobile-user-email"><%= display_name %></div>
                 <span class="role-badge <%= current_user.role %>"><%= current_user.role&.titleize || 'Viewer' %></span>
               </div>
+              <%= link_to notifications_path, class: "btn btn-outline btn-block mobile-nav-action-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                <span>Notifications</span>
+                <% if unread_notifications_count > 0 %>
+                  <span class="badge badge-warning"><%= unread_notifications_count %></span>
+                <% end %>
+              <% end %>
               <%= link_to my_flagged_content_path, class: "btn btn-outline btn-block mobile-nav-action-link", data: { action: "click->mobile-nav#closeMenu" } do %>
                 <span>My Content</span>
                 <% if content_review_count > 0 %>

@@ -2,6 +2,7 @@ class ContentFlag < ApplicationRecord
   belongs_to :flaggable, polymorphic: true
   belongs_to :user
   belongs_to :resolved_by, class_name: 'User', optional: true
+  has_many :notifications, as: :notifiable, dependent: :delete_all
   
   # Status enum: pending, approved, review_requested, edited, deleted
   enum :status, { 

@@ -14,6 +14,7 @@ class Comment < ApplicationRecord
            dependent: :destroy,
            inverse_of: :parent
   has_many :verse_mentions, as: :mentionable, dependent: :destroy
+  has_many :notifications, as: :notifiable, dependent: :delete_all
   has_rich_text :content
 
   scope :roots, -> { where(parent_id: nil) }
@@ -22,6 +23,8 @@ class Comment < ApplicationRecord
   validate :end_verse_valid
   validate :parent_matches_commentable
   validate :depth_within_limit
+
+  after_create :dispatch_notifications
 
   def range?
     end_verse_id.present?
@@ -101,6 +104,10 @@ class Comment < ApplicationRecord
   end
 
   private
+
+  def dispatch_notifications
+    NotificationDispatcher.comment_created(self)
+  end
 
   def parent_matches_commentable
     return if parent.nil?

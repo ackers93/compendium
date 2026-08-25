@@ -113,6 +113,13 @@ Rails.application.routes.draw do
   # Content flagging routes
   resources :content_flags, only: [:create]
   get 'my-flagged-content', to: 'my_flagged_content#index', as: :my_flagged_content
+
+  # In-app notifications
+  resources :notifications, only: [:index, :show] do
+    collection do
+      patch :mark_all_read
+    end
+  end
   
   # Admin routes
   namespace :admin do
