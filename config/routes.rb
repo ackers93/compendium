@@ -10,6 +10,11 @@ Rails.application.routes.draw do
   
   get '/notes/list', to: 'notes#list'
   
+  # Daily readings (Bible Companion)
+  get 'daily_readings', to: 'daily_readings#show', as: :daily_readings
+  get 'daily_readings/:date', to: 'daily_readings#show', as: :daily_reading,
+      constraints: { date: /\d{4}-\d{2}-\d{2}/ }
+
   # Bible verses=
   get 'bible_verses/books', to: 'bible_verses#book_index'
   get 'bulk_upload', to: 'bulk_upload_hub#show', as: :bulk_upload_hub

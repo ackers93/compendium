@@ -1,0 +1,12 @@
+slug: sample-plan
+name: Sample Plan
+description: Tiny fixture for seeder tests
+days:
+  - month: 6
+    day: 15
+    readings:
+      - slot: 1
+        passages:
+          - book: Ruth
+            start_chapter: 1
+            end_chapter: 2

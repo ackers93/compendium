@@ -1,0 +1,77 @@
+<div class="page-header">
+  <h1 class="page-title">Daily Readings</h1>
+  <p class="page-subtitle"><%= @plan.name %></p>
+</div>
+
+<div class="content-section daily-readings">
+  <div class="section-header">
+    <h2 class="section-title"><%= @date.strftime("%A, %B %-d, %Y") %></h2>
+  </div>
+
+  <div class="section-content">
+    <div class="daily-readings-nav">
+      <%= link_to "← Previous",
+          daily_reading_path(date: @prev_date.iso8601),
+          class: "btn btn-outline daily-readings-nav-btn" %>
+
+      <%= form_with url: daily_readings_path, method: :get, local: true, class: "daily-readings-date-form" do %>
+        <label for="daily-reading-date" class="sr-only">Choose date</label>
+        <input
+          id="daily-reading-date"
+          type="date"
+          name="date"
+          value="<%= @date.iso8601 %>"
+          class="form-control daily-readings-date-input"
+          onchange="this.form.submit()"
+        >
+      <% end %>
+
+      <%= link_to "Today",
+          daily_readings_path,
+          class: "btn btn-outline daily-readings-nav-btn" %>
+
+      <%= link_to "Next →",
+          daily_reading_path(date: @next_date.iso8601),
+          class: "btn btn-outline daily-readings-nav-btn" %>
+    </div>
+
+    <% if @plan.description.present? %>
+      <p class="daily-readings-description"><%= @plan.description %></p>
+    <% end %>
+
+    <% if @day.nil? %>
+      <div class="daily-readings-catch-up">
+        <p>
+          February 29 has no assigned readings in the Bible Companion.
+          Use today as a catch-up day for any missed chapters.
+        </p>
+      </div>
+    <% else %>
+      <div class="daily-readings-slots">
+        <% (1..3).each do |slot| %>
+          <% passages = @day.passages_by_slot[slot] || [] %>
+          <section class="daily-readings-slot">
+            <h3 class="daily-readings-slot-title">
+              <span class="daily-readings-slot-number"><%= slot %></span>
+              <%= ReadingPlan::SLOT_LABELS[slot] %>
+            </h3>
+            <ul class="daily-readings-passage-list">
+              <% passages.each do |passage| %>
+                <li class="daily-readings-passage">
+                  <span class="daily-readings-passage-label"><%= passage.display_label %></span>
+                  <span class="daily-readings-chapter-links">
+                    <% passage.chapters.each do |chapter| %>
+                      <%= link_to "#{passage.book} #{chapter}",
+                          bible_verse_verses_path(book: passage.book, chapter: chapter),
+                          class: "daily-readings-chapter-link" %>
+                    <% end %>
+                  </span>
+                </li>
+              <% end %>
+            </ul>
+          </section>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+// Daily readings
+.daily-readings-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  align-items: center;
+  margin-bottom: $space-5;
+}
+
+.daily-readings-date-form {
+  display: flex;
+  align-items: center;
+}
+
+.daily-readings-date-input {
+  width: auto;
+  min-width: 10rem;
+}
+
+.daily-readings-description {
+  color: $gray-600;
+  margin-bottom: $space-5;
+  max-width: 42rem;
+}
+
+.daily-readings-catch-up {
+  padding: $space-5;
+  border: 1px solid $gray-200;
+  border-radius: $radius-md;
+  background: $gray-50;
+}
+
+.daily-readings-slots {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.daily-readings-slot-title {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  margin-bottom: $space-3;
+  font-size: 1.1rem;
+}
+
+.daily-readings-slot-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: $theme-primary;
+  color: $white;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.daily-readings-passage-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.daily-readings-passage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2 $space-4;
+  align-items: baseline;
+  padding: $space-3 $space-4;
+  border: 1px solid $gray-200;
+  border-radius: $radius-md;
+  background: $white;
+}
+
+.daily-readings-passage-label {
+  font-weight: 600;
+  min-width: 10rem;
+}
+
+.daily-readings-chapter-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.daily-readings-chapter-link {
+  text-decoration: none;
+  padding: $space-1 $space-2;
+  border-radius: $radius-sm;
+  background: $gray-100;
+  color: $gray-700;
+  font-size: $font-size-sm;
+}
+
+.daily-readings-chapter-link:hover {
+  background: $theme-primary;
+  color: $white;
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .daily-readings-nav {
+    justify-content: center;
+  }
+
+  .daily-readings-passage {
+    flex-direction: column;
+  }
+}

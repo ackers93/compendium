@@ -90,6 +90,11 @@
               <% end %>
             </li>
             <li class="nav-item">
+              <%= link_to daily_readings_path, class: "nav-link nav-link-sm" do %>
+                Readings
+              <% end %>
+            </li>
+            <li class="nav-item">
               <%= link_to topics_path, class: "nav-link nav-link-sm" do %>
                 Topics
               <% end %>
@@ -192,6 +197,11 @@
             <li class="mobile-nav-item">
               <%= link_to bible_verses_books_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
                 Bible
+              <% end %>
+            </li>
+            <li class="mobile-nav-item">
+              <%= link_to daily_readings_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                Readings
               <% end %>
             </li>
             <li class="mobile-nav-item">

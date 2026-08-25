@@ -1,0 +1,6591 @@
+---
+slug: bible-companion
+name: Bible Companion
+description: The daily Bible reading plan compiled by Robert Roberts (the Bible Companion).
+  Three readings each day cover the Old Testament once and the New Testament twice
+  each year. February 29 has no assigned readings and may be used as a catch-up day.
+days:
+- month: 1
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 1
+      end_chapter: 2
+- month: 1
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 3
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 3
+      end_chapter: 4
+- month: 1
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 6
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 5
+      end_chapter: 5
+- month: 1
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 7
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 9
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 6
+      end_chapter: 6
+- month: 1
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 9
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 11
+      end_chapter: 13
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 7
+      end_chapter: 7
+- month: 1
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 11
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 14
+      end_chapter: 16
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 8
+      end_chapter: 8
+- month: 1
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 13
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 9
+      end_chapter: 9
+- month: 1
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 15
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 10
+      end_chapter: 10
+- month: 1
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 17
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 19
+      end_chapter: 21
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 11
+      end_chapter: 11
+- month: 1
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 12
+      end_chapter: 12
+- month: 1
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 20
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 23
+      end_chapter: 25
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 13
+      end_chapter: 13
+- month: 1
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 22
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 26
+      end_chapter: 28
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 14
+      end_chapter: 14
+- month: 1
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 29
+      end_chapter: 30
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 15
+      end_chapter: 15
+- month: 1
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 25
+      end_chapter: 26
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 16
+      end_chapter: 16
+- month: 1
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 32
+      end_chapter: 32
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 17
+      end_chapter: 17
+- month: 1
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 28
+      end_chapter: 29
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 33
+      end_chapter: 33
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 18
+      end_chapter: 18
+- month: 1
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 34
+      end_chapter: 34
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 19
+      end_chapter: 19
+- month: 1
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 35
+      end_chapter: 35
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 20
+      end_chapter: 20
+- month: 1
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 32
+      end_chapter: 33
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 21
+      end_chapter: 21
+- month: 1
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 34
+      end_chapter: 35
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 37
+      end_chapter: 37
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 22
+      end_chapter: 22
+- month: 1
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 38
+      end_chapter: 38
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 23
+      end_chapter: 23
+- month: 1
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 37
+      end_chapter: 37
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 39
+      end_chapter: 40
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 24
+      end_chapter: 24
+- month: 1
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 38
+      end_chapter: 38
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 41
+      end_chapter: 43
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 25
+      end_chapter: 25
+- month: 1
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 39
+      end_chapter: 40
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 44
+      end_chapter: 44
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 26
+      end_chapter: 26
+- month: 1
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 41
+      end_chapter: 41
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 45
+      end_chapter: 45
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 27
+      end_chapter: 27
+- month: 1
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 42
+      end_chapter: 43
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 46
+      end_chapter: 48
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 28
+      end_chapter: 28
+- month: 1
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 44
+      end_chapter: 45
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 49
+      end_chapter: 49
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 1
+      end_chapter: 2
+- month: 1
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 46
+      end_chapter: 47
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 50
+      end_chapter: 50
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 3
+      end_chapter: 4
+- month: 1
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: Genesis
+      start_chapter: 48
+      end_chapter: 50
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 51
+      end_chapter: 52
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 5
+      end_chapter: 6
+- month: 1
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 53
+      end_chapter: 55
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 7
+      end_chapter: 8
+- month: 1
+  day: 31
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 56
+      end_chapter: 57
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 9
+      end_chapter: 9
+- month: 2
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 58
+      end_chapter: 59
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 10
+      end_chapter: 11
+- month: 2
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 7
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 60
+      end_chapter: 61
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 12
+      end_chapter: 12
+- month: 2
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 62
+      end_chapter: 63
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 13
+      end_chapter: 14
+- month: 2
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 64
+      end_chapter: 65
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 15
+      end_chapter: 16
+- month: 2
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 11
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 66
+      end_chapter: 67
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 1
+      end_chapter: 1
+- month: 2
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 13
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 68
+      end_chapter: 68
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 2
+      end_chapter: 2
+- month: 2
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 69
+      end_chapter: 69
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 3
+      end_chapter: 3
+- month: 2
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 70
+      end_chapter: 71
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 4
+      end_chapter: 4
+- month: 2
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 17
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 72
+      end_chapter: 72
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 5
+      end_chapter: 5
+- month: 2
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 19
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 73
+      end_chapter: 73
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 6
+      end_chapter: 6
+- month: 2
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 74
+      end_chapter: 74
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 7
+      end_chapter: 7
+- month: 2
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 75
+      end_chapter: 76
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 8
+      end_chapter: 8
+- month: 2
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 77
+      end_chapter: 77
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 9
+      end_chapter: 9
+- month: 2
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 24
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 78
+      end_chapter: 78
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 10
+      end_chapter: 10
+- month: 2
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 79
+      end_chapter: 80
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 11
+      end_chapter: 11
+- month: 2
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 81
+      end_chapter: 82
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 12
+      end_chapter: 12
+- month: 2
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 83
+      end_chapter: 84
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 13
+      end_chapter: 13
+- month: 2
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 85
+      end_chapter: 86
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 14
+      end_chapter: 14
+- month: 2
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 87
+      end_chapter: 88
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 15
+      end_chapter: 16
+- month: 2
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 31
+      end_chapter: 32
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 89
+      end_chapter: 89
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 1
+      end_chapter: 2
+- month: 2
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 33
+      end_chapter: 34
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 90
+      end_chapter: 91
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 3
+      end_chapter: 3
+- month: 2
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 35
+      end_chapter: 35
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 92
+      end_chapter: 93
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 4
+      end_chapter: 5
+- month: 2
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 94
+      end_chapter: 95
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 6
+      end_chapter: 6
+- month: 2
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 37
+      end_chapter: 37
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 96
+      end_chapter: 99
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 7
+      end_chapter: 7
+- month: 2
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 38
+      end_chapter: 38
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 100
+      end_chapter: 101
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 8
+      end_chapter: 9
+- month: 2
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: Exodus
+      start_chapter: 39
+      end_chapter: 40
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 102
+      end_chapter: 102
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 10
+      end_chapter: 10
+- month: 2
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 103
+      end_chapter: 103
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 11
+      end_chapter: 11
+- month: 2
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 104
+      end_chapter: 104
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 12
+      end_chapter: 13
+- month: 3
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 105
+      end_chapter: 105
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 14
+      end_chapter: 14
+- month: 3
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 106
+      end_chapter: 106
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 15
+      end_chapter: 15
+- month: 3
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 107
+      end_chapter: 107
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 16
+      end_chapter: 16
+- month: 3
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 9
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 108
+      end_chapter: 109
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 1
+      end_chapter: 2
+- month: 3
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 110
+      end_chapter: 112
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 3
+      end_chapter: 4
+- month: 3
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 12
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 113
+      end_chapter: 114
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 5
+      end_chapter: 7
+- month: 3
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 115
+      end_chapter: 116
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 8
+      end_chapter: 9
+- month: 3
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 117
+      end_chapter: 118
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 10
+      end_chapter: 11
+- month: 3
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 119
+      end_chapter: 119
+      start_verse: 1
+      end_verse: 40
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 12
+      end_chapter: 13
+- month: 3
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 17
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 119
+      end_chapter: 119
+      start_verse: 41
+      end_verse: 80
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 1
+      end_chapter: 1
+- month: 3
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 119
+      end_chapter: 119
+      start_verse: 81
+      end_verse: 128
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 2
+      end_chapter: 2
+- month: 3
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 119
+      end_chapter: 119
+      start_verse: 129
+      end_verse: 176
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 3
+      end_chapter: 3
+- month: 3
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 120
+      end_chapter: 124
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 4
+      end_chapter: 4
+- month: 3
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 125
+      end_chapter: 127
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 5
+      end_chapter: 5
+- month: 3
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 128
+      end_chapter: 130
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 6
+      end_chapter: 6
+- month: 3
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 131
+      end_chapter: 134
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 7
+      end_chapter: 7
+- month: 3
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 135
+      end_chapter: 136
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 8
+      end_chapter: 8
+- month: 3
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 137
+      end_chapter: 139
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 9
+      end_chapter: 9
+- month: 3
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Leviticus
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 140
+      end_chapter: 142
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 10
+      end_chapter: 10
+- month: 3
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 143
+      end_chapter: 144
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 11
+      end_chapter: 11
+- month: 3
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 145
+      end_chapter: 147
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 12
+      end_chapter: 12
+- month: 3
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Psalms
+      start_chapter: 148
+      end_chapter: 150
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 13
+      end_chapter: 14
+- month: 3
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 15
+      end_chapter: 15
+- month: 3
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 16
+      end_chapter: 16
+- month: 3
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 17
+      end_chapter: 17
+- month: 3
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 18
+      end_chapter: 18
+- month: 3
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 8
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 19
+      end_chapter: 19
+- month: 3
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 20
+      end_chapter: 20
+- month: 3
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 21
+      end_chapter: 21
+- month: 3
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 12
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 8
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 22
+      end_chapter: 22
+- month: 3
+  day: 31
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 23
+      end_chapter: 23
+- month: 4
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 24
+      end_chapter: 24
+- month: 4
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: Galatians
+      start_chapter: 1
+      end_chapter: 2
+- month: 4
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 17
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 3
+    passages:
+    - book: Galatians
+      start_chapter: 3
+      end_chapter: 4
+- month: 4
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 3
+    passages:
+    - book: Galatians
+      start_chapter: 5
+      end_chapter: 6
+- month: 4
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 20
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 3
+    passages:
+    - book: Ephesians
+      start_chapter: 1
+      end_chapter: 2
+- month: 4
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 22
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 3
+    passages:
+    - book: Ephesians
+      start_chapter: 3
+      end_chapter: 4
+- month: 4
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 24
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 3
+    passages:
+    - book: Ephesians
+      start_chapter: 5
+      end_chapter: 6
+- month: 4
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 3
+    passages:
+    - book: Philippians
+      start_chapter: 1
+      end_chapter: 2
+- month: 4
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 3
+    passages:
+    - book: Philippians
+      start_chapter: 3
+      end_chapter: 4
+- month: 4
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 1
+      end_chapter: 1
+- month: 4
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 29
+      end_chapter: 30
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 2
+      end_chapter: 3
+- month: 4
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 4
+      end_chapter: 4
+- month: 4
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 32
+      end_chapter: 32
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 5
+      end_chapter: 5
+- month: 4
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 33
+      end_chapter: 33
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 6
+      end_chapter: 6
+- month: 4
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 34
+      end_chapter: 34
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 7
+      end_chapter: 7
+- month: 4
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 35
+      end_chapter: 35
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 8
+      end_chapter: 8
+- month: 4
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Numbers
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 9
+      end_chapter: 10
+- month: 4
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 11
+      end_chapter: 11
+- month: 4
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 12
+      end_chapter: 12
+- month: 4
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 13
+      end_chapter: 14
+- month: 4
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Proverbs
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 15
+      end_chapter: 16
+- month: 4
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 17
+      end_chapter: 18
+- month: 4
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 6
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 19
+      end_chapter: 19
+- month: 4
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 8
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 20
+      end_chapter: 21
+- month: 4
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 10
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 1
+      end_chapter: 1
+- month: 4
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 2
+      end_chapter: 2
+- month: 4
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 13
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 3
+      end_chapter: 4
+- month: 4
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 5
+      end_chapter: 6
+- month: 4
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 7
+      end_chapter: 7
+- month: 4
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 8
+      end_chapter: 8
+- month: 5
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 9
+      end_chapter: 9
+- month: 5
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 10
+      end_chapter: 10
+- month: 5
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Ecclesiastes
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 11
+      end_chapter: 12
+- month: 5
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 13
+      end_chapter: 13
+- month: 5
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 14
+      end_chapter: 15
+- month: 5
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 16
+      end_chapter: 17
+- month: 5
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 18
+      end_chapter: 19
+- month: 5
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 20
+      end_chapter: 20
+- month: 5
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 21
+      end_chapter: 22
+- month: 5
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 23
+      end_chapter: 24
+- month: 5
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 2
+    passages:
+    - book: Song of Solomon
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 25
+      end_chapter: 26
+- month: 5
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 27
+      end_chapter: 27
+- month: 5
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 28
+      end_chapter: 28
+- month: 5
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Colossians
+      start_chapter: 1
+      end_chapter: 1
+- month: 5
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 32
+      end_chapter: 32
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Colossians
+      start_chapter: 2
+      end_chapter: 2
+- month: 5
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Deuteronomy
+      start_chapter: 33
+      end_chapter: 34
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Colossians
+      start_chapter: 3
+      end_chapter: 4
+- month: 5
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: 1 Thessalonians
+      start_chapter: 1
+      end_chapter: 2
+- month: 5
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: 1 Thessalonians
+      start_chapter: 3
+      end_chapter: 4
+- month: 5
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: 1 Thessalonians
+      start_chapter: 5
+      end_chapter: 5
+- month: 5
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: 2 Thessalonians
+      start_chapter: 1
+      end_chapter: 2
+- month: 5
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: 2 Thessalonians
+      start_chapter: 3
+      end_chapter: 3
+- month: 5
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: 1 Timothy
+      start_chapter: 1
+      end_chapter: 3
+- month: 5
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 3
+    passages:
+    - book: 1 Timothy
+      start_chapter: 4
+      end_chapter: 5
+- month: 5
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 3
+    passages:
+    - book: 1 Timothy
+      start_chapter: 6
+      end_chapter: 6
+- month: 5
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 3
+    passages:
+    - book: 2 Timothy
+      start_chapter: 1
+      end_chapter: 1
+- month: 5
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 3
+    passages:
+    - book: 2 Timothy
+      start_chapter: 2
+      end_chapter: 2
+- month: 5
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 17
+      end_chapter: 18
+  - slot: 3
+    passages:
+    - book: 2 Timothy
+      start_chapter: 3
+      end_chapter: 4
+- month: 5
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 3
+    passages:
+    - book: Titus
+      start_chapter: 1
+      end_chapter: 3
+- month: 5
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 20
+      end_chapter: 21
+  - slot: 3
+    passages:
+    - book: Philemon
+      start_chapter: 1
+      end_chapter: 1
+- month: 5
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 1
+      end_chapter: 2
+- month: 5
+  day: 31
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 3
+      end_chapter: 5
+- month: 6
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 6
+      end_chapter: 7
+- month: 6
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 8
+      end_chapter: 9
+- month: 6
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 20
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 26
+      end_chapter: 27
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 10
+      end_chapter: 10
+- month: 6
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 11
+      end_chapter: 11
+- month: 6
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: Joshua
+      start_chapter: 23
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 12
+      end_chapter: 12
+- month: 6
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 13
+      end_chapter: 13
+- month: 6
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 2
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 1
+      end_chapter: 1
+- month: 6
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 4
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 32
+      end_chapter: 32
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 2
+      end_chapter: 2
+- month: 6
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 33
+      end_chapter: 33
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 3
+      end_chapter: 4
+- month: 6
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 7
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 34
+      end_chapter: 34
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 5
+      end_chapter: 5
+- month: 6
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 35
+      end_chapter: 35
+  - slot: 3
+    passages:
+    - book: 1 Peter
+      start_chapter: 1
+      end_chapter: 1
+- month: 6
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 10
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 3
+    passages:
+    - book: 1 Peter
+      start_chapter: 2
+      end_chapter: 2
+- month: 6
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 12
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 37
+      end_chapter: 37
+  - slot: 3
+    passages:
+    - book: 1 Peter
+      start_chapter: 3
+      end_chapter: 5
+- month: 6
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 14
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 38
+      end_chapter: 38
+  - slot: 3
+    passages:
+    - book: 2 Peter
+      start_chapter: 1
+      end_chapter: 2
+- month: 6
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 39
+      end_chapter: 39
+  - slot: 3
+    passages:
+    - book: 2 Peter
+      start_chapter: 3
+      end_chapter: 3
+- month: 6
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 17
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 40
+      end_chapter: 40
+  - slot: 3
+    passages:
+    - book: 1 John
+      start_chapter: 1
+      end_chapter: 2
+- month: 6
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 41
+      end_chapter: 41
+  - slot: 3
+    passages:
+    - book: 1 John
+      start_chapter: 3
+      end_chapter: 4
+- month: 6
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 42
+      end_chapter: 42
+  - slot: 3
+    passages:
+    - book: 1 John
+      start_chapter: 5
+      end_chapter: 5
+- month: 6
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Judges
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 43
+      end_chapter: 43
+  - slot: 3
+    passages:
+    - book: 2 John
+      start_chapter: 1
+      end_chapter: 1
+    - book: 3 John
+      start_chapter: 1
+      end_chapter: 1
+- month: 6
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Ruth
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 44
+      end_chapter: 44
+  - slot: 3
+    passages:
+    - book: Jude
+      start_chapter: 1
+      end_chapter: 1
+- month: 6
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Ruth
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 45
+      end_chapter: 45
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 1
+      end_chapter: 2
+- month: 6
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 46
+      end_chapter: 47
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 3
+      end_chapter: 4
+- month: 6
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 48
+      end_chapter: 48
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 5
+      end_chapter: 6
+- month: 6
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 49
+      end_chapter: 49
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 7
+      end_chapter: 9
+- month: 6
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 50
+      end_chapter: 50
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 10
+      end_chapter: 11
+- month: 6
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 51
+      end_chapter: 51
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 12
+      end_chapter: 13
+- month: 6
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 7
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 52
+      end_chapter: 52
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 14
+      end_chapter: 14
+- month: 6
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 53
+      end_chapter: 53
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 15
+      end_chapter: 16
+- month: 6
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 54
+      end_chapter: 54
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 17
+      end_chapter: 18
+- month: 6
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 11
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 55
+      end_chapter: 55
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 19
+      end_chapter: 20
+- month: 7
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 56
+      end_chapter: 57
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 21
+      end_chapter: 22
+- month: 7
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 58
+      end_chapter: 58
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 1
+      end_chapter: 2
+- month: 7
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 59
+      end_chapter: 59
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 3
+      end_chapter: 4
+- month: 7
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 60
+      end_chapter: 60
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 5
+      end_chapter: 5
+- month: 7
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 61
+      end_chapter: 61
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 6
+      end_chapter: 6
+- month: 7
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 62
+      end_chapter: 62
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 7
+      end_chapter: 7
+- month: 7
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 63
+      end_chapter: 63
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 8
+      end_chapter: 8
+- month: 7
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 64
+      end_chapter: 64
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 9
+      end_chapter: 9
+- month: 7
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 21
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 65
+      end_chapter: 65
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 10
+      end_chapter: 10
+- month: 7
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Isaiah
+      start_chapter: 66
+      end_chapter: 66
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 11
+      end_chapter: 11
+- month: 7
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 12
+      end_chapter: 12
+- month: 7
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 13
+      end_chapter: 13
+- month: 7
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 26
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 14
+      end_chapter: 14
+- month: 7
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 15
+      end_chapter: 15
+- month: 7
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 29
+      end_chapter: 30
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 16
+      end_chapter: 16
+- month: 7
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Samuel
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 17
+      end_chapter: 17
+- month: 7
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 18
+      end_chapter: 18
+- month: 7
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 19
+      end_chapter: 19
+- month: 7
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 20
+      end_chapter: 20
+- month: 7
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 4
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 21
+      end_chapter: 21
+- month: 7
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 22
+      end_chapter: 22
+- month: 7
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 23
+      end_chapter: 23
+- month: 7
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 8
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 24
+      end_chapter: 24
+- month: 7
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 25
+      end_chapter: 25
+- month: 7
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 26
+      end_chapter: 26
+- month: 7
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 27
+      end_chapter: 27
+- month: 7
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 3
+    passages:
+    - book: Matthew
+      start_chapter: 28
+      end_chapter: 28
+- month: 7
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 1
+      end_chapter: 2
+- month: 7
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 3
+      end_chapter: 4
+- month: 7
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 5
+      end_chapter: 6
+- month: 7
+  day: 31
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 7
+      end_chapter: 8
+- month: 8
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 9
+      end_chapter: 9
+- month: 8
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 10
+      end_chapter: 11
+- month: 8
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 20
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 12
+      end_chapter: 12
+- month: 8
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 13
+      end_chapter: 14
+- month: 8
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 3
+    passages:
+    - book: Romans
+      start_chapter: 15
+      end_chapter: 16
+- month: 8
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Samuel
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 1
+      end_chapter: 1
+- month: 8
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 2
+      end_chapter: 2
+- month: 8
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 3
+      end_chapter: 3
+- month: 8
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 4
+      end_chapter: 4
+- month: 8
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 4
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 5
+      end_chapter: 5
+- month: 8
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 32
+      end_chapter: 32
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 6
+      end_chapter: 6
+- month: 8
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 33
+      end_chapter: 33
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 7
+      end_chapter: 7
+- month: 8
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 34
+      end_chapter: 34
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 8
+      end_chapter: 8
+- month: 8
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 35
+      end_chapter: 35
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 9
+      end_chapter: 9
+- month: 8
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 10
+      end_chapter: 10
+- month: 8
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 37
+      end_chapter: 37
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 11
+      end_chapter: 11
+- month: 8
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 38
+      end_chapter: 38
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 12
+      end_chapter: 12
+- month: 8
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 39
+      end_chapter: 39
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 13
+      end_chapter: 13
+- month: 8
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 40
+      end_chapter: 40
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 14
+      end_chapter: 14
+- month: 8
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 41
+      end_chapter: 41
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 15
+      end_chapter: 15
+- month: 8
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 42
+      end_chapter: 42
+  - slot: 3
+    passages:
+    - book: Mark
+      start_chapter: 16
+      end_chapter: 16
+- month: 8
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 43
+      end_chapter: 43
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 1
+      end_chapter: 2
+- month: 8
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 44
+      end_chapter: 44
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 3
+      end_chapter: 3
+- month: 8
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 45
+      end_chapter: 46
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 4
+      end_chapter: 5
+- month: 8
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 47
+      end_chapter: 47
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 6
+      end_chapter: 6
+- month: 8
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 48
+      end_chapter: 48
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 7
+      end_chapter: 7
+- month: 8
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Kings
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 49
+      end_chapter: 49
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 8
+      end_chapter: 9
+- month: 8
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 50
+      end_chapter: 50
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 10
+      end_chapter: 10
+- month: 8
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 51
+      end_chapter: 51
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 11
+      end_chapter: 11
+- month: 8
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Jeremiah
+      start_chapter: 52
+      end_chapter: 52
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 12
+      end_chapter: 13
+- month: 8
+  day: 31
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Lamentations
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 14
+      end_chapter: 14
+- month: 9
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Lamentations
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 15
+      end_chapter: 15
+- month: 9
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Lamentations
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: 1 Corinthians
+      start_chapter: 16
+      end_chapter: 16
+- month: 9
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Lamentations
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 1
+      end_chapter: 2
+- month: 9
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Lamentations
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 3
+      end_chapter: 4
+- month: 9
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 5
+      end_chapter: 7
+- month: 9
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 11
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 8
+      end_chapter: 9
+- month: 9
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 10
+      end_chapter: 11
+- month: 9
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: 2 Corinthians
+      start_chapter: 12
+      end_chapter: 13
+- month: 9
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 1
+      end_chapter: 1
+- month: 9
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 2
+      end_chapter: 2
+- month: 9
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 3
+      end_chapter: 3
+- month: 9
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 4
+      end_chapter: 4
+- month: 9
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 5
+      end_chapter: 5
+- month: 9
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 6
+      end_chapter: 6
+- month: 9
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 7
+      end_chapter: 7
+- month: 9
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 22
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 8
+      end_chapter: 8
+- month: 9
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Kings
+      start_chapter: 24
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 9
+      end_chapter: 9
+- month: 9
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 10
+      end_chapter: 10
+- month: 9
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 11
+      end_chapter: 11
+- month: 9
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 12
+      end_chapter: 12
+- month: 9
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 13
+      end_chapter: 14
+- month: 9
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 18
+      end_chapter: 18
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 15
+      end_chapter: 15
+- month: 9
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 19
+      end_chapter: 19
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 16
+      end_chapter: 16
+- month: 9
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 17
+      end_chapter: 17
+- month: 9
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 18
+      end_chapter: 18
+- month: 9
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 19
+      end_chapter: 19
+- month: 9
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 20
+      end_chapter: 20
+- month: 9
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 21
+      end_chapter: 21
+- month: 9
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 22
+      end_chapter: 22
+- month: 9
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 13
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 23
+      end_chapter: 23
+- month: 10
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 3
+    passages:
+    - book: Luke
+      start_chapter: 24
+      end_chapter: 24
+- month: 10
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 16
+      end_chapter: 16
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 3
+    passages:
+    - book: Galatians
+      start_chapter: 1
+      end_chapter: 2
+- month: 10
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 17
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 3
+    passages:
+    - book: Galatians
+      start_chapter: 3
+      end_chapter: 4
+- month: 10
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 18
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 3
+    passages:
+    - book: Galatians
+      start_chapter: 5
+      end_chapter: 6
+- month: 10
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 20
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 3
+    passages:
+    - book: Ephesians
+      start_chapter: 1
+      end_chapter: 2
+- month: 10
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 32
+      end_chapter: 32
+  - slot: 3
+    passages:
+    - book: Ephesians
+      start_chapter: 3
+      end_chapter: 4
+- month: 10
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 33
+      end_chapter: 33
+  - slot: 3
+    passages:
+    - book: Ephesians
+      start_chapter: 5
+      end_chapter: 6
+- month: 10
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 24
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 34
+      end_chapter: 34
+  - slot: 3
+    passages:
+    - book: Philippians
+      start_chapter: 1
+      end_chapter: 2
+- month: 10
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 26
+      end_chapter: 26
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 35
+      end_chapter: 35
+  - slot: 3
+    passages:
+    - book: Philippians
+      start_chapter: 3
+      end_chapter: 4
+- month: 10
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 27
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 1
+      end_chapter: 1
+- month: 10
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 37
+      end_chapter: 37
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 2
+      end_chapter: 3
+- month: 10
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: 1 Chronicles
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 38
+      end_chapter: 38
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 4
+      end_chapter: 4
+- month: 10
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 39
+      end_chapter: 39
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 5
+      end_chapter: 5
+- month: 10
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 40
+      end_chapter: 40
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 6
+      end_chapter: 6
+- month: 10
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 41
+      end_chapter: 41
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 7
+      end_chapter: 7
+- month: 10
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 42
+      end_chapter: 42
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 8
+      end_chapter: 8
+- month: 10
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 43
+      end_chapter: 43
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 9
+      end_chapter: 10
+- month: 10
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 44
+      end_chapter: 44
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 11
+      end_chapter: 11
+- month: 10
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 10
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 45
+      end_chapter: 45
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 12
+      end_chapter: 12
+- month: 10
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 12
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 46
+      end_chapter: 46
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 13
+      end_chapter: 14
+- month: 10
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 14
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 47
+      end_chapter: 47
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 15
+      end_chapter: 16
+- month: 10
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 16
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Ezekiel
+      start_chapter: 48
+      end_chapter: 48
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 17
+      end_chapter: 18
+- month: 10
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 18
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 19
+      end_chapter: 19
+- month: 10
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: John
+      start_chapter: 20
+      end_chapter: 21
+- month: 10
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 21
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 1
+      end_chapter: 1
+- month: 10
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 23
+      end_chapter: 23
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 2
+      end_chapter: 2
+- month: 10
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 24
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 3
+      end_chapter: 4
+- month: 10
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 25
+      end_chapter: 25
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 5
+      end_chapter: 6
+- month: 10
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 26
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 7
+      end_chapter: 7
+- month: 10
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 8
+      end_chapter: 8
+- month: 10
+  day: 31
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 29
+      end_chapter: 29
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 9
+      end_chapter: 9
+- month: 11
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 30
+      end_chapter: 30
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 10
+      end_chapter: 10
+- month: 11
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 31
+      end_chapter: 31
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 11
+      end_chapter: 12
+- month: 11
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 32
+      end_chapter: 32
+  - slot: 2
+    passages:
+    - book: Daniel
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 13
+      end_chapter: 13
+- month: 11
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 33
+      end_chapter: 33
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 14
+      end_chapter: 15
+- month: 11
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 34
+      end_chapter: 34
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 16
+      end_chapter: 17
+- month: 11
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 35
+      end_chapter: 35
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 18
+      end_chapter: 19
+- month: 11
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: 2 Chronicles
+      start_chapter: 36
+      end_chapter: 36
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 20
+      end_chapter: 20
+- month: 11
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Ezra
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 21
+      end_chapter: 22
+- month: 11
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Ezra
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 23
+      end_chapter: 24
+- month: 11
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Ezra
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 25
+      end_chapter: 26
+- month: 11
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Ezra
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 27
+      end_chapter: 27
+- month: 11
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Ezra
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Acts
+      start_chapter: 28
+      end_chapter: 28
+- month: 11
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Ezra
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Colossians
+      start_chapter: 1
+      end_chapter: 1
+- month: 11
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Ezra
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: Colossians
+      start_chapter: 2
+      end_chapter: 2
+- month: 11
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: Colossians
+      start_chapter: 3
+      end_chapter: 4
+- month: 11
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 3
+    passages:
+    - book: 1 Thessalonians
+      start_chapter: 1
+      end_chapter: 2
+- month: 11
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Hosea
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 3
+    passages:
+    - book: 1 Thessalonians
+      start_chapter: 3
+      end_chapter: 4
+- month: 11
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Joel
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: 1 Thessalonians
+      start_chapter: 5
+      end_chapter: 5
+- month: 11
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Joel
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: 2 Thessalonians
+      start_chapter: 1
+      end_chapter: 2
+- month: 11
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Joel
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: 2 Thessalonians
+      start_chapter: 3
+      end_chapter: 3
+- month: 11
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: 1 Timothy
+      start_chapter: 1
+      end_chapter: 3
+- month: 11
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: 1 Timothy
+      start_chapter: 4
+      end_chapter: 5
+- month: 11
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: 1 Timothy
+      start_chapter: 6
+      end_chapter: 6
+- month: 11
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: 2 Timothy
+      start_chapter: 1
+      end_chapter: 1
+- month: 11
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: Nehemiah
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: 2 Timothy
+      start_chapter: 2
+      end_chapter: 2
+- month: 11
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: Esther
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: 2 Timothy
+      start_chapter: 3
+      end_chapter: 4
+- month: 11
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: Esther
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Titus
+      start_chapter: 1
+      end_chapter: 3
+- month: 11
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: Esther
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Philemon
+      start_chapter: 1
+      end_chapter: 1
+- month: 11
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: Esther
+      start_chapter: 5
+      end_chapter: 6
+  - slot: 2
+    passages:
+    - book: Amos
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 1
+      end_chapter: 2
+- month: 11
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: Esther
+      start_chapter: 7
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Obadiah
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 3
+      end_chapter: 5
+- month: 12
+  day: 1
+  readings:
+  - slot: 1
+    passages:
+    - book: Esther
+      start_chapter: 9
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Jonah
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 6
+      end_chapter: 7
+- month: 12
+  day: 2
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 2
+    passages:
+    - book: Jonah
+      start_chapter: 2
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 8
+      end_chapter: 9
+- month: 12
+  day: 3
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 2
+    passages:
+    - book: Jonah
+      start_chapter: 4
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 10
+      end_chapter: 10
+- month: 12
+  day: 4
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 2
+    passages:
+    - book: Micah
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 11
+      end_chapter: 11
+- month: 12
+  day: 5
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 6
+      end_chapter: 7
+  - slot: 2
+    passages:
+    - book: Micah
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 12
+      end_chapter: 12
+- month: 12
+  day: 6
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 2
+    passages:
+    - book: Micah
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Hebrews
+      start_chapter: 13
+      end_chapter: 13
+- month: 12
+  day: 7
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 2
+    passages:
+    - book: Micah
+      start_chapter: 5
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 1
+      end_chapter: 1
+- month: 12
+  day: 8
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 2
+    passages:
+    - book: Micah
+      start_chapter: 6
+      end_chapter: 6
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 2
+      end_chapter: 2
+- month: 12
+  day: 9
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 2
+    passages:
+    - book: Micah
+      start_chapter: 7
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 3
+      end_chapter: 4
+- month: 12
+  day: 10
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 2
+    passages:
+    - book: Nahum
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: James
+      start_chapter: 5
+      end_chapter: 5
+- month: 12
+  day: 11
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 13
+      end_chapter: 13
+  - slot: 2
+    passages:
+    - book: Nahum
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: 1 Peter
+      start_chapter: 1
+      end_chapter: 1
+- month: 12
+  day: 12
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 14
+      end_chapter: 14
+  - slot: 2
+    passages:
+    - book: Habakkuk
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: 1 Peter
+      start_chapter: 2
+      end_chapter: 2
+- month: 12
+  day: 13
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 15
+      end_chapter: 15
+  - slot: 2
+    passages:
+    - book: Habakkuk
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: 1 Peter
+      start_chapter: 3
+      end_chapter: 5
+- month: 12
+  day: 14
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 16
+      end_chapter: 17
+  - slot: 2
+    passages:
+    - book: Habakkuk
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: 2 Peter
+      start_chapter: 1
+      end_chapter: 2
+- month: 12
+  day: 15
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 18
+      end_chapter: 19
+  - slot: 2
+    passages:
+    - book: Zephaniah
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: 2 Peter
+      start_chapter: 3
+      end_chapter: 3
+- month: 12
+  day: 16
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 20
+      end_chapter: 20
+  - slot: 2
+    passages:
+    - book: Zephaniah
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: 1 John
+      start_chapter: 1
+      end_chapter: 2
+- month: 12
+  day: 17
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 21
+      end_chapter: 21
+  - slot: 2
+    passages:
+    - book: Zephaniah
+      start_chapter: 3
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: 1 John
+      start_chapter: 3
+      end_chapter: 4
+- month: 12
+  day: 18
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 22
+      end_chapter: 22
+  - slot: 2
+    passages:
+    - book: Haggai
+      start_chapter: 1
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: 1 John
+      start_chapter: 5
+      end_chapter: 5
+- month: 12
+  day: 19
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 23
+      end_chapter: 24
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: 2 John
+      start_chapter: 1
+      end_chapter: 1
+    - book: 3 John
+      start_chapter: 1
+      end_chapter: 1
+- month: 12
+  day: 20
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 25
+      end_chapter: 27
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 2
+      end_chapter: 3
+  - slot: 3
+    passages:
+    - book: Jude
+      start_chapter: 1
+      end_chapter: 1
+- month: 12
+  day: 21
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 28
+      end_chapter: 28
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 4
+      end_chapter: 5
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 1
+      end_chapter: 2
+- month: 12
+  day: 22
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 29
+      end_chapter: 30
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 6
+      end_chapter: 7
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 3
+      end_chapter: 4
+- month: 12
+  day: 23
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 31
+      end_chapter: 32
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 8
+      end_chapter: 8
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 5
+      end_chapter: 6
+- month: 12
+  day: 24
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 33
+      end_chapter: 33
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 9
+      end_chapter: 9
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 7
+      end_chapter: 9
+- month: 12
+  day: 25
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 34
+      end_chapter: 34
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 10
+      end_chapter: 10
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 10
+      end_chapter: 11
+- month: 12
+  day: 26
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 35
+      end_chapter: 36
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 11
+      end_chapter: 11
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 12
+      end_chapter: 13
+- month: 12
+  day: 27
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 37
+      end_chapter: 37
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 12
+      end_chapter: 12
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 14
+      end_chapter: 14
+- month: 12
+  day: 28
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 38
+      end_chapter: 38
+  - slot: 2
+    passages:
+    - book: Zechariah
+      start_chapter: 13
+      end_chapter: 14
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 15
+      end_chapter: 16
+- month: 12
+  day: 29
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 39
+      end_chapter: 39
+  - slot: 2
+    passages:
+    - book: Malachi
+      start_chapter: 1
+      end_chapter: 1
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 17
+      end_chapter: 18
+- month: 12
+  day: 30
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 40
+      end_chapter: 40
+  - slot: 2
+    passages:
+    - book: Malachi
+      start_chapter: 2
+      end_chapter: 2
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 19
+      end_chapter: 20
+- month: 12
+  day: 31
+  readings:
+  - slot: 1
+    passages:
+    - book: Job
+      start_chapter: 41
+      end_chapter: 42
+  - slot: 2
+    passages:
+    - book: Malachi
+      start_chapter: 3
+      end_chapter: 4
+  - slot: 3
+    passages:
+    - book: Revelation
+      start_chapter: 21
+      end_chapter: 22

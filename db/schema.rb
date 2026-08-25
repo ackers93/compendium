@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_25_200000) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_26_080000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -184,6 +184,40 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_25_200000) do
     t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
   end
 
+  create_table "reading_plan_days", force: :cascade do |t|
+    t.bigint "reading_plan_id", null: false
+    t.integer "month", null: false
+    t.integer "day", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reading_plan_id", "month", "day"], name: "index_reading_plan_days_on_plan_month_day", unique: true
+    t.index ["reading_plan_id"], name: "index_reading_plan_days_on_reading_plan_id"
+  end
+
+  create_table "reading_plan_passages", force: :cascade do |t|
+    t.bigint "reading_plan_day_id", null: false
+    t.integer "slot", null: false
+    t.integer "position", default: 0, null: false
+    t.string "book", null: false
+    t.integer "start_chapter", null: false
+    t.integer "end_chapter", null: false
+    t.integer "start_verse"
+    t.integer "end_verse"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reading_plan_day_id", "slot", "position"], name: "index_reading_plan_passages_on_day_slot_position"
+    t.index ["reading_plan_day_id"], name: "index_reading_plan_passages_on_reading_plan_day_id"
+  end
+
+  create_table "reading_plans", force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_reading_plans_on_slug", unique: true
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "tag_id"
     t.string "taggable_type"
@@ -287,6 +321,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_25_200000) do
   add_foreign_key "cross_references", "users"
   add_foreign_key "notifications", "users", column: "actor_id"
   add_foreign_key "notifications", "users", column: "recipient_id"
+  add_foreign_key "reading_plan_days", "reading_plans"
+  add_foreign_key "reading_plan_passages", "reading_plan_days"
   add_foreign_key "taggings", "tags"
   add_foreign_key "verse_mentions", "bible_verses"
   add_foreign_key "verse_topics", "bible_verses"
