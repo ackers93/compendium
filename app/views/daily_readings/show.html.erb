@@ -50,7 +50,7 @@
       <div class="daily-readings-slots">
         <% (1..3).each do |slot| %>
           <% passages = @day.passages_by_slot[slot] || [] %>
-          <section class="daily-readings-slot">
+          <section class="daily-readings-slot" id="reading-<%= slot %>">
             <h3 class="daily-readings-slot-title">
               <span class="daily-readings-slot-number"><%= slot %></span>
               <%= ReadingPlan::SLOT_LABELS[slot] %>
@@ -59,7 +59,7 @@
               <% passages.each do |passage| %>
                 <li>
                   <%= link_to passage.display_label,
-                      bible_verse_verses_path(book: passage.book, chapter: passage.start_chapter),
+                      passage.bible_chapter_path,
                       class: "daily-readings-passage-link" %>
                 </li>
               <% end %>

@@ -17,6 +17,10 @@ class ReadingPlanPassage < ApplicationRecord
     start_verse.present? || end_verse.present?
   end
 
+  def bible_chapter_path
+    Rails.application.routes.url_helpers.bible_verse_verses_path(book: book, chapter: start_chapter)
+  end
+
   def display_label
     chapter_part =
       if start_chapter == end_chapter

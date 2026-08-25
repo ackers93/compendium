@@ -71,6 +71,21 @@
             font-size: $font-size-sm;
           }
         }
+
+        .nav-dropdown-toggle.nav-link {
+          display: inline-flex;
+          align-items: center;
+          gap: $space-2;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          line-height: inherit;
+
+          &:hover {
+            color: $white;
+            background-color: rgba($white, 0.08);
+          }
+        }
       }
     }
     
@@ -191,6 +206,54 @@
           background: $gray-100;
           color: $gray-900;
         }
+
+        &.nav-dropdown-item-nested {
+          padding-left: $space-5;
+          font-weight: $font-weight-normal;
+        }
+      }
+
+      .nav-dropdown-heading {
+        display: block;
+        margin-top: $space-1;
+        padding: $space-2 $space-3 $space-1;
+        color: $gray-900;
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-top: 1px solid $gray-200;
+
+        &:hover {
+          color: $gray-700;
+          background: $gray-50;
+          border-radius: $radius-sm;
+        }
+      }
+
+      .nav-dropdown-divider {
+        height: 1px;
+        margin: $space-1 0;
+        background: $gray-200;
+      }
+
+      .nav-dropdown-form {
+        margin: 0;
+      }
+
+      .nav-dropdown-item-button {
+        width: 100%;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        font: inherit;
+
+        &:hover {
+          background: $gray-100;
+          color: $gray-900;
+        }
       }
     }
 
@@ -285,6 +348,36 @@
             &.active {
               color: $white;
               background-color: rgba($white, 0.12);
+            }
+          }
+        }
+
+        .mobile-nav-group {
+          margin-bottom: $space-4;
+
+          .mobile-nav-group-label {
+            padding: $space-2 $space-4;
+            color: rgba($white, 0.55);
+            font-size: $font-size-xs;
+            font-weight: $font-weight-semibold;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+          }
+
+          .mobile-nav-link-nested {
+            display: block;
+            color: $theme-header-text;
+            text-decoration: none;
+            font-weight: $font-weight-medium;
+            font-family: $font-family-ui;
+            font-size: $font-size-base;
+            padding: $space-3 $space-4 $space-3 $space-6;
+            border-radius: $radius;
+            transition: color 0.15s ease, background-color 0.15s ease;
+
+            &:hover {
+              color: $white;
+              background-color: rgba($white, 0.08);
             }
           }
         }

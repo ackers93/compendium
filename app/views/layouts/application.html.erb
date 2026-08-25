@@ -80,34 +80,43 @@
         <ul class="nav-menu nav-menu-desktop">
           <% if user_signed_in? %>
             <li class="nav-item">
-              <%= link_to notes_path, class: "nav-link nav-link-sm" do %>
-                Notes
-              <% end %>
+              <div class="nav-dropdown" data-controller="dropdown">
+                <button type="button"
+                        class="nav-link nav-link-sm nav-dropdown-toggle"
+                        data-dropdown-target="button"
+                        data-action="click->dropdown#toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true">
+                  <span>Bible</span>
+                  <span class="nav-dropdown-caret" aria-hidden="true"></span>
+                </button>
+                <div class="nav-dropdown-menu" data-dropdown-target="menu" hidden>
+                  <%= link_to "Browse Bible", bible_verses_books_path, class: "nav-dropdown-item" %>
+                  <%= link_to "Daily Readings", daily_readings_path, class: "nav-dropdown-heading" %>
+                  <% nav_daily_reading_links.each do |link| %>
+                    <%= link_to link[:label], link[:path], class: "nav-dropdown-item nav-dropdown-item-nested" %>
+                  <% end %>
+                </div>
+              </div>
             </li>
             <li class="nav-item">
-              <%= link_to bible_verses_books_path, class: "nav-link nav-link-sm" do %>
-                Bible
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to daily_readings_path, class: "nav-link nav-link-sm" do %>
-                Readings
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to topics_path, class: "nav-link nav-link-sm" do %>
-                Topics
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to bible_threads_path, class: "nav-link nav-link-sm" do %>
-                Threads
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to chiasms_path, class: "nav-link nav-link-sm" do %>
-                Chiasms
-              <% end %>
+              <div class="nav-dropdown" data-controller="dropdown">
+                <button type="button"
+                        class="nav-link nav-link-sm nav-dropdown-toggle"
+                        data-dropdown-target="button"
+                        data-action="click->dropdown#toggle"
+                        aria-expanded="false"
+                        aria-haspopup="true">
+                  <span>Study</span>
+                  <span class="nav-dropdown-caret" aria-hidden="true"></span>
+                </button>
+                <div class="nav-dropdown-menu" data-dropdown-target="menu" hidden>
+                  <%= link_to "Notes", notes_path, class: "nav-dropdown-item" %>
+                  <%= link_to "Topics", topics_path, class: "nav-dropdown-item" %>
+                  <%= link_to "Threads", bible_threads_path, class: "nav-dropdown-item" %>
+                  <%= link_to "Chiasms", chiasms_path, class: "nav-dropdown-item" %>
+                </div>
+              </div>
             </li>
             <li class="nav-item">
               <%= link_to search_path, class: "nav-link nav-link-sm" do %>
@@ -167,9 +176,15 @@
                   <% end %>
                 <% end %>
                 <%= link_to "Profile", edit_user_registration_path, class: "nav-dropdown-item" %>
+                <div class="nav-dropdown-divider" role="separator"></div>
+                <%= button_to "Log out",
+                    destroy_user_session_path,
+                    method: :delete,
+                    class: "nav-dropdown-item nav-dropdown-item-button",
+                    form: { class: "nav-dropdown-form" },
+                    data: { turbo: false, confirm: "Are you sure you want to log out?" } %>
               </div>
             </div>
-            <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary', data: { turbo: false, confirm: 'Are you sure you want to log out?' } %>
           <% else %>
             <%= link_to 'Log In', new_user_session_path, class: 'btn btn-outline' %>
             <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary' %>
@@ -189,37 +204,22 @@
             <li class="mobile-nav-item">
               <a href="/" class="mobile-nav-link" data-action="click->mobile-nav#closeMenu">Home</a>
             </li>
-            <li class="mobile-nav-item">
-              <%= link_to notes_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
-                Notes
-              <% end %>
-            </li>
-            <li class="mobile-nav-item">
-              <%= link_to bible_verses_books_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
-                Bible
-              <% end %>
-            </li>
-            <li class="mobile-nav-item">
-              <%= link_to daily_readings_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
-                Readings
-              <% end %>
-            </li>
-            <li class="mobile-nav-item">
-              <%= link_to topics_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
-                Topics
-              <% end %>
-            </li>
-            <li class="mobile-nav-item">
-              <%= link_to bible_threads_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
-                Threads
-              <% end %>
-            </li>
-            <li class="mobile-nav-item">
-              <%= link_to chiasms_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
-                Chiasms
-              <% end %>
-            </li>
             <% if user_signed_in? %>
+              <li class="mobile-nav-group">
+                <div class="mobile-nav-group-label">Bible</div>
+                <%= link_to "Browse Bible", bible_verses_books_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+                <%= link_to "Daily Readings", daily_readings_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+                <% nav_daily_reading_links.each do |link| %>
+                  <%= link_to link[:label], link[:path], class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+                <% end %>
+              </li>
+              <li class="mobile-nav-group">
+                <div class="mobile-nav-group-label">Study</div>
+                <%= link_to "Notes", notes_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+                <%= link_to "Topics", topics_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+                <%= link_to "Threads", bible_threads_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+                <%= link_to "Chiasms", chiasms_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+              </li>
               <li class="mobile-nav-item">
                 <%= link_to search_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>
                   Search
@@ -261,7 +261,7 @@
                 <% end %>
               <% end %>
               <%= link_to 'Profile', edit_user_registration_path, class: 'btn btn-outline btn-block', data: { action: "click->mobile-nav#closeMenu" } %>
-              <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-block', data: { turbo: false, confirm: 'Are you sure you want to log out?', action: "click->mobile-nav#closeMenu" } %>
+              <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn btn-outline btn-block', data: { turbo: false, confirm: 'Are you sure you want to log out?', action: "click->mobile-nav#closeMenu" } %>
             <% else %>
               <%= link_to 'Log In', new_user_session_path, class: 'btn btn-outline btn-block', data: { action: "click->mobile-nav#closeMenu" } %>
               <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary btn-block', data: { action: "click->mobile-nav#closeMenu" } %>

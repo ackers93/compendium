@@ -32,5 +32,6 @@ class ReadingPlanPassageTest < ActiveSupport::TestCase
 
     assert_equal [1, 2, 3], passage.chapters
     assert_equal "Genesis 1–3", passage.display_label
+    assert_equal "/bible_verses/Genesis/1", passage.bible_chapter_path
   end
 end
