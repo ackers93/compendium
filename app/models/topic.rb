@@ -2,7 +2,8 @@ class Topic < ApplicationRecord
   has_many :verse_topics, dependent: :destroy
   has_many :bible_verses, through: :verse_topics
   has_many :topic_items, dependent: :destroy
-  
+  has_many :topic_attachments, dependent: :destroy
+
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   
   # Normalize name before saving

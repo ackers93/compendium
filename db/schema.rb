@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_26_080001) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_26_132000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -248,6 +248,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_080001) do
     t.integer "taggings_count", default: 0
   end
 
+  create_table "topic_attachments", force: :cascade do |t|
+    t.bigint "topic_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_topic_attachments_on_topic_id"
+    t.index ["user_id"], name: "index_topic_attachments_on_user_id"
+  end
+
   create_table "topic_items", force: :cascade do |t|
     t.bigint "topic_id", null: false
     t.bigint "user_id", null: false
@@ -337,6 +346,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_080001) do
   add_foreign_key "reading_plan_days", "reading_plans"
   add_foreign_key "reading_plan_passages", "reading_plan_days"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "topic_attachments", "topics"
+  add_foreign_key "topic_attachments", "users"
   add_foreign_key "topic_items", "topics"
   add_foreign_key "topic_items", "users"
   add_foreign_key "verse_mentions", "bible_verses"

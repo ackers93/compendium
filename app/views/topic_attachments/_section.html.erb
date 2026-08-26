@@ -1,0 +1,75 @@
+<div id="topic-attachments" class="content-section mt-8">
+  <div class="section-header">
+    <h2 class="section-title">Attachments</h2>
+  </div>
+  <div class="section-content">
+    <% if local_assigns[:errors].present? && errors.any? %>
+      <div class="alert alert-error mb-4">
+        <% errors.each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if topic_attachments.present? %>
+      <div class="topic-attachments-list mb-6">
+        <% topic_attachments.each do |attachment| %>
+          <div id="<%= dom_id(attachment) %>" class="topic-attachment-row d-flex justify-between items-center mb-3 p-3 border border-gray-200 rounded-lg">
+            <div class="d-flex items-center gap-3">
+              <i class="<%= topic_attachment_icon(attachment) %> text-gray-600"></i>
+              <div>
+                <% if attachment.image? && attachment.file.attached? %>
+                  <%= link_to rails_blob_path(attachment.file, disposition: "inline"), target: "_blank", rel: "noopener" do %>
+                    <%= image_tag rails_blob_path(attachment.file),
+                        class: "topic-attachment-thumb mb-1",
+                        alt: attachment.filename,
+                        loading: "lazy" %>
+                  <% end %>
+                <% end %>
+                <div class="font-semibold">
+                  <%= link_to attachment.filename,
+                      rails_blob_path(attachment.file, disposition: "attachment"),
+                      class: "topic-link" %>
+                </div>
+                <div class="text-sm text-gray-600">
+                  <%= attachment.content_type_label %>
+                  · uploaded by <%= attachment.user.display_name %>
+                  · <%= time_ago_in_words(attachment.created_at) %> ago
+                </div>
+              </div>
+            </div>
+            <% if current_user && current_user.can_delete?(attachment) %>
+              <%= button_to topic_topic_attachment_path(topic, attachment),
+                  method: :delete,
+                  class: "text-red-600 hover:text-red-800 text-sm",
+                  data: { confirm: "Remove this attachment?" } do %>
+                <i class="fa-solid fa-trash"></i>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-600 mb-4">No attachments yet.</p>
+    <% end %>
+
+    <% if current_user && current_user.can_create? %>
+      <div class="add-attachment-section p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <h3 class="text-lg font-semibold mb-3">Upload a file</h3>
+        <p class="text-sm text-gray-600 mb-3">Images, PDF, or Word documents up to 25 MB.</p>
+        <%= form_with model: [topic, TopicAttachment.new],
+                      url: topic_topic_attachments_path(topic),
+                      class: "space-y-3",
+                      data: { turbo: true } do |form| %>
+          <div class="form-group">
+            <%= form.file_field :file,
+                class: "form-input",
+                accept: "image/png,image/jpeg,image/gif,image/webp,application/pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                required: true %>
+          </div>
+          <%= form.submit "Upload", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     member do
       post :add_verse
     end
+    resources :topic_attachments, only: [:create, :destroy]
   end
   get 'bible_verses/:book/:chapter/:verse/topics/new', to: 'verse_topics#new', as: :new_bible_verse_topic
   post 'bible_verses/:book/:chapter/:verse/topics', to: 'verse_topics#create', as: :bible_verse_topics

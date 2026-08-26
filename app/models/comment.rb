@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
   include Flaggable
   include MentionsVerses
+  include ValidatesInlineImages
 
   MAX_DEPTH = 10
 

@@ -164,13 +164,32 @@
     padding: $space-3;
     margin: $space-3 0;
     background: $gray-50;
-    
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
     .attachment__caption {
       font-size: $font-size-sm;
       color: $gray-600;
       margin-top: $space-2;
     }
   }
+}
+
+.topic-attachment-thumb {
+  display: block;
+  max-width: 120px;
+  max-height: 120px;
+  width: auto;
+  height: auto;
+  border-radius: $radius;
+  object-fit: cover;
+}
+
+.topic-attachment-row {
+  gap: $space-3;
 }
 
 // Custom Bible verse button

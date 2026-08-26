@@ -1,3 +1,20 @@
+const INLINE_IMAGE_TYPES = ["image/png", "image/jpeg", "image/gif", "image/webp"]
+const MAX_INLINE_IMAGE_BYTES = 5 * 1024 * 1024
+
+// Only allow reasonably sized images as inline Action Text attachments
+document.addEventListener("trix-file-accept", function(event) {
+  const { file } = event
+  if (!INLINE_IMAGE_TYPES.includes(file.type)) {
+    event.preventDefault()
+    alert("Only PNG, JPEG, GIF, or WebP images can be attached inline.")
+    return
+  }
+  if (file.size > MAX_INLINE_IMAGE_BYTES) {
+    event.preventDefault()
+    alert("Inline images must be 5 MB or smaller.")
+  }
+})
+
 // Custom Trix button and dialog for Bible verse references
 document.addEventListener("trix-initialize", function(event) {
   const trixEditor = event.target

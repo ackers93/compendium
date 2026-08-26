@@ -30,6 +30,7 @@ class TopicsController < ApplicationController
                          .order(bible_order_sql)
     @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
     load_topic_items
+    load_topic_attachments
     @errors = []
   end
 
@@ -52,6 +53,7 @@ class TopicsController < ApplicationController
                            .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
       load_topic_items
+      load_topic_attachments
       render :show, status: :unprocessable_entity
       return
     end
@@ -95,6 +97,7 @@ class TopicsController < ApplicationController
                            .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
       load_topic_items
+      load_topic_attachments
       render :show, status: :unprocessable_entity
     end
   end
@@ -190,7 +193,14 @@ class TopicsController < ApplicationController
       items.select { |ti| ti.itemable_type == type }
     }.reject { |_type, list| list.empty? }
   end
-  
+
+  def load_topic_attachments
+    @topic_attachments = @topic.topic_attachments
+                               .includes(:user)
+                               .with_attached_file
+                               .order(created_at: :desc)
+  end
+
   def topic_params
     params.require(:topic).permit(:name)
   end

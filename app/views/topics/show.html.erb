@@ -28,4 +28,6 @@
 
 <%= render partial: "pinned_content", locals: { topic_items_by_type: @topic_items_by_type || {}, topic: @topic } %>
 
+<%= render partial: "topic_attachments/section", locals: { topic: @topic, topic_attachments: @topic_attachments || [], errors: [] } %>
+
 <%= turbo_frame_tag "modal" %>
