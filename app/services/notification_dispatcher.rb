@@ -32,21 +32,15 @@ class NotificationDispatcher
       topic = verse_topic.topic
       return unless actor && topic
 
-      recipient_ids = VerseTopic
-        .where(topic_id: topic.id)
-        .where.not(id: verse_topic.id)
-        .where.not(user_id: actor.id)
-        .distinct
-        .pluck(:user_id)
+      notify_topic_contributors(topic: topic, actor: actor, notifiable: verse_topic)
+    end
 
-      User.where(id: recipient_ids).find_each do |recipient|
-        create_notification(
-          recipient: recipient,
-          actor: actor,
-          action: "topic_contribution",
-          notifiable: verse_topic
-        )
-      end
+    def topic_item_created(topic_item)
+      actor = topic_item.user
+      topic = topic_item.topic
+      return unless actor && topic
+
+      notify_topic_contributors(topic: topic, actor: actor, notifiable: topic_item)
     end
 
     def thread_entry_created(entry)
@@ -79,6 +73,22 @@ class NotificationDispatcher
     end
 
     private
+
+    def notify_topic_contributors(topic:, actor:, notifiable:)
+      recipient_ids = (
+        VerseTopic.where(topic_id: topic.id).distinct.pluck(:user_id) +
+        TopicItem.where(topic_id: topic.id).distinct.pluck(:user_id)
+      ).uniq - [actor.id]
+
+      User.where(id: recipient_ids).find_each do |recipient|
+        create_notification(
+          recipient: recipient,
+          actor: actor,
+          action: "topic_contribution",
+          notifiable: notifiable
+        )
+      end
+    end
 
     def commentable_owner(commentable)
       return unless commentable.respond_to?(:user)

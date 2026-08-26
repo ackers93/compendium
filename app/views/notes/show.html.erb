@@ -4,6 +4,8 @@
 <% end %>
 <%= render 'note_content', note: @note %>
 
+<%= render "topic_items/section", itemable: @note %>
+
 <div class="content-section mt-8">
   <div class="section-header">
     <h2 class="section-title">Comments</h2>

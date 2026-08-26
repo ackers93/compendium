@@ -69,3 +69,7 @@
     <%= link_to "← Back to Chiasms", chiasms_path, class: "btn btn-outline" %>
   </div>
 </div>
+
+<%= render "topic_items/section", itemable: @chiasm %>
+
+<%= turbo_frame_tag "modal" %>

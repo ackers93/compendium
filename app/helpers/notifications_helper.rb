@@ -11,7 +11,11 @@ module NotificationsHelper
       "#{actor_name} replied to your comment"
     when "topic_contribution"
       topic_name = notification.notifiable&.topic&.name || "a topic"
-      "#{actor_name} added a verse to #{topic_name}"
+      if notification.notifiable.is_a?(TopicItem)
+        "#{actor_name} pinned content to #{topic_name}"
+      else
+        "#{actor_name} added a verse to #{topic_name}"
+      end
     when "thread_contribution"
       thread_title = notification.notifiable&.bible_thread&.title || "a thread"
       "#{actor_name} added a verse to \"#{thread_title}\""
@@ -79,6 +83,8 @@ module NotificationsHelper
     when "CrossReference" then "cross-reference"
     when "BibleThread" then "thread \"#{flag.flaggable.title}\""
     when "Chiasm" then "chiasm \"#{flag.flaggable.title}\""
+    when "TopicItem" then "topic pin"
+    when "VerseTopic" then "topic verse"
     else flag.flaggable_type.underscore.humanize.downcase
     end
   end

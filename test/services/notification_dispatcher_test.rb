@@ -107,6 +107,22 @@ class NotificationDispatcherTest < ActiveSupport::TestCase
     assert_equal @commenter, notification.actor
   end
 
+  test "notifies topic contributors when content is pinned" do
+    topic = Topic.create!(name: "Grace-#{SecureRandom.hex(3)}")
+    VerseTopic.create!(topic: topic, bible_verse: @verse, user: @owner)
+    Notification.delete_all
+
+    topic_item = TopicItem.create!(topic: topic, user: @commenter, itemable: @note)
+
+    notification = Notification.find_by(
+      recipient: @owner,
+      notifiable: topic_item,
+      action: "topic_contribution"
+    )
+    assert_not_nil notification
+    assert_equal @commenter, notification.actor
+  end
+
   test "does not notify contributor of their own topic addition" do
     topic = Topic.create!(name: "Hope-#{SecureRandom.hex(3)}")
     VerseTopic.create!(topic: topic, bible_verse: @verse, user: @owner)

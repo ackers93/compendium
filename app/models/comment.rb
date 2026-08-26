@@ -14,6 +14,7 @@ class Comment < ApplicationRecord
            dependent: :destroy,
            inverse_of: :parent
   has_many :verse_mentions, as: :mentionable, dependent: :destroy
+  has_many :topic_items, as: :itemable, dependent: :destroy
   has_many :notifications, as: :notifiable, dependent: :delete_all
   has_rich_text :content
 

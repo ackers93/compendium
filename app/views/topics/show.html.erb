@@ -1,6 +1,6 @@
 <div class="page-header">
   <h1 class="page-title"><%= @topic.name %></h1>
-  <p class="page-subtitle">Verses associated with this topic</p>
+  <p class="page-subtitle">Verses and related study</p>
 </div>
 
 <div class="content-section">
@@ -12,7 +12,7 @@
       <%= link_to "← Back to Topics", topics_path, class: "btn btn-outline" %>
     </div>
   </div>
-  
+
   <div class="section-content">
     <%= render partial: "verses_list", locals: { grouped_verse_topics: @grouped_verse_topics, topic: @topic } %>
     <% if current_user && current_user.can_create? %>
@@ -26,3 +26,6 @@
   </div>
 </div>
 
+<%= render partial: "pinned_content", locals: { topic_items_by_type: @topic_items_by_type || {}, topic: @topic } %>
+
+<%= turbo_frame_tag "modal" %>

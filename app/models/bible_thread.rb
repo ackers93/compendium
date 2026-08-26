@@ -4,6 +4,7 @@ class BibleThread < ApplicationRecord
   belongs_to :user
   has_many :bible_thread_entries, -> { order(position: :asc) }, dependent: :destroy
   has_many :bible_verses, through: :bible_thread_entries
+  has_many :topic_items, as: :itemable, dependent: :destroy
 
   validates :title, presence: true
 

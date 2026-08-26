@@ -29,6 +29,7 @@ class TopicsController < ApplicationController
                          .includes(:bible_verse, :user)
                          .order(bible_order_sql)
     @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
+    load_topic_items
     @errors = []
   end
 
@@ -50,6 +51,7 @@ class TopicsController < ApplicationController
                            .includes(:bible_verse, :user)
                            .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
+      load_topic_items
       render :show, status: :unprocessable_entity
       return
     end
@@ -92,6 +94,7 @@ class TopicsController < ApplicationController
                            .includes(:bible_verse, :user)
                            .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
+      load_topic_items
       render :show, status: :unprocessable_entity
     end
   end
@@ -176,6 +179,16 @@ class TopicsController < ApplicationController
   
   def set_topic
     @topic = Topic.find(params[:id])
+  end
+
+  def load_topic_items
+    items = @topic.topic_items
+                  .includes(:user, :itemable, :rich_text_note)
+                  .order(created_at: :desc)
+                  .select { |ti| ti.visible_to?(current_user) }
+    @topic_items_by_type = TopicItem::ITEMABLE_TYPES.index_with { |type|
+      items.select { |ti| ti.itemable_type == type }
+    }.reject { |_type, list| list.empty? }
   end
   
   def topic_params

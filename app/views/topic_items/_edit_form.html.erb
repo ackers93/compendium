@@ -1,0 +1,25 @@
+<%= form_with(
+      model: topic_item,
+      url: topic_item_path(topic_item, topic_id: local_assigns[:topic_id]),
+      method: :patch,
+      id: "topic-item-edit-form",
+      data: { turbo_frame: "modal" }
+    ) do |form| %>
+  <% if topic_item.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% topic_item.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :note, "Note (Optional)", class: "form-label" %>
+    <%= form.rich_text_area :note, class: "form-input" %>
+    <small class="form-help">Explain how this relates to the topic</small>
+  </div>
+
+  <div class="form-actions mt-4">
+    <%= form.submit topic_item.note.present? ? "Update Note" : "Add Note", class: "btn btn-primary" %>
+  </div>
+<% end %>

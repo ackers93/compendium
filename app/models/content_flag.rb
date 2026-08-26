@@ -40,6 +40,10 @@ class ContentFlag < ApplicationRecord
       flaggable.title
     when 'Chiasm'
       flaggable.title
+    when 'TopicItem'
+      "Pin on #{flaggable.topic&.name || 'topic'}"
+    when 'VerseTopic'
+      "Verse on #{flaggable.topic&.name || 'topic'}"
     else
       flaggable_type
     end

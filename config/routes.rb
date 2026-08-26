@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   patch 'verse_topics/:id', to: 'verse_topics#update', as: :verse_topic
   put 'verse_topics/:id', to: 'verse_topics#update'
   delete 'verse_topics/:id', to: 'verse_topics#destroy'
+
+  # Topic item pins (notes, threads, chiasms, comments, cross-references)
+  resources :topic_items, only: [:new, :create, :edit, :update, :destroy]
   
   # Bible threads routes
   resources :bible_threads

@@ -1,0 +1,60 @@
+<div id="topic-pinned-content">
+  <% if topic_items_by_type.present? && topic_items_by_type.any? %>
+    <div class="content-section mt-8">
+      <div class="section-header">
+        <h2 class="section-title">Pinned content</h2>
+      </div>
+      <div class="section-content">
+        <% topic_items_by_type.each do |type, items| %>
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold mb-3"><%= TopicItem::TYPE_LABELS[type] || type %></h3>
+            <div class="topic-pinned-list">
+              <% items.each do |topic_item| %>
+                <div id="topic_item_<%= topic_item.id %>" class="topic-item mb-4 p-4 border border-gray-200 rounded-lg">
+                  <div class="d-flex justify-between items-start mb-2">
+                    <div>
+                      <span class="font-semibold text-lg">
+                        <%= link_to topic_item.itemable_title, topic_item_itemable_path(topic_item), class: "topic-link" %>
+                      </span>
+                      <div class="topic-meta text-sm text-gray-600 mt-1">
+                        Pinned by <%= topic_item.user.display_name %> • <%= time_ago_in_words(topic_item.created_at) %> ago
+                      </div>
+                    </div>
+                    <% if current_user && current_user.can_edit?(topic_item) %>
+                      <div class="d-flex gap-2 items-center">
+                        <%= link_to edit_topic_item_path(topic_item, topic_id: topic.id),
+                            class: "text-blue-600 hover:text-blue-800 text-sm",
+                            data: { turbo_frame: "modal" } do %>
+                          <i class="fa-solid fa-edit"></i>
+                        <% end %>
+                        <%= button_to topic_item_path(topic_item, topic_id: topic.id),
+                            method: :delete,
+                            class: "text-red-600 hover:text-red-800 text-sm",
+                            data: { confirm: "Remove this from the topic?" } do %>
+                          <i class="fa-solid fa-trash"></i>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <% if topic_item.note.present? %>
+                    <div class="topic-explanation mt-3 p-3 bg-gray-50 rounded">
+                      <div class="text-sm text-gray-700">
+                        <%= topic_item.note %>
+                      </div>
+                    </div>
+                  <% elsif current_user && current_user.can_edit?(topic_item) %>
+                    <div class="mt-2">
+                      <%= link_to "Add a note", edit_topic_item_path(topic_item, topic_id: topic.id),
+                          class: "text-sm text-blue-600 hover:text-blue-800",
+                          data: { turbo_frame: "modal" } %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

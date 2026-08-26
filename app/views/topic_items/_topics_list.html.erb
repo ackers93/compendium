@@ -1,0 +1,43 @@
+<% topic_items = itemable.topic_items.includes(:topic, :user, :rich_text_note).order(created_at: :desc) %>
+<div id="<%= topic_items_list_dom_id(itemable) %>">
+  <% if topic_items.any? %>
+    <div class="topics-list">
+      <% topic_items.each do |topic_item| %>
+        <div id="topic_item_<%= topic_item.id %>" class="topic-item mb-4 p-4 border border-gray-200 rounded-lg">
+          <div class="d-flex justify-between items-start mb-2">
+            <div>
+              <span class="topic-name font-semibold text-lg">
+                <%= link_to topic_item.topic.name, topic_path(topic_item.topic), class: "topic-link" %>
+              </span>
+              <div class="topic-meta text-sm text-gray-600 mt-1">
+                Added by <%= topic_item.user.display_name %> • <%= time_ago_in_words(topic_item.created_at) %> ago
+              </div>
+            </div>
+            <% if topic_item.user == current_user || current_user&.role_admin? %>
+              <%= button_to topic_item_path(topic_item),
+                  method: :delete,
+                  class: "text-red-600 hover:text-red-800 text-sm",
+                  data: {
+                    turbo_frame: "_top",
+                    confirm: "Remove this from the topic?"
+                  } do %>
+                <i class="fa-solid fa-trash"></i> Remove
+              <% end %>
+            <% end %>
+          </div>
+          <% if topic_item.note.present? %>
+            <div class="topic-explanation mt-3 p-3 bg-gray-50 rounded">
+              <div class="text-sm text-gray-700">
+                <%= topic_item.note %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-4 text-gray-500">
+      <p>Not pinned to any topics yet.</p>
+    </div>
+  <% end %>
+</div>

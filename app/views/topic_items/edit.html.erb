@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-overlay">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <h2 class="modal-title"><%= @topic_item.note.present? ? "Edit Note" : "Add Note" %></h2>
+        <%= link_to "#", class: "modal-close", data: { turbo_frame: "modal" } do %>
+          <i class="fa-solid fa-times"></i>
+        <% end %>
+      </div>
+
+      <div class="modal-body">
+        <%= render "edit_form", topic_item: @topic_item, topic_id: params[:topic_id] %>
+      </div>
+    </div>
+  </div>
+<% end %>

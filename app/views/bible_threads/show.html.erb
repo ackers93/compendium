@@ -79,3 +79,7 @@
     <%= link_to "← Back to Threads", bible_threads_path, class: "btn btn-outline" %>
   </div>
 </div>
+
+<%= render "topic_items/section", itemable: @bible_thread %>
+
+<%= turbo_frame_tag "modal" %>

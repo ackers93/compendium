@@ -23,6 +23,12 @@
               data: { turbo_frame: "modal" } %>
           <span class="mx-1">•</span>
         <% end %>
+        <% if current_user.can_create? %>
+          <%= link_to "Add to Topic", new_topic_item_path_for(comment),
+              class: "text-blue-500 hover:text-blue-700",
+              data: { turbo_frame: "modal" } %>
+          <span class="mx-1">•</span>
+        <% end %>
         <% if current_user.can_edit?(comment) %>
           <%= link_to "Edit", edit_comment_path(comment), 
               class: "text-blue-500 hover:text-blue-700",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_26_080000) do
+ActiveRecord::Schema[8.0].define(version: 2026_08_26_080001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -248,6 +248,19 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_080000) do
     t.integer "taggings_count", default: 0
   end
 
+  create_table "topic_items", force: :cascade do |t|
+    t.bigint "topic_id", null: false
+    t.bigint "user_id", null: false
+    t.string "itemable_type", null: false
+    t.bigint "itemable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["itemable_type", "itemable_id"], name: "index_topic_items_on_itemable"
+    t.index ["topic_id", "itemable_type", "itemable_id", "user_id"], name: "index_topic_items_on_topic_itemable_user", unique: true
+    t.index ["topic_id"], name: "index_topic_items_on_topic_id"
+    t.index ["user_id"], name: "index_topic_items_on_user_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -324,6 +337,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_080000) do
   add_foreign_key "reading_plan_days", "reading_plans"
   add_foreign_key "reading_plan_passages", "reading_plan_days"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "topic_items", "topics"
+  add_foreign_key "topic_items", "users"
   add_foreign_key "verse_mentions", "bible_verses"
   add_foreign_key "verse_topics", "bible_verses"
   add_foreign_key "verse_topics", "topics"

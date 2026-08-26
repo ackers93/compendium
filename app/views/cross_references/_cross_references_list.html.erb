@@ -34,6 +34,13 @@
               </td>
               <% if current_user %>
                 <td>
+                  <% if current_user.can_create? %>
+                    <%= link_to new_topic_item_path_for(cross_ref),
+                        class: "btn btn-sm btn-outline mb-1",
+                        data: { turbo_frame: "modal" } do %>
+                      <i class="fa-solid fa-bookmark"></i> Topic
+                    <% end %>
+                  <% end %>
                   <% if current_user.can_delete?(cross_ref) %>
                     <%= button_to cross_reference_path(cross_ref), 
                         method: :delete, 

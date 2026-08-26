@@ -6,6 +6,7 @@ class CrossReference < ApplicationRecord
   belongs_to :target_end_verse, class_name: 'BibleVerse', optional: true
   belongs_to :user
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :topic_items, as: :itemable, dependent: :destroy
   
   validates :source_verse_id, presence: true
   validates :target_verse_id, presence: true

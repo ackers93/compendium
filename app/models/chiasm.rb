@@ -5,6 +5,7 @@ class Chiasm < ApplicationRecord
   belongs_to :start_verse, class_name: 'BibleVerse'
   belongs_to :end_verse, class_name: 'BibleVerse'
   has_many :chiasm_limbs, -> { order(position: :asc) }, dependent: :destroy, inverse_of: :chiasm
+  has_many :topic_items, as: :itemable, dependent: :destroy
 
   validates :title, presence: true
   validates :start_verse, :end_verse, presence: true

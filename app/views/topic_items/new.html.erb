@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-overlay">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <h2 class="modal-title">Add to Topic</h2>
+        <%= link_to "#", class: "modal-close", data: { turbo_frame: "modal" } do %>
+          <i class="fa-solid fa-times"></i>
+        <% end %>
+      </div>
+
+      <div class="modal-body">
+        <%= render "form", topic_item: @topic_item, itemable: @itemable %>
+      </div>
+
+      <div class="modal-footer">
+        <%= link_to "Cancel", "#", class: "btn btn-outline", data: { turbo_frame: "modal" } %>
+        <button type="submit" form="topic-item-form" class="btn btn-primary">
+          Add to Topic
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
