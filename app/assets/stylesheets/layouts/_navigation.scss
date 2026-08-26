@@ -1,4 +1,7 @@
+$navbar-mobile-height: calc(#{$space-2} * 2 + 4.5rem + #{$space-1} * 2);
+
 .navbar {
+    --navbar-height: #{$navbar-mobile-height};
     background: $theme-header;
     border-bottom: 1px solid var(--color-header-border);
     position: sticky;
@@ -268,7 +271,7 @@
       border: none;
       cursor: pointer;
       padding: 0;
-      z-index: $z-fixed;
+      z-index: $z-modal;
       
       &:focus {
         outline: none;
@@ -305,17 +308,19 @@
     // Mobile Menu
     .nav-menu-mobile {
       position: fixed;
-      top: 7rem;
+      top: 0;
       right: -100%;
       width: 80%;
       max-width: 320px;
-      height: calc(100vh - 7rem);
+      height: 100dvh;
       background: $theme-header;
-      border-left: 1px solid var(--color-header-border);
+      border-left: 3px solid $theme-primary;
       padding: $space-6;
+      padding-top: calc(var(--navbar-height, #{$navbar-mobile-height}) + #{$space-6});
       transition: right 0.3s ease;
       overflow-y: auto;
       box-shadow: $shadow-xl;
+      z-index: $z-fixed;
       
       &.active {
         right: 0;

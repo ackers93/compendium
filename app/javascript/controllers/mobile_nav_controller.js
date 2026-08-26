@@ -4,16 +4,29 @@ export default class extends Controller {
   static targets = ["menu", "hamburger"]
 
   connect() {
-    // Close menu when clicking outside
     this.boundCloseOnClickOutside = this.closeOnClickOutside.bind(this)
+    this.boundSyncNavbarHeight = this.syncNavbarHeight.bind(this)
+
+    this.syncNavbarHeight()
+    window.addEventListener("resize", this.boundSyncNavbarHeight)
+
+    this.resizeObserver = new ResizeObserver(this.boundSyncNavbarHeight)
+    this.resizeObserver.observe(this.element)
   }
 
   disconnect() {
     document.removeEventListener("click", this.boundCloseOnClickOutside)
+    window.removeEventListener("resize", this.boundSyncNavbarHeight)
+    this.resizeObserver?.disconnect()
+  }
+
+  syncNavbarHeight() {
+    this.element.style.setProperty("--navbar-height", `${this.element.offsetHeight}px`)
   }
 
   toggle(event) {
     event.stopPropagation()
+    this.syncNavbarHeight()
     const isOpen = this.menuTarget.classList.contains("active")
     
     if (isOpen) {
