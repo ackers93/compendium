@@ -19,6 +19,7 @@ import ChiasmRangeController from "./chiasm_range_controller"
 import ChiasmsSearchController from "./chiasms_search_controller"
 import BulkUploadController from "./bulk_upload_controller"
 import BulkUploadTabsController from "./bulk_upload_tabs_controller"
+import GraphMapController from "./graph_map_controller"
 
 application.register("modal", ModalController)
 application.register("mobile-nav", MobileNavController)
@@ -40,5 +41,6 @@ application.register("chiasm-range", ChiasmRangeController)
 application.register("chiasms-search", ChiasmsSearchController)
 application.register("bulk-upload", BulkUploadController)
 application.register("bulk-upload-tabs", BulkUploadTabsController)
+application.register("graph-map", GraphMapController)
 
 export { application } 

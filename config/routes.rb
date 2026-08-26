@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   root to: "home#index"
   
   get '/notes/list', to: 'notes#list'
-  
+
+  get "map", to: "maps#show", as: :map
+
   # Daily readings (Bible Companion)
   get 'daily_readings', to: 'daily_readings#show', as: :daily_readings
   get 'daily_readings/:date', to: 'daily_readings#show', as: :daily_reading,

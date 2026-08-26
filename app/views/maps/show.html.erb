@@ -1,0 +1,33 @@
+<div class="graph-map"
+     data-controller="graph-map"
+     data-graph-map-graph-value="<%= h(@graph.to_json) %>">
+  <aside class="graph-map__panel" aria-label="Map controls">
+    <h1 class="graph-map__title">Map</h1>
+    <p class="graph-map__subtitle">Connected notes, verses, topics, and more. Isolated items are hidden.</p>
+
+    <div class="graph-map__filters" role="group" aria-label="Show node types">
+      <% @graph[:types].each do |type| %>
+        <label class="graph-map__filter">
+          <input type="checkbox"
+                 checked
+                 data-graph-map-target="typeToggle"
+                 data-action="change->graph-map#toggleType"
+                 data-type="<%= type[:id] %>">
+          <span class="graph-map__swatch graph-map__swatch--<%= type[:id].underscore.dasherize %>" aria-hidden="true"></span>
+          <span><%= type[:label] %></span>
+        </label>
+      <% end %>
+    </div>
+
+    <p class="graph-map__hint">Drag to pan · scroll to zoom · click a node to open it</p>
+  </aside>
+
+  <div class="graph-map__canvas-wrap">
+    <svg class="graph-map__canvas" data-graph-map-target="canvas" role="img" aria-label="Connection graph"></svg>
+    <% if @graph[:nodes].empty? %>
+      <p class="graph-map__empty" data-graph-map-target="empty">
+        Nothing is connected yet. Link a verse to a topic, add a note mention, or create a thread to see the map fill in.
+      </p>
+    <% end %>
+  </div>
+</div>
