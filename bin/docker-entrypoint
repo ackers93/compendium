@@ -9,7 +9,7 @@ fi
 # Migrate on boot only when not on Fly (Fly runs db:prepare via release_command).
 # Skipping here lets Puma bind immediately so health checks can pass.
 if [ -z "${FLY_APP_NAME}" ] && [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  ./bin/rails db:prepare
+  ./bin/rails release:prepare
 fi
 
 exec "${@}"
