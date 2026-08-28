@@ -1,9 +1,12 @@
 # Builds a typed node/edge graph of connected study content for the Map view.
 # Pass include_node_types to omit types (e.g. Comment) without changing callers.
+#
+# Cross-references are edges between verse nodes (not hub nodes). A range
+# target expands to every verse in that span so each verse can be visualized.
 class GraphMapBuilder
   include Rails.application.routes.url_helpers
 
-  NODE_TYPES = %w[BibleVerse Topic Note BibleThread Chiasm CrossReference Comment].freeze
+  NODE_TYPES = %w[BibleVerse Topic Note BibleThread Chiasm Comment].freeze
 
   TYPE_LABELS = {
     "BibleVerse" => "Verses",
@@ -11,7 +14,6 @@ class GraphMapBuilder
     "Note" => "Notes",
     "BibleThread" => "Threads",
     "Chiasm" => "Chiasms",
-    "CrossReference" => "Cross-references",
     "Comment" => "Comments"
   }.freeze
 
@@ -91,12 +93,27 @@ class GraphMapBuilder
     return unless include_type?("Topic")
 
     TopicItem.pluck(:topic_id, :itemable_type, :itemable_id).each do |topic_id, itemable_type, itemable_id|
+      if itemable_type == "CrossReference"
+        add_topic_cross_reference(topic_id, itemable_id)
+        next
+      end
+
       next unless include_type?(itemable_type)
       next if itemable_type == "Note" && !note_visible?(itemable_id)
 
       topic_key = register_node("Topic", topic_id)
       item_key = register_node(itemable_type, itemable_id)
       add_edge("topic_item", topic_key, item_key)
+    end
+  end
+
+  def add_topic_cross_reference(topic_id, xref_id)
+    return unless include_type?("BibleVerse")
+
+    topic_key = register_node("Topic", topic_id)
+    verse_ids_for_cross_reference(xref_id).each do |verse_id|
+      verse_key = register_node("BibleVerse", verse_id)
+      add_edge("topic_item", topic_key, verse_key)
     end
   end
 
@@ -113,16 +130,15 @@ class GraphMapBuilder
   def add_cross_references
     return unless include_type?("BibleVerse")
 
-    CrossReference.pluck(:id, :source_verse_id, :target_verse_id).each do |id, source_id, target_id|
+    rows = CrossReference.pluck(:source_verse_id, :target_verse_id, :target_end_verse_id)
+    target_ids_by_row = expand_cross_reference_targets(rows)
+
+    rows.each_with_index do |(source_id, _target_id, _end_id), index|
       source_key = register_node("BibleVerse", source_id)
-      target_key = register_node("BibleVerse", target_id)
-      add_edge("cross_reference", source_key, target_key)
-
-      next unless include_type?("CrossReference")
-
-      cr_key = register_node("CrossReference", id)
-      add_edge("cross_reference", cr_key, source_key)
-      add_edge("cross_reference", cr_key, target_key)
+      target_ids_by_row[index].each do |target_id|
+        target_key = register_node("BibleVerse", target_id)
+        add_edge("cross_reference", source_key, target_key)
+      end
     end
   end
 
@@ -142,7 +158,12 @@ class GraphMapBuilder
     return unless include_type?("Comment")
 
     Comment.pluck(:id, :commentable_type, :commentable_id, :parent_id).each do |id, ctype, cid, parent_id|
-      next unless %w[BibleVerse Note CrossReference].include?(ctype)
+      if ctype == "CrossReference"
+        add_comment_on_cross_reference(id, cid, parent_id)
+        next
+      end
+
+      next unless %w[BibleVerse Note].include?(ctype)
       next unless include_type?(ctype)
       next if ctype == "Note" && !note_visible?(cid)
 
@@ -155,6 +176,21 @@ class GraphMapBuilder
       parent_comment_key = register_node("Comment", parent_id)
       add_edge("comment", comment_key, parent_comment_key)
     end
+  end
+
+  def add_comment_on_cross_reference(comment_id, xref_id, parent_id)
+    return unless include_type?("BibleVerse")
+
+    comment_key = register_node("Comment", comment_id)
+    verse_ids_for_cross_reference(xref_id).each do |verse_id|
+      verse_key = register_node("BibleVerse", verse_id)
+      add_edge("comment", comment_key, verse_key)
+    end
+
+    return if parent_id.blank?
+
+    parent_comment_key = register_node("Comment", parent_id)
+    add_edge("comment", comment_key, parent_comment_key)
   end
 
   def add_mentions
@@ -174,6 +210,80 @@ class GraphMapBuilder
       mentionable_key = register_node(mtype, mid)
       add_edge("mention", mentionable_key, verse_key)
     end
+  end
+
+  # Returns [source, *target span] verse ids for a CrossReference id.
+  def verse_ids_for_cross_reference(xref_id)
+    row = cross_reference_rows[xref_id]
+    return [] unless row
+
+    source_id, target_id, target_end_id = row
+    [source_id] + expand_target_span(target_id, target_end_id)
+  end
+
+  def cross_reference_rows
+    @cross_reference_rows ||= CrossReference.pluck(:id, :source_verse_id, :target_verse_id, :target_end_verse_id)
+                                            .to_h { |id, s, t, e| [id, [s, t, e]] }
+  end
+
+  # Parallel array: for each [source, target, end] row, the expanded target verse ids.
+  def expand_cross_reference_targets(rows)
+    range_keys = rows.filter_map { |_s, t, e| [t, e] if e.present? }.uniq
+    range_map = load_range_verse_ids(range_keys)
+
+    rows.map do |_source_id, target_id, target_end_id|
+      if target_end_id.present?
+        range_map[[target_id, target_end_id]] || [target_id]
+      else
+        [target_id]
+      end
+    end
+  end
+
+  def expand_target_span(target_id, target_end_id)
+    return [target_id] if target_end_id.blank?
+
+    @target_span_cache ||= {}
+    @target_span_cache[[target_id, target_end_id]] ||= begin
+      load_range_verse_ids([[target_id, target_end_id]])[[target_id, target_end_id]] || [target_id]
+    end
+  end
+
+  def load_range_verse_ids(range_keys)
+    return {} if range_keys.empty?
+
+    verse_ids = range_keys.flatten.uniq
+    verses = BibleVerse.where(id: verse_ids).pluck(:id, :book, :chapter, :verse).to_h { |id, b, c, v|
+      [id, { book: b, chapter: c, verse: v }]
+    }
+
+    # Group ranges by book/chapter so we can resolve mid-span verses in one query each.
+    by_chapter = Hash.new { |h, k| h[k] = [] }
+    range_keys.each do |start_id, end_id|
+      start_v = verses[start_id]
+      end_v = verses[end_id]
+      next unless start_v && end_v
+
+      by_chapter[[start_v[:book], start_v[:chapter]]] << {
+        key: [start_id, end_id],
+        from: start_v[:verse],
+        to: end_v[:verse]
+      }
+    end
+
+    result = {}
+    by_chapter.each do |(book, chapter), spans|
+      min_v = spans.map { |s| s[:from] }.min
+      max_v = spans.map { |s| s[:to] }.max
+      chapter_verses = BibleVerse.where(book: book, chapter: chapter, verse: min_v..max_v)
+                                 .pluck(:verse, :id)
+                                 .to_h
+
+      spans.each do |span|
+        result[span[:key]] = (span[:from]..span[:to]).filter_map { |v| chapter_verses[v] }
+      end
+    end
+    result
   end
 
   def note_visible?(note_id)
@@ -207,7 +317,6 @@ class GraphMapBuilder
     hydrate_notes
     hydrate_threads
     hydrate_chiasms
-    hydrate_cross_references
     hydrate_comments
   end
 
@@ -263,22 +372,6 @@ class GraphMapBuilder
       key = node_id("Chiasm", id)
       @nodes[key][:label] = title
       @nodes[key][:url] = chiasm_path(id)
-    end
-  end
-
-  def hydrate_cross_references
-    ids = @pending_labels["CrossReference"].to_a
-    return if ids.empty?
-
-    CrossReference.where(id: ids).includes(:source_verse, :target_verse, :target_end_verse).find_each do |xref|
-      key = node_id("CrossReference", xref.id)
-      @nodes[key][:label] = xref.connection_label
-      source = xref.source_verse
-      @nodes[key][:url] = bible_verse_show_path(
-        book: source.book,
-        chapter: source.chapter,
-        verse: source.verse
-      )
     end
   end
 

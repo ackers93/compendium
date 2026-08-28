@@ -3,7 +3,7 @@
      data-graph-map-graph-value="<%= h(@graph.to_json) %>">
   <aside class="graph-map__panel" aria-label="Map controls">
     <h1 class="graph-map__title">Map</h1>
-    <p class="graph-map__subtitle">Connected notes, verses, topics, and more. Isolated items are hidden.</p>
+    <p class="graph-map__subtitle">Connections between verses, notes, topics, and more. Nodes without a link in the current filters are hidden.</p>
 
     <div class="graph-map__filters" role="group" aria-label="Show node types">
       <% @graph[:types].each do |type| %>
@@ -24,10 +24,8 @@
 
   <div class="graph-map__canvas-wrap">
     <svg class="graph-map__canvas" data-graph-map-target="canvas" role="img" aria-label="Connection graph"></svg>
-    <% if @graph[:nodes].empty? %>
-      <p class="graph-map__empty" data-graph-map-target="empty">
-        Nothing is connected yet. Link a verse to a topic, add a note mention, or create a thread to see the map fill in.
-      </p>
-    <% end %>
+    <p class="graph-map__empty" data-graph-map-target="empty" <%= "hidden" unless @graph[:nodes].empty? %>>
+      Nothing is connected yet. Link a verse to a topic, add a note mention, or create a thread to see the map fill in.
+    </p>
   </div>
 </div>

@@ -142,21 +142,31 @@ export default class extends Controller {
     if (!this.node) return
 
     const hidden = this.hiddenTypes
-    const visibleIds = new Set(
+    const typedVisible = new Set(
       this.nodes.filter((n) => !hidden.has(n.type)).map((n) => n.id)
     )
 
-    this.node.style("display", (d) => (visibleIds.has(d.id) ? null : "none"))
+    // Only keep nodes that still have an edge to another typed-visible node.
+    const connectedVisible = new Set()
+    this.links.forEach((d) => {
+      const s = typeof d.source === "object" ? d.source.id : d.source
+      const t = typeof d.target === "object" ? d.target.id : d.target
+      if (typedVisible.has(s) && typedVisible.has(t)) {
+        connectedVisible.add(s)
+        connectedVisible.add(t)
+      }
+    })
+
+    this.node.style("display", (d) => (connectedVisible.has(d.id) ? null : "none"))
     this.link.style("display", (d) => {
       const s = typeof d.source === "object" ? d.source.id : d.source
       const t = typeof d.target === "object" ? d.target.id : d.target
-      return visibleIds.has(s) && visibleIds.has(t) ? null : "none"
+      return connectedVisible.has(s) && connectedVisible.has(t) ? null : "none"
     })
 
     if (this.hasEmptyTarget) {
-      const anyVisible = this.nodes.some((n) => visibleIds.has(n.id))
-      this.emptyTarget.hidden = anyVisible || this.nodes.length === 0
-      if (this.nodes.length === 0) this.emptyTarget.hidden = false
+      // Show empty state when nothing is visible under the current filters.
+      this.emptyTarget.hidden = connectedVisible.size > 0
     }
   }
 

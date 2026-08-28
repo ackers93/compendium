@@ -96,6 +96,61 @@ class GraphMapBuilderTest < ActiveSupport::TestCase
     assert_match %r{/bible_verses/John/3/16}, verse_node[:url]
   end
 
+  test "cross references link verses directly without a hub node" do
+    xref = CrossReference.create!(user: @user, source_verse: @verse, target_verse: @other_verse)
+
+    graph = GraphMapBuilder.call(viewer: @user)
+    node_ids = graph[:nodes].map { |n| n[:id] }
+    edge = graph[:edges].find { |e|
+      e[:type] == "cross_reference" &&
+        [e[:source], e[:target]].to_set == ["BibleVerse:#{@verse.id}", "BibleVerse:#{@other_verse.id}"].to_set
+    }
+
+    assert edge, "expected verse-to-verse cross reference edge"
+    assert_includes node_ids, "BibleVerse:#{@verse.id}"
+    assert_includes node_ids, "BibleVerse:#{@other_verse.id}"
+    assert_not_includes node_ids, "CrossReference:#{xref.id}"
+    assert_not_includes graph[:types].map { |t| t[:id] }, "CrossReference"
+  end
+
+  test "cross reference ranges expand to every target verse" do
+    mid = BibleVerse.create!(
+      book: "Romans",
+      chapter: 5,
+      verse: 9,
+      text: "Much more then, being now justified by his blood",
+      testament: "NT"
+    )
+    end_verse = BibleVerse.create!(
+      book: "Romans",
+      chapter: 5,
+      verse: 10,
+      text: "For if, when we were enemies, we were reconciled",
+      testament: "NT"
+    )
+    CrossReference.create!(
+      user: @user,
+      source_verse: @verse,
+      target_verse: @other_verse,
+      target_end_verse: end_verse
+    )
+
+    graph = GraphMapBuilder.call(viewer: @user)
+    node_ids = graph[:nodes].map { |n| n[:id] }
+    targets = [@other_verse, mid, end_verse].map { |v| "BibleVerse:#{v.id}" }
+
+    assert_includes node_ids, "BibleVerse:#{@verse.id}"
+    targets.each { |id| assert_includes node_ids, id }
+
+    targets.each do |target_id|
+      edge = graph[:edges].find { |e|
+        e[:type] == "cross_reference" &&
+          [e[:source], e[:target]].to_set == ["BibleVerse:#{@verse.id}", target_id].to_set
+      }
+      assert edge, "expected edge from source to #{target_id}"
+    end
+  end
+
   test "includes comment nodes linked to their commentable" do
     comment = Comment.create!(user: @user, commentable: @verse, content: "Insightful note")
 
@@ -107,5 +162,24 @@ class GraphMapBuilderTest < ActiveSupport::TestCase
     }
 
     assert edge, "expected comment edge to verse"
+  end
+
+  test "comments on cross references link to the involved verses" do
+    xref = CrossReference.create!(user: @user, source_verse: @verse, target_verse: @other_verse)
+    comment = Comment.create!(user: @user, commentable: xref, content: "Great connection")
+
+    graph = GraphMapBuilder.call(viewer: @user)
+    node_ids = graph[:nodes].map { |n| n[:id] }
+
+    assert_includes node_ids, "Comment:#{comment.id}"
+    assert_not_includes node_ids, "CrossReference:#{xref.id}"
+
+    [@verse, @other_verse].each do |verse|
+      edge = graph[:edges].find { |e|
+        e[:type] == "comment" &&
+          [e[:source], e[:target]].to_set == ["Comment:#{comment.id}", "BibleVerse:#{verse.id}"].to_set
+      }
+      assert edge, "expected comment edge to BibleVerse:#{verse.id}"
+    end
   end
 end
