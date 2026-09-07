@@ -1,0 +1,67 @@
+<div class="page-header">
+  <h1 class="page-title">Tables</h1>
+  <p class="page-subtitle">Create reusable tables to embed in notes and comments</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <h2 class="section-title">Your Tables</h2>
+      <div class="d-flex gap-2 items-center">
+        <%= form_with url: content_tables_path, method: :get, class: "d-flex gap-2", local: true do |form| %>
+          <%= form.text_field :search,
+              value: params[:search],
+              placeholder: "Search tables...",
+              class: "form-control search-input",
+              autocomplete: "off" %>
+        <% end %>
+        <% if current_user&.can_create? %>
+          <%= link_to new_content_table_path, class: "btn btn-primary" do %>
+            <i class="fa-solid fa-plus"></i>
+            New Table
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-content">
+    <% if @content_tables.any? %>
+      <div class="content-tables-list">
+        <% @content_tables.each do |table| %>
+          <div class="content-table-card">
+            <div class="content-table-card-header">
+              <h3 class="content-table-card-title">
+                <%= link_to table.title, content_table_path(table) %>
+              </h3>
+              <div class="content-table-card-meta">
+                <span class="text-sm text-gray-600">
+                  <%= table.row_count %>×<%= table.column_count %> ·
+                  Updated <%= table.updated_at.strftime('%b %d, %Y') %>
+                </span>
+              </div>
+            </div>
+            <div class="content-table-card-actions">
+              <% if current_user&.can_edit?(table) %>
+                <%= link_to "Edit", edit_content_table_path(table), class: "btn btn-outline btn-sm" %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-8 text-gray-500">
+        <% if params[:search].present? %>
+          <p>No tables found matching "<%= params[:search] %>".</p>
+        <% else %>
+          <p>No tables yet.</p>
+          <% if current_user&.can_create? %>
+            <p class="text-sm mt-2">
+              <%= link_to "Create your first table", new_content_table_path %>
+            </p>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

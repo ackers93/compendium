@@ -6,6 +6,7 @@ class User < ApplicationRecord
     has_many :cross_references, dependent: :destroy
     has_many :bible_threads, dependent: :destroy
     has_many :chiasms, dependent: :destroy
+    has_many :content_tables, dependent: :destroy
     has_many :notifications, foreign_key: :recipient_id, dependent: :destroy, inverse_of: :recipient
     
     # Include default devise modules. Others available are:

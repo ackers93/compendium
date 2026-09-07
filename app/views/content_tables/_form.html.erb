@@ -1,0 +1,137 @@
+<% style = content_table.style_with_defaults %>
+<% cells_json = (content_table.cells.presence || ContentTable.default_cells(content_table.row_count, content_table.column_count)).to_json %>
+<% style_json = style.to_json %>
+
+<%= form_with model: content_table, class: "content-table-form", data: {
+  controller: "content-table-editor",
+  content_table_editor_max_rows_value: ContentTable::MAX_ROWS,
+  content_table_editor_max_columns_value: ContentTable::MAX_COLUMNS
+} do |form| %>
+  <% if content_table.errors.any? %>
+    <div class="form-errors" role="alert">
+      <p><%= pluralize(content_table.errors.count, "error") %> prevented this table from being saved:</p>
+      <ul>
+        <% content_table.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="content-table-editor">
+    <div class="content-table-editor-main">
+      <div class="form-group">
+        <%= form.label :title, class: "form-label" %>
+        <%= form.text_field :title, class: "form-input", required: true, placeholder: "Table title" %>
+      </div>
+
+      <div class="content-table-toolbar">
+        <button type="button" class="btn btn-outline btn-sm" data-action="content-table-editor#addRow">
+          <i class="fa-solid fa-plus"></i> Row
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" data-action="content-table-editor#removeRow">
+          <i class="fa-solid fa-minus"></i> Row
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" data-action="content-table-editor#addColumn">
+          <i class="fa-solid fa-plus"></i> Column
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" data-action="content-table-editor#removeColumn">
+          <i class="fa-solid fa-minus"></i> Column
+        </button>
+        <span class="content-table-dimensions text-sm text-gray-600" data-content-table-editor-target="dimensions"></span>
+      </div>
+
+      <div class="content-table-grid-wrap">
+        <table class="content-table-grid" data-content-table-editor-target="grid"></table>
+      </div>
+    </div>
+
+    <aside class="content-table-editor-sidebar">
+      <h3 class="content-table-sidebar-title">Table style</h3>
+
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input type="checkbox"
+                 data-content-table-editor-target="headerRow"
+                 data-action="change->content-table-editor#syncStyle"
+                 <%= "checked" if style["header_row"] %>>
+          <span>Header row</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input type="checkbox"
+                 data-content-table-editor-target="headerColumn"
+                 data-action="change->content-table-editor#syncStyle"
+                 <%= "checked" if style["header_column"] %>>
+          <span>Header column</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label class="form-checkbox">
+          <input type="checkbox"
+                 data-content-table-editor-target="showTitle"
+                 data-action="change->content-table-editor#syncStyle"
+                 <%= "checked" if style["show_title"] %>>
+          <span>Show title in embed</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="ct_text_align">Text align</label>
+        <select id="ct_text_align"
+                class="form-select"
+                data-content-table-editor-target="textAlign"
+                data-action="change->content-table-editor#syncStyle">
+          <% ContentTable::TEXT_ALIGNS.each do |align| %>
+            <option value="<%= align %>" <%= "selected" if style["text_align"] == align %>><%= align.capitalize %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="ct_border_width">Border width</label>
+        <input id="ct_border_width"
+               type="number"
+               min="0"
+               max="8"
+               class="form-input"
+               value="<%= style["border_width"] %>"
+               data-content-table-editor-target="borderWidth"
+               data-action="input->content-table-editor#syncStyle">
+      </div>
+
+      <div class="content-table-color-grid">
+        <% [
+          ["headerBg", "Header background", style["header_bg"]],
+          ["headerText", "Header text", style["header_text"]],
+          ["bodyBg", "Body background", style["body_bg"]],
+          ["bodyText", "Body text", style["body_text"]],
+          ["stripeBg", "Stripe background", style["stripe_bg"]],
+          ["borderColor", "Border color", style["border_color"]]
+        ].each do |target, label, value| %>
+          <div class="form-group">
+            <label class="form-label"><%= label %></label>
+            <input type="color"
+                   value="<%= value %>"
+                   class="form-color"
+                   data-content-table-editor-target="<%= target %>"
+                   data-action="input->content-table-editor#syncStyle">
+          </div>
+        <% end %>
+      </div>
+    </aside>
+  </div>
+
+  <%= form.hidden_field :row_count, data: { content_table_editor_target: "rowCount" } %>
+  <%= form.hidden_field :column_count, data: { content_table_editor_target: "columnCount" } %>
+  <%= form.hidden_field :cells, value: cells_json, data: { content_table_editor_target: "cellsField" } %>
+  <%= form.hidden_field :style, value: style_json, data: { content_table_editor_target: "styleField" } %>
+
+  <div class="form-actions d-flex gap-2 mt-4">
+    <%= form.submit content_table.persisted? ? "Save Table" : "Create Table", class: "btn btn-primary" %>
+    <%= link_to "Cancel", content_table.persisted? ? content_table_path(content_table) : content_tables_path, class: "btn btn-outline" %>
+  </div>
+<% end %>

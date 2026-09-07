@@ -21,6 +21,7 @@ import ChiasmsSearchController from "./chiasms_search_controller"
 import BulkUploadController from "./bulk_upload_controller"
 import BulkUploadTabsController from "./bulk_upload_tabs_controller"
 import GraphMapController from "./graph_map_controller"
+import ContentTableEditorController from "./content_table_editor_controller"
 
 application.register("modal", ModalController)
 application.register("mobile-nav", MobileNavController)
@@ -44,5 +45,6 @@ application.register("chiasms-search", ChiasmsSearchController)
 application.register("bulk-upload", BulkUploadController)
 application.register("bulk-upload-tabs", BulkUploadTabsController)
 application.register("graph-map", GraphMapController)
+application.register("content-table-editor", ContentTableEditorController)
 
 export { application } 

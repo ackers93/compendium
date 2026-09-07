@@ -68,6 +68,13 @@ Rails.application.routes.draw do
 
   # Chiasms routes
   resources :chiasms
+
+  # Content tables (Trix attachables)
+  resources :content_tables do
+    member do
+      get :attachable
+    end
+  end
   
   # Comments on cross-references
   

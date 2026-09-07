@@ -1,0 +1,15 @@
+<div class="page-header">
+  <h1 class="page-title">Create Table</h1>
+  <p class="page-subtitle">Build a reusable table you can embed in rich text</p>
+</div>
+
+<% if params[:from] == "trix" %>
+  <div class="content-table-trix-banner" role="status">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>Save this table, then return to your other tab and insert it from the table picker.</span>
+  </div>
+<% end %>
+
+<div class="content-section">
+  <%= render "form", content_table: @content_table %>
+</div>

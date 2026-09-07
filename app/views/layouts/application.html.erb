@@ -115,6 +115,7 @@
                   <%= link_to "Topics", topics_path, class: "nav-dropdown-item" %>
                   <%= link_to "Threads", bible_threads_path, class: "nav-dropdown-item" %>
                   <%= link_to "Chiasms", chiasms_path, class: "nav-dropdown-item" %>
+                  <%= link_to "Tables", content_tables_path, class: "nav-dropdown-item" %>
                   <%= link_to "Map", map_path, class: "nav-dropdown-item" %>
                 </div>
               </div>
@@ -220,6 +221,7 @@
                 <%= link_to "Topics", topics_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
                 <%= link_to "Threads", bible_threads_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
                 <%= link_to "Chiasms", chiasms_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+                <%= link_to "Tables", content_tables_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
                 <%= link_to "Map", map_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
               </li>
               <li class="mobile-nav-item">
@@ -293,6 +295,7 @@
           <%= link_to "Topics", topics_path, class: "site-footer-link" %>
           <%= link_to "Threads", bible_threads_path, class: "site-footer-link" %>
           <%= link_to "Chiasms", chiasms_path, class: "site-footer-link" %>
+          <%= link_to "Tables", content_tables_path, class: "site-footer-link" %>
           <%= link_to "Map", map_path, class: "site-footer-link" %>
           <%= link_to "Search", search_path, class: "site-footer-link" %>
         </nav>
