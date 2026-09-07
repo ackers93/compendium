@@ -170,7 +170,24 @@
   }
 }
 
+// Action Text wraps attachables in <action-text-attachment>, which is inline by
+// default — force table embeds onto their own full-width lines so surrounding
+// text does not wrap beside them.
+.trix-content action-text-attachment:has(.content-table-embed),
+.trix-content action-text-attachment:has(.content-table-trix-preview),
+trix-editor action-text-attachment:has(.content-table-trix-preview),
+trix-editor action-text-attachment:has(.content-table-embed) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  clear: both;
+}
+
 .content-table-embed {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   margin: $space-4 0;
   padding: $space-3;
   border: 1px solid $gray-200;
@@ -235,7 +252,10 @@
   display: flex;
   align-items: center;
   gap: $space-3;
-  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: $space-2 0;
   padding: $space-2 $space-3;
   border: 1px solid $gray-200;
   border-radius: $radius;
@@ -337,5 +357,13 @@
 .trix-content {
   .content-table-embed {
     border-color: $gray-200;
+  }
+
+  // Trix may nest figure.attachment; keep those block too
+  .attachment.content-table-embed,
+  .attachment.content-table-trix-preview {
+    display: block;
+    width: 100%;
+    max-width: 100%;
   }
 }
