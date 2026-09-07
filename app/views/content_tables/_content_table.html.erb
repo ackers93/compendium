@@ -1,0 +1,29 @@
+<%# Final render inside Action Text / show page %>
+<% css_vars = content_table.css_variables.map { |k, v| "#{k}: #{v}" }.join("; ") %>
+
+<figure class="content-table-embed attachment"
+        style="<%= css_vars %>"
+        data-content-table-id="<%= content_table.id %>">
+  <% if content_table.show_title? %>
+    <figcaption class="content-table-embed-title"><%= content_table.title %></figcaption>
+  <% end %>
+
+  <div class="content-table-embed-scroll">
+    <table class="content-table-embed-table
+                  <%= "content-table-embed-table--header-row" if content_table.header_row? %>
+                  <%= "content-table-embed-table--header-column" if content_table.header_column? %>">
+      <% content_table.cells.each_with_index do |row, row_index| %>
+        <% stripe = content_table.header_row? ? (row_index.positive? && row_index.even?) : row_index.odd? %>
+        <tr class="<%= "is-stripe" if stripe %>">
+          <% row.each_with_index do |cell, col_index| %>
+            <% is_header = (content_table.header_row? && row_index.zero?) || (content_table.header_column? && col_index.zero?) %>
+            <% tag_name = is_header ? :th : :td %>
+            <%= content_tag(tag_name) do %>
+              <%= safe_join(cell.to_s.split("\n").map { |line| ERB::Util.html_escape(line) }, tag.br) %>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</figure>

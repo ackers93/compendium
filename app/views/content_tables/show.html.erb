@@ -1,0 +1,26 @@
+<div class="page-header">
+  <div class="d-flex justify-between items-center">
+    <div>
+      <h1 class="page-title"><%= @content_table.title %></h1>
+      <p class="page-subtitle">
+        <%= @content_table.row_count %>×<%= @content_table.column_count %> ·
+        Updated <%= @content_table.updated_at.strftime('%b %d, %Y') %>
+      </p>
+    </div>
+    <div class="d-flex gap-2">
+      <% if current_user&.can_edit?(@content_table) %>
+        <%= link_to "Edit", edit_content_table_path(@content_table), class: "btn btn-primary" %>
+      <% end %>
+      <%= link_to "All Tables", content_tables_path, class: "btn btn-outline" %>
+      <% if current_user&.can_delete?(@content_table) %>
+        <%= button_to "Delete", content_table_path(@content_table), method: :delete,
+            class: "btn btn-outline",
+            form: { data: { turbo_confirm: "Delete this table? Existing embeds will show as missing." } } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="content-section">
+  <%= render @content_table %>
+</div>

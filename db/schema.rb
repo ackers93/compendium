@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_26_132000) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_08_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -140,6 +140,19 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_132000) do
     t.index ["resolved_by_id"], name: "index_content_flags_on_resolved_by_id"
     t.index ["status"], name: "index_content_flags_on_status"
     t.index ["user_id"], name: "index_content_flags_on_user_id"
+  end
+
+  create_table "content_tables", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.integer "column_count", default: 3, null: false
+    t.integer "row_count", default: 3, null: false
+    t.json "cells", default: [], null: false
+    t.json "style", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "created_at"], name: "index_content_tables_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_content_tables_on_user_id"
   end
 
   create_table "cross_references", force: :cascade do |t|
@@ -337,6 +350,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_132000) do
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "content_flags", "users"
   add_foreign_key "content_flags", "users", column: "resolved_by_id"
+  add_foreign_key "content_tables", "users"
   add_foreign_key "cross_references", "bible_verses", column: "source_verse_id"
   add_foreign_key "cross_references", "bible_verses", column: "target_end_verse_id"
   add_foreign_key "cross_references", "bible_verses", column: "target_verse_id"
