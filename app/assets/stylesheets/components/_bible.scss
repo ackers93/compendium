@@ -1331,7 +1331,7 @@
   box-shadow: $shadow-sm;
   border: 1px solid $gray-200;
   overflow: hidden;
-  padding: $space-4 $space-6;
+  padding: $space-1 0;
 
   .verse-item-list-link {
     display: block;
@@ -1349,7 +1349,7 @@
   }
 
   .verse-item-list {
-    padding: $space-2 0;
+    padding: $space-2 $space-3;
 
     &:not(:last-child) {
       border-bottom: 1px solid $gray-200;
@@ -1360,25 +1360,25 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: $space-4;
+    gap: $space-3;
   }
-  
+
   .verse-number-list {
     font-size: $font-size-base;
-    min-width: 32px;
+    min-width: 1.5rem;
     text-align: right;
     flex-shrink: 0;
   }
-  
+
   .verse-text-list {
     font-size: $font-size-base;
     line-height: 1.5;
   }
-  
+
   .verse-counts-cell {
     font-size: $font-size-xs;
     white-space: nowrap;
-    padding-left: $space-3;
+    padding-left: $space-2;
   }
 }
 
@@ -1563,14 +1563,18 @@
   }
 
   .verses-list-list-view {
+    .verse-item-list {
+      padding: $space-2;
+    }
+
     .verse-item-list-row {
       flex-direction: column;
       align-items: flex-start;
-      gap: $space-2;
+      gap: $space-1;
     }
 
     .verse-counts-cell {
-      padding-left: calc(32px + #{$space-2});
+      padding-left: calc(1.5rem + #{$space-2});
     }
   }
 
