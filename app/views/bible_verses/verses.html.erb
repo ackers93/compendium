@@ -4,7 +4,10 @@
 <% range_track_count = @range_track_count || 0 %>
 <% comments_by_verse = @chapter_comments_by_verse_id || {} %>
 
-<div class="page-header">
+<div class="page-header"
+     data-controller="recent-chapters"
+     data-recent-chapters-book-value="<%= @book %>"
+     data-recent-chapters-chapter-value="<%= @chapter %>">
   <h1 class="page-title chapter-title-nav">
     <% if prev_chapter %>
       <%= link_to "←",
@@ -28,6 +31,10 @@
       <span class="chapter-title-arrow chapter-title-arrow-disabled" aria-hidden="true">→</span>
     <% end %>
   </h1>
+  <nav class="recent-chapters"
+       data-recent-chapters-target="list"
+       aria-label="Recent chapters"
+       hidden></nav>
   <p class="page-subtitle">All verses in this chapter</p>
 </div>
 
