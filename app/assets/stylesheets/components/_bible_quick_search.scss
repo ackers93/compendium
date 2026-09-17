@@ -9,7 +9,7 @@
   z-index: $z-fixed;
   width: 3rem;
   height: 3rem;
-  border: none;
+  border: 2px solid $theme-primary;
   border-radius: $radius-md;
   background: $theme-header;
   color: $white;
@@ -18,7 +18,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+  transition: background-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
 
   &:hover {
     background: $gray-800;
@@ -31,6 +31,7 @@
 
   &.is-open {
     background: $theme-primary;
+    border-color: $theme-primary;
   }
 
   .bible-quick-search-fab__icon-close {
