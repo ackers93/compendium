@@ -265,7 +265,6 @@
     bottom: $space-3;
     width: auto;
     max-height: 85vh;
-    max-height: #{"min(85dvh, 640px)"};
     border: 1px solid $gray-200;
     border-radius: $radius-lg;
     z-index: calc(#{$z-modal} + 1);
