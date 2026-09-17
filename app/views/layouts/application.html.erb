@@ -310,5 +310,80 @@
     </footer>
     
     <%= turbo_frame_tag "modal" %>
+
+    <% if user_signed_in? %>
+      <div class="bible-quick-search"
+           data-controller="bible-quick-search"
+           data-bible-quick-search-url-value="<%= bible_verses_quick_search_path %>">
+        <button type="button"
+                class="bible-quick-search-backdrop"
+                data-bible-quick-search-target="backdrop"
+                data-action="click->bible-quick-search#close"
+                aria-label="Close Bible search"
+                hidden></button>
+
+        <aside class="bible-quick-search-panel"
+               data-bible-quick-search-target="panel"
+               aria-label="Bible Search"
+               aria-hidden="true">
+          <div class="bible-quick-search-panel__header">
+            <h2 class="bible-quick-search-panel__title">Bible Search</h2>
+            <button type="button"
+                    class="bible-quick-search-panel__close"
+                    data-action="click->bible-quick-search#close"
+                    aria-label="Close">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="bible-quick-search-panel__search">
+            <label class="sr-only" for="bible-quick-search-input">Search Bible</label>
+            <input id="bible-quick-search-input"
+                   type="search"
+                   class="form-control"
+                   placeholder="Reference or keyword (e.g. John 3:16, love)"
+                   autocomplete="off"
+                   data-bible-quick-search-target="input"
+                   data-action="input->bible-quick-search#search keydown->bible-quick-search#handleInputKeydown" />
+          </div>
+
+          <ul class="bible-quick-search-panel__results"
+              data-bible-quick-search-target="results"
+              role="listbox"
+              aria-label="Search results"></ul>
+
+          <div class="bible-quick-search-panel__preview" data-bible-quick-search-target="preview">
+            <p class="bible-quick-search-panel__preview-empty"
+               data-bible-quick-search-target="previewEmpty">
+              Select a result to preview the verse here.
+            </p>
+            <div data-bible-quick-search-target="previewContent" hidden>
+              <h3 class="bible-quick-search-panel__preview-reference"
+                  data-bible-quick-search-target="previewReference"></h3>
+              <p class="bible-quick-search-panel__preview-text"
+                 data-bible-quick-search-target="previewText"></p>
+              <a class="bible-quick-search-panel__preview-link"
+                 data-bible-quick-search-target="previewLink"
+                 href="#">Open full page</a>
+            </div>
+          </div>
+        </aside>
+
+        <button type="button"
+                class="bible-quick-search-fab"
+                data-bible-quick-search-target="fab"
+                data-action="click->bible-quick-search#toggle"
+                aria-label="Open Bible search"
+                aria-expanded="false"
+                title="Bible Search">
+          <span class="bible-quick-search-fab__icon-open" aria-hidden="true">
+            <i class="fa-solid fa-book-bible"></i>
+          </span>
+          <span class="bible-quick-search-fab__icon-close" aria-hidden="true">
+            <i class="fa-solid fa-xmark"></i>
+          </span>
+        </button>
+      </div>
+    <% end %>
   </body>
 </html>

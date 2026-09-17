@@ -9,6 +9,7 @@ import TopicsSearchController from "./topics_search_controller"
 import ThreadsSearchController from "./threads_search_controller"
 import SearchController from "./search_controller"
 import BibleSearchController from "./bible_search_controller"
+import BibleQuickSearchController from "./bible_quick_search_controller"
 import DropdownController from "./dropdown_controller"
 import ThemeFormController from "./theme_form_controller"
 import OnboardingController from "./onboarding_controller"
@@ -33,6 +34,7 @@ application.register("topics-search", TopicsSearchController)
 application.register("threads-search", ThreadsSearchController)
 application.register("search", SearchController)
 application.register("bible-search", BibleSearchController)
+application.register("bible-quick-search", BibleQuickSearchController)
 application.register("dropdown", DropdownController)
 application.register("theme-form", ThemeFormController)
 application.register("onboarding", OnboardingController)

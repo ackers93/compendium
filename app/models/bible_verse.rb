@@ -33,6 +33,17 @@ class BibleVerse < ApplicationRecord
   validates :verse, presence: true
   validates :text, presence: true
   validates :testament, presence: true, inclusion: { in: ['OT', 'NT'] }
+
+  scope :search_by_text, ->(query) {
+    q = query.to_s.strip
+    if q.blank?
+      none
+    else
+      where("text ILIKE ?", "%#{sanitize_sql_like(q)}%")
+        .order(:book, :chapter, :verse)
+        .limit(20)
+    end
+  }
   
   # Get human-readable reference (e.g., "John 3:16")
   def reference

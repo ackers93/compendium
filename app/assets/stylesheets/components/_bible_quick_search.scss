@@ -1,0 +1,286 @@
+:root {
+  --bible-quick-search-width: clamp(280px, 25vw, 400px);
+}
+
+.bible-quick-search-fab {
+  position: fixed;
+  right: $space-4;
+  bottom: calc(#{$space-4} + env(safe-area-inset-bottom, 0px));
+  z-index: $z-fixed;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: $radius-md;
+  background: $theme-header;
+  color: $white;
+  box-shadow: $shadow-lg;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease, transform 0.15s ease, opacity 0.15s ease;
+
+  &:hover {
+    background: $gray-800;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px $theme-primary-muted, $shadow-lg;
+  }
+
+  &.is-open {
+    background: $theme-primary;
+  }
+
+  .bible-quick-search-fab__icon-close {
+    display: none;
+  }
+
+  &.is-open .bible-quick-search-fab__icon-open {
+    display: none;
+  }
+
+  &.is-open .bible-quick-search-fab__icon-close {
+    display: inline-flex;
+  }
+}
+
+.bible-quick-search-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: $z-modal;
+  background: rgba($gray-900, 0.45);
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.bible-quick-search-panel {
+  position: fixed;
+  top: var(--navbar-height, #{$navbar-mobile-height});
+  right: 0;
+  bottom: 0;
+  width: var(--bible-quick-search-width);
+  z-index: $z-fixed;
+  display: flex;
+  flex-direction: column;
+  background: $theme-surface;
+  border-left: 1px solid $gray-200;
+  box-shadow: $shadow-lg;
+  transform: translateX(100%);
+  transition: transform 0.2s ease;
+  visibility: hidden;
+
+  &.is-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+}
+
+.bible-quick-search-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-3;
+  padding: $space-4 $space-4 $space-3;
+  border-bottom: 1px solid $gray-200;
+  flex-shrink: 0;
+}
+
+.bible-quick-search-panel__title {
+  margin: 0;
+  font-family: $font-family-ui;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $theme-text;
+}
+
+.bible-quick-search-panel__close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $gray-600;
+  cursor: pointer;
+
+  &:hover {
+    background: $gray-100;
+    color: $theme-text;
+  }
+}
+
+.bible-quick-search-panel__search {
+  padding: $space-3 $space-4;
+  border-bottom: 1px solid $gray-200;
+  flex-shrink: 0;
+
+  input {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.bible-quick-search-panel__results {
+  list-style: none;
+  margin: 0;
+  padding: $space-2 0;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.bible-quick-search__empty {
+  padding: $space-4;
+  color: $gray-500;
+  font-size: $font-size-sm;
+  text-align: center;
+}
+
+.bible-quick-search__result {
+  display: block;
+  width: 100%;
+  padding: $space-3 $space-4;
+  border: none;
+  border-bottom: 1px solid $gray-100;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-family: $font-family-ui;
+
+  &:hover,
+  &.is-active {
+    background: $gray-50;
+  }
+
+  &.is-selected {
+    background: rgba($primary, 0.08);
+    box-shadow: inset 3px 0 0 $theme-primary;
+  }
+}
+
+.bible-quick-search__result-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-2;
+}
+
+.bible-quick-search__result-label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $theme-text;
+}
+
+.bible-quick-search__result-meta {
+  flex-shrink: 0;
+  font-size: $font-size-xs;
+  color: $gray-500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bible-quick-search__snippet {
+  display: block;
+  margin-top: $space-1;
+  font-size: $font-size-xs;
+  line-height: $line-height-normal;
+  color: $gray-600;
+}
+
+.bible-quick-search-panel__preview {
+  flex-shrink: 0;
+  border-top: 1px solid $gray-200;
+  background: $gray-50;
+  padding: $space-4;
+  max-height: 40%;
+  overflow-y: auto;
+}
+
+.bible-quick-search-panel__preview-empty {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $gray-500;
+}
+
+.bible-quick-search-panel__preview-reference {
+  margin: 0 0 $space-2;
+  font-family: $font-family-ui;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $theme-primary;
+}
+
+.bible-quick-search-panel__preview-text {
+  margin: 0 0 $space-3;
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+  color: $gray-800;
+  font-style: italic;
+}
+
+.bible-quick-search-panel__preview-link {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+}
+
+// Desktop: push main content / footer when open
+@media (min-width: $breakpoint-md) {
+  body.bible-quick-search-open {
+    .main-content,
+    .site-footer {
+      margin-right: var(--bible-quick-search-width);
+      transition: margin-right 0.2s ease;
+    }
+  }
+}
+
+// Mobile: modal sheet
+@media (max-width: #{$breakpoint-md - 1px}) {
+  body:has(.has-recent-chapters) .bible-quick-search-fab {
+    bottom: calc(#{$space-4} + 4.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bible-quick-search-panel {
+    top: auto;
+    left: $space-3;
+    right: $space-3;
+    bottom: $space-3;
+    width: auto;
+    max-height: 85vh;
+    max-height: #{"min(85dvh, 640px)"};
+    border: 1px solid $gray-200;
+    border-radius: $radius-lg;
+    z-index: calc(#{$z-modal} + 1);
+    transform: translateY(110%);
+    box-shadow: $shadow-xl;
+
+    &.is-open {
+      transform: translateY(0);
+    }
+  }
+
+  .bible-quick-search-panel__close {
+    display: inline-flex;
+  }
+
+  body.bible-quick-search-modal-open {
+    overflow: hidden;
+  }
+}

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_08_000001) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_16_202210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -83,6 +84,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_08_000001) do
     t.datetime "updated_at", null: false
     t.string "testament"
     t.index ["book", "chapter", "verse"], name: "index_bible_verses_on_book_and_chapter_and_verse", unique: true
+    t.index ["text"], name: "index_bible_verses_on_text_trgm", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "chiasm_limbs", force: :cascade do |t|
