@@ -195,7 +195,13 @@ class TopicItemsController < ApplicationController
       source = commentable.source_verse
       bible_verse_show_path(book: source.book, chapter: source.chapter, verse: source.verse)
     when BibleVerse
-      bible_verse_show_path(book: commentable.book, chapter: commentable.chapter, verse: commentable.verse)
+      if comment.book_coverage?
+        bible_verse_chapters_path(book: commentable.book)
+      elsif comment.chapter_coverage?
+        bible_verse_verses_path(book: commentable.book, chapter: commentable.chapter)
+      else
+        bible_verse_show_path(book: commentable.book, chapter: commentable.chapter, verse: commentable.verse)
+      end
     else
       root_path
     end

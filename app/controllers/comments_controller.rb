@@ -22,6 +22,7 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new(commentable: @commentable)
     assign_parent(@comment, params[:parent_id])
+    assign_requested_coverage(@comment)
   end
 
   def create
@@ -29,6 +30,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params.except(:parent_id))
     @comment.user = current_user
     @comment.commentable = @commentable
+    @comment.coverage = Comment::COVERAGE_VERSE unless @commentable.is_a?(BibleVerse)
 
     assign_parent(@comment, comment_params[:parent_id])
     end_verse_error = @comment.reply? ? nil : resolve_end_verse(@comment, @comment.commentable)
@@ -46,8 +48,11 @@ class CommentsController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       elsif @comment.save
-        format.turbo_stream { 
-          if @page_commentable.is_a?(CrossReference)
+        redirect_path = create_success_redirect_path
+        format.turbo_stream {
+          if redirect_path
+            redirect_to redirect_path, notice: "Comment was successfully created."
+          elsif @page_commentable.is_a?(CrossReference)
             render turbo_stream: [
               turbo_stream.replace("cross-references", 
                 partial: "cross_references/cross_references_list", 
@@ -94,7 +99,9 @@ class CommentsController < ApplicationController
           end
         }
         format.html { 
-          if @page_commentable.is_a?(CrossReference)
+          if redirect_path
+            redirect_to redirect_path, notice: "Comment was successfully created."
+          elsif @page_commentable.is_a?(CrossReference)
             redirect_to root_path
           elsif @page_commentable.is_a?(BibleVerse)
             redirect_to bible_verse_show_path(book: @page_commentable.book, chapter: @page_commentable.chapter, verse: @page_commentable.verse), notice: "Comment was successfully created."
@@ -269,7 +276,7 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:content, :parent_id)
+    params.require(:comment).permit(:content, :parent_id, :coverage)
   end
 
   def assign_parent(comment, parent_id)
@@ -281,6 +288,49 @@ class CommentsController < ApplicationController
     comment.parent = parent
     comment.commentable = parent.commentable
     comment.end_verse = nil
+    comment.coverage = parent.coverage
+  end
+
+  def assign_requested_coverage(comment)
+    return if comment.reply?
+    return unless comment.commentable.is_a?(BibleVerse)
+
+    requested = params[:coverage].to_s
+    comment.coverage = requested if Comment::COVERAGES.include?(requested)
+  end
+
+  def coverage_redirect_path
+    commentable = @comment.commentable
+    return unless commentable.is_a?(BibleVerse)
+
+    case params[:return_to]
+    when "chapter"
+      bible_verse_verses_path(book: commentable.book, chapter: commentable.chapter)
+    when "book"
+      bible_verse_chapters_path(book: commentable.book)
+    end
+  end
+
+  def create_success_redirect_path
+    coverage_redirect_path || (full_page_comment_submit? ? comment_create_fallback_path : nil)
+  end
+
+  def full_page_comment_submit?
+    request.headers["Turbo-Frame"] == "_top"
+  end
+
+  def comment_create_fallback_path
+    return request.referer if request.referer.present?
+
+    commentable = @comment.commentable
+    case commentable
+    when BibleVerse
+      bible_verse_show_path(book: commentable.book, chapter: commentable.chapter, verse: commentable.verse)
+    when Note
+      note_path(commentable)
+    else
+      root_path
+    end
   end
 
   def reply_allowed?(parent, page_commentable)
@@ -294,6 +344,12 @@ class CommentsController < ApplicationController
 
   def resolve_end_verse(comment, commentable)
     return nil unless commentable.is_a?(BibleVerse)
+
+    unless comment.verse_coverage? && comment.root?
+      comment.end_verse = nil
+      return nil
+    end
+
     return nil unless params[:comment]&.key?(:end_verse) || params[:comment]&.key?("end_verse")
 
     end_verse_param = params.dig(:comment, :end_verse)

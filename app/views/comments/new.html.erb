@@ -5,6 +5,10 @@
         <h2 class="modal-title">
           <% if @comment.parent.present? %>
             Reply to <%= @comment.parent.user&.display_name || "comment" %>
+          <% elsif @comment.chapter_coverage? %>
+            Add Chapter Comment
+          <% elsif @comment.book_coverage? %>
+            Add Book Comment
           <% else %>
             Add Comment
           <% end %>
@@ -20,13 +24,21 @@
               <%= truncate(plain_text_from_rich_text(@comment.parent.content), length: 180) %>
             </div>
           </div>
+        <% elsif @commentable.is_a?(BibleVerse) && @comment.chapter_coverage? %>
+          <p class="text-sm text-gray-600 mb-4">
+            Comment on <%= @commentable.book %> <%= @commentable.chapter %>
+          </p>
+        <% elsif @commentable.is_a?(BibleVerse) && @comment.book_coverage? %>
+          <p class="text-sm text-gray-600 mb-4">
+            Comment on <%= @commentable.book %>
+          </p>
         <% elsif @commentable.is_a?(BibleVerse) %>
           <p class="text-sm text-gray-600 mb-4">
             <%= @commentable.book %> <%= @commentable.chapter %>:<%= @commentable.verse %>
             <span class="text-gray-500">— optionally extend through another verse in this chapter</span>
           </p>
         <% end %>
-        <%= render 'comments/form', comment: @comment, page_commentable: @commentable %>
+        <%= render 'comments/form', comment: @comment, page_commentable: @commentable, turbo_frame_top: true %>
       </div>
 
       <div class="modal-footer">

@@ -74,6 +74,27 @@ module ApplicationHelper
     end
   end
 
+  def comment_location_path(comment)
+    commentable = comment.commentable
+    case commentable
+    when Note
+      note_path(commentable)
+    when CrossReference
+      source = commentable.source_verse
+      bible_verse_show_path(book: source.book, chapter: source.chapter, verse: source.verse)
+    when BibleVerse
+      if comment.book_coverage?
+        bible_verse_chapters_path(book: commentable.book)
+      elsif comment.chapter_coverage?
+        bible_verse_verses_path(book: commentable.book, chapter: commentable.chapter)
+      else
+        bible_verse_show_path(book: commentable.book, chapter: commentable.chapter, verse: commentable.verse)
+      end
+    else
+      root_path
+    end
+  end
+
   def verse_mention_title(mentionable)
     case mentionable
     when Note
@@ -84,7 +105,7 @@ module ApplicationHelper
       when Note
         commentable.title
       when BibleVerse
-        commentable.reference
+        mentionable.verse_reference || commentable.reference
       when CrossReference
         commentable.connection_label
       else
@@ -105,7 +126,7 @@ module ApplicationHelper
       when Note
         "Comment on note"
       when BibleVerse
-        "Comment on #{commentable.reference}"
+        "Comment on #{mentionable.verse_reference || commentable.reference}"
       when CrossReference
         "Comment on cross-reference"
       else
@@ -121,18 +142,7 @@ module ApplicationHelper
     when Note
       note_path(mentionable)
     when Comment
-      commentable = mentionable.commentable
-      case commentable
-      when Note
-        note_path(commentable)
-      when BibleVerse
-        bible_verse_show_path(book: commentable.book, chapter: commentable.chapter, verse: commentable.verse)
-      when CrossReference
-        source = commentable.source_verse
-        bible_verse_show_path(book: source.book, chapter: source.chapter, verse: source.verse)
-      else
-        root_path
-      end
+      comment_location_path(mentionable)
     else
       root_path
     end

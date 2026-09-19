@@ -56,6 +56,30 @@
     </div>
   </div>
   
+  <% if current_user&.can_create? || (@chapter_level_comments || []).any? || (@book_level_comments || []).any? %>
+    <div class="coverage-comments-wrap mb-6">
+      <% if current_user&.can_create? || (@chapter_level_comments || []).any? %>
+        <%= render "comments/coverage_section",
+              title: "Comments on #{@book} #{@chapter}",
+              comments: @chapter_level_comments || [],
+              children_by_parent: @chapter_level_children || {},
+              page_verse: @verses.first,
+              empty_message: "No chapter-level comments yet.",
+              add_path: (@verses.first && current_user&.can_create?) ? new_bible_verse_comment_path(book: @book, chapter: @chapter, verse: @verses.first.verse, coverage: Comment::COVERAGE_CHAPTER, return_to: "chapter") : nil,
+              add_label: "Add chapter comment" %>
+      <% end %>
+
+      <% if (@book_level_comments || []).any? %>
+        <%= render "comments/coverage_section",
+              title: "Comments on #{@book}",
+              comments: @book_level_comments,
+              children_by_parent: @book_level_children || {},
+              page_verse: @verses.first,
+              empty_message: "No book-level comments yet." %>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="section-content">
     <!-- Card View (Table Style) -->
     <div data-verse-view-toggle-target="cardView"

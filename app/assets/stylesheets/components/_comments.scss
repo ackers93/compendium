@@ -77,6 +77,34 @@
   }
 }
 
+.coverage-comments-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.coverage-comments {
+  padding: $space-4;
+  background: $theme-surface;
+  border: 1px solid $gray-200;
+  border-radius: $radius;
+
+  .section-header {
+    margin-bottom: $space-3;
+  }
+
+  .section-title {
+    font-size: $font-size-lg;
+    margin-bottom: 0;
+  }
+}
+
+.coverage-comments-empty {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $gray-500;
+}
+
 .comment-actions {
   display: flex;
   gap: $space-2;

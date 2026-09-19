@@ -394,7 +394,13 @@ class GraphMapBuilder
       note_path(comment.commentable)
     when BibleVerse
       verse = comment.commentable
-      bible_verse_show_path(book: verse.book, chapter: verse.chapter, verse: verse.verse)
+      if comment.book_coverage?
+        bible_verse_chapters_path(book: verse.book)
+      elsif comment.chapter_coverage?
+        bible_verse_verses_path(book: verse.book, chapter: verse.chapter)
+      else
+        bible_verse_show_path(book: verse.book, chapter: verse.chapter, verse: verse.verse)
+      end
     when CrossReference
       source = comment.commentable.source_verse
       bible_verse_show_path(book: source.book, chapter: source.chapter, verse: source.verse)

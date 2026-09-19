@@ -23,14 +23,26 @@ class Comment < ApplicationRecord
   IMPORT_SOURCE_CSV = "csv"
   IMPORT_SOURCES = [IMPORT_SOURCE_OLIVE_TREE, IMPORT_SOURCE_CSV].freeze
 
+  COVERAGE_VERSE = "verse"
+  COVERAGE_CHAPTER = "chapter"
+  COVERAGE_BOOK = "book"
+  COVERAGES = [COVERAGE_VERSE, COVERAGE_CHAPTER, COVERAGE_BOOK].freeze
+
   scope :roots, -> { where(parent_id: nil) }
   scope :from_import, ->(source) { where(import_source: source) }
+  scope :verse_coverage, -> { where(coverage: [COVERAGE_VERSE, nil]) }
+  scope :chapter_coverage, -> { where(coverage: COVERAGE_CHAPTER) }
+  scope :book_coverage, -> { where(coverage: COVERAGE_BOOK) }
 
   validates :content, presence: true
   validates :import_source, inclusion: { in: IMPORT_SOURCES }, allow_nil: true
+  validates :coverage, inclusion: { in: COVERAGES }
   validate :end_verse_valid
+  validate :coverage_allowed
   validate :parent_matches_commentable
   validate :depth_within_limit
+
+  before_validation :normalize_coverage
 
   after_create :dispatch_notifications
 
@@ -40,6 +52,22 @@ class Comment < ApplicationRecord
 
   def csv_import?
     import_source == IMPORT_SOURCE_CSV
+  end
+
+  def verse_coverage?
+    coverage.blank? || coverage == COVERAGE_VERSE
+  end
+
+  def chapter_coverage?
+    coverage == COVERAGE_CHAPTER
+  end
+
+  def book_coverage?
+    coverage == COVERAGE_BOOK
+  end
+
+  def scoped_coverage?
+    chapter_coverage? || book_coverage?
   end
 
   def range?
@@ -70,6 +98,8 @@ class Comment < ApplicationRecord
 
   def verse_reference
     return nil unless commentable.is_a?(BibleVerse)
+    return commentable.book if book_coverage?
+    return "#{commentable.book} #{commentable.chapter}" if chapter_coverage?
 
     if range?
       "#{commentable.book} #{commentable.chapter}:#{commentable.verse}-#{end_verse.verse}"
@@ -80,6 +110,7 @@ class Comment < ApplicationRecord
 
   def involves_verse?(verse)
     return false unless commentable.is_a?(BibleVerse)
+    return false if scoped_coverage?
     return true if commentable_id == verse.id || end_verse_id == verse.id
     return false unless range?
 
@@ -87,6 +118,37 @@ class Comment < ApplicationRecord
       commentable.chapter == verse.chapter &&
       verse.verse.between?(commentable.verse, end_verse.verse)
   end
+
+  def self.covering_chapter(book, chapter)
+    joins(commentable_verse_join)
+      .where(coverage: COVERAGE_CHAPTER, parent_id: nil)
+      .where("coverage_verses.book = ? AND coverage_verses.chapter = ?", book, chapter)
+  end
+
+  def self.covering_book(book)
+    joins(commentable_verse_join)
+      .where(coverage: COVERAGE_BOOK, parent_id: nil)
+      .where("coverage_verses.book = ?", book)
+  end
+
+  def self.thread_children_for(roots)
+    return {} if roots.blank?
+
+    commentable_ids = roots.map(&:commentable_id).uniq
+    all = where(commentable_type: roots.first.commentable_type, commentable_id: commentable_ids)
+            .includes(:user, :end_verse, :commentable, :rich_text_content)
+            .order(created_at: :asc)
+            .to_a
+
+    all.each_with_object(Hash.new { |h, k| h[k] = [] }) do |comment, hash|
+      hash[comment.parent_id] << comment if comment.parent_id
+    end
+  end
+
+  def self.commentable_verse_join
+    "INNER JOIN bible_verses AS coverage_verses ON comments.commentable_type = 'BibleVerse' AND comments.commentable_id = coverage_verses.id"
+  end
+  private_class_method :commentable_verse_join
 
   # Returns [roots, children_by_parent_id] for threaded rendering.
   # For bible verses, roots are visible on that verse; replies are loaded from
@@ -101,6 +163,7 @@ class Comment < ApplicationRecord
 
       commentable_ids = roots.map(&:commentable_id).uniq
       all = Comment.where(commentable_type: 'BibleVerse', commentable_id: commentable_ids)
+                   .verse_coverage
                    .includes(:user, :end_verse, :commentable, :rich_text_content)
                    .order(created_at: :asc)
                    .to_a
@@ -125,6 +188,22 @@ class Comment < ApplicationRecord
     NotificationDispatcher.comment_created(self)
   end
 
+  def normalize_coverage
+    if reply? && parent
+      self.coverage = parent.coverage
+      self.end_verse = nil
+    elsif coverage.blank?
+      self.coverage = COVERAGE_VERSE
+    end
+  end
+
+  def coverage_allowed
+    return if verse_coverage?
+    return if commentable.is_a?(BibleVerse)
+
+    errors.add(:coverage, "can only be chapter or book for Bible comments")
+  end
+
   def parent_matches_commentable
     return if parent.nil?
 
@@ -146,6 +225,11 @@ class Comment < ApplicationRecord
 
     if reply?
       errors.add(:end_verse, "can't be set on replies")
+      return
+    end
+
+    if scoped_coverage?
+      errors.add(:end_verse, "can't be set on chapter or book comments")
       return
     end
 

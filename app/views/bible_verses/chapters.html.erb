@@ -11,6 +11,19 @@
     </div>
   </div>
   
+  <% if current_user&.can_create? || @book_level_comments.any? %>
+    <div class="section-content coverage-comments-wrap">
+      <%= render "comments/coverage_section",
+            title: "Comments on #{@book}",
+            comments: @book_level_comments,
+            children_by_parent: @book_level_children,
+            page_verse: @first_verse,
+            empty_message: "No book-level comments yet.",
+            add_path: (@first_verse && current_user&.can_create?) ? new_bible_verse_comment_path(book: @book, chapter: @first_verse.chapter, verse: @first_verse.verse, coverage: Comment::COVERAGE_BOOK, return_to: "book") : nil,
+            add_label: "Add book comment" %>
+    </div>
+  <% end %>
+
   <div class="section-content">
     <div class="chapters-grid">
       <% @chapters.each do |chapter| %>

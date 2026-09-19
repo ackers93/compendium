@@ -192,7 +192,13 @@ class WeeklyDigestCollector
       note_url(comment.commentable, **mailer_url_options)
     when BibleVerse
       verse = comment.commentable
-      bible_verse_show_url(book: verse.book, chapter: verse.chapter, verse: verse.verse, **mailer_url_options)
+      if comment.book_coverage?
+        bible_verse_chapters_url(book: verse.book, **mailer_url_options)
+      elsif comment.chapter_coverage?
+        bible_verse_verses_url(book: verse.book, chapter: verse.chapter, **mailer_url_options)
+      else
+        bible_verse_show_url(book: verse.book, chapter: verse.chapter, verse: verse.verse, **mailer_url_options)
+      end
     when CrossReference
       source = comment.commentable.source_verse
       bible_verse_show_url(book: source.book, chapter: source.chapter, verse: source.verse, **mailer_url_options)

@@ -9,7 +9,7 @@
     <span class="comment-date">
       • <%= time_ago_in_words(comment.created_at) %> ago
     </span>
-    <% if comment.commentable.is_a?(BibleVerse) && comment.range? %>
+    <% if comment.commentable.is_a?(BibleVerse) && (comment.range? || comment.scoped_coverage?) %>
       <span class="comment-range">
         • on <%= comment.verse_reference %>
       </span>

@@ -47,9 +47,16 @@ class BibleVersesController < ApplicationController
   def chapters
     @book = params[:book]
     @chapters = BibleVerse.where(book: @book).select(:chapter).distinct.order(:chapter)
-    
+
     respond_to do |format|
-      format.html
+      format.html do
+        @first_verse = BibleVerse.where(book: @book).order(:chapter, :verse).first
+        @book_level_comments = Comment.covering_book(@book)
+                                      .includes(:user, :end_verse, :commentable, :rich_text_content)
+                                      .order(created_at: :desc)
+                                      .to_a
+        @book_level_children = Comment.thread_children_for(@book_level_comments)
+      end
       format.json { render json: { chapters: @chapters.pluck(:chapter) } }
     end
   end
@@ -64,9 +71,21 @@ class BibleVersesController < ApplicationController
         verse_ids = @verses.map(&:id)
         @chapter_comments_by_verse_id = Comment
           .where(commentable_type: 'BibleVerse', commentable_id: verse_ids)
+          .verse_coverage
           .includes(:user, :end_verse, :commentable, :rich_text_content)
           .order(created_at: :desc)
           .group_by(&:commentable_id)
+
+        @chapter_level_comments = Comment.covering_chapter(@book, @chapter)
+                                         .includes(:user, :end_verse, :commentable, :rich_text_content)
+                                         .order(created_at: :desc)
+                                         .to_a
+        @chapter_level_children = Comment.thread_children_for(@chapter_level_comments)
+        @book_level_comments = Comment.covering_book(@book)
+                                      .includes(:user, :end_verse, :commentable, :rich_text_content)
+                                      .order(created_at: :desc)
+                                      .to_a
+        @book_level_children = Comment.thread_children_for(@book_level_comments)
 
         ranged = @chapter_comments_by_verse_id.values.flatten.select(&:range?)
         @range_comment_tracks = view_context.assign_range_comment_tracks(ranged)

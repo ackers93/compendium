@@ -1,0 +1,29 @@
+<% comments = local_assigns.fetch(:comments, []) %>
+<% children_by_parent = local_assigns.fetch(:children_by_parent, {}) %>
+
+<div class="coverage-comments">
+  <div class="section-header">
+    <div class="bible-section-actions">
+      <h3 class="section-title"><%= title %></h3>
+      <% if local_assigns[:add_path].present? && current_user&.can_create? %>
+        <%= link_to add_label, add_path,
+            class: "btn btn-outline btn-sm",
+            data: { turbo_frame: "modal" } %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if comments.any? %>
+    <div class="comments-list">
+      <% comments.each do |comment| %>
+        <%= render "comments/comment",
+              comment: comment,
+              children_by_parent: children_by_parent,
+              page_verse: local_assigns[:page_verse],
+              depth: 0 %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="coverage-comments-empty"><%= local_assigns[:empty_message] %></p>
+  <% end %>
+</div>

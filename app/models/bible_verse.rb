@@ -56,16 +56,20 @@ class BibleVerse < ApplicationRecord
       .joins("INNER JOIN bible_verses AS cv ON comments.commentable_type = 'BibleVerse' AND comments.commentable_id = cv.id")
       .joins("LEFT JOIN bible_verses AS cev ON comments.end_verse_id = cev.id")
       .where(
-        "(comments.commentable_id = :id AND comments.commentable_type = 'BibleVerse')
-         OR comments.end_verse_id = :id
-         OR (
-           comments.end_verse_id IS NOT NULL
-           AND cv.book = :book
-           AND cv.chapter = :chapter
-           AND cv.verse <= :verse
-           AND cev.verse >= :verse
+        "(comments.coverage = :verse_coverage OR comments.coverage IS NULL)
+         AND (
+           (comments.commentable_id = :id AND comments.commentable_type = 'BibleVerse')
+           OR comments.end_verse_id = :id
+           OR (
+             comments.end_verse_id IS NOT NULL
+             AND cv.book = :book
+             AND cv.chapter = :chapter
+             AND cv.verse <= :verse
+             AND cev.verse >= :verse
+           )
          )",
-        id: id, book: book, chapter: chapter, verse: verse
+        id: id, book: book, chapter: chapter, verse: verse,
+        verse_coverage: Comment::COVERAGE_VERSE
       )
   end
   

@@ -1,6 +1,8 @@
-<%= form_with(model: comment, url: bible_verse_form_url_for(comment, page_commentable: local_assigns[:page_commentable]), id: comment.reply? || comment.parent_id.present? ? nil : "comment-form", data: { turbo_frame: params[:direct_edit] ? "_top" : nil }) do |form| %>
+<%= form_with(model: comment, url: bible_verse_form_url_for(comment, page_commentable: local_assigns[:page_commentable]), id: comment.reply? || comment.parent_id.present? ? nil : "comment-form", data: { turbo_frame: (params[:direct_edit] || local_assigns[:turbo_frame_top]) ? "_top" : nil }) do |form| %>
   <%= hidden_field_tag :direct_edit, params[:direct_edit] if params[:direct_edit] %>
+  <%= hidden_field_tag :return_to, params[:return_to] if params[:return_to].present? %>
   <%= form.hidden_field :parent_id if comment.parent_id.present? || comment.parent.present? %>
+  <%= form.hidden_field :coverage if comment.commentable.is_a?(BibleVerse) && comment.scoped_coverage? && comment.root? && comment.parent.nil? && comment.parent_id.blank? %>
   
   <% if comment.errors.any? %>
     <div class="alert alert-error mb-4">
@@ -10,7 +12,7 @@
     </div>
   <% end %>
 
-  <% if comment.commentable.is_a?(BibleVerse) && comment.root? && comment.parent.nil? && comment.parent_id.blank? %>
+  <% if comment.commentable.is_a?(BibleVerse) && comment.verse_coverage? && comment.root? && comment.parent.nil? && comment.parent_id.blank? %>
     <div class="form-group">
       <label for="comment_end_verse" class="form-label">Through verse <span class="text-sm text-gray-500 font-normal">(optional)</span></label>
       <input type="number"

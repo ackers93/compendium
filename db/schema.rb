@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_19_031459) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_19_153000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -122,6 +122,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_19_031459) do
     t.bigint "end_verse_id"
     t.bigint "parent_id"
     t.string "import_source"
+    t.string "coverage", default: "verse", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["end_verse_id"], name: "index_comments_on_end_verse_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
