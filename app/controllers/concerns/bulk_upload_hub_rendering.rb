@@ -2,7 +2,7 @@ module BulkUploadHubRendering
   extend ActiveSupport::Concern
 
   DEFAULT_ROW_COUNT = 5
-  TABS = %w[comments cross_references topics threads olive_tree].freeze
+  TABS = %w[comments csv cross_references topics threads olive_tree].freeze
 
   private
 
@@ -22,6 +22,7 @@ module BulkUploadHubRendering
     @thread_verse_refs = "" if @thread_verse_refs.nil?
     @thread_errors = [] if @thread_errors.nil?
     @import_result = nil if @import_result.nil?
+    @csv_text = "" if @csv_text.nil?
   end
 
   def default_comment_rows

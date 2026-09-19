@@ -1,6 +1,6 @@
 <div class="page-header">
   <h1 class="page-title">Bulk Upload</h1>
-  <p class="page-subtitle">Add comments, cross references, topics, or threads in bulk — or import Olive Tree notes</p>
+  <p class="page-subtitle">Add comments, cross references, topics, or threads in bulk — or import CSV and Olive Tree notes</p>
 </div>
 
 <div class="content-section">
@@ -12,6 +12,10 @@
               bulk_upload_hub_path(tab: "comments"),
               class: "tab-button #{'active' if @tab == 'comments'}",
               data: { bulk_upload_tabs_target: "tab", tab: "comments", action: "click->bulk-upload-tabs#select" } %>
+          <%= link_to "CSV",
+              bulk_upload_hub_path(tab: "csv"),
+              class: "tab-button #{'active' if @tab == 'csv'}",
+              data: { bulk_upload_tabs_target: "tab", tab: "csv", action: "click->bulk-upload-tabs#select" } %>
           <%= link_to "Cross References",
               bulk_upload_hub_path(tab: "cross_references"),
               class: "tab-button #{'active' if @tab == 'cross_references'}",
@@ -36,6 +40,13 @@
            data-tab="comments"
            role="tabpanel">
         <%= render "bulk_upload_hub/comments" %>
+      </div>
+
+      <div class="tab-content <%= 'active' if @tab == 'csv' %>"
+           data-bulk-upload-tabs-target="panel"
+           data-tab="csv"
+           role="tabpanel">
+        <%= render "bulk_upload_hub/csv" %>
       </div>
 
       <div class="tab-content <%= 'active' if @tab == 'cross_references' %>"

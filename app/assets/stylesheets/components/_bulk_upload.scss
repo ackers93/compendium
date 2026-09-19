@@ -265,6 +265,30 @@
   }
 }
 
+.csv-import-or {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin: -$space-2 0 $space-4;
+  color: $gray-500;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: $gray-200;
+  }
+}
+
+.csv-import-paste {
+  min-height: 10rem;
+}
+
 .bulk-simple-form {
   max-width: 720px;
 
