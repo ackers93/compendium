@@ -6,7 +6,7 @@
   position: fixed;
   right: $space-4;
   bottom: calc(#{$space-4} + env(safe-area-inset-bottom, 0px));
-  z-index: $z-fixed;
+  z-index: $z-popover;
   width: 3rem;
   height: 3rem;
   border: 2px solid $theme-primary;
@@ -50,7 +50,7 @@
 .bible-quick-search-backdrop {
   position: fixed;
   inset: 0;
-  z-index: $z-modal;
+  z-index: $z-popover;
   background: rgba($gray-900, 0.45);
   border: 0;
   padding: 0;
@@ -75,7 +75,7 @@
   right: 0;
   bottom: 0;
   width: var(--bible-quick-search-width);
-  z-index: $z-fixed;
+  z-index: $z-tooltip;
   display: flex;
   flex-direction: column;
   background: $theme-surface;
@@ -267,7 +267,7 @@
     max-height: 85vh;
     border: 1px solid $gray-200;
     border-radius: $radius-lg;
-    z-index: calc(#{$z-modal} + 1);
+    z-index: $z-tooltip;
     transform: translateY(110%);
     box-shadow: $shadow-xl;
 

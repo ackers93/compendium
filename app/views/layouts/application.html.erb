@@ -317,7 +317,8 @@
     <% if user_signed_in? %>
       <div class="bible-quick-search"
            data-controller="bible-quick-search"
-           data-bible-quick-search-url-value="<%= bible_verses_quick_search_path %>">
+           data-bible-quick-search-url-value="<%= bible_verses_quick_search_path %>"
+           data-action="click->bible-quick-search#stopPropagation">
         <button type="button"
                 class="bible-quick-search-backdrop"
                 data-bible-quick-search-target="backdrop"

@@ -53,12 +53,18 @@ export default class extends Controller {
     return window.matchMedia(`(max-width: ${this.mobileBreakpointValue - 1}px)`).matches
   }
 
-  toggle() {
+  toggle(event) {
+    event?.stopPropagation()
     this.setOpen(!this.open)
   }
 
-  close() {
+  close(event) {
+    event?.stopPropagation()
     this.setOpen(false)
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation()
   }
 
   setOpen(nextOpen) {
@@ -81,12 +87,14 @@ export default class extends Controller {
 
     if (nextOpen) {
       requestAnimationFrame(() => this.inputTarget.focus())
+      if (this.isMobile()) {
+        document.body.style.overflow = "hidden"
+      }
     } else {
-      document.body.style.overflow = ""
-    }
-
-    if (nextOpen && this.isMobile()) {
-      document.body.style.overflow = "hidden"
+      // Keep scroll locked if an app modal is still open underneath
+      if (!document.querySelector(".modal-overlay")) {
+        document.body.style.overflow = ""
+      }
     }
   }
 
