@@ -81,11 +81,6 @@ class BibleVersesController < ApplicationController
                                          .order(created_at: :desc)
                                          .to_a
         @chapter_level_children = Comment.thread_children_for(@chapter_level_comments)
-        @book_level_comments = Comment.covering_book(@book)
-                                      .includes(:user, :end_verse, :commentable, :rich_text_content)
-                                      .order(created_at: :desc)
-                                      .to_a
-        @book_level_children = Comment.thread_children_for(@book_level_comments)
 
         ranged = @chapter_comments_by_verse_id.values.flatten.select(&:range?)
         @range_comment_tracks = view_context.assign_range_comment_tracks(ranged)
