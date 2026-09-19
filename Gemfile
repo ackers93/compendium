@@ -24,6 +24,9 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# CSV is no longer a default gem in Ruby 3.4+
+gem "csv"
+
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
 

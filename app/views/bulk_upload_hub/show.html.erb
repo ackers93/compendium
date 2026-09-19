@@ -1,6 +1,6 @@
 <div class="page-header">
   <h1 class="page-title">Bulk Upload</h1>
-  <p class="page-subtitle">Add comments, cross references, topics, or threads in bulk</p>
+  <p class="page-subtitle">Add comments, cross references, topics, or threads in bulk — or import Olive Tree notes</p>
 </div>
 
 <div class="content-section">
@@ -24,6 +24,10 @@
               bulk_upload_hub_path(tab: "threads"),
               class: "tab-button #{'active' if @tab == 'threads'}",
               data: { bulk_upload_tabs_target: "tab", tab: "threads", action: "click->bulk-upload-tabs#select" } %>
+          <%= link_to "Olive Tree",
+              bulk_upload_hub_path(tab: "olive_tree"),
+              class: "tab-button #{'active' if @tab == 'olive_tree'}",
+              data: { bulk_upload_tabs_target: "tab", tab: "olive_tree", action: "click->bulk-upload-tabs#select" } %>
         </nav>
       </div>
 
@@ -53,6 +57,13 @@
            data-tab="threads"
            role="tabpanel">
         <%= render "bulk_upload_hub/threads" %>
+      </div>
+
+      <div class="tab-content <%= 'active' if @tab == 'olive_tree' %>"
+           data-bulk-upload-tabs-target="panel"
+           data-tab="olive_tree"
+           role="tabpanel">
+        <%= render "bulk_upload_hub/olive_tree" %>
       </div>
     </div>
   </div>

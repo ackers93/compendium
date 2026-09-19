@@ -1,0 +1,50 @@
+<div class="bulk-upload-help">
+  <p>Import verse notes from an Olive Tree Bible App Sync Export CSV. Highlights and empty notes are skipped.</p>
+  <ol>
+    <li>Sign in at <a href="https://www.olivetree.com/store/secure_login.php" target="_blank" rel="noopener">olivetree.com</a></li>
+    <li>Open <strong>Export Notes</strong> and request an export</li>
+    <li>Download the CSV from the email link, then upload it here</li>
+  </ol>
+</div>
+
+<%= form_with url: olive_tree_import_path, method: :post, multipart: true, class: "bulk-upload-form" do %>
+  <div class="form-group">
+    <label for="olive_tree_file">Olive Tree CSV</label>
+    <%= file_field_tag :file, id: "olive_tree_file", accept: ".csv,text/csv", required: true, class: "form-control" %>
+  </div>
+
+  <div class="bulk-upload-actions">
+    <div class="bulk-upload-submit">
+      <%= submit_tag "Import notes", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<% if @import_result&.row_results&.any? { |row| row.error.present? } %>
+  <div class="table-container bulk-upload-table" style="margin-top: 1.5rem;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Verse</th>
+          <th scope="col">Note</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @import_result.row_results.each do |row| %>
+          <tr>
+            <td><%= row.reference %></td>
+            <td><%= truncate(row.content.to_s, length: 120) %></td>
+            <td>
+              <% if row.success %>
+                <span class="text-success">Imported</span>
+              <% else %>
+                <span class="text-danger"><%= row.error %></span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
