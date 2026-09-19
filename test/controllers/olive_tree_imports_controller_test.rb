@@ -38,6 +38,23 @@ class OliveTreeImportsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to bulk_upload_hub_path(tab: "olive_tree")
     follow_redirect!
     assert_match(/Imported 4 notes/, flash[:notice])
+    assert_match(/skipped 2 other rows/, flash[:notice])
+  end
+
+  test "skips olive tree duplicates on re-import" do
+    post olive_tree_import_path, params: {
+      file: fixture_file_upload("olive_tree/notes_export.csv", "text/csv")
+    }
+
+    assert_no_difference -> { Comment.count } do
+      post olive_tree_import_path, params: {
+        file: fixture_file_upload("olive_tree/notes_export.csv", "text/csv")
+      }
+    end
+
+    assert_redirected_to bulk_upload_hub_path(tab: "olive_tree")
+    follow_redirect!
+    assert_match(/skipped 4 duplicates/, flash[:notice])
   end
 
   test "requires a csv file" do

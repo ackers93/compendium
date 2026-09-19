@@ -19,14 +19,22 @@ class Comment < ApplicationRecord
   has_many :notifications, as: :notifiable, dependent: :delete_all
   has_rich_text :content
 
+  IMPORT_SOURCE_OLIVE_TREE = "olive_tree"
+
   scope :roots, -> { where(parent_id: nil) }
+  scope :from_import, ->(source) { where(import_source: source) }
 
   validates :content, presence: true
+  validates :import_source, inclusion: { in: [IMPORT_SOURCE_OLIVE_TREE] }, allow_nil: true
   validate :end_verse_valid
   validate :parent_matches_commentable
   validate :depth_within_limit
 
   after_create :dispatch_notifications
+
+  def olive_tree_import?
+    import_source == IMPORT_SOURCE_OLIVE_TREE
+  end
 
   def range?
     end_verse_id.present?

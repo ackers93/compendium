@@ -34,6 +34,7 @@ class Imports::OliveTreeNotesImporterTest < ActiveSupport::TestCase
 
     comment = Comment.find_by(commentable: @acts_24)
     assert_equal @user, comment.user
+    assert_equal Comment::IMPORT_SOURCE_OLIVE_TREE, comment.import_source
     assert_equal "Blah blah", comment.content.to_plain_text.strip
 
     ranged = Comment.find_by(commentable: @john_16)
@@ -65,5 +66,49 @@ class Imports::OliveTreeNotesImporterTest < ActiveSupport::TestCase
     assert_equal 1, result.imported_count
     comment = Comment.find_by(commentable: @acts_24)
     assert_equal "N<MN XZ", comment.content.to_plain_text.strip
+  end
+
+  test "skips duplicates of prior olive tree imports only" do
+    csv = <<~CSV
+      category_name,type,highlighter_name,title,content,reference_start,reference_end,associated_product,date_created,last_modified,tags
+      Annotations,Note,,Title,Imported note,Acts:8:24,Acts:8:24,,,2026-01-01T00:00:00Z,2026-01-01T00:00:00Z,""
+    CSV
+
+    first = Imports::OliveTreeNotesImporter.call(user: @user, io_or_string: csv)
+    assert_equal 1, first.imported_count
+
+    Comment.create!(
+      user: @user,
+      commentable: @acts_24,
+      content: "Imported note"
+    )
+
+    assert_no_difference -> { Comment.count } do
+      second = Imports::OliveTreeNotesImporter.call(user: @user, io_or_string: csv)
+      assert_equal 0, second.imported_count
+      assert_equal 1, second.skipped[:duplicate]
+    end
+
+    assert_equal 1, Comment.from_import(Comment::IMPORT_SOURCE_OLIVE_TREE).where(commentable: @acts_24).count
+    assert_equal 1, Comment.where(commentable: @acts_24, import_source: nil).count
+  end
+
+  test "imports when matching text exists only as a hand-written comment" do
+    Comment.create!(
+      user: @user,
+      commentable: @acts_24,
+      content: "Same words"
+    )
+
+    csv = <<~CSV
+      category_name,type,highlighter_name,title,content,reference_start,reference_end,associated_product,date_created,last_modified,tags
+      Annotations,Note,,Title,Same words,Acts:8:24,Acts:8:24,,,2026-01-01T00:00:00Z,2026-01-01T00:00:00Z,""
+    CSV
+
+    assert_difference -> { Comment.count }, 1 do
+      result = Imports::OliveTreeNotesImporter.call(user: @user, io_or_string: csv)
+      assert_equal 1, result.imported_count
+      assert_equal 0, result.skipped[:duplicate].to_i
+    end
   end
 end

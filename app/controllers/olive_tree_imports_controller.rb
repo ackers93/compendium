@@ -25,7 +25,7 @@ class OliveTreeImportsController < ApplicationController
     result = Imports::OliveTreeNotesImporter.call(user: current_user, io_or_string: file)
     @import_result = result
 
-    if result.imported_count.positive? && result.failed_count.zero?
+    if result.failed_count.zero? && (result.imported_count.positive? || result.skipped.values.sum.positive?)
       redirect_to bulk_upload_hub_path(tab: "olive_tree"),
                   notice: import_notice(result)
     else
@@ -45,9 +45,13 @@ class OliveTreeImportsController < ApplicationController
   end
 
   def import_notice(result)
-    parts = ["Imported #{result.imported_count} #{'note'.pluralize(result.imported_count)}"]
-    skipped_total = result.skipped.values.sum
-    parts << "skipped #{skipped_total} #{'row'.pluralize(skipped_total)}" if skipped_total.positive?
+    parts = []
+    if result.imported_count.positive?
+      parts << "Imported #{result.imported_count} #{'note'.pluralize(result.imported_count)}"
+    end
+    parts.concat(skip_summary_parts(result.skipped))
+    return "No notes were imported." if parts.empty?
+
     parts.join("; ") + "."
   end
 
@@ -55,10 +59,18 @@ class OliveTreeImportsController < ApplicationController
     parts = []
     parts << "#{result.imported_count} #{'note'.pluralize(result.imported_count)} imported" if result.imported_count.positive?
     parts << "#{result.failed_count} #{'row'.pluralize(result.failed_count)} failed" if result.failed_count.positive?
-    skipped_total = result.skipped.values.sum
-    parts << "#{skipped_total} #{'row'.pluralize(skipped_total)} skipped" if skipped_total.positive?
+    parts.concat(skip_summary_parts(result.skipped))
     return "No notes were imported." if parts.empty?
 
     parts.join(". ") + "."
+  end
+
+  def skip_summary_parts(skipped)
+    parts = []
+    duplicate_count = skipped[:duplicate].to_i
+    other_skipped = skipped.except(:duplicate).values.sum
+    parts << "skipped #{duplicate_count} #{'duplicate'.pluralize(duplicate_count)}" if duplicate_count.positive?
+    parts << "skipped #{other_skipped} other #{'row'.pluralize(other_skipped)}" if other_skipped.positive?
+    parts
   end
 end
