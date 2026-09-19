@@ -256,6 +256,9 @@
                   <span class="badge badge-warning"><%= content_review_count %></span>
                 <% end %>
               <% end %>
+              <%= link_to new_bulk_upload_path, class: "btn btn-outline btn-block mobile-nav-action-link", data: { action: "click->mobile-nav#closeMenu" } do %>
+                <span>Bulk Upload</span>
+              <% end %>
               <% if current_user.can_manage_users? %>
                 <%= link_to admin_users_path, class: "btn btn-outline btn-block mobile-nav-action-link", data: { action: "click->mobile-nav#closeMenu" } do %>
                   <span>Admin</span>
