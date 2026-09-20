@@ -52,7 +52,7 @@ module Imports
 
       parsed = VerseReferenceParser.parse(row.reference)
       unless parsed
-        return failure(row, "Could not parse \"#{row.reference}\". Try formats like gen1:1, Gen 1:1, or Genesis 1:1-4.")
+        return failure(row, "Could not parse \"#{row.reference}\". Try formats like gen1:1, Gen 1:1, Genesis 1:1-4, or 1ki:16:31.")
       end
 
       verse = BibleVerse.find_by(book: parsed.book, chapter: parsed.chapter, verse: parsed.start_verse)

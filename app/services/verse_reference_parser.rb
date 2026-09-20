@@ -31,7 +31,7 @@ class VerseReferenceParser
     "est" => "Esther",
     "job" => "Job",
     "ps" => "Psalms", "psa" => "Psalms", "psalm" => "Psalms",
-    "prov" => "Proverbs", "pr" => "Proverbs",
+    "prov" => "Proverbs", "pro" => "Proverbs", "pr" => "Proverbs",
     "eccl" => "Ecclesiastes", "ecc" => "Ecclesiastes",
     "song" => "Song of Solomon", "sos" => "Song of Solomon", "sol" => "Song of Solomon",
     "isa" => "Isaiah", "is" => "Isaiah",
@@ -81,6 +81,7 @@ class VerseReferenceParser
   }.freeze
 
   SPACED_PATTERN = /\A(.+?)\s+(\d+):(\d+)(?:-(\d+))?\z/i
+  COLON_PATTERN = /\A(.+):(\d+):(\d+)(?:-(\d+))?\z/i
   COMPACT_PATTERN = /\A(.+?)(\d+):(\d+)(?:-(\d+))?\z/i
 
   def self.parse(reference)
@@ -96,7 +97,9 @@ class VerseReferenceParser
 
     normalized = @reference.gsub(/\s+-\s*$/, "").strip
 
-    match = normalized.match(SPACED_PATTERN) || normalized.match(COMPACT_PATTERN)
+    match = normalized.match(SPACED_PATTERN) ||
+            normalized.match(COLON_PATTERN) ||
+            normalized.match(COMPACT_PATTERN)
     return nil unless match
 
     book_token = match[1].strip

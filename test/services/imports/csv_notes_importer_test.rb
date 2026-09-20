@@ -16,6 +16,35 @@ class Imports::CsvNotesImporterTest < ActiveSupport::TestCase
     @csv_path = Rails.root.join("test/fixtures/files/csv_import/notes.csv")
   end
 
+  test "imports colon-separated abbreviations from a verse,point paste" do
+    kings_31 = BibleVerse.create!(book: "1 Kings", chapter: 16, verse: 31, text: "And it came to pass", testament: "OT")
+    BibleVerse.create!(book: "1 Kings", chapter: 21, verse: 8, text: "So she wrote letters", testament: "OT")
+    BibleVerse.create!(book: "1 Kings", chapter: 21, verse: 13, text: "And there came in two men", testament: "OT")
+    proverbs = BibleVerse.create!(book: "Proverbs", chapter: 22, verse: 28, text: "Remove not the ancient landmark", testament: "OT")
+
+    csv = <<~CSV
+      verse,point
+      1ki:16:31,"Jezebel, the Sidonian princess who became queen of Israel.
+      Influence is powerful for good or harm."
+      1ki:21:8-13,"She writes letters in Ahab's name and has Naboth stoned."
+      pro:22:28,Do not move an ancient boundary stone.
+    CSV
+
+    result = Imports::CsvNotesImporter.call(user: @user, io_or_string: csv)
+
+    assert_equal 3, result.imported_count
+    assert_equal 0, result.failed_count
+
+    comment = Comment.find_by(commentable: kings_31)
+    assert_match(/Sidonian princess/, comment.content.to_plain_text)
+    assert_equal Comment::IMPORT_SOURCE_CSV, comment.import_source
+
+    ranged = Comment.find_by(commentable: BibleVerse.find_by(book: "1 Kings", chapter: 21, verse: 8))
+    assert_equal 13, ranged.end_verse.verse
+
+    assert_equal "Do not move an ancient boundary stone.", Comment.find_by(commentable: proverbs).content.to_plain_text.strip
+  end
+
   test "imports comments from csv with headers" do
     result = nil
 

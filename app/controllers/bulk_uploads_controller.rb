@@ -42,7 +42,7 @@ class BulkUploadsController < ApplicationController
 
       parsed = VerseReferenceParser.parse(reference)
       unless parsed
-        message = "Could not parse \"#{reference}\". Try formats like gen1:1, Gen 1:1, or Genesis 1:1-4."
+        message = "Could not parse \"#{reference}\". Try formats like gen1:1, Gen 1:1, Genesis 1:1-4, or 1ki:16:31."
         record_comment_error(index, message)
         next
       end

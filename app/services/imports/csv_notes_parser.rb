@@ -6,7 +6,8 @@ module Imports
     Result = Struct.new(:rows, :skipped, keyword_init: true)
 
     VERSE_HEADERS = %w[verse reference verse_reference].freeze
-    CONTENT_HEADERS = %w[comment content note notes].freeze
+    CONTENT_HEADERS = %w[comment content note notes point points].freeze
+    SMART_DOUBLE_QUOTES = /[\u201C\u201D\u201E\u201F\u00AB\u00BB\uFF02]/
 
     def self.parse(io_or_string)
       new(io_or_string).parse
@@ -46,6 +47,9 @@ module Imports
 
       if verse_idx && content_idx && verse_idx != content_idx
         [verse_idx, content_idx, table.drop(1)]
+      elsif verse_idx && headers.size >= 2
+        fallback_content_idx = verse_idx.zero? ? 1 : 0
+        [verse_idx, fallback_content_idx, table.drop(1)]
       else
         [0, 1, table]
       end
@@ -69,7 +73,7 @@ module Imports
       text = text.to_s
       text = text.dup.force_encoding(Encoding::UTF_8) unless text.encoding == Encoding::UTF_8
       text = text.encode(Encoding::UTF_8, invalid: :replace, undef: :replace) unless text.valid_encoding?
-      text.delete_prefix("\uFEFF")
+      text.delete_prefix("\uFEFF").gsub(SMART_DOUBLE_QUOTES, '"')
     end
   end
 end

@@ -53,7 +53,7 @@ class VerseReferenceResolver
   def resolve
     parsed = VerseReferenceParser.parse(@reference)
     unless parsed
-      return Result.new(error: "Could not parse \"#{@reference}\". Try formats like gen1:1, Gen 1:1, or Genesis 1:1-4.")
+      return Result.new(error: "Could not parse \"#{@reference}\". Try formats like gen1:1, Gen 1:1, Genesis 1:1-4, or 1ki:16:31.")
     end
 
     if !@allow_range && parsed.end_verse
