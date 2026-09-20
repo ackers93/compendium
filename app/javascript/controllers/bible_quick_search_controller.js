@@ -12,7 +12,8 @@ export default class extends Controller {
     "previewContent",
     "previewReference",
     "previewText",
-    "previewLink"
+    "previewLink",
+    "previewOpenHereLink"
   ]
 
   static values = {
@@ -290,6 +291,53 @@ export default class extends Controller {
     this.previewReferenceTarget.textContent = reference
     this.previewTextTarget.textContent = text
     this.previewLinkTarget.href = href
+    if (this.hasPreviewOpenHereLinkTarget) {
+      this.previewOpenHereLinkTarget.href = href
+    }
+  }
+
+  openHere(event) {
+    if (!this.hasUnsavedContributionWork()) return
+
+    const leave = window.confirm(
+      "You have unsaved text in a contribution form. Leave this page and discard your work?"
+    )
+    if (!leave) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+  }
+
+  hasUnsavedContributionWork() {
+    const textareas = document.querySelectorAll("textarea")
+    for (const textarea of textareas) {
+      if (this.element.contains(textarea)) continue
+      if (textarea.value.trim().length > 0) return true
+    }
+
+    const trixEditors = document.querySelectorAll("trix-editor")
+    for (const trix of trixEditors) {
+      if (this.element.contains(trix)) continue
+      if (this.trixHasContent(trix)) return true
+    }
+
+    const modalInputs = document.querySelectorAll(
+      ".modal-overlay input[type='text'], .modal-overlay input:not([type])"
+    )
+    for (const input of modalInputs) {
+      if (input.value.trim().length > 0) return true
+    }
+
+    return false
+  }
+
+  trixHasContent(trix) {
+    try {
+      const plain = trix.editor?.getDocument()?.toString() || trix.textContent || ""
+      return plain.replace(/\u00a0/g, " ").trim().length > 0
+    } catch {
+      return (trix.textContent || "").trim().length > 0
+    }
   }
 
   clearResults() {

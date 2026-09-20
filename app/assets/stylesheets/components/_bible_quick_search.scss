@@ -236,6 +236,13 @@
   font-style: italic;
 }
 
+.bible-quick-search-panel__preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-3 $space-4;
+}
+
 .bible-quick-search-panel__preview-link {
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;

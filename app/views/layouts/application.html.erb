@@ -366,11 +366,17 @@
                   data-bible-quick-search-target="previewReference"></h3>
               <p class="bible-quick-search-panel__preview-text"
                  data-bible-quick-search-target="previewText"></p>
-              <a class="bible-quick-search-panel__preview-link"
-                 data-bible-quick-search-target="previewLink"
-                 href="#"
-                 target="_blank"
-                 rel="noopener noreferrer">Open full page</a>
+              <div class="bible-quick-search-panel__preview-actions">
+                <a class="bible-quick-search-panel__preview-link"
+                   data-bible-quick-search-target="previewOpenHereLink"
+                   data-action="click->bible-quick-search#openHere"
+                   href="#">Open here</a>
+                <a class="bible-quick-search-panel__preview-link"
+                   data-bible-quick-search-target="previewLink"
+                   href="#"
+                   target="_blank"
+                   rel="noopener noreferrer">Open in new tab</a>
+              </div>
             </div>
           </div>
         </aside>
