@@ -10,9 +10,18 @@
       <%= link_to "← Bible", bible_verses_books_path, class: "btn btn-outline" %>
     </div>
   </div>
-  
+
+  <div class="section-content">
+    <div class="chapters-grid">
+      <% @chapters.each do |chapter| %>
+        <%= link_to chapter.chapter, bible_verse_verses_path(book: @book, chapter: chapter.chapter), 
+            class: "chapter-link" %>
+      <% end %>
+    </div>
+  </div>
+
   <% if current_user&.can_create? || @book_level_comments.any? %>
-    <div class="section-content coverage-comments-wrap">
+    <div class="section-content coverage-comments-wrap mt-6">
       <%= render "comments/coverage_section",
             title: "Comments on #{@book}",
             comments: @book_level_comments,
@@ -23,13 +32,4 @@
             add_label: "Add book comment" %>
     </div>
   <% end %>
-
-  <div class="section-content">
-    <div class="chapters-grid">
-      <% @chapters.each do |chapter| %>
-        <%= link_to chapter.chapter, bible_verse_verses_path(book: @book, chapter: chapter.chapter), 
-            class: "chapter-link" %>
-      <% end %>
-    </div>
-  </div>
 </div> 
