@@ -27,8 +27,8 @@ class User < ApplicationRecord
 
     CONTRIBUTOR_AGREEMENT_TERMS = [
       {
-        title: "Human-written content",
-        body: "All content you contribute must be written by you. AI tools may be used sparingly for light editing or research, but the substance of your notes, comments, and other contributions should be your own work."
+        title: "Human Studied content",
+        body: "All content you contribute must be studied by you. AI tools may be used sparingly for light editing or research, but the substance of your notes, comments, and other contributions should be your own work."
       },
       {
         title: "Kindness and encouragement",
