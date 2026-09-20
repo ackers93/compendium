@@ -22,7 +22,9 @@ module BulkUploadHubRendering
     @thread_verse_refs = "" if @thread_verse_refs.nil?
     @thread_errors = [] if @thread_errors.nil?
     @import_result = nil if @import_result.nil?
+    @xref_import_result = nil if @xref_import_result.nil?
     @csv_text = "" if @csv_text.nil?
+    @csv_xref_text = "" if @csv_xref_text.nil?
   end
 
   def default_comment_rows

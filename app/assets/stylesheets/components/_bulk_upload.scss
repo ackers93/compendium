@@ -289,6 +289,21 @@
   min-height: 10rem;
 }
 
+.bulk-csv-section {
+  & + & {
+    margin-top: $space-6;
+    padding-top: $space-6;
+    border-top: 1px solid $gray-200;
+  }
+}
+
+.bulk-csv-section-title {
+  margin: 0 0 $space-3;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $gray-900;
+}
+
 .bulk-simple-form {
   max-width: 720px;
 

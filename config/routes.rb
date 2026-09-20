@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'bible_verses/bulk_upload', to: 'bulk_uploads#new', as: :new_bulk_upload
   post 'bible_verses/bulk_upload', to: 'bulk_uploads#create', as: :bulk_upload
   post 'bulk_upload/csv', to: 'csv_imports#create', as: :csv_import
+  post 'bulk_upload/csv_cross_references', to: 'csv_cross_reference_imports#create', as: :csv_cross_reference_import
   post 'bulk_upload/olive_tree', to: 'olive_tree_imports#create', as: :olive_tree_import
   get 'bible_verses/bulk_cross_references', to: 'bulk_cross_references#new', as: :new_bulk_cross_reference
   post 'bible_verses/bulk_cross_references', to: 'bulk_cross_references#create', as: :bulk_cross_reference

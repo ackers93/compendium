@@ -1,57 +1,123 @@
-<div class="bulk-upload-help">
-  <p>Import verse comments from a CSV. Attach a file or paste the same text below. Re-importing the same comments skips duplicates without touching hand-written comments.</p>
-  <ul>
-    <li>Columns: <code>verse</code> (or <code>reference</code>) and <code>comment</code> (or <code>content</code>, <code>note</code>, <code>point</code>)</li>
-    <li>A header row is optional. Ranges like <code>John 3:16-18</code> and compact refs like <code>1ki:16:31</code> are supported.</li>
-  </ul>
+<div class="bulk-csv-section">
+  <h2 class="bulk-csv-section-title">Verse comments</h2>
+  <div class="bulk-upload-help">
+    <p>Import verse comments from a CSV. Attach a file or paste the same text below. Re-importing the same comments skips duplicates without touching hand-written comments.</p>
+    <ul>
+      <li>Columns: <code>verse</code> (or <code>reference</code>) and <code>comment</code> (or <code>content</code>, <code>note</code>, <code>point</code>)</li>
+      <li>A header row is optional. Ranges like <code>John 3:16-18</code> and compact refs like <code>1ki:16:31</code> are supported.</li>
+    </ul>
+  </div>
+
+  <%= form_with url: csv_import_path, method: :post, multipart: true, class: "bulk-simple-form" do %>
+    <div class="form-group">
+      <label for="csv_file" class="form-label">CSV file</label>
+      <%= file_field_tag :file, id: "csv_file", accept: ".csv,text/csv", class: "form-control" %>
+    </div>
+
+    <div class="csv-import-or" aria-hidden="true">or</div>
+
+    <div class="form-group">
+      <label for="csv_text" class="form-label">Paste CSV</label>
+      <%= text_area_tag :csv_text, @csv_text, id: "csv_text", class: "form-textarea bulk-verse-refs-input csv-import-paste", rows: 8, placeholder: "verse,comment\nGenesis 1:1,In the beginning God created\nJohn 3:16-18,For God so loved the world" %>
+      <p class="form-help">If you attach a file, the pasted text is ignored.</p>
+    </div>
+
+    <div class="bulk-upload-actions">
+      <div class="bulk-upload-submit">
+        <%= submit_tag "Import comments", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @import_result&.row_results&.any? { |row| row.error.present? } %>
+    <div class="table-container bulk-upload-table" style="margin-top: 1.5rem;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Verse</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @import_result.row_results.each do |row| %>
+            <tr>
+              <td><%= row.reference %></td>
+              <td><%= truncate(row.content.to_s, length: 120) %></td>
+              <td>
+                <% if row.success %>
+                  <span class="text-success">Imported</span>
+                <% else %>
+                  <span class="text-danger"><%= row.error %></span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 </div>
 
-<%= form_with url: csv_import_path, method: :post, multipart: true, class: "bulk-simple-form" do %>
-  <div class="form-group">
-    <label for="csv_file" class="form-label">CSV file</label>
-    <%= file_field_tag :file, id: "csv_file", accept: ".csv,text/csv", class: "form-control" %>
+<div class="bulk-csv-section">
+  <h2 class="bulk-csv-section-title">Cross-references</h2>
+  <div class="bulk-upload-help">
+    <p>Import cross-references from a CSV with two verses and a comment. Re-importing the same comment on an existing pair skips duplicates without touching hand-written comments.</p>
+    <ul>
+      <li>Columns: <code>source</code> (or <code>verse1</code>), <code>target</code> (or <code>verse2</code>), and <code>comment</code></li>
+      <li>Source must be a single verse. Target ranges like <code>John 3:16-18</code> are supported. Compact refs like <code>1ki:16:31</code> work in both columns.</li>
+    </ul>
   </div>
 
-  <div class="csv-import-or" aria-hidden="true">or</div>
-
-  <div class="form-group">
-    <label for="csv_text" class="form-label">Paste CSV</label>
-    <%= text_area_tag :csv_text, @csv_text, id: "csv_text", class: "form-textarea bulk-verse-refs-input csv-import-paste", rows: 8, placeholder: "verse,comment\nGenesis 1:1,In the beginning God created\nJohn 3:16-18,For God so loved the world" %>
-    <p class="form-help">If you attach a file, the pasted text is ignored.</p>
-  </div>
-
-  <div class="bulk-upload-actions">
-    <div class="bulk-upload-submit">
-      <%= submit_tag "Import comments", class: "btn btn-primary" %>
+  <%= form_with url: csv_cross_reference_import_path, method: :post, multipart: true, class: "bulk-simple-form" do %>
+    <div class="form-group">
+      <label for="csv_xref_file" class="form-label">CSV file</label>
+      <%= file_field_tag :file, id: "csv_xref_file", accept: ".csv,text/csv", class: "form-control" %>
     </div>
-  </div>
-<% end %>
 
-<% if @import_result&.row_results&.any? { |row| row.error.present? } %>
-  <div class="table-container bulk-upload-table" style="margin-top: 1.5rem;">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Verse</th>
-          <th scope="col">Comment</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @import_result.row_results.each do |row| %>
+    <div class="csv-import-or" aria-hidden="true">or</div>
+
+    <div class="form-group">
+      <label for="csv_xref_text" class="form-label">Paste CSV</label>
+      <%= text_area_tag :csv_text, @csv_xref_text, id: "csv_xref_text", class: "form-textarea bulk-verse-refs-input csv-import-paste", rows: 8, placeholder: "source,target,comment\nGenesis 1:1,John 3:16,The Word was in the beginning\nGenesis 1:1,John 3:16-18,For God so loved the world" %>
+      <p class="form-help">If you attach a file, the pasted text is ignored.</p>
+    </div>
+
+    <div class="bulk-upload-actions">
+      <div class="bulk-upload-submit">
+        <%= submit_tag "Import cross-references", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @xref_import_result&.row_results&.any? { |row| row.error.present? } %>
+    <div class="table-container bulk-upload-table bulk-upload-table--cross-references" style="margin-top: 1.5rem;">
+      <table class="table">
+        <thead>
           <tr>
-            <td><%= row.reference %></td>
-            <td><%= truncate(row.content.to_s, length: 120) %></td>
-            <td>
-              <% if row.success %>
-                <span class="text-success">Imported</span>
-              <% else %>
-                <span class="text-danger"><%= row.error %></span>
-              <% end %>
-            </td>
+            <th scope="col">Source</th>
+            <th scope="col">Target</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Status</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+        </thead>
+        <tbody>
+          <% @xref_import_result.row_results.each do |row| %>
+            <tr>
+              <td><%= row.source_reference %></td>
+              <td><%= row.target_reference %></td>
+              <td><%= truncate(row.content.to_s, length: 120) %></td>
+              <td>
+                <% if row.success %>
+                  <span class="text-success">Imported</span>
+                <% else %>
+                  <span class="text-danger"><%= row.error %></span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
