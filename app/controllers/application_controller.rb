@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include BrowserTimeZone
+
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :check_otp_requirement
   before_action :check_onboarding_requirement
