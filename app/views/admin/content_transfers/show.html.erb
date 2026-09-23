@@ -1,0 +1,48 @@
+<%= render "admin/shared/admin_nav" %>
+
+<div class="page-header">
+  <h1 class="page-title">Export / Import</h1>
+  <p class="page-subtitle">Download each content type as JSON so you can restore it on a later deployment. Files use verse references and author emails, not database IDs.</p>
+</div>
+
+<div class="content-section">
+  <div class="content-transfer-help">
+    <p>Import is additive: matching records are skipped, missing authors are assigned to you, and nobody is notified. Inline images and topic file uploads are not included.</p>
+    <p class="form-help">Recommended import order: <strong>content tables → notes → cross-references → comments → topics → threads → chiasms → topic pins</strong>. Related types should come from the same export snapshot.</p>
+  </div>
+
+  <div class="content-transfer-all">
+    <%= link_to export_admin_content_transfer_path(type: "all"), class: "btn btn-primary" do %>
+      <i class="fa-solid fa-file-zipper"></i>
+      Download all types
+    <% end %>
+  </div>
+</div>
+
+<div class="content-transfer-list">
+  <% @types.each do |type| %>
+    <div class="content-transfer-card">
+      <div class="content-transfer-card-header">
+        <div class="content-transfer-card-title">
+          <i class="fa-solid <%= type.icon %>"></i>
+          <h2><%= type.label %></h2>
+        </div>
+        <p class="content-transfer-count"><%= pluralize(type.counter.call, "record") %></p>
+      </div>
+
+      <div class="content-transfer-card-actions">
+        <%= link_to export_admin_content_transfer_path(type: type.key), class: "btn btn-outline" do %>
+          <i class="fa-solid fa-download"></i>
+          Download JSON
+        <% end %>
+
+        <%= form_with url: import_admin_content_transfer_path, method: :post, multipart: true, class: "content-transfer-import-form" do %>
+          <%= hidden_field_tag :type, type.key %>
+          <label class="form-label" for="content_transfer_file_<%= type.key %>">Import JSON</label>
+          <%= file_field_tag :file, id: "content_transfer_file_#{type.key}", accept: "application/json,.json", class: "form-control" %>
+          <%= submit_tag "Import #{type.label.downcase}", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

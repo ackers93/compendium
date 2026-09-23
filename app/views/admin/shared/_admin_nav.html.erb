@@ -15,6 +15,10 @@
       <i class="fa-solid fa-list-check"></i>
       Review Content
     <% end %>
+    <%= link_to admin_content_transfer_path, class: "filter-tab #{controller_name == 'content_transfers' ? 'active' : ''}" do %>
+      <i class="fa-solid fa-file-export"></i>
+      Export / Import
+    <% end %>
   </div>
 </div>
 

@@ -1,5 +1,17 @@
 class NotificationDispatcher
   class << self
+    def silence
+      previous = Thread.current[:notification_dispatcher_silent]
+      Thread.current[:notification_dispatcher_silent] = true
+      yield
+    ensure
+      Thread.current[:notification_dispatcher_silent] = previous
+    end
+
+    def silent?
+      Thread.current[:notification_dispatcher_silent]
+    end
+
     def comment_created(comment)
       actor = comment.user
       return unless actor
@@ -97,6 +109,7 @@ class NotificationDispatcher
     end
 
     def create_notification(recipient:, actor:, action:, notifiable:)
+      return if silent?
       return if recipient.nil? || actor.nil?
       return if recipient.id == actor.id
 

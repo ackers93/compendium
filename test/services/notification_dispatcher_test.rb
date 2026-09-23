@@ -219,6 +219,18 @@ class NotificationDispatcherTest < ActiveSupport::TestCase
     assert @owner.can_delete?(thread)
   end
 
+  test "does not notify when silenced" do
+    assert_no_difference -> { Notification.count } do
+      NotificationDispatcher.silence do
+        Comment.create!(
+          user: @commenter,
+          commentable: @note,
+          content: "Quiet import"
+        )
+      end
+    end
+  end
+
   test "notifies content author when review is requested" do
     flag = ContentFlag.create!(
       user: @other,

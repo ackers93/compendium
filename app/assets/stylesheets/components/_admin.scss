@@ -931,9 +931,93 @@
   display: inline-flex;
   align-items: center;
   gap: $space-2;
-  
+
   i {
     color: $info;
+  }
+}
+
+.content-transfer-help {
+  margin-bottom: $space-6;
+
+  p {
+    margin-bottom: $space-3;
+    color: $gray-700;
+    line-height: 1.6;
+  }
+}
+
+.content-transfer-all {
+  margin-bottom: $space-6;
+}
+
+.content-transfer-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.content-transfer-card {
+  background: $white;
+  border: 2px solid $gray-200;
+  border-radius: $radius-lg;
+  padding: $space-6;
+}
+
+.content-transfer-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: $space-4;
+  margin-bottom: $space-4;
+  padding-bottom: $space-3;
+  border-bottom: 1px solid $gray-200;
+}
+
+.content-transfer-card-title {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+
+  i {
+    color: $theme-primary;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $gray-900;
+  }
+}
+
+.content-transfer-count {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $gray-600;
+}
+
+.content-transfer-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-6;
+  align-items: flex-end;
+}
+
+.content-transfer-import-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+  align-items: flex-end;
+  flex: 1 1 20rem;
+
+  .form-label {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .form-control {
+    flex: 1 1 12rem;
   }
 }
 

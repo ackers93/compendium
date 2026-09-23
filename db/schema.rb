@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_19_153000) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_23_233000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -145,6 +145,16 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_19_153000) do
     t.index ["resolved_by_id"], name: "index_content_flags_on_resolved_by_id"
     t.index ["status"], name: "index_content_flags_on_status"
     t.index ["user_id"], name: "index_content_flags_on_user_id"
+  end
+
+  create_table "content_import_mappings", force: :cascade do |t|
+    t.string "source", null: false
+    t.string "record_type", null: false
+    t.bigint "source_id", null: false
+    t.bigint "local_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source", "record_type", "source_id"], name: "index_content_import_mappings_on_source_type_and_id", unique: true
   end
 
   create_table "content_tables", force: :cascade do |t|
