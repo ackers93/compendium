@@ -110,14 +110,6 @@ class BibleVersesController < ApplicationController
     end
   end
   
-  def verse_picker
-    old_testament_order = OLD_TESTAMENT_BOOKS.each_with_index.map { |book, index| "WHEN '#{book}' THEN #{index}" }.join(' ')
-    new_testament_order = NEW_TESTAMENT_BOOKS.each_with_index.map { |book, index| "WHEN '#{book}' THEN #{index}" }.join(' ')
-
-    @old_testament_books = BibleVerse.select("book, CASE book #{old_testament_order} END as book_order").distinct.where(testament: 'OT').order('book_order')
-    @new_testament_books = BibleVerse.select("book, CASE book #{new_testament_order} END as book_order").distinct.where(testament: 'NT').order('book_order')
-  end
-
   def show
     @book = params[:book]
     @chapter = params[:chapter].to_i
