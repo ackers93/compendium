@@ -81,6 +81,10 @@
     color: $gray-500;
     margin: 0;
     line-height: 1.4;
+
+    &--mobile {
+      display: none;
+    }
   }
 
   &__canvas-wrap {
@@ -143,23 +147,48 @@
 
   @media (max-width: 768px) {
     flex-direction: column;
-    height: auto;
+    // Keep a fixed viewport height so the canvas can flex into the remainder.
+    height: calc(100vh - 4rem);
     min-height: calc(100vh - 4rem);
 
     &__panel {
       width: 100%;
       border-right: none;
       border-bottom: 1px solid $gray-200;
+      padding: $space-3 $space-4;
+      flex-shrink: 0;
       max-height: none;
+      overflow-y: visible;
+    }
+
+    &__title {
+      font-size: $font-size-lg;
+      margin-bottom: $space-2;
+    }
+
+    &__subtitle {
+      display: none;
+    }
+
+    &__hint:not(.graph-map__hint--mobile) {
+      display: none;
+    }
+
+    &__hint--mobile {
+      display: block;
+      margin-top: $space-2;
     }
 
     &__filters {
       flex-direction: row;
       flex-wrap: wrap;
+      margin-bottom: 0;
+      gap: $space-2 $space-3;
     }
 
     &__canvas-wrap {
-      min-height: 60vh;
+      flex: 1;
+      min-height: 0;
     }
   }
 }

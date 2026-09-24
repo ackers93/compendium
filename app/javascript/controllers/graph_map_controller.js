@@ -8,9 +8,11 @@ export default class extends Controller {
 
   connect() {
     this.hiddenTypes = new Set()
+    this.visibleIds = new Set()
     this.dragged = false
+    this.pendingFit = false
     this.resizeObserver = new ResizeObserver(() => this.resize())
-    this.resizeObserver.observe(this.element)
+    this.resizeObserver.observe(this.canvasSizeElement())
     this.render()
   }
 
@@ -18,6 +20,9 @@ export default class extends Controller {
     this.resizeObserver?.disconnect()
     this.simulation?.stop()
     this.simulation = null
+    this.zoom = null
+    this.svg = null
+    this.zoomLayer = null
   }
 
   toggleType(event) {
@@ -29,14 +34,25 @@ export default class extends Controller {
     } else {
       this.hiddenTypes.add(type)
     }
-    this.applyVisibility()
+    this.applyVisibility({ fit: true })
+  }
+
+  // Size against the canvas wrap (visible map), not the outer panel+canvas shell.
+  canvasSizeElement() {
+    return this.canvasTarget.parentElement || this.canvasTarget
+  }
+
+  dimensions() {
+    const rect = this.canvasSizeElement().getBoundingClientRect()
+    return {
+      width: Math.max(rect.width, 320),
+      height: Math.max(rect.height, 240)
+    }
   }
 
   render() {
     const svgEl = this.canvasTarget
-    const rect = this.element.getBoundingClientRect()
-    const width = Math.max(rect.width, 320)
-    const height = Math.max(rect.height, 400)
+    const { width, height } = this.dimensions()
 
     this.width = width
     this.height = height
@@ -46,6 +62,8 @@ export default class extends Controller {
     svg.attr("viewBox", `0 0 ${width} ${height}`)
       .attr("width", "100%")
       .attr("height", "100%")
+
+    this.svg = svg
 
     const graph = this.graphValue || { nodes: [], edges: [] }
     this.nodes = (graph.nodes || []).map((n) => ({ ...n }))
@@ -58,6 +76,7 @@ export default class extends Controller {
     if (this.nodes.length === 0) return
 
     const g = svg.append("g").attr("class", "graph-map__zoom")
+    this.zoomLayer = g
 
     this.link = g.append("g")
       .attr("class", "graph-map__links")
@@ -97,35 +116,42 @@ export default class extends Controller {
       .attr("text-anchor", "middle")
       .text((d) => this.shortLabel(d.label))
 
+    this.pendingFit = true
     this.simulation = d3.forceSimulation(this.nodes)
       .force("link", d3.forceLink(this.links).id((d) => d.id).distance(56).strength(0.4))
       .force("charge", d3.forceManyBody().strength(-120))
       .force("center", d3.forceCenter(width / 2, height / 2))
       .force("collision", d3.forceCollide().radius((d) => (d.size || 6) + 8))
       .on("tick", () => this.ticked())
+      .on("end", () => this.onSimulationEnd())
 
-    const zoom = d3.zoom()
+    this.zoom = d3.zoom()
       .scaleExtent([0.2, 4])
       .on("zoom", (event) => {
         g.attr("transform", event.transform)
       })
 
-    svg.call(zoom)
-    this.applyVisibility()
+    svg.call(this.zoom)
+    this.applyVisibility({ fit: false })
   }
 
   resize() {
     if (!this.simulation) return
-    const rect = this.element.getBoundingClientRect()
-    const width = Math.max(rect.width, 320)
-    const height = Math.max(rect.height, 400)
+    const { width, height } = this.dimensions()
     if (Math.abs(width - this.width) < 8 && Math.abs(height - this.height) < 8) return
 
     this.width = width
     this.height = height
     d3.select(this.canvasTarget).attr("viewBox", `0 0 ${width} ${height}`)
     this.simulation.force("center", d3.forceCenter(width / 2, height / 2))
+    this.pendingFit = true
     this.simulation.alpha(0.3).restart()
+  }
+
+  onSimulationEnd() {
+    if (!this.pendingFit) return
+    this.pendingFit = false
+    this.fitToVisibleNodes()
   }
 
   ticked() {
@@ -138,7 +164,7 @@ export default class extends Controller {
     this.node.attr("transform", (d) => `translate(${d.x},${d.y})`)
   }
 
-  applyVisibility() {
+  applyVisibility({ fit = false } = {}) {
     if (!this.node) return
 
     const hidden = this.hiddenTypes
@@ -157,6 +183,8 @@ export default class extends Controller {
       }
     })
 
+    this.visibleIds = connectedVisible
+
     this.node.style("display", (d) => (connectedVisible.has(d.id) ? null : "none"))
     this.link.style("display", (d) => {
       const s = typeof d.source === "object" ? d.source.id : d.source
@@ -167,6 +195,61 @@ export default class extends Controller {
     if (this.hasEmptyTarget) {
       // Show empty state when nothing is visible under the current filters.
       this.emptyTarget.hidden = connectedVisible.size > 0
+    }
+
+    if (fit && connectedVisible.size > 0) {
+      // Simulation may still be cooling after a resize; otherwise fit immediately.
+      if (this.simulation && this.simulation.alpha() > 0.02) {
+        this.pendingFit = true
+      } else {
+        this.fitToVisibleNodes({ animate: true })
+      }
+    }
+  }
+
+  fitToVisibleNodes({ animate = false } = {}) {
+    if (!this.zoom || !this.svg || !this.nodes?.length) return
+
+    const visible = this.nodes.filter((n) => this.visibleIds.has(n.id) && n.x != null && n.y != null)
+    if (visible.length === 0) return
+
+    let minX = Infinity
+    let minY = Infinity
+    let maxX = -Infinity
+    let maxY = -Infinity
+
+    visible.forEach((n) => {
+      const r = (n.size || 6) + 4
+      // Labels sit below the dot; include a bit of vertical room.
+      minX = Math.min(minX, n.x - r)
+      minY = Math.min(minY, n.y - r)
+      maxX = Math.max(maxX, n.x + r)
+      maxY = Math.max(maxY, n.y + r + 14)
+    })
+
+    const boundsWidth = Math.max(maxX - minX, 1)
+    const boundsHeight = Math.max(maxY - minY, 1)
+    const padding = 36
+    const scale = Math.min(
+      4,
+      Math.max(
+        0.2,
+        0.9 * Math.min(
+          (this.width - padding * 2) / boundsWidth,
+          (this.height - padding * 2) / boundsHeight
+        )
+      )
+    )
+    const transform = d3.zoomIdentity
+      .translate(this.width / 2, this.height / 2)
+      .scale(scale)
+      .translate(-(minX + maxX) / 2, -(minY + maxY) / 2)
+
+    const selection = this.svg
+    if (animate) {
+      selection.transition().duration(350).call(this.zoom.transform, transform)
+    } else {
+      selection.call(this.zoom.transform, transform)
     }
   }
 
