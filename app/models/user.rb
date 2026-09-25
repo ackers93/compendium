@@ -151,50 +151,14 @@ class User < ApplicationRecord
     
     # Get count of flagged content needing review for this user
     def flagged_content_needing_review_count
-      note_ids = notes.pluck(:id)
-      comment_ids = comments.pluck(:id)
-      cross_ref_ids = cross_references.pluck(:id)
-      thread_ids = bible_threads.pluck(:id)
-      chiasm_ids = chiasms.pluck(:id)
-      
-      # Return 0 if user has no content
-      return 0 if note_ids.empty? && comment_ids.empty? && cross_ref_ids.empty? && thread_ids.empty? && chiasm_ids.empty?
-      
-      conditions = []
-      params = []
-      
-      unless note_ids.empty?
-        conditions << '(flaggable_type = ? AND flaggable_id IN (?))'
-        params += ['Note', note_ids]
-      end
-      
-      unless comment_ids.empty?
-        conditions << '(flaggable_type = ? AND flaggable_id IN (?))'
-        params += ['Comment', comment_ids]
-      end
-      
-      unless cross_ref_ids.empty?
-        conditions << '(flaggable_type = ? AND flaggable_id IN (?))'
-        params += ['CrossReference', cross_ref_ids]
-      end
-      
-      unless thread_ids.empty?
-        conditions << '(flaggable_type = ? AND flaggable_id IN (?))'
-        params += ['BibleThread', thread_ids]
-      end
-
-      unless chiasm_ids.empty?
-        conditions << '(flaggable_type = ? AND flaggable_id IN (?))'
-        params += ['Chiasm', chiasm_ids]
-      end
-      
-      ContentFlag.where(conditions.join(' OR '), *params)
-                 .status_review_requested
-                 .count
+      @flagged_content_needing_review_count ||= ContentFlag
+        .where(content_author_id: id)
+        .status_review_requested
+        .count
     end
 
     def unread_notifications_count
-      notifications.unread.count
+      @unread_notifications_count ||= notifications.unread.count
     end
     
     # Display name in format "name - ecclesia"

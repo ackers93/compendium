@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_23_233000) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_24_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -140,6 +140,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_23_233000) do
     t.text "admin_note"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "content_author_id"
+    t.index ["content_author_id", "status"], name: "index_content_flags_on_content_author_id_and_status"
     t.index ["flaggable_type", "flaggable_id"], name: "index_content_flags_on_flaggable"
     t.index ["flaggable_type", "flaggable_id"], name: "index_content_flags_on_flaggable_type_and_flaggable_id"
     t.index ["resolved_by_id"], name: "index_content_flags_on_resolved_by_id"
@@ -364,6 +366,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_23_233000) do
   add_foreign_key "comments", "bible_verses", column: "end_verse_id"
   add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "content_flags", "users"
+  add_foreign_key "content_flags", "users", column: "content_author_id"
   add_foreign_key "content_flags", "users", column: "resolved_by_id"
   add_foreign_key "content_tables", "users"
   add_foreign_key "cross_references", "bible_verses", column: "source_verse_id"

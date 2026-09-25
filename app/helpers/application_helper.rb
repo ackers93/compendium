@@ -154,4 +154,21 @@ module ApplicationHelper
     declarations = current_user.theme_css_variables.map { |key, value| "#{key}: #{value};" }.join("\n      ")
     tag.style(":root {\n      #{declarations}\n    }".html_safe)
   end
+
+  def nav_alert_counts
+    return @nav_alert_counts if defined?(@nav_alert_counts)
+
+    return @nav_alert_counts = nil unless user_signed_in?
+
+    content_review = current_user.flagged_content_needing_review_count
+    admin_pending = current_user.can_manage_users? ? ContentFlag.status_pending.count : 0
+    unread_notifications = current_user.unread_notifications_count
+
+    @nav_alert_counts = {
+      content_review: content_review,
+      admin_pending: admin_pending,
+      unread_notifications: unread_notifications,
+      total: content_review + admin_pending + unread_notifications
+    }
+  end
 end

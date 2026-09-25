@@ -1,8 +1,11 @@
 class ContentFlag < ApplicationRecord
   belongs_to :flaggable, polymorphic: true
   belongs_to :user
+  belongs_to :content_author, class_name: "User", optional: true
   belongs_to :resolved_by, class_name: 'User', optional: true
   has_many :notifications, as: :notifiable, dependent: :delete_all
+
+  before_validation :assign_content_author_id, on: :create
   
   # Status enum: pending, approved, review_requested, edited, deleted
   enum :status, { 
@@ -51,7 +54,13 @@ class ContentFlag < ApplicationRecord
   
   # Get the author of the flagged content
   def content_author
-    flaggable.user
+    super || flaggable&.user
+  end
+
+  private
+
+  def assign_content_author_id
+    self.content_author_id ||= flaggable&.user_id
   end
 end
 
