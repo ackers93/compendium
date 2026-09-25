@@ -1,0 +1,202 @@
+<% range_tracks = @range_comment_tracks || {} %>
+<% range_track_count = @range_track_count || 0 %>
+<% comments_by_verse = @chapter_comments_by_verse_id || {} %>
+
+<div class="section-content">
+  <!-- Card View (Table Style) -->
+  <div data-verse-view-toggle-target="cardView"
+       data-controller="range-brackets"
+       class="verses-table-view <%= 'has-range-tracks' if range_track_count > 0 %>"
+       style="<%= "--range-track-count: #{range_track_count};" if range_track_count > 0 %>">
+    <% @verses.each do |verse| %>
+      <% verse_comments = comments_by_verse[verse.id] || [] %>
+      <% row_range_assignments = range_tracks.select { |_id, a| verse.verse.between?(a[:start_verse], a[:end_verse]) } %>
+      <div class="verse-table-row" data-verse-number="<%= verse.verse %>">
+        <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse),
+            class: "verse-column verse-column-link" do %>
+          <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
+          <span class="verse-text text-gray-700"><%= verse.text %></span>
+        <% end %>
+        <div class="verse-content-column">
+          <!-- Comments Section: single-verse always; ranged only on start verse -->
+          <% if verse_comments.any? %>
+            <div class="verse-comments-section mb-3">
+              <% verse_comments.each do |comment| %>
+                <% if comment.range? %>
+                  <% assignment = range_tracks[comment.id] %>
+                  <div class="ranged-comment-with-connector"
+                       style="--range-color: <%= assignment[:color] %>; --range-track: <%= assignment[:track] %>;">
+                    <div class="comment-preview comment-preview--ranged"
+                         data-controller="comment-preview"
+                         data-action="mouseenter->comment-preview#open mouseleave->comment-preview#scheduleClose"
+                         data-comment-id="<%= comment.id %>">
+                      <div class="comment-preview-text">
+                        <span class="range-comment-badge"><%= comment.verse_reference %></span>
+                        <%= plain_text_from_rich_text(comment.content, 40) %>
+                      </div>
+                      <div class="comment-full-text">
+                        <div class="comment-header text-xs text-gray-500 mb-1">
+                          <span class="author-name"><%= comment.user&.display_name || "Unknown User" %></span>
+                          <span class="comment-date">• <%= time_ago_in_words(comment.created_at) %> ago</span>
+                          <span>• on <%= comment.verse_reference %></span>
+                        </div>
+                        <div class="comment-content">
+                          <%= comment.content %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="range-comment-connector" aria-hidden="true"></div>
+                  </div>
+                <% else %>
+                  <div class="comment-preview"
+                       data-controller="comment-preview"
+                       data-action="mouseenter->comment-preview#open mouseleave->comment-preview#scheduleClose"
+                       data-comment-id="<%= comment.id %>">
+                    <div class="comment-preview-text">
+                      <%= plain_text_from_rich_text(comment.content, 40) %>
+                    </div>
+                    <div class="comment-full-text">
+                      <div class="comment-header text-xs text-gray-500 mb-1">
+                        <span class="author-name"><%= comment.user&.display_name || "Unknown User" %></span>
+                        <span class="comment-date">• <%= time_ago_in_words(comment.created_at) %> ago</span>
+                      </div>
+                      <div class="comment-content">
+                        <%= comment.content %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- Cross-References Section -->
+          <% if verse.ordered_cross_references.any? %>
+            <div class="verse-cross-refs-section mb-3">
+              <span class="verse-cross-refs-section-title">CRs:</span>
+              <% verse.ordered_cross_references.each_with_index do |cross_ref, index| %>
+                <% link_verse = cross_ref.link_verse_for(verse) %>
+                <%= link_to cross_ref.display_reference_for(verse),
+                    bible_verse_show_path(book: link_verse.book, chapter: link_verse.chapter, verse: link_verse.verse),
+                    class: "cross-ref-link" %><% unless index == verse.ordered_cross_references.count - 1 %>, <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- Threads Section -->
+          <% if verse.bible_threads.any? %>
+            <div class="verse-threads-section">
+              <span class="verse-threads-section-title">T:</span>
+              <% verse.bible_threads.each_with_index do |thread, index| %>
+                <%= link_to thread.title, bible_thread_path(thread), class: "thread-link" %><% unless index == verse.bible_threads.count - 1 %>, <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- Chiasms Section -->
+          <% verse_chiasms = (@chiasms_by_verse_id || {})[verse.id] || [] %>
+          <% if verse_chiasms.any? %>
+            <div class="verse-chiasms-section">
+              <span class="verse-chiasms-section-title">X:</span>
+              <% verse_chiasms.each_with_index do |chiasm, index| %>
+                <%= link_to chiasm.title, chiasm_path(chiasm), class: "chiasm-link" %><% unless index == verse_chiasms.count - 1 %>, <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- Topics Section -->
+          <% if verse.topics.any? %>
+            <div class="verse-topics-section mb-3">
+              <span class="verse-topics-section-title">Topics:</span>
+              <% verse.topics.each_with_index do |topic, index| %>
+                <%= link_to topic.name, topic_path(topic), class: "topic-tag topic-link" %><% unless index == verse.topics.count - 1 %>, <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <!-- Quick actions -->
+          <% if current_user&.can_create? %>
+            <div class="verse-actions-section mt-2">
+              <%= link_to new_bible_verse_comment_path(book: @book, chapter: @chapter, verse: verse.verse),
+                  class: "verse-action-link",
+                  data: { turbo_frame: "modal" } do %>
+                <i class="fa-solid fa-comment"></i> Comment
+              <% end %>
+              <%= link_to new_bible_verse_cross_reference_path(source_book: @book, source_chapter: @chapter, source_verse: verse.verse),
+                  class: "verse-action-link",
+                  data: { turbo_frame: "modal" } do %>
+                <i class="fa-solid fa-link"></i> Cross-Reference
+              <% end %>
+              <%= link_to new_bible_thread_path(book: @book, chapter: @chapter, verse: verse.verse),
+                  class: "verse-action-link" do %>
+                <i class="fa-solid fa-list-ol"></i> Thread
+              <% end %>
+              <%= link_to new_chiasm_path(book: @book, chapter: @chapter, verse: verse.verse),
+                  class: "verse-action-link" do %>
+                <i class="fa-solid fa-arrows-left-right-to-line"></i> Chiasm
+              <% end %>
+              <%= link_to new_bible_verse_topic_path(book: @book, chapter: @chapter, verse: verse.verse),
+                  class: "verse-action-link",
+                  data: { turbo_frame: "modal" } do %>
+                <i class="fa-solid fa-tag"></i> Topic
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <% if range_track_count > 0 %>
+          <div class="verse-range-rail" aria-hidden="true">
+            <% range_track_count.times do |track_index| %>
+              <% assignment = row_range_assignments.values.find { |a| a[:track] == track_index } %>
+              <% segment = assignment ? range_rail_segment_for(verse.verse, assignment) : nil %>
+              <div class="range-rail-slot <%= "range-rail-slot--#{segment}" if segment %>"
+                   data-track="<%= track_index %>"
+                   style="<%= "--range-color: #{assignment[:color]}; --range-track: #{track_index};" if assignment %>"></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- List View (Alternative Style) -->
+  <div data-verse-view-toggle-target="listView" class="verses-list-list-view hidden">
+    <% @verses.each do |verse| %>
+      <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse),
+          class: "verse-item-list-link" do %>
+        <div class="verse-item-list">
+          <div class="verse-item-list-row">
+            <div class="d-flex items-start gap-2 flex-1">
+              <span class="verse-number-list font-bold text-primary flex-shrink-0"><%= verse.verse %></span>
+              <span class="verse-text-list text-gray-700"><%= verse.text %></span>
+            </div>
+            <div class="verse-counts-cell flex-shrink-0 text-sm text-gray-500">
+              <% counts = [] %>
+              <% start_comment_count = (comments_by_verse[verse.id] || []).size %>
+              <% counts << "C:#{start_comment_count}" if start_comment_count > 0 %>
+              <% counts << "CR:#{verse.all_cross_references.count}" if verse.all_cross_references.any? %>
+              <% counts << "T:#{verse.bible_threads.count}" if verse.bible_threads.any? %>
+              <% chiasm_count = ((@chiasms_by_verse_id || {})[verse.id] || []).size %>
+              <% counts << "X:#{chiasm_count}" if chiasm_count > 0 %>
+              <% counts << "TP:#{verse.topics.count}" if verse.topics.any? %>
+              <%= counts.join(' | ') if counts.any? %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<% if current_user&.can_create? || (@chapter_level_comments || []).any? %>
+  <div class="coverage-comments-wrap mt-6">
+    <%= render "comments/coverage_section",
+          title: "Comments on #{@book} #{@chapter}",
+          comments: @chapter_level_comments || [],
+          children_by_parent: @chapter_level_children || {},
+          page_verse: @verses.first,
+          empty_message: "No chapter-level comments yet.",
+          add_path: (@verses.first && current_user&.can_create?) ? new_bible_verse_comment_path(book: @book, chapter: @chapter, verse: @verses.first.verse, coverage: Comment::COVERAGE_CHAPTER, return_to: "chapter") : nil,
+          add_label: "Add chapter comment" %>
+  </div>
+<% end %>

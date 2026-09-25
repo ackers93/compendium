@@ -67,47 +67,17 @@ class BibleVersesController < ApplicationController
     @verses = BibleVerse.where(book: @book, chapter: @chapter).order(:verse)
 
     respond_to do |format|
-      format.html do
-        verse_ids = @verses.map(&:id)
-        @chapter_comments_by_verse_id = Comment
-          .where(commentable_type: 'BibleVerse', commentable_id: verse_ids)
-          .verse_coverage
-          .includes(:user, :end_verse, :commentable, :rich_text_content)
-          .order(created_at: :desc)
-          .group_by(&:commentable_id)
-
-        @chapter_level_comments = Comment.covering_chapter(@book, @chapter)
-                                         .includes(:user, :end_verse, :commentable, :rich_text_content)
-                                         .order(created_at: :desc)
-                                         .to_a
-        @chapter_level_children = Comment.thread_children_for(@chapter_level_comments)
-
-        ranged = @chapter_comments_by_verse_id.values.flatten.select(&:range?)
-        @range_comment_tracks = view_context.assign_range_comment_tracks(ranged)
-        @range_track_count = @range_comment_tracks.values.map { |a| a[:track] }.max.then { |m| m ? m + 1 : 0 }
-
-        max_verse = @verses.maximum(:verse) || 1
-        overlapping_chiasms = Chiasm
-          .includes(:user, :start_verse, :end_verse)
-          .joins("INNER JOIN bible_verses AS chiasm_start ON chiasm_start.id = chiasms.start_verse_id")
-          .joins("INNER JOIN bible_verses AS chiasm_end ON chiasm_end.id = chiasms.end_verse_id")
-          .where("chiasm_start.book = ?", @book)
-          .where(
-            "(chiasm_start.chapter < :c OR (chiasm_start.chapter = :c AND chiasm_start.verse <= :max_v))",
-            c: @chapter, max_v: max_verse
-          )
-          .where(
-            "(chiasm_end.chapter > :c OR (chiasm_end.chapter = :c AND chiasm_end.verse >= 1))",
-            c: @chapter
-          )
-
-        @chiasms_by_verse_id = {}
-        @verses.each do |verse|
-          @chiasms_by_verse_id[verse.id] = overlapping_chiasms.select { |c| c.contains_verse?(verse) }
-        end
-      end
+      format.html # Verse text first; comments/chiasms/side panels load via turbo frame
       format.json { render json: { verses: @verses.as_json(only: [:id, :verse, :text]) } }
     end
+  end
+
+  # Lazy-loaded chapter annotations (comments, chiasms, CRs, threads, topics).
+  def chapter_annotations
+    @book = params[:book]
+    @chapter = params[:chapter].to_i
+    load_chapter_annotations!
+    render layout: false
   end
   
   def show
@@ -154,6 +124,50 @@ class BibleVersesController < ApplicationController
   end
 
   private
+
+  def load_chapter_annotations!
+    @verses = BibleVerse.where(book: @book, chapter: @chapter)
+                        .includes(:topics, :bible_threads)
+                        .order(:verse)
+    verse_ids = @verses.map(&:id)
+
+    @chapter_comments_by_verse_id = Comment
+      .where(commentable_type: "BibleVerse", commentable_id: verse_ids)
+      .verse_coverage
+      .includes(:user, :end_verse, :commentable, :rich_text_content)
+      .order(created_at: :desc)
+      .group_by(&:commentable_id)
+
+    @chapter_level_comments = Comment.covering_chapter(@book, @chapter)
+                                     .includes(:user, :end_verse, :commentable, :rich_text_content)
+                                     .order(created_at: :desc)
+                                     .to_a
+    @chapter_level_children = Comment.thread_children_for(@chapter_level_comments)
+
+    ranged = @chapter_comments_by_verse_id.values.flatten.select(&:range?)
+    @range_comment_tracks = view_context.assign_range_comment_tracks(ranged)
+    @range_track_count = @range_comment_tracks.values.map { |a| a[:track] }.max.then { |m| m ? m + 1 : 0 }
+
+    max_verse = @verses.maximum(:verse) || 1
+    overlapping_chiasms = Chiasm
+      .includes(:user, :start_verse, :end_verse)
+      .joins("INNER JOIN bible_verses AS chiasm_start ON chiasm_start.id = chiasms.start_verse_id")
+      .joins("INNER JOIN bible_verses AS chiasm_end ON chiasm_end.id = chiasms.end_verse_id")
+      .where("chiasm_start.book = ?", @book)
+      .where(
+        "(chiasm_start.chapter < :c OR (chiasm_start.chapter = :c AND chiasm_start.verse <= :max_v))",
+        c: @chapter, max_v: max_verse
+      )
+      .where(
+        "(chiasm_end.chapter > :c OR (chiasm_end.chapter = :c AND chiasm_end.verse >= 1))",
+        c: @chapter
+      )
+
+    @chiasms_by_verse_id = {}
+    @verses.each do |verse|
+      @chiasms_by_verse_id[verse.id] = overlapping_chiasms.select { |c| c.contains_verse?(verse) }
+    end
+  end
 
   def reference_search_results(query, include_text:)
     results = []

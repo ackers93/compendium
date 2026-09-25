@@ -1133,7 +1133,8 @@
 
   .ranged-comment-with-connector {
     display: flex;
-    align-items: center;
+    // Top-align so expanding a comment doesn't shift it under the cursor
+    align-items: flex-start;
     gap: 0;
     margin-bottom: $space-2;
     width: 100%;
@@ -1159,7 +1160,8 @@
       height: var(--range-line-width);
       min-width: 0.75rem;
       background: var(--range-color);
-      align-self: center;
+      // Stay near the first line of the preview (not recentered when expanded)
+      margin-top: calc(#{$space-2} + 0.65em);
       position: relative;
 
       // Continue into the rail up to this track's vertical line (overlap for a solid join)
@@ -1209,22 +1211,30 @@
       border: 1px solid $gray-200;
       border-radius: $radius-sm;
       cursor: pointer;
-      transition: all 0.2s ease;
-      
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      // Class-based expand (see comment-preview controller) — avoids :hover
+      // flicker when range-bracket ResizeObserver mutates the DOM.
       &:hover {
         border-color: $theme-primary;
         box-shadow: $shadow-sm;
-        
+      }
+
+      &.is-expanded {
+        border-color: $theme-primary;
+        box-shadow: $shadow-sm;
+
         .comment-preview-text {
           display: none;
         }
-        
+
         .comment-full-text {
           display: block;
         }
       }
 
-      &.comment-preview--ranged:hover {
+      &.comment-preview--ranged:hover,
+      &.comment-preview--ranged.is-expanded {
         border-color: var(--range-color);
       }
       

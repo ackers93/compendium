@@ -4,15 +4,30 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect() {
     this.sync = this.sync.bind(this)
+    this.scheduleSync = this.scheduleSync.bind(this)
     this.sync()
-    this.resizeObserver = new ResizeObserver(this.sync)
+    this.resizeObserver = new ResizeObserver(this.scheduleSync)
     this.resizeObserver.observe(this.element)
-    window.addEventListener("load", this.sync)
+    window.addEventListener("load", this.scheduleSync)
   }
 
   disconnect() {
     this.resizeObserver?.disconnect()
-    window.removeEventListener("load", this.sync)
+    window.removeEventListener("load", this.scheduleSync)
+    if (this.rafId) cancelAnimationFrame(this.rafId)
+  }
+
+  scheduleSync() {
+    // Skip while a comment is expanded — mutating styles mid-hover causes
+    // spurious mouseleave events that collapse the preview.
+    if (this.element.querySelector(".comment-preview.is-expanded")) return
+
+    if (this.rafId) return
+    this.rafId = requestAnimationFrame(() => {
+      this.rafId = null
+      if (this.element.querySelector(".comment-preview.is-expanded")) return
+      this.sync()
+    })
   }
 
   sync() {
@@ -23,11 +38,11 @@ export default class extends Controller {
         const railSlot = row.querySelector(`.range-rail-slot[data-track="${track}"]`)
         if (!connector || !railSlot) return
 
-        // Elbow Y is relative to the rail slot (which bleeds into row padding)
         const slotRect = railSlot.getBoundingClientRect()
         const connectorRect = connector.getBoundingClientRect()
-        const elbowY = connectorRect.top + connectorRect.height / 2 - slotRect.top
-        railSlot.style.setProperty("--range-elbow-y", `${Math.max(elbowY, 0)}px`)
+        const next = `${Math.max(connectorRect.top + connectorRect.height / 2 - slotRect.top, 0)}px`
+        if (railSlot.style.getPropertyValue("--range-elbow-y") === next) return
+        railSlot.style.setProperty("--range-elbow-y", next)
       })
     })
   }

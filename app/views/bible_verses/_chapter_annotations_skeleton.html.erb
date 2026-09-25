@@ -1,0 +1,32 @@
+<div class="section-content">
+  <div data-verse-view-toggle-target="cardView" class="verses-table-view">
+    <% @verses.each do |verse| %>
+      <div class="verse-table-row" data-verse-number="<%= verse.verse %>">
+        <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse),
+            class: "verse-column verse-column-link" do %>
+          <span class="verse-number font-bold text-primary"><%= verse.verse %></span>
+          <span class="verse-text text-gray-700"><%= verse.text %></span>
+        <% end %>
+        <div class="verse-content-column">
+          <p class="text-sm text-gray-400 mb-0" aria-live="polite">Loading notes…</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div data-verse-view-toggle-target="listView" class="verses-list-list-view hidden">
+    <% @verses.each do |verse| %>
+      <%= link_to bible_verse_show_path(book: @book, chapter: @chapter, verse: verse.verse),
+          class: "verse-item-list-link" do %>
+        <div class="verse-item-list">
+          <div class="verse-item-list-row">
+            <div class="d-flex items-start gap-2 flex-1">
+              <span class="verse-number-list font-bold text-primary flex-shrink-0"><%= verse.verse %></span>
+              <span class="verse-text-list text-gray-700"><%= verse.text %></span>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
