@@ -113,6 +113,10 @@
                 <i class="fa-solid fa-arrows-left-right-to-line"></i> Your Chiasm
               <% when 'DiscussionQuestion' %>
                 <i class="fa-solid fa-circle-question"></i> Your Discussion Question
+              <% when 'CommunityQuestion' %>
+                <i class="fa-solid fa-circle-question"></i> Your Question
+              <% when 'CommunityAnswer' %>
+                <i class="fa-solid fa-reply"></i> Your Answer
               <% end %>
             </div>
             <div class="flag-status">
@@ -208,6 +212,12 @@
                   <% else %>
                     <em class="text-danger">Content has been deleted</em>
                   <% end %>
+                <% when 'CommunityQuestion', 'CommunityAnswer' %>
+                  <% if flag.flaggable %>
+                    <%= truncate(flag.flaggable.content.to_plain_text, length: 300) %>
+                  <% else %>
+                    <em class="text-danger">Content has been deleted</em>
+                  <% end %>
                 <% end %>
               </div>
             </div>
@@ -230,6 +240,10 @@
                   edit_chiasm_path(flag.flaggable)
                 when 'DiscussionQuestion'
                   edit_discussion_question_path(flag.flaggable)
+                when 'CommunityQuestion'
+                  edit_community_question_path(flag.flaggable)
+                when 'CommunityAnswer'
+                  edit_community_question_community_answer_path(flag.flaggable.community_question, flag.flaggable)
                 end
               %>
               
@@ -263,6 +277,10 @@
                   chiasm_path(flag.flaggable)
                 when 'DiscussionQuestion'
                   discussion_question_parent_path(flag.flaggable)
+                when 'CommunityQuestion'
+                  community_question_path(flag.flaggable)
+                when 'CommunityAnswer'
+                  community_question_path(flag.flaggable.community_question, anchor: dom_id(flag.flaggable))
                 end
               %>
               
@@ -296,6 +314,10 @@
                   chiasm_path(flag.flaggable)
                 when 'DiscussionQuestion'
                   discussion_question_parent_path(flag.flaggable)
+                when 'CommunityQuestion'
+                  community_question_path(flag.flaggable)
+                when 'CommunityAnswer'
+                  community_question_path(flag.flaggable.community_question, anchor: dom_id(flag.flaggable))
                 end
               %>
               

@@ -79,6 +79,10 @@ Rails.application.routes.draw do
   # Bible threads routes
   resources :bible_threads
 
+  resources :community_questions do
+    resources :community_answers, only: [:new, :create, :edit, :update, :destroy]
+  end
+
   # Chiasms routes
   resources :chiasms
 
@@ -141,6 +145,7 @@ Rails.application.routes.draw do
   get 'search/verse_comments', to: 'searches#verse_comments', as: :search_verse_comments
   get 'search/cross_reference_comments', to: 'searches#cross_reference_comments', as: :search_cross_reference_comments
   get 'search/note_comments', to: 'searches#note_comments', as: :search_note_comments
+  get 'search/community_questions', to: 'searches#community_questions', as: :search_community_questions
   
   # Content flagging routes
   resources :content_flags, only: [:create]

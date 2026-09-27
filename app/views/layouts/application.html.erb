@@ -53,6 +53,10 @@
             idInput.name = 'chiasm_id';
           } else if (contentType === 'DiscussionQuestion') {
             idInput.name = 'discussion_question_id';
+          } else if (contentType === 'CommunityQuestion') {
+            idInput.name = 'community_question_id';
+          } else if (contentType === 'CommunityAnswer') {
+            idInput.name = 'community_answer_id';
           }
           idInput.value = contentId;
           form.appendChild(idInput);
@@ -122,6 +126,9 @@
                   <%= link_to "Map", map_path, class: "nav-dropdown-item" %>
                 </div>
               </div>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Q&A", community_questions_path, class: "nav-link nav-link-sm" %>
             </li>
             <li class="nav-item">
               <%= link_to search_path, class: "nav-link nav-link-sm" do %>
@@ -224,6 +231,9 @@
                 <%= link_to "Chiasms", chiasms_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
                 <%= link_to "Tables", content_tables_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
                 <%= link_to "Map", map_path, class: "mobile-nav-link mobile-nav-link-nested", data: { action: "click->mobile-nav#closeMenu" } %>
+              </li>
+              <li class="mobile-nav-item">
+                <%= link_to "Q&A", community_questions_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } %>
               </li>
               <li class="mobile-nav-item">
                 <%= link_to search_path, class: "mobile-nav-link", data: { action: "click->mobile-nav#closeMenu" } do %>

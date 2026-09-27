@@ -49,6 +49,11 @@ class ContentFlag < ApplicationRecord
       "Verse on #{flaggable.topic&.name || 'topic'}"
     when 'DiscussionQuestion'
       flaggable.body.to_s.truncate(80)
+    when 'CommunityQuestion'
+      flaggable.title
+    when 'CommunityAnswer'
+      plain = flaggable.content.to_plain_text.to_s.strip
+      plain.present? ? plain.truncate(80) : "Answer"
     else
       flaggable_type
     end

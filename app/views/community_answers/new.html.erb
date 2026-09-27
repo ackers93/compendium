@@ -1,0 +1,32 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-overlay" data-controller="modal">
+    <div class="modal modal-md" data-modal-target="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <% if @community_answer.parent.present? %>
+            Reply to <%= @community_answer.parent.user&.display_name || "answer" %>
+          <% else %>
+            Post an answer
+          <% end %>
+        </h2>
+        <%= link_to "×", "#", class: "modal-close", data: { action: "click->modal#closeModal" } %>
+      </div>
+
+      <div class="modal-body">
+        <% if @community_answer.parent.present? %>
+          <div class="reply-context mb-4">
+            <p class="text-sm text-gray-500 mb-1">Replying to:</p>
+            <div class="reply-context-quote">
+              <%= truncate(@community_answer.parent.content.to_plain_text, length: 180) %>
+            </div>
+          </div>
+        <% end %>
+        <%= render "community_answers/form", community_answer: @community_answer, community_question: @community_question %>
+      </div>
+
+      <div class="modal-footer">
+        <%= link_to "Cancel", "#", class: "btn btn-outline", data: { action: "click->modal#closeModal" } %>
+      </div>
+    </div>
+  </div>
+<% end %>

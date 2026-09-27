@@ -1,0 +1,38 @@
+<div class="page-header">
+  <h1 class="page-title">Q&A</h1>
+  <p class="page-subtitle">Ask a question and discuss the answers</p>
+  <% if current_user&.can_create? %>
+    <div class="mt-4">
+      <%= link_to new_community_question_path, class: "btn btn-primary" do %>
+        <i class="fa-solid fa-plus"></i>
+        Ask a question
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">Questions</h2>
+  </div>
+  <div class="section-content">
+    <% if @community_questions.any? %>
+      <% @community_questions.each do |question| %>
+        <div class="comment-item mb-4">
+          <h3 class="text-lg font-semibold">
+            <%= link_to question.title, question, class: "topic-link" %>
+          </h3>
+          <div class="topic-meta text-sm text-gray-600 mt-1">
+            <%= question.user.display_name %>
+            • <%= time_ago_in_words(question.created_at) %> ago
+            • <%= pluralize(@answer_counts[question.id].to_i, "answer") %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center py-8 text-gray-500">
+        <p>No questions yet.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

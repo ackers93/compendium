@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-overlay" data-controller="modal">
+    <div class="modal modal-md" data-modal-target="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit answer</h2>
+        <%= link_to "×", "#", class: "modal-close", data: { action: "click->modal#closeModal" } %>
+      </div>
+
+      <div class="modal-body">
+        <%= render "community_answers/form", community_answer: @community_answer, community_question: @community_question %>
+      </div>
+
+      <div class="modal-footer">
+        <%= link_to "Cancel", "#", class: "btn btn-outline", data: { action: "click->modal#closeModal" } %>
+      </div>
+    </div>
+  </div>
+<% end %>

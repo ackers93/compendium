@@ -134,4 +134,16 @@ class SearchesController < ApplicationController
 
     render partial: "discussion_questions_results"
   end
+
+  def community_questions
+    @community_questions = if params[:q].present?
+      CommunityQuestion.includes(:user)
+                       .search_by_title_or_body(params[:q])
+                       .recent
+    else
+      CommunityQuestion.none
+    end
+
+    render partial: "community_questions_results"
+  end
 end

@@ -1,0 +1,15 @@
+<div id="community-answers">
+  <% if roots.any? %>
+    <% roots.each do |community_answer| %>
+      <%= render "community_answers/answer",
+            community_answer: community_answer,
+            community_question: community_question,
+            children_by_parent: children_by_parent,
+            depth: 0 %>
+    <% end %>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <p>No answers yet.</p>
+    </div>
+  <% end %>
+</div>

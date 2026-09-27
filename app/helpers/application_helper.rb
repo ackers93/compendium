@@ -143,6 +143,10 @@ module ApplicationHelper
       note_path(mentionable)
     when Comment
       comment_location_path(mentionable)
+    when CommunityQuestion
+      community_question_path(mentionable)
+    when CommunityAnswer
+      community_question_path(mentionable.community_question, anchor: dom_id(mentionable))
     else
       root_path
     end

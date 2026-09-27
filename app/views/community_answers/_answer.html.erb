@@ -1,0 +1,53 @@
+<% depth = local_assigns.fetch(:depth, 0) %>
+<% children_by_parent = local_assigns.fetch(:children_by_parent, {}) %>
+<% child_answers = children_by_parent[community_answer.id] || [] %>
+
+<div id="<%= dom_id(community_answer) %>" class="comment-thread<%= ' comment-reply' if depth > 0 %>">
+  <div class="comment-item<%= ' comment-item--nested' if depth > 0 %>">
+    <div class="comment-header text-xs text-gray-500 mb-1">
+      <span class="author-name"><%= community_answer.user&.display_name || "Unknown User" %></span>
+      <span class="comment-date">• <%= time_ago_in_words(community_answer.created_at) %> ago</span>
+      <% if current_user %>
+        <span class="ml-2 comment-actions-inline">
+          <% if current_user.can_create? && depth < CommunityAnswer::MAX_DEPTH %>
+            <%= link_to "Reply",
+                  new_community_question_community_answer_path(community_question, parent_id: community_answer.id),
+                  class: "text-blue-500 hover:text-blue-700",
+                  data: { turbo_frame: "modal" } %>
+            <span class="mx-1">•</span>
+          <% end %>
+          <% if current_user.can_edit?(community_answer) %>
+            <%= link_to "Edit",
+                  edit_community_question_community_answer_path(community_question, community_answer),
+                  class: "text-blue-500 hover:text-blue-700",
+                  data: { turbo_frame: "modal" } %>
+            <span class="mx-1">•</span>
+          <% end %>
+          <% if current_user.can_delete?(community_answer) %>
+            <%= link_to "Delete",
+                  community_question_community_answer_path(community_question, community_answer),
+                  class: "text-red-500 hover:text-red-700",
+                  data: { turbo_method: :delete, turbo_confirm: child_answers.any? ? "Delete this answer and its replies?" : "Are you sure?" } %>
+          <% else %>
+            <%= link_to "Flag", "javascript:void(0)",
+                  onclick: "flagContent('CommunityAnswer', #{community_answer.id})",
+                  class: "text-yellow-600 hover:text-yellow-800" %>
+          <% end %>
+        </span>
+      <% end %>
+    </div>
+    <div class="comment-content">
+      <%= community_answer.content %>
+    </div>
+  </div>
+
+  <div id="<%= dom_id(community_answer, :replies) %>" class="comment-replies">
+    <% child_answers.each do |reply| %>
+      <%= render "community_answers/answer",
+            community_answer: reply,
+            community_question: community_question,
+            children_by_parent: children_by_parent,
+            depth: depth + 1 %>
+    <% end %>
+  </div>
+</div>

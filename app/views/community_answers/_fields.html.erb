@@ -1,0 +1,24 @@
+<%= form_with model: community_answer,
+      url: community_answer.persisted? ? community_question_community_answer_path(community_question, community_answer) : community_question_community_answers_path(community_question),
+      data: { turbo_frame: (community_answer.persisted? || community_answer.parent_id.present? || params[:direct_edit]) ? "_top" : nil } do |form| %>
+  <%= form.hidden_field :parent_id if community_answer.parent_id.present? %>
+
+  <% if community_answer.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% community_answer.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :content, community_answer.reply? ? "Reply" : "Answer", class: "form-label" %>
+    <%= form.rich_text_area :content,
+          class: "form-input",
+          id: "community_answer_content_#{community_answer.id || "new_#{community_answer.parent_id || community_answer.object_id}"}" %>
+  </div>
+
+  <div class="form-actions mt-4">
+    <%= form.submit community_answer.persisted? ? "Update" : (community_answer.reply? ? "Post Reply" : "Post Answer"), class: "btn btn-primary" %>
+  </div>
+<% end %>

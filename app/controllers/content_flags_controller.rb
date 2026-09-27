@@ -47,6 +47,10 @@ class ContentFlagsController < ApplicationController
       Chiasm.find_by(id: params[:chiasm_id])
     elsif params[:discussion_question_id]
       DiscussionQuestion.find_by(id: params[:discussion_question_id])
+    elsif params[:community_question_id]
+      CommunityQuestion.find_by(id: params[:community_question_id])
+    elsif params[:community_answer_id]
+      CommunityAnswer.find_by(id: params[:community_answer_id])
     end
   end
   

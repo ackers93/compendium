@@ -1,0 +1,23 @@
+<%= form_with model: community_question do |form| %>
+  <% if community_question.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% community_question.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-input", maxlength: CommunityQuestion::TITLE_MAX_LENGTH %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :content, "Question", class: "form-label" %>
+    <%= form.rich_text_area :content, class: "form-input", id: "community_question_content_#{community_question.id || "new"}" %>
+  </div>
+
+  <div class="form-actions mt-4">
+    <%= form.submit community_question.persisted? ? "Update Question" : "Post Question", class: "btn btn-primary" %>
+  </div>
+<% end %>

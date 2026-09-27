@@ -112,6 +112,10 @@
                 <i class="fa-solid fa-arrows-left-right-to-line"></i> Chiasm
               <% when 'DiscussionQuestion' %>
                 <i class="fa-solid fa-circle-question"></i> Discussion Question
+              <% when 'CommunityQuestion' %>
+                <i class="fa-solid fa-circle-question"></i> Question
+              <% when 'CommunityAnswer' %>
+                <i class="fa-solid fa-reply"></i> Answer
               <% end %>
             </div>
             <div class="flag-status">
@@ -181,6 +185,10 @@
                   <%= flag.flaggable.title %> — <%= flag.flaggable.range_reference %>
                 <% when 'DiscussionQuestion' %>
                   <%= truncate(flag.flaggable.body.to_s, length: 200) %>
+                <% when 'CommunityQuestion' %>
+                  <%= truncate(flag.flaggable.content.to_plain_text, length: 200) %>
+                <% when 'CommunityAnswer' %>
+                  <%= truncate(flag.flaggable.content.to_plain_text, length: 200) %>
                 <% end %>
               </div>
             </div>
@@ -240,6 +248,10 @@
                   chiasm_path(flag.flaggable)
                 when 'DiscussionQuestion'
                   discussion_question_parent_path(flag.flaggable)
+                when 'CommunityQuestion'
+                  community_question_path(flag.flaggable)
+                when 'CommunityAnswer'
+                  community_question_path(flag.flaggable.community_question, anchor: dom_id(flag.flaggable))
                 end
               %>
               <%= link_to "View Content", view_path, class: "btn btn-sm btn-outline", target: "_blank" %>

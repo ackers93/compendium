@@ -55,6 +55,27 @@ class NotificationDispatcher
       notify_topic_contributors(topic: topic, actor: actor, notifiable: topic_item)
     end
 
+    def community_answer_created(answer)
+      actor = answer.user
+      return unless actor
+
+      if answer.reply? && answer.parent&.user
+        create_notification(
+          recipient: answer.parent.user,
+          actor: actor,
+          action: "answer_reply",
+          notifiable: answer
+        )
+      elsif answer.root? && answer.community_question&.user
+        create_notification(
+          recipient: answer.community_question.user,
+          actor: actor,
+          action: "answer",
+          notifiable: answer
+        )
+      end
+    end
+
     def discussion_question_created(discussion_question)
       return unless discussion_question.questionable.is_a?(Topic)
 

@@ -1,14 +1,15 @@
 class TopicItem < ApplicationRecord
   include Flaggable
 
-  ITEMABLE_TYPES = %w[Note BibleThread Chiasm Comment CrossReference].freeze
+  ITEMABLE_TYPES = %w[Note BibleThread Chiasm Comment CrossReference CommunityQuestion].freeze
 
   TYPE_LABELS = {
     "Note" => "Notes",
     "BibleThread" => "Threads",
     "Chiasm" => "Chiasms",
     "Comment" => "Comments",
-    "CrossReference" => "Cross-references"
+    "CrossReference" => "Cross-references",
+    "CommunityQuestion" => "Questions"
   }.freeze
 
   belongs_to :topic
@@ -54,6 +55,8 @@ class TopicItem < ApplicationRecord
       plain.present? ? plain.truncate(80) : "Comment"
     when CrossReference
       itemable.connection_label
+    when CommunityQuestion
+      itemable.title
     else
       itemable_type
     end

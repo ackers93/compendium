@@ -1,0 +1,7 @@
+<% if community_answer.new_record? && community_answer.parent_id.blank? %>
+  <div id="community-answer-form">
+    <%= render "community_answers/fields", community_answer: community_answer, community_question: community_question %>
+  </div>
+<% else %>
+  <%= render "community_answers/fields", community_answer: community_answer, community_question: community_question %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_27_120000) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_27_130000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -127,6 +127,25 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_120000) do
     t.index ["end_verse_id"], name: "index_comments_on_end_verse_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["user_id", "import_source", "commentable_type", "commentable_id"], name: "index_comments_on_user_import_source_and_commentable"
+  end
+
+  create_table "community_answers", force: :cascade do |t|
+    t.bigint "community_question_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "parent_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_question_id"], name: "index_community_answers_on_community_question_id"
+    t.index ["parent_id"], name: "index_community_answers_on_parent_id"
+    t.index ["user_id"], name: "index_community_answers_on_user_id"
+  end
+
+  create_table "community_questions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_community_questions_on_user_id"
   end
 
   create_table "content_flags", force: :cascade do |t|
@@ -376,6 +395,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_27_120000) do
   add_foreign_key "chiasms", "users"
   add_foreign_key "comments", "bible_verses", column: "end_verse_id"
   add_foreign_key "comments", "comments", column: "parent_id"
+  add_foreign_key "community_answers", "community_answers", column: "parent_id"
+  add_foreign_key "community_answers", "community_questions"
+  add_foreign_key "community_answers", "users"
+  add_foreign_key "community_questions", "users"
   add_foreign_key "content_flags", "users"
   add_foreign_key "content_flags", "users", column: "content_author_id"
   add_foreign_key "content_flags", "users", column: "resolved_by_id"

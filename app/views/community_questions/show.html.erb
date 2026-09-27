@@ -1,0 +1,60 @@
+<div class="page-header">
+  <h1 class="page-title"><%= @community_question.title %></h1>
+  <p class="page-subtitle">
+    Asked by <%= @community_question.user.display_name %>
+    • <%= time_ago_in_words(@community_question.created_at) %> ago
+  </p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <div class="d-flex justify-between items-center">
+      <%= link_to community_questions_path, class: "btn btn-outline" do %>
+        ← Back to Q&A
+      <% end %>
+      <div class="d-flex gap-2 items-center">
+        <% if current_user&.can_edit?(@community_question) %>
+          <%= link_to "Edit", edit_community_question_path(@community_question), class: "btn btn-outline btn-sm" %>
+        <% end %>
+        <% if current_user&.can_delete?(@community_question) %>
+          <%= button_to "Delete", community_question_path(@community_question),
+                method: :delete,
+                class: "btn btn-outline btn-sm",
+                form: { data: { turbo_confirm: "Delete this question and its answers?" } } %>
+        <% elsif current_user %>
+          <%= link_to "Flag", "javascript:void(0)",
+                onclick: "flagContent('CommunityQuestion', #{@community_question.id})",
+                class: "btn btn-outline btn-sm" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="<%= dom_id(@community_question) %>" class="section-content">
+    <%= @community_question.content %>
+  </div>
+</div>
+
+<%= render "topic_items/section", itemable: @community_question %>
+
+<div class="content-section mt-8">
+  <div class="section-header">
+    <h2 class="section-title">Answers</h2>
+  </div>
+  <div class="section-content">
+    <%= render "community_answers/list",
+          roots: @roots,
+          children_by_parent: @children_by_parent,
+          community_question: @community_question %>
+
+    <% if current_user&.can_create? %>
+      <div class="content-surface mt-6">
+        <h3 class="text-lg font-semibold mb-4">Post an answer</h3>
+        <%= render "community_answers/form",
+              community_answer: @community_answer,
+              community_question: @community_question %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= turbo_frame_tag "modal" %>

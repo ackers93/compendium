@@ -19,6 +19,8 @@ module TopicItemsHelper
     when CrossReference
       source = itemable.source_verse
       bible_verse_show_path(book: source.book, chapter: source.chapter, verse: source.verse)
+    when CommunityQuestion
+      community_question_path(itemable)
     else
       root_path
     end

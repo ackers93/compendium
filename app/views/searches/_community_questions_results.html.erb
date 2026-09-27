@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "community-questions-search-results" do %>
+  <% if @community_questions.any? %>
+    <div class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Q&A</h2>
+      </div>
+      <div class="section-content">
+        <% @community_questions.each do |question| %>
+          <div class="comment-item mb-4">
+            <h3 class="text-lg font-semibold">
+              <%= link_to question.title, community_question_path(question), data: { turbo_frame: "_top" } %>
+            </h3>
+            <div class="text-sm text-gray-600 mt-1">
+              <%= question.user&.display_name %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

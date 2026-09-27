@@ -23,6 +23,11 @@ module NotificationsHelper
       "#{actor_name} added a verse to \"#{thread_title}\""
     when "review_requested"
       "An admin requested a review of your #{flaggable_label(notification.notifiable)}"
+    when "answer"
+      question_title = notification.notifiable&.community_question&.title || "your question"
+      "#{actor_name} answered \"#{question_title}\""
+    when "answer_reply"
+      "#{actor_name} replied to your answer"
     else
       "#{actor_name} sent you a notification"
     end
@@ -42,6 +47,8 @@ module NotificationsHelper
       bible_thread_path(notifiable.bible_thread)
     when "comment", "reply"
       path_for_comment(notifiable)
+    when "answer", "answer_reply"
+      path_for_community_answer(notifiable)
     else
       notifications_path
     end
@@ -56,6 +63,8 @@ module NotificationsHelper
     when "topic_contribution" then "fa-solid fa-bookmark"
     when "thread_contribution" then "fa-solid fa-link"
     when "review_requested" then "fa-solid fa-flag"
+    when "answer" then "fa-solid fa-circle-question"
+    when "answer_reply" then "fa-solid fa-reply"
     else "fa-solid fa-bell"
     end
   end
@@ -89,6 +98,8 @@ module NotificationsHelper
     when "TopicItem" then "topic pin"
     when "VerseTopic" then "topic verse"
     when "DiscussionQuestion" then "discussion question"
+    when "CommunityQuestion" then "question \"#{flag.flaggable.title}\""
+    when "CommunityAnswer" then "answer"
     else flag.flaggable_type.underscore.humanize.downcase
     end
   end
@@ -100,6 +111,12 @@ module NotificationsHelper
     when DiscussionQuestion
       notifiable.questionable if notifiable.questionable.is_a?(Topic)
     end
+  end
+
+  def path_for_community_answer(answer)
+    return notifications_path unless answer&.community_question
+
+    community_question_path(answer.community_question, anchor: dom_id(answer))
   end
 
   def path_for_comment(comment)

@@ -61,6 +61,10 @@ module Admin
         redirect_to edit_chiasm_path(@flag.flaggable)
       when 'DiscussionQuestion'
         redirect_to edit_discussion_question_path(@flag.flaggable, direct_edit: true)
+      when 'CommunityQuestion'
+        redirect_to edit_community_question_path(@flag.flaggable)
+      when 'CommunityAnswer'
+        redirect_to edit_community_question_community_answer_path(@flag.flaggable.community_question, @flag.flaggable, direct_edit: true)
       when 'CrossReference'
         redirect_to admin_content_flags_path, alert: "Cross-references cannot be edited directly. Please delete and recreate if needed."
       end
