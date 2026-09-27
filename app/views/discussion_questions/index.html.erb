@@ -1,0 +1,17 @@
+<div class="page-header">
+  <h1 class="page-title">Discussion Questions</h1>
+  <p class="page-subtitle">Prompts for people running discussion groups</p>
+</div>
+
+<div class="content-section">
+  <div class="section-header">
+    <h2 class="section-title">All Discussion Questions</h2>
+  </div>
+  <div class="section-content">
+    <%= render "discussion_questions/list",
+          discussion_questions: @discussion_questions,
+          show_parent: true %>
+  </div>
+</div>
+
+<%= turbo_frame_tag "modal" %>

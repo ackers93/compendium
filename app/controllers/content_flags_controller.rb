@@ -45,6 +45,8 @@ class ContentFlagsController < ApplicationController
       BibleThread.find_by(id: params[:bible_thread_id])
     elsif params[:chiasm_id]
       Chiasm.find_by(id: params[:chiasm_id])
+    elsif params[:discussion_question_id]
+      DiscussionQuestion.find_by(id: params[:discussion_question_id])
     end
   end
   

@@ -25,6 +25,8 @@ class BibleVerse < ApplicationRecord
   has_many :verse_topics, dependent: :destroy
   has_many :topics, through: :verse_topics
 
+  has_many :discussion_questions, -> { order(created_at: :desc) }, as: :questionable, dependent: :destroy
+
   # Mentions from notes/comments that link to this verse
   has_many :verse_mentions, dependent: :destroy
   

@@ -1,0 +1,19 @@
+<div class="discussion-questions-section">
+  <div class="section-header">
+    <div class="bible-section-actions">
+      <h3 class="section-title">Discussion Questions</h3>
+    </div>
+  </div>
+  <p class="text-sm text-gray-600 mb-4">Prompts for people running discussion groups.</p>
+
+  <%= render "discussion_questions/list", discussion_questions: discussion_questions %>
+
+  <% if current_user&.can_create? %>
+    <div class="add-comment-section mt-4">
+      <h4 class="text-lg font-semibold mb-4">Suggest a discussion question</h4>
+      <%= render "discussion_questions/form",
+            discussion_question: questionable.discussion_questions.build,
+            questionable: questionable %>
+    </div>
+  <% end %>
+</div>

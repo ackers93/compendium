@@ -91,6 +91,7 @@ class BibleVersesController < ApplicationController
     else
       @published_mentions = @bible_verse.published_mentions
       @verse_chiasms = Chiasm.containing_verse(@bible_verse).includes(:user, :chiasm_limbs)
+      @discussion_questions = @bible_verse.discussion_questions.includes(:user)
     end
   end
 

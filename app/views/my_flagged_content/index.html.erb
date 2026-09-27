@@ -111,6 +111,8 @@
                 <i class="fa-solid fa-list-ol"></i> Your Thread
               <% when 'Chiasm' %>
                 <i class="fa-solid fa-arrows-left-right-to-line"></i> Your Chiasm
+              <% when 'DiscussionQuestion' %>
+                <i class="fa-solid fa-circle-question"></i> Your Discussion Question
               <% end %>
             </div>
             <div class="flag-status">
@@ -200,6 +202,12 @@
                   <% else %>
                     <em class="text-danger">Content has been deleted</em>
                   <% end %>
+                <% when 'DiscussionQuestion' %>
+                  <% if flag.flaggable %>
+                    <%= truncate(flag.flaggable.body.to_s, length: 300) %>
+                  <% else %>
+                    <em class="text-danger">Content has been deleted</em>
+                  <% end %>
                 <% end %>
               </div>
             </div>
@@ -220,6 +228,8 @@
                   edit_bible_thread_path(flag.flaggable)
                 when 'Chiasm'
                   edit_chiasm_path(flag.flaggable)
+                when 'DiscussionQuestion'
+                  edit_discussion_question_path(flag.flaggable)
                 end
               %>
               
@@ -251,6 +261,8 @@
                   bible_thread_path(flag.flaggable)
                 when 'Chiasm'
                   chiasm_path(flag.flaggable)
+                when 'DiscussionQuestion'
+                  discussion_question_parent_path(flag.flaggable)
                 end
               %>
               
@@ -282,6 +294,8 @@
                   bible_thread_path(flag.flaggable)
                 when 'Chiasm'
                   chiasm_path(flag.flaggable)
+                when 'DiscussionQuestion'
+                  discussion_question_parent_path(flag.flaggable)
                 end
               %>
               

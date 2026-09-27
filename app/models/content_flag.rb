@@ -47,6 +47,8 @@ class ContentFlag < ApplicationRecord
       "Pin on #{flaggable.topic&.name || 'topic'}"
     when 'VerseTopic'
       "Verse on #{flaggable.topic&.name || 'topic'}"
+    when 'DiscussionQuestion'
+      flaggable.body.to_s.truncate(80)
     else
       flaggable_type
     end

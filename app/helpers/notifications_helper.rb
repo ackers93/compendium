@@ -10,9 +10,11 @@ module NotificationsHelper
     when "reply"
       "#{actor_name} replied to your comment"
     when "topic_contribution"
-      topic_name = notification.notifiable&.topic&.name || "a topic"
+      topic_name = topic_for_notification(notification.notifiable)&.name || "a topic"
       if notification.notifiable.is_a?(TopicItem)
         "#{actor_name} pinned content to #{topic_name}"
+      elsif notification.notifiable.is_a?(DiscussionQuestion)
+        "#{actor_name} added a discussion question to #{topic_name}"
       else
         "#{actor_name} added a verse to #{topic_name}"
       end
@@ -34,7 +36,8 @@ module NotificationsHelper
     when "review_requested"
       my_flagged_content_path(status: "review_requested")
     when "topic_contribution"
-      topic_path(notifiable.topic)
+      topic = topic_for_notification(notifiable)
+      topic ? topic_path(topic) : notifications_path
     when "thread_contribution"
       bible_thread_path(notifiable.bible_thread)
     when "comment", "reply"
@@ -85,7 +88,17 @@ module NotificationsHelper
     when "Chiasm" then "chiasm \"#{flag.flaggable.title}\""
     when "TopicItem" then "topic pin"
     when "VerseTopic" then "topic verse"
+    when "DiscussionQuestion" then "discussion question"
     else flag.flaggable_type.underscore.humanize.downcase
+    end
+  end
+
+  def topic_for_notification(notifiable)
+    case notifiable
+    when TopicItem, VerseTopic
+      notifiable.topic
+    when DiscussionQuestion
+      notifiable.questionable if notifiable.questionable.is_a?(Topic)
     end
   end
 

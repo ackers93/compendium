@@ -29,6 +29,7 @@ class TopicsController < ApplicationController
                          .includes(:bible_verse, :user)
                          .order(bible_order_sql)
     @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
+    @discussion_questions = @topic.discussion_questions.includes(:user)
     load_topic_items
     load_topic_attachments
     @errors = []
@@ -52,6 +53,7 @@ class TopicsController < ApplicationController
                            .includes(:bible_verse, :user)
                            .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
+      @discussion_questions = @topic.discussion_questions.includes(:user)
       load_topic_items
       load_topic_attachments
       render :show, status: :unprocessable_entity
@@ -96,6 +98,7 @@ class TopicsController < ApplicationController
                            .includes(:bible_verse, :user)
                            .order(bible_order_sql)
       @grouped_verse_topics = group_consecutive_verses(verse_topics.to_a)
+      @discussion_questions = @topic.discussion_questions.includes(:user)
       load_topic_items
       load_topic_attachments
       render :show, status: :unprocessable_entity

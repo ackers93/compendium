@@ -55,6 +55,16 @@ class NotificationDispatcher
       notify_topic_contributors(topic: topic, actor: actor, notifiable: topic_item)
     end
 
+    def discussion_question_created(discussion_question)
+      return unless discussion_question.questionable.is_a?(Topic)
+
+      actor = discussion_question.user
+      topic = discussion_question.questionable
+      return unless actor && topic
+
+      notify_topic_contributors(topic: topic, actor: actor, notifiable: discussion_question)
+    end
+
     def thread_entry_created(entry)
       actor = entry.user
       thread = entry.bible_thread

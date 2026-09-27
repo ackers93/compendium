@@ -65,6 +65,14 @@ Rails.application.routes.draw do
   put 'verse_topics/:id', to: 'verse_topics#update'
   delete 'verse_topics/:id', to: 'verse_topics#destroy'
 
+  resources :discussion_questions, only: [:index, :edit, :update, :destroy]
+  post 'bible_verses/:book/:chapter/:verse/discussion_questions',
+       to: 'discussion_questions#create',
+       as: :bible_verse_discussion_questions
+  post 'topics/:topic_id/discussion_questions',
+       to: 'discussion_questions#create',
+       as: :topic_discussion_questions
+
   # Topic item pins (notes, threads, chiasms, comments, cross-references)
   resources :topic_items, only: [:new, :create, :edit, :update, :destroy]
   
@@ -126,6 +134,7 @@ Rails.application.routes.draw do
   # Search routes
   get 'search', to: 'searches#index', as: :search
   get 'search/topics', to: 'searches#topics', as: :search_topics
+  get 'search/discussion_questions', to: 'searches#discussion_questions', as: :search_discussion_questions
   get 'search/threads', to: 'searches#threads', as: :search_threads
   get 'search/chiasms', to: 'searches#chiasms', as: :search_chiasms
   get 'search/notes', to: 'searches#notes', as: :search_notes

@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
     has_many :notes, dependent: :destroy
     has_many :comments, dependent: :destroy
+    has_many :discussion_questions, dependent: :destroy
     has_many :cross_references, dependent: :destroy
     has_many :bible_threads, dependent: :destroy
     has_many :chiasms, dependent: :destroy

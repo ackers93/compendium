@@ -1,0 +1,28 @@
+<%= turbo_frame_tag "discussion-questions-search-results" do %>
+  <% if @discussion_questions.any? %>
+    <div class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Discussion Questions</h2>
+      </div>
+      <div class="section-content">
+        <% @discussion_questions.each do |discussion_question| %>
+          <div class="comment-item mb-4">
+            <div class="comment-header text-xs text-gray-500 mb-1">
+              <%= link_to discussion_question.parent_label,
+                    discussion_question_parent_path(discussion_question),
+                    class: "text-blue-600 hover:text-blue-800",
+                    data: { turbo_frame: "_top" } %>
+              <span class="mx-1">•</span>
+              <span><%= discussion_question.user&.display_name || "Unknown User" %></span>
+            </div>
+            <div class="comment-content">
+              <%= link_to truncate(discussion_question.body, length: 180),
+                    discussion_question_parent_path(discussion_question),
+                    data: { turbo_frame: "_top" } %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

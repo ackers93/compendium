@@ -3,6 +3,7 @@ class Topic < ApplicationRecord
   has_many :bible_verses, through: :verse_topics
   has_many :topic_items, dependent: :destroy
   has_many :topic_attachments, dependent: :destroy
+  has_many :discussion_questions, -> { order(created_at: :desc) }, as: :questionable, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   

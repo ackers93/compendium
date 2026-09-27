@@ -1,0 +1,34 @@
+<div id="<%= dom_id(discussion_question) %>" class="comment-item mb-4">
+  <div class="comment-header text-xs text-gray-500 mb-1">
+    <% if local_assigns[:show_parent] %>
+      <%= link_to discussion_question.parent_label,
+            discussion_question_parent_path(discussion_question),
+            class: "text-blue-600 hover:text-blue-800" %>
+      <span class="mx-1">•</span>
+    <% end %>
+    <span class="author-name"><%= discussion_question.user&.display_name || "Unknown User" %></span>
+    <span class="comment-date">• <%= time_ago_in_words(discussion_question.created_at) %> ago</span>
+    <% if current_user %>
+      <span class="ml-2 comment-actions-inline">
+        <% if current_user.can_edit?(discussion_question) %>
+          <%= link_to "Edit", edit_discussion_question_path(discussion_question),
+                class: "text-blue-500 hover:text-blue-700",
+                data: { turbo_frame: "modal" } %>
+          <span class="mx-1">•</span>
+        <% end %>
+        <% if current_user.can_delete?(discussion_question) %>
+          <%= link_to "Delete", discussion_question_path(discussion_question),
+                class: "text-red-500 hover:text-red-700",
+                data: { turbo_method: :delete, turbo_confirm: "Remove this discussion question?" } %>
+        <% else %>
+          <%= link_to "Flag", "javascript:void(0)",
+                onclick: "flagContent('DiscussionQuestion', #{discussion_question.id})",
+                class: "text-yellow-600 hover:text-yellow-800" %>
+        <% end %>
+      </span>
+    <% end %>
+  </div>
+  <div class="comment-content">
+    <%= simple_format(discussion_question.body) %>
+  </div>
+</div>

@@ -19,6 +19,7 @@
 
 <div class="search-results">
   <%= turbo_frame_tag "topics-search-results", src: (params[:q].present? ? search_topics_path(q: params[:q]) : nil) %>
+  <%= turbo_frame_tag "discussion-questions-search-results", src: (params[:q].present? ? search_discussion_questions_path(q: params[:q]) : nil) %>
   <%= turbo_frame_tag "threads-search-results", src: (params[:q].present? ? search_threads_path(q: params[:q]) : nil) %>
   <%= turbo_frame_tag "chiasms-search-results", src: (params[:q].present? ? search_chiasms_path(q: params[:q]) : nil) %>
   <%= turbo_frame_tag "notes-search-results", src: (params[:q].present? ? search_notes_path(q: params[:q]) : nil) %>

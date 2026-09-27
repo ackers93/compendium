@@ -110,6 +110,8 @@
                 <i class="fa-solid fa-list-ol"></i> Bible Thread
               <% when 'Chiasm' %>
                 <i class="fa-solid fa-arrows-left-right-to-line"></i> Chiasm
+              <% when 'DiscussionQuestion' %>
+                <i class="fa-solid fa-circle-question"></i> Discussion Question
               <% end %>
             </div>
             <div class="flag-status">
@@ -177,6 +179,8 @@
                   <%= flag.flaggable.title %>
                 <% when 'Chiasm' %>
                   <%= flag.flaggable.title %> — <%= flag.flaggable.range_reference %>
+                <% when 'DiscussionQuestion' %>
+                  <%= truncate(flag.flaggable.body.to_s, length: 200) %>
                 <% end %>
               </div>
             </div>
@@ -234,6 +238,8 @@
                   bible_thread_path(flag.flaggable)
                 when 'Chiasm'
                   chiasm_path(flag.flaggable)
+                when 'DiscussionQuestion'
+                  discussion_question_parent_path(flag.flaggable)
                 end
               %>
               <%= link_to "View Content", view_path, class: "btn btn-sm btn-outline", target: "_blank" %>

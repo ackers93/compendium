@@ -1,0 +1,8 @@
+<% questionable = local_assigns[:questionable] || discussion_question.questionable %>
+<% if discussion_question.persisted? %>
+  <%= render "discussion_questions/fields", discussion_question: discussion_question, questionable: questionable %>
+<% else %>
+  <div id="discussion-question-form">
+    <%= render "discussion_questions/fields", discussion_question: discussion_question, questionable: questionable %>
+  </div>
+<% end %>

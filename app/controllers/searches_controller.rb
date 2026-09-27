@@ -122,4 +122,16 @@ class SearchesController < ApplicationController
     
     render partial: 'note_comments_results'
   end
+
+  def discussion_questions
+    @discussion_questions = if params[:q].present?
+      DiscussionQuestion.includes(:user, :questionable)
+                        .search_by_body_or_parent(params[:q])
+                        .recent
+    else
+      DiscussionQuestion.none
+    end
+
+    render partial: "discussion_questions_results"
+  end
 end

@@ -1,0 +1,13 @@
+<div id="discussion-questions-list">
+  <% if discussion_questions.any? %>
+    <% discussion_questions.each do |discussion_question| %>
+      <%= render "discussion_questions/question",
+            discussion_question: discussion_question,
+            show_parent: local_assigns[:show_parent] %>
+    <% end %>
+  <% else %>
+    <div class="text-center py-8 text-gray-500">
+      <p>No discussion questions yet. These prompts help people running discussion groups.</p>
+    </div>
+  <% end %>
+</div>

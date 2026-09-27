@@ -1,0 +1,24 @@
+<%= form_with model: discussion_question,
+      url: discussion_question.persisted? ? discussion_question_path(discussion_question) : discussion_question_create_path(questionable),
+      data: { turbo_frame: (discussion_question.persisted? || params[:direct_edit]) ? "_top" : nil } do |form| %>
+  <% if discussion_question.errors.any? %>
+    <div class="alert alert-error mb-4">
+      <% discussion_question.errors.full_messages.each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :body, "Question", class: "form-label" %>
+    <%= form.text_area :body,
+          rows: 3,
+          class: "form-input",
+          maxlength: DiscussionQuestion::BODY_MAX_LENGTH,
+          placeholder: "A question for a discussion group..." %>
+  </div>
+
+  <div class="form-actions mt-4">
+    <%= form.submit discussion_question.persisted? ? "Update Question" : "Add Question", class: "btn btn-primary" %>
+  </div>
+<% end %>

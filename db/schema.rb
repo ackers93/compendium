@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_24_140000) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_27_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -184,6 +184,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_140000) do
     t.index ["target_end_verse_id"], name: "index_cross_references_on_target_end_verse_id"
     t.index ["target_verse_id"], name: "index_cross_references_on_target_verse_id"
     t.index ["user_id"], name: "index_cross_references_on_user_id"
+  end
+
+  create_table "discussion_questions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "questionable_type", null: false
+    t.bigint "questionable_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionable_type", "questionable_id"], name: "index_discussion_questions_on_questionable"
+    t.index ["user_id"], name: "index_discussion_questions_on_user_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -373,6 +384,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_24_140000) do
   add_foreign_key "cross_references", "bible_verses", column: "target_end_verse_id"
   add_foreign_key "cross_references", "bible_verses", column: "target_verse_id"
   add_foreign_key "cross_references", "users"
+  add_foreign_key "discussion_questions", "users"
   add_foreign_key "notifications", "users", column: "actor_id"
   add_foreign_key "notifications", "users", column: "recipient_id"
   add_foreign_key "reading_plan_days", "reading_plans"
